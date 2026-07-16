@@ -6,6 +6,7 @@ on:
     paths:
       - "dashboard/**"
       - "data/**"
+      - "docs/SCORING_MODEL.md"
       - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
@@ -30,9 +31,10 @@ jobs:
 
       - name: Build static dashboard artifact
         run: |
-          mkdir -p _site/dashboard _site/data
+          mkdir -p _site/dashboard _site/data _site/docs
           cp -R dashboard/. _site/dashboard/
           cp -R data/. _site/data/
+          cp docs/SCORING_MODEL.md _site/docs/SCORING_MODEL.md
           touch _site/.nojekyll
 
       - name: Upload GitHub Pages artifact

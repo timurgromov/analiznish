@@ -11,13 +11,13 @@
 ## Changes
 
 - Добавлен workflow `.github/workflows/deploy-pages.yml`.
-- Workflow собирает Pages artifact только из `dashboard/` и `data/`.
+- Workflow собирает Pages artifact из `dashboard/`, `data/` и одного нужного интерфейсу файла `docs/SCORING_MODEL.md`.
 - Публичный URL интерфейса: `https://timurgromov.github.io/analiznish/dashboard/`.
 - README, tasks и current state синхронизированы с новым способом просмотра.
 
 ## Verification
 
-- Локальный dashboard продолжает использовать исходные относительные пути `dashboard/../data/`; в Pages artifact сохраняется та же структура.
+- Локальный dashboard продолжает использовать исходные относительные пути `dashboard/../data/` и `dashboard/../docs/SCORING_MODEL.md`; в Pages artifact сохраняется та же структура.
 - Workflow использует официальный contract GitHub Pages: `configure-pages`, `upload-pages-artifact`, `deploy-pages`, `pages: write` и `id-token: write`.
 - Перед первым deploy владелец repo должен в `Settings` → `Pages` выбрать `GitHub Actions` как Source.
 
