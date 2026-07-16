@@ -1,0 +1,33 @@
+.DS_Store
+
+# Secrets and local state
+.env
+.env.*
+!.env.example
+.local/
+
+# Temporary artifacts
+tmp/
+temp/
+screenshots/
+debug/
+exports/
+*.log
+*.dump
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+*.tar
+*.tar.gz
+*.zip
+
+# Common runtimes, if added later
+node_modules/
+.venv/
+venv/
+dist/
+build/
+.next/
+.cache/
+

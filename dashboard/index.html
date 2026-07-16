@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Анализ Ниш — Хит-парад</title>
+    <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css?v=20260705-tooltips-2" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Анализ Ниш</p>
+        <h1>Хит-парад и рецепт оценки</h1>
+      </div>
+      <div class="status" id="data-status">Загрузка данных</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel hero-panel" aria-labelledby="formula-title">
+        <div>
+          <h2 id="formula-title">Итоговая формула</h2>
+          <p class="lead" id="formula-text">
+            Итог = Базовый балл × Доверие
+          </p>
+        </div>
+        <div class="formula-grid" aria-label="Состав итогового балла">
+          <div>
+            <strong>35%</strong>
+            <span>Рынок</span>
+          </div>
+          <div>
+            <strong>25%</strong>
+            <span>Экономика</span>
+          </div>
+          <div>
+            <strong>20%</strong>
+            <span>Защита и масштаб</span>
+          </div>
+          <div>
+            <strong>20%</strong>
+            <span>Личный фильтр</span>
+          </div>
+          <div>
+            <strong>×</strong>
+            <span>Доверие</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="ranking-title">
+        <div class="section-head">
+          <div>
+            <h2 id="ranking-title">Текущий хит-парад</h2>
+            <p>Рейтинг подтягивается из <code>data/HIT_PARADE.md</code>. Итог — это базовый балл, умноженный на доверие.</p>
+          </div>
+          <div class="legend">
+            <span><i class="dot strong"></i> 65+</span>
+            <span><i class="dot medium"></i> 50-64</span>
+            <span><i class="dot weak"></i> ниже 50</span>
+          </div>
+        </div>
+        <div class="scroll-note">Таблица широкая: двигай ее вправо-влево внутри блока, чтобы увидеть все столбцы.</div>
+        <div class="table-wrap">
+          <table class="ranking-table">
+            <thead id="hit-head"></thead>
+            <tbody id="hit-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="split">
+        <div class="panel detail-panel" aria-labelledby="selected-title">
+          <h2 id="selected-title">Выбранная ниша</h2>
+          <div id="selected-niche" class="selected-empty">
+            Выбери строку в хит-параде, чтобы увидеть расшифровку.
+          </div>
+        </div>
+
+        <div class="panel metric-panel" aria-labelledby="metrics-title">
+          <h2 id="metrics-title">Иерархия оценки</h2>
+          <div class="metric-list" id="metric-list"></div>
+        </div>
+      </section>
+
+      <section class="panel" aria-labelledby="criteria-title">
+        <div class="section-head">
+          <div>
+            <h2 id="criteria-title">Общая матрица критериев</h2>
+            <p>Это общий “рецепт” оценки. Конкретные баллы выбранной ниши показаны выше.</p>
+          </div>
+        </div>
+        <div class="criteria-grid" id="criteria-grid"></div>
+      </section>
+    </main>
+
+    <script src="./app.js?v=20260716-fotushka"></script>
+  </body>
+</html>
