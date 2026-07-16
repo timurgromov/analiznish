@@ -12,7 +12,7 @@
 * Backend: отсутствует.
 * Database: Markdown files.
 * Storage: local project files.
-* Deploy: локальный Docker Compose service на `127.0.0.1:8765`; GitHub Pages workflow подготовлен для публичного read-only dashboard.
+* Deploy: локальный Docker Compose service на `127.0.0.1:8765` и публичный read-only dashboard на GitHub Pages: `https://timurgromov.github.io/analiznish/dashboard/`.
 * External services: не подключены.
 
 ## What Works Now
@@ -37,7 +37,7 @@
 * Ассистент по женскому циклу пересчитан как РФ/СНГ Telegram-first продукт под цель `100 000 ₽/мес`: итог `45`, доверие `0.60`. MVP не обязан быть AI-продуктом: базовая версия может быть скриптовым ботом с расчетом фаз и заранее подготовленными рекомендациями. Конкуренция учтена как плюс к рынку, а не минус. Риск не в Flo/Clue, а в недоказанной готовности русскоязычных пользователей платить, канале привлечения и доверии к чувствительным данным в Telegram-боте.
 * AI-фотосессии / Фотушка добавлены как `quick_scan` после глубокого исследования конкурента: итог `37`, рынок `86`, доверие `0.55`. Универсальный B2C-клон поставлен в парковку; допустим только 7–14-дневный платный тест одной event/B2B/emotional вертикали. Заявления «до 10 млн ₽/мес» и «4–5 млн ₽» отмечены как self-reported; второе означает собственные средства, а не привлечённый раунд.
 * Git инициализирован на ветке `main`; `origin` подключен к `https://github.com/timurgromov/analiznish.git`. До initial commit удалённый репозиторий был пустым; видимость repo — public по настройке пользователя.
-* GitHub Pages ещё требует разового выбора источника `GitHub Actions` в настройках репозитория. После этого workflow публикует dashboard по адресу `https://timurgromov.github.io/analiznish/dashboard/` при изменениях в `dashboard/` или `data/` на `main`.
+* GitHub Pages включён с источником `GitHub Actions`. Workflow публикует dashboard по адресу `https://timurgromov.github.io/analiznish/dashboard/` при изменениях в `dashboard/`, `data/` или `docs/SCORING_MODEL.md` на `main`.
 * Нет автоматического расчета score из карточек.
 * Dashboard read-only и не редактирует Markdown.
 * Нет интеграции с Wordstat/Trends/Sheets/Notion.
@@ -74,6 +74,6 @@
 
 ## Last Known Good State
 
-* Commit: `d1a32be` (`Initial project import`) на `main` с проектными файлами и без локальных артефактов.
-* Deploy: local Docker Compose; GitHub Pages workflow подготовлен, первый публичный deploy ожидает включения `GitHub Actions` как источника Pages.
-* Verification: `./scripts/check-local.sh` и `node --check dashboard/app.js` прошли 2026-07-16; Docker dashboard работает, `HTTP/1.1 200 OK`; nginx отдаёт новую строку, карточку и mapping.
+* Commit: `4d08f18` (`Fix Pages dashboard data artifact`) на `main`.
+* Deploy: local Docker Compose и GitHub Pages.
+* Verification: `./scripts/check-local.sh`, `node --check dashboard/app.js` и YAML-check workflow прошли. GitHub Actions run `29538467360` успешно собрал и развернул dashboard; публичная страница вернула `HTTP 200`, загрузила все 7 строк рейтинга и карточки ниш.

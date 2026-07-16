@@ -80,7 +80,7 @@ http://127.0.0.1:8765/dashboard/
 https://timurgromov.github.io/analiznish/dashboard/
 ```
 
-Workflow `.github/workflows/deploy-pages.yml` публикует только dashboard, папку `data/` и `docs/SCORING_MODEL.md`, который нужен для расшифровки критериев. Каждый push изменений в них на `main` автоматически обновляет страницу. Первый раз в GitHub нужно выбрать `Settings` → `Pages` → `Source` → `GitHub Actions`.
+Workflow `.github/workflows/deploy-pages.yml` публикует только dashboard, папку `data/` и `docs/SCORING_MODEL.md`, который нужен для расшифровки критериев. Источник GitHub Pages уже настроен на `GitHub Actions`; каждый push изменений в них на `main` автоматически обновляет страницу.
 
 Проверка статуса:
 
