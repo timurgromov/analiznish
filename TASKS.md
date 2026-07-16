@@ -18,6 +18,7 @@
 - [x] Добавить правило: новая ниша по умолчанию попадает в hit parade и карточку, если пользователь явно не просит не записывать.
 - [x] Добавить предварительную оценку ассистента по женскому циклу в hit parade.
 - [x] Инициализировать Git и подключить `origin` к `timurgromov/analiznish`.
+- [x] Добавить workflow GitHub Pages для read-only dashboard.
 
 ## Next
 
@@ -35,6 +36,8 @@
   - Acceptance: выбрана одна вертикаль, есть 30 целевых офферов, 10 оплат или документированные отказы, gross margin после retries/QA/support и 30-дневный repeat test.
 - [ ] Проверить, достаточно ли read-only dashboard поверх Markdown или нужно зеркало в CSV/Google Sheets/Notion.
   - Acceptance: выбран один источник правды, остальные форматы только производные.
+- [ ] Включить GitHub Pages c источником `GitHub Actions` и проверить публичный dashboard.
+  - Acceptance: `https://timurgromov.github.io/analiznish/dashboard/` открывает рейтинг и карточки ниш с телефона и компьютера.
 - [ ] После 10 оцененных ниш откалибровать веса скоринга.
   - Acceptance: documented decision в `docs/history/DECISIONS.md`.
 

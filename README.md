@@ -72,6 +72,16 @@ http://127.0.0.1:8765/dashboard/
 
 Контейнер использует `restart: unless-stopped`, поэтому dashboard остается доступен после закрытия Codex-сессии и перезапуска Docker Desktop. Dashboard read-only: чтобы изменить рейтинг или критерии, редактируй Markdown через проектный workflow.
 
+## Публичный dashboard
+
+После включения GitHub Pages интерфейс доступен с любого устройства:
+
+```text
+https://timurgromov.github.io/analiznish/dashboard/
+```
+
+Workflow `.github/workflows/deploy-pages.yml` публикует только dashboard и папку `data/`. Каждый push изменений в них на `main` автоматически обновляет страницу. Первый раз в GitHub нужно выбрать `Settings` → `Pages` → `Source` → `GitHub Actions`.
+
 Проверка статуса:
 
 ```bash
@@ -97,4 +107,4 @@ docker compose down
 * Git: репозиторий инициализирован на ветке `main`; origin подключен к `https://github.com/timurgromov/analiznish.git`.
 * Runtime: локальный static dashboard через Docker Compose + nginx.
 * Production deploy: отсутствует.
-* GitHub: удалённый репозиторий создан пользователем как public; секреты и локальные артефакты остаются исключены через `.gitignore`.
+* GitHub: удалённый репозиторий создан пользователем как public; секреты и локальные артефакты остаются исключены через `.gitignore`. GitHub Pages публикует read-only dashboard после разового включения источника `GitHub Actions`.
