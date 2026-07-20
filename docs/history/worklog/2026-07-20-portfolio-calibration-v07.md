@@ -63,4 +63,6 @@ moat_scale_score = round(100 * (moat + operational_scale + growth_channel) / 30)
 * `node --check dashboard/app.js`: passed.
 * `./scripts/check-local.sh`: passed, включая portfolio validator и secret scan.
 * `git diff --check`: passed.
-* Публикация GitHub Pages и production HTTP-проверка будут добавлены после push.
+* Commit `4d54e2b` отправлен в `main`.
+* GitHub Actions run `29746249598`: `success`.
+* Production HTTP: публичный dashboard, `dashboard/app.js` и `data/HIT_PARADE.md` отдают v0.7; default selection указывает на «Фотушку», карта и очередь совпадают с валидатором.

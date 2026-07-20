@@ -78,6 +78,6 @@
 
 ## Last Known Good State
 
-* Commit: `d171ad1` (`Separate market opportunity from execution priority`) на `main`.
+* Commit: `4d54e2b` (`Calibrate portfolio scoring with evidence`) на `main`.
 * Deploy: local Docker Compose и GitHub Pages.
-* Проверка v0.6: `./scripts/check-local.sh`, `node --check dashboard/app.js`, parser-level contract и мобильная HTTP-проверка прошли. GitHub Actions run `29744213593` успешно опубликован; публичный HTML и `data/HIT_PARADE.md` подтверждают две таблицы и «Фотушку» `78` выше PastLife `65` на карте рынков.
+* Проверка v0.7: `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check` и локальная HTTP-проверка прошли. GitHub Actions run `29746249598` завершился `success`; публичные HTML, JavaScript и `data/HIT_PARADE.md` подтверждают v0.7, default-карточку «Фотушки», карту `76/75/73/68/57/50/48` и очередь `58/43/31/25/24/21`.
