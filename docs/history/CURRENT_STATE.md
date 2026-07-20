@@ -76,6 +76,6 @@
 
 ## Last Known Good State
 
-* Основа: commit `4d08f18` (`Fix Pages dashboard data artifact`) на `main`; следующий commit содержит миграцию v0.6.
+* Commit: `d171ad1` (`Separate market opportunity from execution priority`) на `main`.
 * Deploy: local Docker Compose и GitHub Pages.
-* Локальная проверка v0.6: `./scripts/check-local.sh`, `node --check dashboard/app.js`, parser-level contract и мобильная HTTP-проверка прошли. После push проверить новый GitHub Actions run и публичный dashboard.
+* Проверка v0.6: `./scripts/check-local.sh`, `node --check dashboard/app.js`, parser-level contract и мобильная HTTP-проверка прошли. GitHub Actions run `29744213593` успешно опубликован; публичный HTML и `data/HIT_PARADE.md` подтверждают две таблицы и «Фотушку» `78` выше PastLife `65` на карте рынков.
