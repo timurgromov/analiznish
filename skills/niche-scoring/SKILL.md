@@ -25,9 +25,9 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 4. For `deep_score`, require block A from `docs/NICHE_QUESTIONNAIRE.md`.
 5. Apply hard filters before score.
 6. Separate facts, assumptions, estimates, and unverified claims.
-7. Всегда сначала выводи детальные критерии: сформированный рынок, размер рынка, рост/тренд, горячий спрос, конкуренция, референс/модель, одна проблема/сегмент, LTV, X4, защита, реинвестиционный потенциал, операционная масштабируемость, канал роста.
+7. Всегда сначала выводи детальные критерии: сформированный рынок, размер рынка, рост/тренд, горячий спрос, конкуренция, референс/модель, одна проблема/сегмент, LTV, X4, cash cycle, защита, реинвестиционный потенциал, операционная масштабируемость, канал роста.
 8. Classify the object: `market_reference`, `concrete_bet`, `existing_asset`, or `active_business`.
-9. Score `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, and `evidence_confidence`; calculate `market_opportunity_score`.
+9. Рассчитай `market_score`, `economics_score` и `moat_scale_score` строго по формулам v0.7, затем `personal_filter_score`, `evidence_confidence` и `market_opportunity_score`.
 10. Calculate `execution_priority_score` only when our customer, offer and first channel are defined. Never invent it for a market reference.
 11. Apply caps and penalties from `docs/SCORING_MODEL.md`.
 12. Return verdict, main risk, next action, and kill conditions for a concrete bet; for a reference, return evidence, gaps and the condition for defining our entry.
@@ -44,3 +44,4 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 * Не давать один мутный вердикт "перспективно" без score breakdown.
 * Карта рынков и очередь ставок не смешивают рыночный референс с конкретным активом одним баллом.
 * Новая оцененная ниша не остается только в ответе чата: она попадает в `data/HIT_PARADE.md` и `data/niches/`, если пользователь явно не запретил запись.
+* `node scripts/validate-portfolio.mjs` проходит: критерии, базовые блоки, производные показатели и сортировка двух таблиц согласованы.

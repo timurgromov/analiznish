@@ -35,6 +35,8 @@ for file in "${required_files[@]}"; do
   fi
 done
 
+node scripts/validate-portfolio.mjs
+
 if command -v rg >/dev/null 2>&1; then
   if rg -n --hidden --glob '!.git' --glob '!.env.example' --glob '!scripts/check-local.sh' '(sk-[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|password\s*=|api[_-]?key\s*=\s*[^[:space:]]+)' .; then
     echo "potential secret pattern found"

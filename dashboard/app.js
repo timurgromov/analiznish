@@ -54,7 +54,7 @@ const evidenceStatusLabels = {
 const state = {
   market: { headers: [], rows: [] },
   queue: { headers: [], rows: [] },
-  selected: { source: "market", index: 2 },
+  selected: { source: "market", index: 1 },
   criteriaByNiche: {},
   summariesByNiche: {},
 };

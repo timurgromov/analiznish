@@ -71,18 +71,21 @@ Web-first entertainment AI-сервис: пользователь загружа
 
 | Критерий | Балл | Статус | Вывод |
 | --- | ---: | --- | --- |
-| Сформированный рынок | 8/10 | supported | AI avatar/photo products существуют, но конкретно "прошлая жизнь по фото" уже уже, чем весь AI-photo рынок. |
-| Размер рынка | 8/10 | estimated | Потенциально широкий entertainment/social рынок, но достижимая русскоязычная аудитория не посчитана. |
-| Рост рынка / тренд | unknown | unverified | Wordstat/Trends по русским запросам не проверены. |
-| Горячий спрос | 6/10 | estimated | Есть эмоциональный спрос на AI-фото и шаринг, но прямой коммерческий спрос на этот оффер не доказан. |
+| Сформированный рынок | 7/10 | supported | Широкий AI-photo рынок существует, но точный формат «прошлая жизнь по фото» уже категории нейрофотосессий и не доказан продажами. |
+| Размер рынка | 7/10 | estimated | Entertainment/social аудитория широкая, но достижимый русскоязычный сегмент и его платёжеспособность не посчитаны. |
+| Рост рынка / тренд | 4/10 | supported/unverified | Общий AI-photo рынок активен, но MyHeritage официально закрыл AI Time Machine в январе 2026 года; Wordstat/Trends точного оффера не проверены. |
+| Горячий спрос | 4/10 | unverified | Эмоциональный интерес правдоподобен, но прямой коммерческий спрос и первые оплаты PastLife отсутствуют. |
 | Конкуренция | 8/10 | supported | Есть крупные смежные конкуренты: AI avatars, AI photos, AI enhancement. Это плюс, но они не один-в-один. |
-| Референс / готовая модель | 8/10 | supported | Референсы есть; модель credit packs понятна, а админка позволяет запускать не одну, а серию AI-photo офферов. |
-| Одна проблема / один сегмент | 7/10 | estimated | Сегмент и боль понятны, но пока широковато: entertainment, эзотерика, AI-фото, family sharing. |
-| Повторные продажи / LTV | 6/15 | estimated | Есть credit packs и потенциальные повторы для семьи/друзей, но это не расходник и не подписка. |
-| Наценка X4 / маржинальность | unknown | unverified | Цена пакетов есть, но AI-cost, retries, payment fees и налоги не сведены. X4 не доказана. |
+| Референс / готовая модель | 6/10 | supported | Credit packs понятны, но прежний прямой референс MyHeritage sunset; действующие Lensa/Remini/«Фотушка» подтверждают только более широкий AI-photo job. |
+| Одна проблема / один сегмент | 6/10 | estimated | Оффер эмоционально ясен, но аудитория смешивает entertainment, эзотерику, AI-фото и family sharing. |
+| Повторные продажи / LTV | 5/15 | estimated | Пакеты и генерации для близких допускают повтор, но это не подписка, а фактических повторов нет. |
+| Наценка X4 / маржинальность | 3/15 | unverified | AI-cost, retries, payment fee, бесплатная первая генерация и CAC не сведены; X4 не доказана. |
+| Cash cycle | 5/10 | estimated | Платные кредиты покупаются до генерации, но первый бесплатный результат создаёт COGS до выручки, а happy path оплаты не проверен. |
 | Защита от копирования | 7/10 | supported | Одна идея копируется легко, но готовая админка, каталог, QA/retry, payment/promo контур и накопленная prompt-инфраструктура дают операционный барьер. |
-| Реинвестиционный потенциал | 4/5 | estimated | Digital-продукт и reusable engine могут давать хороший leverage, если AI-cost/CAC сходятся или если актив продается как готовый проект. |
-| **Сводно по критериям** | **72/100** |  | Ниша интересная: смежный рынок подтвержден, а reusable engine повышает защиту и масштаб. Слабые места остаются: прямой спрос, маржа, LTV и платежные метрики. |
+| Реинвестиционный потенциал | 3/5 | estimated | Digital-актив может реинвестировать выручку, но пока выручка и остаток после generation cost/CAC равны неизвестному. |
+| Операционная масштабируемость | 8/10 | verified | Production runtime, очередь, админка и каталог уже масштабируют delivery; качество, retries и support остаются операционными рисками. |
+| Канал роста | 2/10 | unverified | VK/OK/TG и promo links перечислены, но нет канала с фактическим трафиком, CAC или оплатами. |
+| **Рынок / Экономика / Защита** | **42/70 · 16/45 · 17/30** |  | v0.7 отделяет сильный кодовый актив от пока слабого доказательства рынка и экономики. |
 
 ### Вывод по нише
 
@@ -100,6 +103,7 @@ Web-first entertainment AI-сервис: пользователь загружа
 | Project can be packaged as a sale-ready AI business asset | supported | PastLife `docs/BUSINESS_SALE_PACKAGE.md` | Sale narrative, buyer materials, transfer package and target packaging range are documented. |
 | Admin/prompt/payment/promo infrastructure is reusable for other AI-photo toys | supported | PastLife `README.md`, `docs/BUSINESS_SALE_PACKAGE.md`, `UX.md` | Admin panels, PromptCard catalog, product catalog, promo/referral and analytics contours exist in docs/code. |
 | Market has direct/adjacent competitors | supported | MyHeritage, Prisma/Lensa, Remini, Artisse sources | Validates category existence. |
+| MyHeritage AI Time Machine закрыт с января 2026 года | verified | MyHeritage official blog update | Прямой historical-avatar референс был реальным, но не доказывает устойчивый текущий спрос. |
 | Demand among VK/OK/TG is plausible | unverified | PastLife product docs | Needs traffic test and query research. |
 | Unit economics can work | unverified | PastLife docs | Needs AI-cost/retry/CAC/margin model. |
 
@@ -137,16 +141,25 @@ PastLife AI нужно учитывать в двух плоскостях:
 
 ## Score
 
+### Подоценки личного фильтра
+
+| Подоценка | Балл | Пояснение |
+| --- | ---: | --- |
+| Быстрые деньги | 35 | Есть готовый актив, но payment happy path, продажи и покупатель проекта отсутствуют. |
+| Свобода | 90 | Digital delivery не привязан к месту и календарю. |
+| Финансовая устойчивость | 60 | Код переносим, но стартовый рынок, платежи и провайдеры остаются локально/платформенно зависимыми. |
+| Фокус | 50 | Актив уже создан, но дальнейшая полировка без продаж конкурирует с денежным ядром. |
+
 | Метрика | Балл | Пояснение |
 | --- | ---: | --- |
 | Тип объекта | Существующий актив | Production-движок и пакетируемый проект; это не чужой рыночный референс. |
-| Рынок | 71 | Смежный AI-photo рынок сформирован, но прямой спрос на PastLife-оффер и тренд по русским запросам не проверены. |
-| Экономика | 55 | Credit packs и sale-ready asset дают потенциал, но LTV не подписочный, X4/margin/CAC и payment happy path не доказаны. |
-| Защита и масштаб | 72 | Одна игрушка копируется легко, но reusable admin/runtime, каталог промптов, payment/promo контур и sale package повышают защиту и масштаб. |
-| Личный фильтр | 82 | Собран из быстрых денег 79, свободы 90, фин. устойчивости 80 и фокуса 82: digital asset хорошо подходит по свободе и переносимости. |
-| Доверие к оценке | 0.73 | Доказательства по продукту и asset-layer сильные; спрос, CAC, продажи, buyer interest и юнит-экономика не проверены. |
-| Рыночная возможность v0.6 | 65 | `round(0.60*71 + 0.40*55) = 65`. Это оценка категории и модели, без бонуса за уже готовый код. |
-| Приоритет ставки v0.6 | 49 | `round((0.40*55 + 0.35*72 + 0.25*82) * 0.73) = 49`. Это практическая ценность следующего шага по активу, не оценка рыночного потолка. |
+| Рынок | 60 | `round(100*42/70)`: широкий AI-photo рынок есть, но exact-offer спрос слаб, а прямой референс AI Time Machine закрыт. |
+| Экономика | 36 | `round(100*16/45)`: credit packs и предоплата возможны, но маржа, CAC, payment happy path и повторы не доказаны. |
+| Защита и масштаб | 57 | `round(100*17/30)`: production engine — реальный актив, но нет защищённого канала. |
+| Личный фильтр | 54 | `round(0.40*35 + 0.20*90 + 0.20*60 + 0.20*50)`: свобода высокая, быстрые деньги и текущий фокус низкие. |
+| Доверие к оценке | 0.65 | Код и production-актив проверены; коммерческий спрос, продажи, CAC, маржа и buyer interest отсутствуют. |
+| Рыночная возможность v0.7 | 50 | `round(0.60*60 + 0.40*36) = 50`. Готовый код не добавляется в рыночный балл. |
+| Приоритет ставки v0.7 | 31 | `round((0.40*36 + 0.35*57 + 0.25*54) * 0.65) = 31`. Это парковка до коммерческого сигнала, а не отрицание ценности кода. |
 | Итог v0.5 (история) | 51 | `round((0.35*71 + 0.25*55 + 0.20*72 + 0.20*82) * 0.73)`. С версии v0.6 не использовать для сравнения с рыночными референсами. |
 
 ## Вердикт
@@ -171,19 +184,19 @@ Kill conditions:
 - Пользователи активно смотрят бесплатно, но не сохраняют/не шарят/не покупают.
 - Sale package не вызывает интереса без реальных метрик или требует доработок, сопоставимых с полноценным запуском.
 
-## Hit Parade Rows v0.6
+## Hit Parade Rows v0.7
 
 ### Карта рынков и референсов
 
 | Место на карте | Ниша / референс | Тип объекта | Рыночная возможность | Рынок | Экономика | Доверие | Сильнейшее доказательство | Вывод | Пересмотр |
 | ---: | --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- |
-| 6 | PastLife AI / Sansara | Существующий актив | 65 | 71 | 55 | 0.73 | Production-движок и reusable инфраструктура существуют, но платежи, CAC и спрос не подтверждены. | Проверять как актив; не смешивать с рыночным потолком AI-фотосессий. | 2026-07-20 |
+| 6 | PastLife AI / Sansara | Существующий актив | 50 | 60 | 36 | 0.65 | Production-движок существует, но exact-offer спрос, платежи и маржа не подтверждены; прямой референс AI Time Machine закрыт. | Парковать активную разработку до payment/traffic сигнала; готовый код не равен доказанному рынку. | 2026-07-20 |
 
 ### Очередь конкретных ставок
 
 | Приоритет | Ниша | Тип объекта | Приоритет ставки | Экономика | Защита и масштаб | Личный фильтр | Доверие | Решение | Главный риск | Следующий шаг | Пересмотр |
 | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- |
-| 3 | PastLife AI / Sansara | Существующий актив | 49 | 55 | 72 | 82 | 0.73 | Докрутить модель / актив к продаже | Не доказаны спрос, CAC, маржа, платежи и покупатель актива. | Payment happy path, 100–300 пользователей и sale package. | 2026-07-20 |
+| 3 | PastLife AI / Sansara | Существующий актив | 31 | 36 | 57 | 54 | 0.65 | Парковка до коммерческого сигнала | Не доказаны спрос, CAC, маржа, платежи и покупатель актива. | Payment happy path, затем 100–300 пользователей; не полировать продукт до этих данных. | 2026-07-20 |
 
 ## Rescore History
 
@@ -192,6 +205,7 @@ Kill conditions:
 - 2026-07-02: formula v0.4 added freedom and financial resilience; overall changed from 55 to 56 because the product is portable and can potentially earn outside one local market.
 - 2026-07-02: formula v0.5 switched from one `Нишевой балл` to hybrid blocks; overall changed from 56 to 51 because weak proof of direct market demand and economics is now separated from strong freedom/asset value.
 - 2026-07-20: migration to v0.6 separated market opportunity (`65`) from execution priority (`49`). The latter reflects the existing asset and focus, not a claim that PastLife has a higher business ceiling than AI-photo category leaders.
+- 2026-07-20: portfolio audit v0.7 added the official January 2026 sunset of MyHeritage AI Time Machine and deterministic blocks. Market/economics/moat/personal became `60/36/57/54`, confidence `0.65`, market opportunity `50`, execution priority `31`.
 
 ## Sources
 
@@ -207,7 +221,7 @@ Local:
 
 External:
 
-- https://www.myheritage.com/ai-time-machine
+- https://blog.myheritage.com/2022/12/new-ai-time-machine-adds-ai-avatars/ (official update: product sunset in January 2026)
 - https://prisma-ai.com/lensa
 - https://remini.ai/
 - https://en.wikipedia.org/wiki/Artisse_AI

@@ -80,11 +80,14 @@ Telegram-first сервис: платный персональный бот мо
 | Конкуренция | 10/10 | supported | Конкуренции много, это плюс: рынок с деньгами есть. |
 | Референс / готовая модель | 9/10 | supported | Есть публичные каналы, закрытые/платные слои и международные paid alert продукты. |
 | Одна проблема / один сегмент | 8/10 | supported | Сегмент и боль сформулированы: гибкие путешественники, которым нужен личный фильтр вместо общего потока. |
-| Повторные продажи / LTV | 12/15 | estimated | Подписка, годовые планы, founder access and family/group дают лучшее LTV, чем разовые продукты. Churn не проверен. |
-| Наценка X4 / маржинальность | 10/15 | estimated | Software/subscription потенциально high-margin, но API, поддержка, канал и модерация не посчитаны. |
+| Повторные продажи / LTV | 10/15 | supported/estimated | Going подтверждает платную recurring-модель deal alerts, но retention и продление именно российской Telegram-версии не проверены. |
+| Наценка X4 / маржинальность | 6/15 | estimated | Digital delivery потенциально маржинален, но API, поддержка, ручная модерация, посевы и реальный CAC не посчитаны; X4 не доказана. |
+| Cash cycle | 8/10 | supported | Годовые founder-пакеты и подписка оплачиваются до периода доступа; бесплатный канал и посевы создают затраты до конверсии. |
 | Защита от копирования | 6/10 | supported | Защита в данных, истории цен, UX, персонализации и канале; но крупные игроки могут копировать. |
-| Реинвестиционный потенциал | 4/5 | estimated | Подписка и founder cash могут финансировать канал, рекламу и доработку продукта. |
-| **Сводно по критериям** | **85/100** |  | Ниша сильная: рынок и конкуренция есть, модель подписочная, LTV лучше, общий travel-demand поддержан внешними признаками. Слабые места — paid demand в РФ, бренд, compliance и API/cached-price ограничения. |
+| Реинвестиционный потенциал | 3/5 | estimated | Предоплата может финансировать канал, но до продаж неизвестно, остаются ли деньги после acquisition и поддержки. |
+| Операционная масштабируемость | 8/10 | verified/supported | Runtime автоматизирован и уже работает; ручная модерация, API-ограничения и качество cached prices остаются узкими местами. |
+| Канал роста | 5/10 | supported/unverified | Канал, посевы и founder-воронка спроектированы, но повторяемого привлечения и paid conversion ещё нет. |
+| **Рынок / Экономика / Защита** | **60/70 · 27/45 · 19/30** |  | Блоки v0.7 рассчитаны из детальных критериев; гипотетическая software-маржа больше не считается доказанной. |
 
 ### Вывод по нише
 
@@ -134,13 +137,22 @@ Commercial review contains scenario math, but these are planning scenarios, not 
 
 ## Score
 
+### Подоценки личного фильтра
+
+| Подоценка | Балл | Пояснение |
+| --- | ---: | --- |
+| Быстрые деньги | 55 | Продукт готов к beta, но ни одна платная конверсия ещё не подтверждена. |
+| Свобода | 85 | Telegram/software-модель не привязана к месту и личному delivery. |
+| Финансовая устойчивость | 65 | Возможна географическая экспансия, но старт зависит от РФ/Telegram, travel API и занятого бренда. |
+| Фокус | 60 | Есть работающий актив, однако запуск потребует отдельного канала и отвлечёт от денежного ядра. |
+
 | Метрика | Балл | Пояснение |
 | --- | ---: | --- |
-| Рынок | 85 | Рынок дешевых билетов и deal alerts сформирован: есть спрос, конкуренты, референсы и понятный сегмент; общий travel/airfare trend поддержан, но paid personal alerts в РФ требуют проверки. |
-| Экономика | 76 | Подписка, founder offers и family/group plans дают LTV; маржинальность software-модели вероятно хорошая, но API/support/CAC еще не сведены. |
-| Защита и масштаб | 70 | Есть данные, история цен, UX, бот и канал; защита средняя, потому что крупные тревел-игроки могут копировать механику. |
-| Личный фильтр | 75 | Собран из быстрых денег 70, свободы 85, фин. устойчивости 75 и фокуса 78: идея удаленная и актив уже построен, но paid demand еще не доказан. |
-| Доверие к оценке | 0.76 | Product/runtime evidence strong; market payment, CAC, churn and brand validation missing. |
+| Рынок | 86 | `round(100*60/70)`: категория и платные международные референсы сильны; российский paid demand остаётся непроверенным. |
+| Экономика | 60 | `round(100*27/45)`: recurring и предоплата доказаны как модель категории, но наша маржа, CAC и churn отсутствуют. |
+| Защита и масштаб | 63 | `round(100*19/30)`: runtime и данные дают актив, но канал не доказан, а механику могут повторить крупные игроки. |
+| Личный фильтр | 64 | `round(0.40*55 + 0.20*85 + 0.20*65 + 0.20*60)`: удалённый готовый актив, но не быстрые деньги до первой платной beta. |
+| Доверие к оценке | 0.70 | Runtime и категория подтверждены; payment intent, CAC, churn и повторяемый канал в РФ отсутствуют. |
 | Итог v0.5 (история) | 60 | `round((0.35*85 + 0.25*76 + 0.20*70 + 0.20*75) * 0.76)`. С версии v0.6 не использовать как единый рейтинг портфеля. |
 
 ## Вердикт
@@ -165,11 +177,11 @@ Kill / pause conditions:
 - Channel acquisition CAC makes 690 RUB/month plan economically weak.
 - Telegram/compliance risk blocks ads or paid distribution.
 
-## Portfolio v0.6
+## Portfolio v0.7
 
 * Тип объекта: `concrete_bet` / конкретная ставка.
-* Рыночная возможность: `81` = `round(0.60*85 + 0.40*76)`.
-* Приоритет ставки: `56` = `round((0.40*76 + 0.35*70 + 0.25*75) * 0.76)`.
+* Рыночная возможность: `76` = `round(0.60*86 + 0.40*60)`.
+* Приоритет ставки: `43` = `round((0.40*60 + 0.35*63 + 0.25*64) * 0.70)`.
 * Сильное доказательство: сформированная категория deal alerts, работающий продукт и конкурентные референсы; payment intent ещё требует проверки.
 
 ## Hit Parade Row v0.5 (история)
@@ -185,6 +197,7 @@ Kill / pause conditions:
 - 2026-07-02: formula v0.5 switched from one `Нишевой балл` to hybrid blocks `Рынок / Экономика / Защита и масштаб / Личный фильтр`; overall stayed 59.
 - 2026-07-02: trend no longer marked `unknown`; general airfare/travel pain is supported by external industry signals, but paid personal alert demand in РФ remains unverified. Overall changed from 59 to 60.
 - 2026-07-20: migration to v0.6 separated market opportunity (`81`) from execution priority (`56`); base evidence and score components were not re-estimated.
+- 2026-07-20: portfolio audit v0.7 retained the strong market (`86`) but removed optimistic subscription-margin, LTV and channel assumptions. Economics became `60`, moat/scale `63`, personal filter `64`, confidence `0.70`; market opportunity became `76`, execution priority `43`.
 
 ## Sources
 
@@ -201,6 +214,8 @@ Local:
 
 External:
 
+- https://www.going.com/how-it-works
+- https://www.going.com/guides/membership-guide
 - https://t.me/s/samokatus/44679
 - https://samokatus.ru/best-deals
 - https://t.me/s/travelradar

@@ -53,13 +53,14 @@ Questionnaire completion: L0 idea stub | L1 quick scan | L2 deep score | L3 inve
 | --- | ---: | --- | --- |
 | Сформированный рынок | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Размер рынка | TBD/10 | verified/supported/estimated/unverified | TBD |
-| Рост рынка / тренд | TBD/-10..+10 | verified/supported/estimated/unverified | TBD |
+| Рост рынка / тренд | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Горячий спрос | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Конкуренция | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Референс / готовая модель | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Одна проблема / один сегмент | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Повторные продажи / LTV | TBD/15 | verified/supported/estimated/unverified | TBD |
 | Наценка X4 / маржинальность | TBD/15 | verified/supported/estimated/unverified | TBD |
+| Cash cycle | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Защита от копирования | TBD/10 | verified/supported/estimated/unverified | TBD |
 | Реинвестиционный потенциал | TBD/5 | verified/supported/estimated/unverified | TBD |
 | Операционная масштабируемость | TBD/10 | verified/supported/estimated/unverified | TBD |
@@ -97,12 +98,21 @@ Questionnaire completion: L0 idea stub | L1 quick scan | L2 deep score | L3 inve
 
 ## Score
 
+### Подоценки личного фильтра
+
+| Подоценка | Балл | Пояснение |
+| --- | ---: | --- |
+| Быстрые деньги | TBD | TBD |
+| Свобода | TBD | TBD |
+| Финансовая устойчивость | TBD | TBD |
+| Фокус | TBD | TBD |
+
 | Метрика | Балл | Пояснение |
 | --- | ---: | --- |
 | Тип объекта | TBD | `market_reference`, `concrete_bet`, `existing_asset` или `active_business` |
-| Рынок | TBD | Сформированность рынка, размер, рост, спрос, конкуренция, референс, сегмент |
-| Экономика | TBD | LTV, повторные продажи, маржа, cash cycle, реинвестиционный потенциал |
-| Защита и масштаб | TBD | Защита, делегируемость, переносимость актива, канал роста |
+| Рынок | TBD | `round(100 × сумма 7 рыночных критериев / 70)` |
+| Экономика | TBD | `round(100 × (LTV + маржа + cash cycle + реинвестирование) / 45)` |
+| Защита и масштаб | TBD | `round(100 × (защита + операционная масштабируемость + канал) / 30)` |
 | Личный фильтр | TBD | Быстрые деньги, свобода, финансовая устойчивость, фокус |
 | Доверие к оценке | TBD | TBD |
 | Рыночная возможность | TBD | `round(0.60 × Рынок + 0.40 × Экономика)` |
