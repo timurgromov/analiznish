@@ -29,14 +29,18 @@
 
 `Model note: <recommended model>/<reasoning effort> — <короткая причина>`
 
-Используй:
+Используй только модели и labels reasoning effort, реально видимые в текущем Codex UI:
 
-* `GPT-5.4-Mini` — мелкие docs-правки, README/TASKS, простая таблица;
-* `GPT-5.3-Codex-Spark` — быстрые frontend/UI итерации, если позже появится интерфейс;
-* `GPT-5.4` — обычная разработка, scripts, интеграции, data-файлы;
-* `GPT-5.5` — архитектура скоринга, сложная проверка рынка, безопасность, production, VPS/deploy.
+- `GPT-5.6 Luna` — дешёвые задачи: docs, поиск, мелкие правки, README/TASKS/AGENTS, простые CSS/HTML изменения, классификация и первичный ресёрч.
+- `GPT-5.3-Codex-Spark` — быстрые UI/frontend итерации в существующем интерфейсе, лендинги и компоненты без тяжёлой логики.
+- `GPT-5.6 Terra` — обычный кодинг, scripts, scaffold, интеграции, CI/debug средней сложности и продуктовые итерации по умолчанию.
+- `GPT-5.6 Sol` — архитектура, production, безопасность, данные, сложный debug, multi-service, deploy, risky migrations и задачи с высокой ценой ошибки.
 
-Если текущая модель неизвестна, не утверждай её; укажи оптимальную модель для задачи.
+Если Sol/Terra/Luna отсутствуют в интерфейсе, выбирай эквивалент по роли: cheapest -> balanced -> flagship. Не используй устаревшие номера моделей как единственно допустимые.
+
+Reasoning effort: `Низкий` — дешёвые и короткие задачи; `Средний` — обычная работа; `Высокий` — сложный debug и важные изменения; `Очень высокий` — architecture, security, production incidents и risky migrations. `Максимальный/Max` используй только для quality-first задач с особо высокой ценой ошибки.
+
+Если задача несущественная и ответ односложный, `Model note` можно опустить. Если пользователь просит экономить токены, предпочитай более дешёвую модель и явно скажи об этом. Если текущая модель неизвестна, не утверждай её; укажи оптимальную модель для задачи.
 
 ## Working Order
 
@@ -167,8 +171,16 @@ Meaningful change:
 
 Не печатай и не коммить реальные ключи, cookies, API tokens, session IDs, пароли, production URLs с секретами. Все локальные заметки с чувствительными данными — только в ignored `.local/`.
 
+<!-- ruslan-project-workflows:start -->
+## Global Reusable Skills
+
+В Codex reusable workflows доступны глобально из personal plugin `ruslan-project-workflows`. Перед существенной задачей выбери только skills, релевантные текущей задаче, по их descriptions; не загружай весь набор без причины.
+
+Используй namespaced skill `ruslan-project-workflows:<skill-name>`. Если personal plugin недоступен на другом компьютере или в другом агенте, используй локальный fallback `skills/<skill-name>/SKILL.md`, если такой файл существует. Project-specific правила этого `AGENTS.md` имеют приоритет над общим skill.
+<!-- ruslan-project-workflows:end -->
+
 ## Telegram/MAX Live Verification
 
-Для любой задачи, которая создаёт, изменяет, тестирует или ревьюит Telegram/MAX bot, channel, group, deep link, Mini App, WebApp, messenger CTA или support/admin flow, обязательно используй `skills/telegram-surface-verify/SKILL.md`.
+Для любой задачи, которая создаёт, изменяет, тестирует или ревьюит Telegram/MAX bot, channel, group, deep link, Mini App, WebApp, messenger CTA или support/admin flow, обязательно используй global skill `ruslan-project-workflows:telegram-surface-verify`; если personal plugin недоступен, используй локальный fallback `skills/telegram-surface-verify/SKILL.md`.
 
 Не считай messenger UX/flow проверенным без живой авторизованной сессии и реального прохождения пользовательских шагов. Если доступа к Telegram/MAX нет, назови это конкретным blocker и не заявляй, что flow проверен.
