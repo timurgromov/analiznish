@@ -2,7 +2,7 @@
 
 Status: active
 Mode: deep_score
-Last reviewed: 2026-07-01
+Last reviewed: 2026-07-20
 Questionnaire completion: L2 deep score with gaps
 
 ## One-liner
@@ -141,7 +141,7 @@ Commercial review contains scenario math, but these are planning scenarios, not 
 | Защита и масштаб | 70 | Есть данные, история цен, UX, бот и канал; защита средняя, потому что крупные тревел-игроки могут копировать механику. |
 | Личный фильтр | 75 | Собран из быстрых денег 70, свободы 85, фин. устойчивости 75 и фокуса 78: идея удаленная и актив уже построен, но paid demand еще не доказан. |
 | Доверие к оценке | 0.76 | Product/runtime evidence strong; market payment, CAC, churn and brand validation missing. |
-| Итог | 60 | `round((0.35*85 + 0.25*76 + 0.20*70 + 0.20*75) * 0.76)`. |
+| Итог v0.5 (история) | 60 | `round((0.35*85 + 0.25*76 + 0.20*70 + 0.20*75) * 0.76)`. С версии v0.6 не использовать как единый рейтинг портфеля. |
 
 ## Вердикт
 
@@ -165,7 +165,14 @@ Kill / pause conditions:
 - Channel acquisition CAC makes 690 RUB/month plan economically weak.
 - Telegram/compliance risk blocks ads or paid distribution.
 
-## Hit Parade Row
+## Portfolio v0.6
+
+* Тип объекта: `concrete_bet` / конкретная ставка.
+* Рыночная возможность: `81` = `round(0.60*85 + 0.40*76)`.
+* Приоритет ставки: `56` = `round((0.40*76 + 0.35*70 + 0.25*75) * 0.76)`.
+* Сильное доказательство: сформированная категория deal alerts, работающий продукт и конкурентные референсы; payment intent ещё требует проверки.
+
+## Hit Parade Row v0.5 (история)
 
 | Место | Ниша | Модель | Итог | Рынок | Экономика | Защита и масштаб | Личный фильтр | Доверие | Вердикт | Главный риск | Следующий шаг | Пересмотр |
 | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- |
@@ -177,6 +184,7 @@ Kill / pause conditions:
 - 2026-07-02: formula v0.4 added freedom and financial resilience; overall changed from 57 to 59 because the product is remote/software-like and can potentially expand beyond one local market.
 - 2026-07-02: formula v0.5 switched from one `Нишевой балл` to hybrid blocks `Рынок / Экономика / Защита и масштаб / Личный фильтр`; overall stayed 59.
 - 2026-07-02: trend no longer marked `unknown`; general airfare/travel pain is supported by external industry signals, but paid personal alert demand in РФ remains unverified. Overall changed from 59 to 60.
+- 2026-07-20: migration to v0.6 separated market opportunity (`81`) from execution priority (`56`); base evidence and score components were not re-estimated.
 
 ## Sources
 

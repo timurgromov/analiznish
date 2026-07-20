@@ -132,7 +132,7 @@ The market is massive, but distribution is algorithmic and winner-take-most. Cap
 | Фин. устойчивость | 85 | Потенциально валютная/global-монетизация; риск в платформенной зависимости YouTube and foreign payment/account setup. |
 | Фокус | 50 | Uses AI/content skills and can be tested cheaply, but may distract from stronger current assets. |
 | Доверие к оценке | 0.74 | Platform policies are verified; case-study income, exact niche demand and foreign-channel setup are not verified. |
-| Итог | 47 | `round((0.55*64 + 0.20*48 + 0.10*80 + 0.10*85 + 0.05*50) * 0.74)`. |
+| Итог v0.4 (история) | 47 | `round((0.55*64 + 0.20*48 + 0.10*80 + 0.10*85 + 0.05*50) * 0.74)`. Карточка не входит в активный портфель v0.6; не использовать этот балл для текущего сравнения. |
 
 ## Вердикт
 

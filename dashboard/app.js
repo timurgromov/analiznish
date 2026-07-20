@@ -13,32 +13,32 @@ const nicheCardPaths = {
 
 const metricDescriptions = [
   {
-    title: "Итог",
-    text: "Финальный балл: базовый балл, умноженный на доверие к данным.",
+    title: "Рыночная возможность",
+    text: "Показывает силу категории и модели денег: 60% рынка и 40% экономики. Не учитывает наш готовый код или личный фокус.",
+  },
+  {
+    title: "Приоритет ставки",
+    text: "Показывает, во что из наших определённых моделей разумно вложить ближайшие 7–14 дней. Чужому референсу не присваивается.",
   },
   {
     title: "Рынок",
-    text: "Проверяет, есть ли большой сформированный рынок: размер, рост, горячий спрос, конкуренция, референс и один понятный сегмент.",
+    text: "Есть ли большой сформированный рынок: размер, рост, спрос, конкуренция, референс и понятный сегмент.",
   },
   {
     title: "Экономика",
-    text: "Проверяет, может ли модель зарабатывать нормально: LTV, повторные продажи, X4/маржа, cash cycle и деньги на реинвестирование.",
+    text: "Может ли модель зарабатывать: LTV, повторные продажи, маржа, cash cycle и деньги на рост.",
   },
   {
     title: "Защита и масштаб",
-    text: "Проверяет, сложно ли бизнес копировать и можно ли масштабировать его через процессы, активы, делегирование и канал роста.",
+    text: "Сложно ли скопировать модель и можно ли масштабировать её через процессы, активы, делегирование и канал роста.",
   },
   {
     title: "Личный фильтр",
-    text: "Проверяет, подходит ли идея тебе сейчас: быстрые деньги, свобода, финансовая устойчивость и фокус без распыления.",
+    text: "Подходит ли ставка сейчас: быстрые деньги, свобода, финансовая устойчивость и фокус без распыления.",
   },
   {
     title: "Доверие",
-    text: "Множитель качества доказательств. Непроверенная красивая идея режется сильнее, чем скучная ниша с фактами, конкурентами и понятной экономикой.",
-  },
-  {
-    title: "Базовый балл",
-    text: "Оценка модели по рынку, экономике, защите/масштабу и личному фильтру до поправки на доверие.",
+    text: "Качество доказательств. Оно видно рядом с рыночной возможностью и уменьшает только приоритет конкретной ставки.",
   },
 ];
 
@@ -52,9 +52,9 @@ const evidenceStatusLabels = {
 };
 
 const state = {
-  rows: [],
-  headers: [],
-  selectedIndex: 0,
+  market: { headers: [], rows: [] },
+  queue: { headers: [], rows: [] },
+  selected: { source: "market", index: 2 },
   criteriaByNiche: {},
   summariesByNiche: {},
 };
@@ -68,20 +68,21 @@ function splitMarkdownRow(line) {
     .map((cell) => cell.trim());
 }
 
-function parseFirstTable(markdown) {
+function parseTable(markdown, firstHeader) {
   const lines = markdown.split("\n");
-  const start = lines.findIndex((line) => line.trim().startsWith("| Место |"));
+  const start = lines.findIndex((line) => line.trim().startsWith(`| ${firstHeader} |`));
   if (start === -1) return { headers: [], rows: [] };
 
   const tableLines = [];
-  for (let i = start; i < lines.length; i += 1) {
-    if (!lines[i].trim().startsWith("|")) break;
-    tableLines.push(lines[i]);
+  for (let index = start; index < lines.length; index += 1) {
+    if (!lines[index].trim().startsWith("|")) break;
+    tableLines.push(lines[index]);
   }
 
-  const headers = splitMarkdownRow(tableLines[0]);
-  const rows = tableLines.slice(2).map((line) => splitMarkdownRow(line));
-  return { headers, rows };
+  return {
+    headers: splitMarkdownRow(tableLines[0]),
+    rows: tableLines.slice(2).map((line) => splitMarkdownRow(line)),
+  };
 }
 
 function parseCriteria(markdown) {
@@ -90,8 +91,8 @@ function parseCriteria(markdown) {
   if (start === -1) return [];
 
   const rows = [];
-  for (let i = start + 2; i < lines.length; i += 1) {
-    const line = lines[i].trim();
+  for (let index = start + 2; index < lines.length; index += 1) {
+    const line = lines[index].trim();
     if (!line.startsWith("|")) break;
     const [title, points, description] = splitMarkdownRow(line);
     rows.push({ title, points, description });
@@ -108,8 +109,8 @@ function parseNicheCriteria(markdown) {
   if (start === -1) return [];
 
   const rows = [];
-  for (let i = start + 2; i < lines.length; i += 1) {
-    const line = lines[i].trim();
+  for (let index = start + 2; index < lines.length; index += 1) {
+    const line = lines[index].trim();
     if (!line.startsWith("|")) break;
     const [title, points, status, conclusion] = splitMarkdownRow(line);
     if (!title || title.startsWith("**")) continue;
@@ -124,8 +125,8 @@ function parseOneLiner(markdown) {
   if (heading === -1) return "";
 
   const parts = [];
-  for (let i = heading + 1; i < lines.length; i += 1) {
-    const line = lines[i].trim();
+  for (let index = heading + 1; index < lines.length; index += 1) {
+    const line = lines[index].trim();
     if (line.startsWith("## ")) break;
     if (!line) {
       if (parts.length) break;
@@ -136,21 +137,32 @@ function parseOneLiner(markdown) {
   return parts.join(" ");
 }
 
-function extractFormula(markdown) {
-  const match = markdown.match(/overall_score\s*=\s*([^\n]+)/);
-  if (!match) return "";
-  return "Итог = Базовый балл × Доверие. Базовый балл = Рынок 35% + Экономика 25% + Защита и масштаб 20% + Личный фильтр 20%.";
+function parseScore(value) {
+  return Number.parseFloat(String(value).replace(",", "."));
 }
 
 function scoreClass(value) {
-  const number = Number.parseFloat(String(value).replace(",", "."));
+  const number = parseScore(value);
   if (number >= 65) return "strong";
   if (number >= 50) return "medium";
   return "weak";
 }
 
-function parseScore(value) {
-  return Number.parseFloat(String(value).replace(",", "."));
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function canonicalName(value) {
+  return String(value).replace(/[«»]/g, "").trim();
+}
+
+function getRowValue(table, row, header) {
+  const index = table.headers.indexOf(header);
+  return index === -1 ? "" : row[index] || "";
 }
 
 function helpIcon(key) {
@@ -168,126 +180,79 @@ function labelWithHelp(label, key = label) {
   return `<span class="label-with-help">${escapeHtml(label)}${helpIcon(key)}</span>`;
 }
 
-function scoreCell(value, note = "", noteHelpKey = "") {
+function scoreCell(value) {
   const number = parseScore(value);
-  if (Number.isNaN(number)) return value;
+  if (Number.isNaN(number)) return escapeHtml(value || "—");
   const width = Math.max(0, Math.min(100, number));
-  const klass = scoreClass(number);
   return `
-    <div class="score-number">
-      <span>${value}</span>
-      ${note ? `<small>${escapeHtml(note)}${helpIcon(noteHelpKey)}</small>` : ""}
-    </div>
-    <div class="bar" aria-hidden="true"><span class="${klass}" style="width: ${width}%"></span></div>
+    <div class="score-number"><span>${escapeHtml(value)}</span></div>
+    <div class="bar" aria-hidden="true"><span class="${scoreClass(number)}" style="width: ${width}%"></span></div>
   `;
 }
 
-function getRowValue(row, header) {
-  const index = state.headers.indexOf(header);
-  return index === -1 ? "" : row[index];
-}
-
-function calculatePotential(row) {
-  const market = parseScore(getRowValue(row, "Рынок"));
-  const economics = parseScore(getRowValue(row, "Экономика"));
-  const moatScale = parseScore(getRowValue(row, "Защита и масштаб"));
-  const personal = parseScore(getRowValue(row, "Личный фильтр"));
-  if ([market, economics, moatScale, personal].some(Number.isNaN)) return null;
-  return Math.round(0.35 * market + 0.25 * economics + 0.2 * moatScale + 0.2 * personal);
-}
-
 function columnClass(header) {
-  if (["Итог", "Рынок", "Экономика", "Защита и масштаб", "Личный фильтр"].includes(header)) return "score-cell";
-  if (header === "Место") return "rank";
-  if (header === "Ниша") return "name-cell";
-  if (header === "Модель") return "model-cell compact-text";
+  if (["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика", "Защита и масштаб", "Личный фильтр"].includes(header)) return "score-cell";
+  if (["Место на карте", "Приоритет"].includes(header)) return "rank";
+  if (["Ниша / референс", "Ниша"].includes(header)) return "name-cell";
+  if (header === "Тип объекта") return "type-cell compact-text";
   if (header === "Доверие") return "confidence-cell";
-  if (header === "Вердикт") return "verdict-cell compact-text";
-  if (["Главный риск", "Следующий шаг"].includes(header)) return "long-text compact-text";
+  if (["Сильнейшее доказательство", "Вывод", "Решение", "Главный риск", "Следующий шаг"].includes(header)) return "long-text compact-text";
   if (header === "Пересмотр") return "date-cell";
   return "compact-text";
 }
 
-function renderHitParade(headers, rows) {
-  const head = document.querySelector("#hit-head");
-  const body = document.querySelector("#hit-body");
+function renderTable(source, headSelector, bodySelector) {
+  const table = state[source];
+  const head = document.querySelector(headSelector);
+  const body = document.querySelector(bodySelector);
+  const scoreHeaders = ["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика", "Защита и масштаб", "Личный фильтр"];
 
-  head.innerHTML = `<tr>${headers
+  head.innerHTML = `<tr>${table.headers
     .map((header) => `<th class="${columnClass(header)}">${labelWithHelp(header)}</th>`)
     .join("")}</tr>`;
-  body.innerHTML = rows
+
+  body.innerHTML = table.rows
     .map((row, index) => {
-      const cells = headers
+      const active = state.selected.source === source && state.selected.index === index ? "active" : "";
+      const cells = table.headers
         .map((header, cellIndex) => {
           const cell = row[cellIndex] || "";
-          const className = columnClass(header);
-          let content = cell;
-          if (header === "Итог") {
-            const potential = calculatePotential(row);
-            content = scoreCell(cell, potential === null ? "" : `база ${potential}`);
-          } else if (["Рынок", "Экономика", "Защита и масштаб", "Личный фильтр"].includes(header)) {
-            content = scoreCell(cell);
-          }
-          if (header === "Вердикт") {
-            content = `<span class="verdict">${cell}</span>`;
-          }
-          return `<td class="${className}" title="${escapeHtml(cell)}">${content}</td>`;
+          const content = scoreHeaders.includes(header) ? scoreCell(cell) : escapeHtml(cell);
+          return `<td class="${columnClass(header)}" title="${escapeHtml(cell)}">${content}</td>`;
         })
         .join("");
-      const active = index === state.selectedIndex ? "active" : "";
       return `<tr class="${active}" data-index="${index}">${cells}</tr>`;
     })
     .join("");
 
   body.querySelectorAll("tr").forEach((row) => {
     row.addEventListener("click", () => {
-      state.selectedIndex = Number(row.dataset.index);
-      renderHitParade(state.headers, state.rows);
+      state.selected = { source, index: Number(row.dataset.index) };
+      renderTable("market", "#market-head", "#market-body");
+      renderTable("queue", "#queue-head", "#queue-body");
       renderSelected();
     });
   });
 }
 
-function getValue(row, header) {
-  return getRowValue(row, header);
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;");
-}
-
-function translateEvidenceStatus(value) {
-  return evidenceStatusLabels[value] || value;
+function findRowByName(table, name) {
+  const nameHeader = table.headers.includes("Ниша / референс") ? "Ниша / референс" : "Ниша";
+  return table.rows.find((row) => canonicalName(getRowValue(table, row, nameHeader)) === canonicalName(name));
 }
 
 function renderSelectedCriteria(name) {
-  const criteria = state.criteriaByNiche[name] || [];
+  const criteria = state.criteriaByNiche[canonicalName(name)] || [];
   if (!criteria.length) {
-    return `
-      <div class="selected-criteria-empty">
-        По этой нише пока нет карточки с детальными критериями.
-      </div>
-    `;
+    return '<div class="selected-criteria-empty">По этой нише пока нет карточки с детальными критериями.</div>';
   }
 
   return `
     <div class="selected-criteria">
       <h4>Детальные критерии</h4>
-      <p>Это конкретная расшифровка выбранной ниши. Эти критерии потом собираются в блоки: рынок, экономика, защита/масштаб и личный фильтр.</p>
+      <p>Это расшифровка базовых блоков выбранного объекта. Рыночная возможность и приоритет ставки строятся уже поверх них.</p>
       <div class="selected-criteria-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>Критерий</th>
-              <th>Балл</th>
-              <th>Статус</th>
-              <th>Вывод</th>
-            </tr>
-          </thead>
+          <thead><tr><th>Критерий</th><th>Балл</th><th>Статус</th><th>Вывод</th></tr></thead>
           <tbody>
             ${criteria
               .map(
@@ -295,10 +260,9 @@ function renderSelectedCriteria(name) {
                   <tr>
                     <td>${escapeHtml(item.title)}</td>
                     <td><strong>${escapeHtml(item.points)}</strong></td>
-                    <td>${escapeHtml(translateEvidenceStatus(item.status))}</td>
+                    <td>${escapeHtml(evidenceStatusLabels[item.status] || item.status)}</td>
                     <td>${escapeHtml(item.conclusion)}</td>
-                  </tr>
-                `,
+                  </tr>`,
               )
               .join("")}
           </tbody>
@@ -310,39 +274,48 @@ function renderSelectedCriteria(name) {
 
 function renderSelected() {
   const container = document.querySelector("#selected-niche");
-  const row = state.rows[state.selectedIndex];
-  if (!row) {
+  const selectedTable = state[state.selected.source];
+  const selectedRow = selectedTable.rows[state.selected.index];
+  if (!selectedRow) {
     container.className = "selected-empty";
-    container.textContent = "Выбери строку в хит-параде, чтобы увидеть расшифровку.";
+    container.textContent = "Выбери строку в таблице, чтобы увидеть расшифровку.";
     return;
   }
 
-  const name = getValue(row, "Ниша");
-  const model = getValue(row, "Модель");
-  const risk = getValue(row, "Главный риск");
-  const next = getValue(row, "Следующий шаг");
-  const summary = state.summariesByNiche[name] || model;
-  const potential = calculatePotential(row);
+  const selectedNameHeader = selectedTable.headers.includes("Ниша / референс") ? "Ниша / референс" : "Ниша";
+  const name = getRowValue(selectedTable, selectedRow, selectedNameHeader);
+  const marketRow = findRowByName(state.market, name);
+  const queueRow = findRowByName(state.queue, name);
+  const type = getRowValue(state.market, marketRow || [], "Тип объекта") || getRowValue(state.queue, queueRow || [], "Тип объекта");
+  const summary = state.summariesByNiche[canonicalName(name)] || "";
+  const opportunity = marketRow ? getRowValue(state.market, marketRow, "Рыночная возможность") : "—";
+  const priority = queueRow ? getRowValue(state.queue, queueRow, "Приоритет ставки") : "—";
+  const market = marketRow ? getRowValue(state.market, marketRow, "Рынок") : "—";
+  const economics = marketRow ? getRowValue(state.market, marketRow, "Экономика") : queueRow ? getRowValue(state.queue, queueRow, "Экономика") : "—";
+  const confidence = marketRow ? getRowValue(state.market, marketRow, "Доверие") : queueRow ? getRowValue(state.queue, queueRow, "Доверие") : "—";
+  const evidence = marketRow ? getRowValue(state.market, marketRow, "Сильнейшее доказательство") : "";
+  const marketConclusion = marketRow ? getRowValue(state.market, marketRow, "Вывод") : "";
+  const decision = queueRow ? getRowValue(state.queue, queueRow, "Решение") : "Это рыночный референс: приоритет нашей ставки не рассчитывается, пока не определены наш сегмент, оффер и канал.";
+  const risk = queueRow ? getRowValue(state.queue, queueRow, "Главный риск") : marketConclusion;
+  const next = queueRow ? getRowValue(state.queue, queueRow, "Следующий шаг") : "Если рассматривать вход, сначала выбрать одну вертикаль, плательщика, оффер и первый канал.";
 
   container.className = "";
   container.innerHTML = `
+    <p class="selection-context">Открыто из: ${state.selected.source === "market" ? "карты рынков и референсов" : "очереди конкретных ставок"}</p>
     <h3>${escapeHtml(name)}</h3>
-    <p>${escapeHtml(model)}</p>
-    <div class="description-block">
-      <strong>Коротко о бизнесе</strong>
-      <span>${escapeHtml(summary)}</span>
-    </div>
+    <p>${escapeHtml(summary)}</p>
+    <div class="description-block"><strong>Тип объекта</strong><span>${escapeHtml(type)}</span></div>
     <div class="selected-grid">
-      <div><span>${labelWithHelp("Итог")}</span><strong>${getValue(row, "Итог")}</strong></div>
-      <div><span>${labelWithHelp("Базовый балл")}</span><strong>${potential === null ? "—" : potential}</strong></div>
-      <div><span>${labelWithHelp("Рынок")}</span><strong>${getValue(row, "Рынок")}</strong></div>
-      <div><span>${labelWithHelp("Экономика")}</span><strong>${getValue(row, "Экономика")}</strong></div>
-      <div><span>${labelWithHelp("Защита и масштаб")}</span><strong>${getValue(row, "Защита и масштаб")}</strong></div>
-      <div><span>${labelWithHelp("Личный фильтр")}</span><strong>${getValue(row, "Личный фильтр")}</strong></div>
-      <div><span>${labelWithHelp("Доверие")}</span><strong>${getValue(row, "Доверие")}</strong></div>
+      <div><span>${labelWithHelp("Рыночная возможность")}</span><strong>${escapeHtml(opportunity)}</strong></div>
+      <div><span>${labelWithHelp("Приоритет ставки")}</span><strong>${escapeHtml(priority)}</strong></div>
+      <div><span>${labelWithHelp("Рынок")}</span><strong>${escapeHtml(market)}</strong></div>
+      <div><span>${labelWithHelp("Экономика")}</span><strong>${escapeHtml(economics)}</strong></div>
+      <div><span>${labelWithHelp("Доверие")}</span><strong>${escapeHtml(confidence)}</strong></div>
     </div>
+    <div class="evidence-block"><strong>Сильнейшее доказательство</strong>${escapeHtml(evidence)}</div>
     <div class="risk-block">
-      <div><strong>Главный риск</strong>${escapeHtml(risk)}</div>
+      <div><strong>Решение</strong>${escapeHtml(decision)}</div>
+      <div><strong>Главный риск / вывод</strong>${escapeHtml(risk)}</div>
       <div><strong>Следующий шаг</strong>${escapeHtml(next)}</div>
     </div>
     ${renderSelectedCriteria(name)}
@@ -350,31 +323,14 @@ function renderSelected() {
 }
 
 function renderMetrics() {
-  const container = document.querySelector("#metric-list");
-  container.innerHTML = metricDescriptions
-    .map(
-      (item) => `
-        <article class="metric-item">
-          <strong>${item.title}</strong>
-          <p>${item.text}</p>
-        </article>
-      `,
-    )
+  document.querySelector("#metric-list").innerHTML = metricDescriptions
+    .map((item) => `<article class="metric-item"><strong>${item.title}</strong><p>${item.text}</p></article>`)
     .join("");
 }
 
 function renderCriteria(criteria) {
-  const container = document.querySelector("#criteria-grid");
-  container.innerHTML = criteria
-    .map(
-      (item) => `
-        <article class="criterion">
-          <h3>${item.title}</h3>
-          <span class="points">${item.points}</span>
-          <p>${item.description}</p>
-        </article>
-      `,
-    )
+  document.querySelector("#criteria-grid").innerHTML = criteria
+    .map((item) => `<article class="criterion"><h3>${item.title}</h3><span class="points">${item.points}</span><p>${item.description}</p></article>`)
     .join("");
 }
 
@@ -386,9 +342,7 @@ function setStatus(text, type = "") {
 
 async function loadText(path) {
   const response = await fetch(path, { cache: "no-store" });
-  if (!response.ok) {
-    throw new Error(`Не удалось загрузить ${path}: ${response.status}`);
-  }
+  if (!response.ok) throw new Error(`Не удалось загрузить ${path}: ${response.status}`);
   return response.text();
 }
 
@@ -399,24 +353,23 @@ async function init() {
       loadText(SCORING_PATH),
       ...Object.values(nicheCardPaths).map((path) => loadText(path)),
     ]);
-    const parsed = parseFirstTable(hitParade);
-    const criteria = parseCriteria(scoring);
-    const formula = extractFormula(scoring);
+    state.market = parseTable(hitParade, "Место на карте");
+    state.queue = parseTable(hitParade, "Приоритет");
     state.criteriaByNiche = Object.fromEntries(
-      Object.keys(nicheCardPaths).map((name, index) => [name, parseNicheCriteria(nicheCards[index])]),
+      Object.keys(nicheCardPaths).map((name, index) => [canonicalName(name), parseNicheCriteria(nicheCards[index])]),
     );
     state.summariesByNiche = Object.fromEntries(
-      Object.keys(nicheCardPaths).map((name, index) => [name, parseOneLiner(nicheCards[index])]),
+      Object.keys(nicheCardPaths).map((name, index) => [canonicalName(name), parseOneLiner(nicheCards[index])]),
     );
 
-    if (!parsed.rows.length) throw new Error("В data/HIT_PARADE.md не найдена таблица рейтинга.");
+    if (!state.market.rows.length || !state.queue.rows.length) {
+      throw new Error("В data/HIT_PARADE.md не найдены обе таблицы портфеля.");
+    }
+    const criteria = parseCriteria(scoring);
     if (!criteria.length) throw new Error("В docs/SCORING_MODEL.md не найдена таблица критериев.");
 
-    state.headers = parsed.headers;
-    state.rows = parsed.rows;
-
-    document.querySelector("#formula-text").textContent = formula || document.querySelector("#formula-text").textContent;
-    renderHitParade(state.headers, state.rows);
+    renderTable("market", "#market-head", "#market-body");
+    renderTable("queue", "#queue-head", "#queue-body");
     renderSelected();
     renderMetrics();
     renderCriteria(criteria);
@@ -425,7 +378,7 @@ async function init() {
     setStatus("Ошибка данных", "error");
     document.querySelector(".layout").insertAdjacentHTML(
       "afterbegin",
-      `<div class="error-message">${error.message}. Открой dashboard через локальный сервер, а не через file://.</div>`,
+      `<div class="error-message">${escapeHtml(error.message)}. Открой dashboard через локальный сервер, а не через file://.</div>`,
     );
     renderMetrics();
   }

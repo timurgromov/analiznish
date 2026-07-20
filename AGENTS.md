@@ -44,7 +44,7 @@
 2. Перед оценкой ниши прочитай `docs/SCORING_MODEL.md`, `docs/WORKFLOW.md`, `docs/NICHE_QUESTIONNAIRE.md`, `docs/NICHE_INPUT_TEMPLATE.md`, `data/HIT_PARADE.md` и при необходимости `skills/niche-scoring/SKILL.md`.
 3. Если пользователь дал неполные входные данные, не стопорись из-за мелочей для `quick_scan`. Но для `deep_score` обязателен блок A из `docs/NICHE_QUESTIONNAIRE.md`.
 4. Сначала применяй hard filters и красные флаги, потом обязательно выводи таблицу детальных критериев.
-5. Разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence` и итоговый `overall_score`.
+5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Не сравнивай чужой референс и существующий актив одним итоговым числом.
 6. Всегда отделяй факты, оценки и допущения. Если источник не проверен, пиши `unverified`.
 7. Если пользователь приносит новую нишу/идею на оценку, по умолчанию анализируй ее и добавляй в `data/HIT_PARADE.md` с карточкой в `data/niches/`, даже если данных хватает только на `quick_scan`. Исключение только если пользователь явно просит `idea_inbox`, "только быстрый разбор", "не добавлять в рейтинг" или "без записи".
 8. После meaningful change обновляй `docs/history/`.
@@ -108,21 +108,27 @@
 
 `data/HIT_PARADE.md` — источник правды по текущему рейтингу.
 
-Каждая строка должна иметь:
+`data/HIT_PARADE.md` содержит две независимые таблицы: карту рынков/референсов и очередь конкретных ставок.
 
-* место;
-* название ниши;
-* бизнес-модель;
-* `overall_score`;
-* `market_score`;
-* `economics_score`;
-* `moat_scale_score`;
-* `personal_filter_score`;
-* `evidence_confidence`;
-* главный риск;
-* вердикт;
-* следующий шаг;
+В карте рынков каждая строка должна иметь:
+
+* место на карте;
+* название ниши или референса;
+* тип объекта;
+* `market_opportunity_score`, `market_score`, `economics_score`, `evidence_confidence`;
+* сильнейшее доказательство и вывод;
 * дату последнего пересмотра.
+
+В очереди ставок каждая строка должна иметь:
+
+* приоритет;
+* название ниши;
+* тип объекта;
+* `execution_priority_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`;
+* главный риск, решение и следующий шаг;
+* дату последнего пересмотра.
+
+Для `market_reference` не выдумывай `execution_priority_score`: сначала нужен наш конкретный сегмент, оффер и канал.
 
 Если оценка изменилась, не стирай старую логику. Добавь новую карточку или worklog, чтобы было понятно, почему рейтинг поменялся.
 

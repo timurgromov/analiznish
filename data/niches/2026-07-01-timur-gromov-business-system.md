@@ -2,7 +2,7 @@
 
 Status: active
 Mode: deep_score
-Last reviewed: 2026-07-01
+Last reviewed: 2026-07-20
 Questionnaire completion: L2 deep score with gaps
 
 ## One-liner
@@ -139,7 +139,7 @@ TAM/SAM/SOM не посчитаны численно, но Wordstat-снимок
 | Защита и масштаб | 66 | Личный бренд и методология сильные, каналы развиваются, но масштаб ограничен личным календарем, офлайн-датами и делегируемостью. |
 | Личный фильтр | 66 | Собран из быстрых денег 89, свободы 25, фин. устойчивости 35 и фокуса 94: это денежное ядро, но свобода и валютная устойчивость низкие. |
 | Доверие к оценке | 0.88 | Есть live-сайт, цены, конкуренты, операционные docs, Wordstat-снимок, margin calculator и подтвержденные заказы; остаются CAC/lead quality по новым каналам. |
-| Итог | 64 | `round((0.35*84 + 0.25*65 + 0.20*66 + 0.20*66) * 0.88)`. |
+| Итог v0.5 (история) | 64 | `round((0.35*84 + 0.25*65 + 0.20*66 + 0.20*66) * 0.88)`. С версии v0.6 не использовать как единый рейтинг портфеля. |
 
 ## Вердикт
 
@@ -164,7 +164,14 @@ Kill / pause conditions for scale experiments:
 - Делегирование снижает доверие к бренду сильнее, чем увеличивает прибыль.
 - Юбилеи/новые сегменты отвлекают от свадебного cashflow без отдельной маржи.
 
-## Hit Parade Row
+## Portfolio v0.6
+
+* Тип объекта: `active_business` / действующий бизнес.
+* Рыночная возможность: `76` = `round(0.60*84 + 0.40*65)`.
+* Приоритет ставки: `58` = `round((0.40*65 + 0.35*66 + 0.25*66) * 0.88)`.
+* Сильное доказательство: фактические заказы, операционные данные, подтверждённая маржа и коммерческий спрос.
+
+## Hit Parade Row v0.5 (история)
 
 | Место | Ниша | Модель | Итог | Рынок | Экономика | Защита и масштаб | Личный фильтр | Доверие | Вердикт | Главный риск | Следующий шаг | Пересмотр |
 | ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- |
@@ -176,6 +183,7 @@ Kill / pause conditions for scale experiments:
 - 2026-07-02: formula v0.4 added freedom and financial resilience; overall changed from 65 to 58 because the model is strongly tied to Moscow, dates, personal presence and ruble/local demand.
 - 2026-07-02: formula v0.5 switched from one `Нишевой балл` to hybrid blocks; overall changed from 58 to 54 because weak LTV, not-yet-ingested margin evidence and offline calendar constraints became more visible.
 - 2026-07-02: rescored after reading Margin Calculator and YandexDirectGrowth evidence. Overall changed from 54 to 64: margin and Wordstat are no longer unknown; economics and confidence increased.
+- 2026-07-20: migration to v0.6 separated market opportunity (`76`) from execution priority (`58`); base evidence and score components were not re-estimated.
 
 ## Sources
 

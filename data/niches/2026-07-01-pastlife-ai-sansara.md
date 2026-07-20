@@ -2,7 +2,7 @@
 
 Status: active
 Mode: deep_score
-Last reviewed: 2026-07-01
+Last reviewed: 2026-07-20
 Questionnaire completion: L2 deep score with gaps
 
 ## One-liner
@@ -139,16 +139,19 @@ PastLife AI нужно учитывать в двух плоскостях:
 
 | Метрика | Балл | Пояснение |
 | --- | ---: | --- |
+| Тип объекта | Существующий актив | Production-движок и пакетируемый проект; это не чужой рыночный референс. |
 | Рынок | 71 | Смежный AI-photo рынок сформирован, но прямой спрос на PastLife-оффер и тренд по русским запросам не проверены. |
 | Экономика | 55 | Credit packs и sale-ready asset дают потенциал, но LTV не подписочный, X4/margin/CAC и payment happy path не доказаны. |
 | Защита и масштаб | 72 | Одна игрушка копируется легко, но reusable admin/runtime, каталог промптов, payment/promo контур и sale package повышают защиту и масштаб. |
 | Личный фильтр | 82 | Собран из быстрых денег 79, свободы 90, фин. устойчивости 80 и фокуса 82: digital asset хорошо подходит по свободе и переносимости. |
 | Доверие к оценке | 0.73 | Доказательства по продукту и asset-layer сильные; спрос, CAC, продажи, buyer interest и юнит-экономика не проверены. |
-| Итог | 51 | `round((0.35*71 + 0.25*55 + 0.20*72 + 0.20*82) * 0.73)`. |
+| Рыночная возможность v0.6 | 65 | `round(0.60*71 + 0.40*55) = 65`. Это оценка категории и модели, без бонуса за уже готовый код. |
+| Приоритет ставки v0.6 | 49 | `round((0.40*55 + 0.35*72 + 0.25*82) * 0.73) = 49`. Это практическая ценность следующего шага по активу, не оценка рыночного потолка. |
+| Итог v0.5 (история) | 51 | `round((0.35*71 + 0.25*55 + 0.20*72 + 0.20*82) * 0.73)`. С версии v0.6 не использовать для сравнения с рыночными референсами. |
 
 ## Вердикт
 
-Вердикт: Докрутить модель / sale-ready asset.
+Вердикт: Докрутить модель / sale-ready asset. Высокий личный fit и готовая инфраструктура делают это разумной ставкой на короткий тест, но не доказывают, что PastLife сильнее AI-фотосессий как категория или крупный бизнес.
 
 Главный риск: проект уже технически сильный и потенциально продаваемый как актив, но ещё не доказал оплату, CAC, маржу и buyer interest. Самый опасный сценарий — продолжать полировать админку/каталог вместо доведения payment happy path, метрик и sale package.
 
@@ -168,11 +171,19 @@ Kill conditions:
 - Пользователи активно смотрят бесплатно, но не сохраняют/не шарят/не покупают.
 - Sale package не вызывает интереса без реальных метрик или требует доработок, сопоставимых с полноценным запуском.
 
-## Hit Parade Row
+## Hit Parade Rows v0.6
 
-| Место | Ниша | Модель | Итог | Рынок | Экономика | Защита и масштаб | Личный фильтр | Доверие | Вердикт | Главный риск | Следующий шаг | Пересмотр |
-| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- |
-| 3 | PastLife AI / Sansara | Reusable AI-photo entertainment engine + first B2C product + possible sale asset | 51 | 71 | 55 | 72 | 82 | 0.73 | Докрутить модель / sale-ready asset | Не доказаны спрос, CAC, маржа, платежи и покупатель актива | Payment happy path + 100-300 user test + sale package | 2026-07-02 |
+### Карта рынков и референсов
+
+| Место на карте | Ниша / референс | Тип объекта | Рыночная возможность | Рынок | Экономика | Доверие | Сильнейшее доказательство | Вывод | Пересмотр |
+| ---: | --- | --- | ---: | ---: | ---: | ---: | --- | --- | --- |
+| 6 | PastLife AI / Sansara | Существующий актив | 65 | 71 | 55 | 0.73 | Production-движок и reusable инфраструктура существуют, но платежи, CAC и спрос не подтверждены. | Проверять как актив; не смешивать с рыночным потолком AI-фотосессий. | 2026-07-20 |
+
+### Очередь конкретных ставок
+
+| Приоритет | Ниша | Тип объекта | Приоритет ставки | Экономика | Защита и масштаб | Личный фильтр | Доверие | Решение | Главный риск | Следующий шаг | Пересмотр |
+| ---: | --- | --- | ---: | ---: | ---: | ---: | ---: | --- | --- | --- | --- |
+| 3 | PastLife AI / Sansara | Существующий актив | 49 | 55 | 72 | 82 | 0.73 | Докрутить модель / актив к продаже | Не доказаны спрос, CAC, маржа, платежи и покупатель актива. | Payment happy path, 100–300 пользователей и sale package. | 2026-07-20 |
 
 ## Rescore History
 
@@ -180,6 +191,7 @@ Kill conditions:
 - 2026-07-01: rescore after user clarified reusable admin/engine and possible project sale scenario; scale/focus/protection increased, but payment/demand/buyer risks remain.
 - 2026-07-02: formula v0.4 added freedom and financial resilience; overall changed from 55 to 56 because the product is portable and can potentially earn outside one local market.
 - 2026-07-02: formula v0.5 switched from one `Нишевой балл` to hybrid blocks; overall changed from 56 to 51 because weak proof of direct market demand and economics is now separated from strong freedom/asset value.
+- 2026-07-20: migration to v0.6 separated market opportunity (`65`) from execution priority (`49`). The latter reflects the existing asset and focus, not a claim that PastLife has a higher business ceiling than AI-photo category leaders.
 
 ## Sources
 

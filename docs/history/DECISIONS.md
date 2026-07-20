@@ -11,7 +11,7 @@
 
 ## DEC-2026-07-01-SCORING-ARCHITECTURE — Отдельные scores для денег, масштаба и фокуса
 
-Status: superseded  
+Status: superseded
 Area: product | data | prompt  
 Decision date: 2026-07-01  
 Evidence: user goal, Vlasov transcript, need to avoid mixing fast cash with scalable company logic  
@@ -38,7 +38,7 @@ Superseded by:
 
 ## DEC-2026-07-01-SCORING-V03-NICHE-MATRIX — Единая матрица критериев ниши
 
-Status: superseded  
+Status: superseded
 Area: product | data | prompt  
 Decision date: 2026-07-01  
 Evidence: user feedback that the Vlasov-derived criteria should be the main scoring system, not a separate score next to duplicated scale logic  
@@ -109,7 +109,7 @@ Superseded by:
 
 ## DEC-2026-07-03-SCORING-V05-HYBRID-BLOCKS — Гибридная матрица из 4 блоков
 
-Status: active  
+Status: superseded
 Area: product | data | prompt  
 Decision date: 2026-07-03  
 Evidence: trial after user discussion; need to keep market/economics/moat/personal tradeoffs visible without overloading hit parade columns  
@@ -142,6 +142,53 @@ Do not:
 
 Verification:
 `docs/SCORING_MODEL.md` v0.5, `data/HIT_PARADE.md`, карточки ниш, dashboard, `docs/NICHE_REPORT_TEMPLATE.md` и `skills/niche-scoring/SKILL.md` синхронизированы под 4 блока.
+
+Superseded by:
+`DEC-2026-07-20-SCORING-V06-DUAL-LENS-PORTFOLIO`.
+
+## DEC-2026-07-20-SCORING-V06-DUAL-LENS-PORTFOLIO — Карта рынков отдельно от очереди ставок
+
+Status: active
+Area: scoring | data | UX | prompt
+Decision date: 2026-07-20
+Evidence: portfolio review after a strong market reference («Фотушка») was ranked below an existing code asset (PastLife) by one v0.5 score
+Commits: смотреть историю Git после публикации
+Supersedes: `DEC-2026-07-03-SCORING-V05-HYBRID-BLOCKS` as the portfolio ranking method
+
+Decision:
+Сохранять четыре базовых блока v0.5, но не сворачивать разные типы объектов в один общий рейтинг. Вести две независимые таблицы:
+
+```text
+market_opportunity_score = round(0.60 * market_score + 0.40 * economics_score)
+
+execution_priority_score = round(
+  (0.40 * economics_score + 0.35 * moat_scale_score + 0.25 * personal_filter_score)
+  * evidence_confidence
+)
+```
+
+`market_opportunity_score` показывает силу категории и модели заработка. Его можно применять к конкуренту или рыночному референсу, но он не является оценкой стоимости компании и не прогнозирует её выручку.
+
+`execution_priority_score` показывает полезность ближайшей работы по нашей конкретной модели или существующему активу. Его нельзя считать для чужого референса, пока не определены наш клиент, сегмент, оффер и первый канал.
+
+Why:
+У v0.5 высокий личный fit и готовый код могли поднять PastLife выше «Фотушки» в общем списке. Это неверно читается как вывод, будто PastLife сильнее по рынку или потолку бизнеса. На самом деле это два разных вопроса: рынок AI-фотосессий подтверждён сильнее, а существующий PastLife-актив может быть удобнее для дешёвого короткого теста.
+
+Do:
+
+* Перед score указывать тип объекта: `market_reference`, `concrete_bet`, `existing_asset` или `active_business`.
+* Сортировать карту рынков только по `market_opportunity_score`; `evidence_confidence` всегда показывать рядом.
+* Сортировать очередь только по `execution_priority_score`.
+* Хранить публичные заявления конкурента, включая выручку, с уровнем доказательности; не переносить их в нашу модель.
+
+Do not:
+
+* Не сравнивать чужой референс и существующий актив одной колонкой «Итог».
+* Не выдавать рыночному референсу искусственно низкий приоритет нашей ставки.
+* Не считать self-reported выручку подтверждённым фактом.
+
+Verification:
+`docs/SCORING_MODEL.md` v0.6, `data/HIT_PARADE.md`, семь карточек ниш, шаблоны, prompts и dashboard используют две таблицы. «Фотушка» имеет рыночную возможность `78`, PastLife — `65`; у «Фотушки» нет приоритета нашей ставки до определения конкретного входа.
 
 ## DEC-2026-07-03-IDEA-INBOX-PURPOSE — Система как фильтр потока идей
 

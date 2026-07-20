@@ -26,12 +26,14 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 5. Apply hard filters before score.
 6. Separate facts, assumptions, estimates, and unverified claims.
 7. Всегда сначала выводи детальные критерии: сформированный рынок, размер рынка, рост/тренд, горячий спрос, конкуренция, референс/модель, одна проблема/сегмент, LTV, X4, защита, реинвестиционный потенциал, операционная масштабируемость, канал роста.
-8. Score `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, and `evidence_confidence`.
-9. Apply caps and penalties from `docs/SCORING_MODEL.md`.
-10. Return verdict, main risk, next action, and kill conditions.
-11. Update `data/HIT_PARADE.md` for every new evaluated niche unless the user explicitly says not to record it.
-12. Add or update a card in `data/niches/` for every evaluated niche. For `quick_scan`, keep confidence low and document gaps.
-13. Update `docs/history/` after meaningful changes.
+8. Classify the object: `market_reference`, `concrete_bet`, `existing_asset`, or `active_business`.
+9. Score `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, and `evidence_confidence`; calculate `market_opportunity_score`.
+10. Calculate `execution_priority_score` only when our customer, offer and first channel are defined. Never invent it for a market reference.
+11. Apply caps and penalties from `docs/SCORING_MODEL.md`.
+12. Return verdict, main risk, next action, and kill conditions for a concrete bet; for a reference, return evidence, gaps and the condition for defining our entry.
+13. Update the applicable table(s) in `data/HIT_PARADE.md` for every new evaluated niche unless the user explicitly says not to record it.
+14. Add or update a card in `data/niches/` for every evaluated niche. For `quick_scan`, keep confidence low and document gaps.
+15. Update `docs/history/` after meaningful changes.
 
 ## Acceptance
 
@@ -40,5 +42,5 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 * Не делать отчет по нише без видимой таблицы детальных критериев.
 * Не штрафовать новую идею только за отсутствие собственных оплат; оценивай открытый рынок, а отсутствие собственных продаж относить к evidence/traction.
 * Не давать один мутный вердикт "перспективно" без score breakdown.
-* Строка hit parade содержит главный риск и следующий шаг.
+* Карта рынков и очередь ставок не смешивают рыночный референс с конкретным активом одним баллом.
 * Новая оцененная ниша не остается только в ответе чата: она попадает в `data/HIT_PARADE.md` и `data/niches/`, если пользователь явно не запретил запись.
