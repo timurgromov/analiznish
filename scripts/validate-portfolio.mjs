@@ -1,9 +1,10 @@
 import fs from "node:fs";
 
 const cards = [
-  ["Travel Radar", "data/niches/2026-07-01-travel-radar.md", "Конкретная ставка"],
+  ["Радарыч", "data/niches/2026-07-01-travel-radar.md", "Конкретная ставка"],
   ["AI-фотосессии / Фотушка", "data/niches/2026-07-16-ai-photo-sessions-fotushka.md", "Рыночный референс"],
   ["Timur Gromov Business System", "data/niches/2026-07-01-timur-gromov-business-system.md", "Действующий бизнес"],
+  ["КАДРА", "data/niches/2026-07-21-kadra-ai-photo.md", "Конкретная ставка"],
   ["Ассистент по женскому циклу", "data/niches/2026-07-05-ai-cycle-assistant.md", "Конкретная ставка"],
   ["Rule24 для психологов", "data/niches/2026-07-03-rule24-psychologists.md", "Существующий актив"],
   ["PastLife AI / Sansara", "data/niches/2026-07-01-pastlife-ai-sansara.md", "Существующий актив"],

@@ -2,7 +2,8 @@ const HIT_PARADE_PATH = "../data/HIT_PARADE.md";
 const SCORING_PATH = "../docs/SCORING_MODEL.md";
 
 const nicheCardPaths = {
-  "Travel Radar": "../data/niches/2026-07-01-travel-radar.md",
+  "Радарыч": "../data/niches/2026-07-01-travel-radar.md",
+  "КАДРА": "../data/niches/2026-07-21-kadra-ai-photo.md",
   "Timur Gromov Business System": "../data/niches/2026-07-01-timur-gromov-business-system.md",
   "PastLife AI / Sansara": "../data/niches/2026-07-01-pastlife-ai-sansara.md",
   "Rule24 для психологов": "../data/niches/2026-07-03-rule24-psychologists.md",

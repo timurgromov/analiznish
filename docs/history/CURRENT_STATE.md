@@ -32,13 +32,15 @@
 
 ## Known Blockers
 
-* В активном портфеле семь объектов: Timur Gromov Business System, Travel Radar, PastLife AI / Sansara, Rule24 для психологов, ProfiWatcher для Profi.ru, Ассистент по женскому циклу, AI-фотосессии / Фотушка.
+* В активном портфеле восемь объектов: Timur Gromov Business System, Радарыч, КАДРА, PastLife AI / Sansara, Rule24 для психологов, ProfiWatcher для Profi.ru, Ассистент по женскому циклу, AI-фотосессии / Фотушка.
 * ProfiWatcher добавлен только как `quick_scan` с низким доверием `0.55`: кодовый актив проверен, но продажа внешним пользователям заблокирована до проверки правил Profi.ru, платных пилотов и фактической надежности сессий.
 * Ассистент по женскому циклу после v0.7 имеет рыночную возможность `68`, приоритет ставки `24`, доверие `0.55`. Категория сильная, но basic Flo for Partners бесплатен, поэтому платный pair-mode, LTV и канал не считаются доказанными.
-* AI-фотосессии / «Фотушка» — `market_reference`: рыночная возможность `75`, рынок `83`, экономика `62`, доверие `0.72`. Официально видны продукт, цены, площадки и воронка; «до 10 млн ₽/мес», COGS, margin и repeat остаются `self-reported`. У референса нет приоритета нашей ставки.
+* AI-фотосессии / «Фотушка» — `market_reference`: рыночная возможность `75`, рынок `83`, экономика `62`, доверие `0.80`. Открытые данные дополнены живым Telegram onboarding, free result, нативным каталогом и pricing surfaces из исследования «КАДРЫ»; «до 10 млн ₽/мес», COGS, margin и repeat остаются `self-reported`. У референса нет приоритета нашей ставки.
+* КАДРА — `concrete_bet`: рыночная возможность `72`, приоритет ставки `34`, доверие `0.65`. Hands-on research Фотушки, НейроКадра и Facee подтверждает рынок; собственного runtime, точной цены, cost model, повторяемого канала и оплат ещё нет.
 * PastLife AI / Sansara — `existing_asset`: рыночная возможность `50`, приоритет ставки `31`. Production-движок доказан, но direct-offer спрос и экономика нет; MyHeritage официально закрыл AI Time Machine в январе 2026 года.
-* Карта v0.7: Travel Radar `76`, «Фотушка» `75`, Timur Gromov Business System `73`, ассистент по циклу `68`, Rule24 `57`, PastLife `50`, ProfiWatcher `48`.
-* Очередь v0.7: Timur `58`, Travel Radar `43`, PastLife `31`, Rule24 `25`, ассистент по циклу `24`, ProfiWatcher `21`.
+* Радарыч — `concrete_bet`: рыночная возможность `76`, рынок `87`, экономика `60`, приоритет ставки `52`, доверие `0.82`. Учтены production commercial flow, hands-on аудит пяти Telegram-ботов, российские media competitors и международные pricing benchmarks; реальных оплат, CAC, churn и доказанного канала нет.
+* Карта v0.7: Радарыч `76`, «Фотушка» `75`, Timur Gromov Business System `73`, КАДРА `72`, ассистент по циклу `68`, Rule24 `57`, PastLife `50`, ProfiWatcher `48`.
+* Очередь v0.7: Timur `58`, Радарыч `52`, КАДРА `34`, PastLife `31`, Rule24 `25`, ассистент по циклу `24`, ProfiWatcher `21`.
 * Git инициализирован на ветке `main`; `origin` подключен к `https://github.com/timurgromov/analiznish.git`. До initial commit удалённый репозиторий был пустым; видимость repo — public по настройке пользователя.
 * GitHub Pages включён с источником `GitHub Actions`. Workflow публикует dashboard по адресу `https://timurgromov.github.io/analiznish/dashboard/` при изменениях в `dashboard/`, `data/` или `docs/SCORING_MODEL.md` на `main`.
 * Score не записывается автоматически, но `scripts/validate-portfolio.mjs` пересчитывает блоки из критериев и падает при расхождении карточек, hit parade, формул или сортировки.
@@ -80,4 +82,4 @@
 
 * Commit: `4d54e2b` (`Calibrate portfolio scoring with evidence`) на `main`.
 * Deploy: local Docker Compose и GitHub Pages.
-* Проверка v0.7: `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check` и локальная HTTP-проверка прошли. GitHub Actions run `29746249598` завершился `success`; публичные HTML, JavaScript и `data/HIT_PARADE.md` подтверждают v0.7, default-карточку «Фотушки», карту `76/75/73/68/57/50/48` и очередь `58/43/31/25/24/21`.
+* Локальная проверка переоценки 2026-07-21 прошла: `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. Production Pages нужно проверить после push текущего commit.
