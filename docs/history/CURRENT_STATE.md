@@ -80,6 +80,6 @@
 
 ## Last Known Good State
 
-* Commit: `4d54e2b` (`Calibrate portfolio scoring with evidence`) на `main`.
+* Commit: `45d919f` (`Rescore Radarych and Kadra portfolio`) на `main`.
 * Deploy: local Docker Compose и GitHub Pages.
-* Локальная проверка переоценки 2026-07-21 прошла: `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. Production Pages нужно проверить после push текущего commit.
+* Переоценка 2026-07-21 проверена локально командами `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. GitHub Pages run `29856243208` завершился `success`; публичный dashboard загрузил данные и интерактивные карточки «Радарыча» `76/52/0.82` и «КАДРЫ» `72/34/0.65`.

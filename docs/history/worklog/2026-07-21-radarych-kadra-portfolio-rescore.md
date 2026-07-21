@@ -25,6 +25,8 @@
 - `node --check dashboard/app.js` — passed.
 - `git diff --check` — passed.
 - Live Telegram: авторизованный «Радарыч» показал paywall Founders 100, preview и объяснение продукта. CTA заявки и реальная оплата не выполнялись.
+- GitHub Pages Actions run `29856243208` — `success`.
+- Публичный dashboard загрузил обе таблицы; клики по «Радарычу» и «КАДРЕ» открыли правильные карточки и значения `76/52/0.82` и `72/34/0.65`.
 
 ## Result
 
@@ -39,10 +41,12 @@
 - «Радарычу» нужны пять независимых founder-сессий и первые 10 реальных оплат; без них экономика `60` не повышается.
 - «КАДРЕ» нужны один launch-сегмент, точный пакет/цена, первый канал, donor/provider cost test и 10 реальных покупателей.
 - Revenue/margin/repeat «Фотушки» остаются self-reported.
-- Production GitHub Pages проверить после push.
+- Следующий production-check нужен после будущего изменения data/dashboard, не после этой переоценки.
 
 ## Links
 
 - Related decisions: `docs/history/DECISIONS.md`
+- Commit: `45d919f` (`Rescore Radarych and Kadra portfolio`)
+- Deploy: GitHub Pages run `29856243208`, success
 - Radarych evidence: sibling project `travel-radar/docs/COMPETITOR_PRICING_AND_BUSINESS_PLAN_2026-07-20.md`, `travel-radar/docs/TELEGRAM_COMPETITOR_BOT_AUDIT_2026-07-21.md`
 - Kadra evidence: sibling project `Кадра /docs/history/CURRENT_STATE.md`, `Кадра /docs/research/`
