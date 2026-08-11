@@ -194,6 +194,12 @@ Meaningful change:
 
 Используй namespaced skill `ruslan-project-workflows:<skill-name>`. Если personal plugin недоступен на другом компьютере или в другом агенте, используй локальный fallback `skills/<skill-name>/SKILL.md`, если такой файл существует. Project-specific правила этого `AGENTS.md` имеют приоритет над общим skill.
 
+## UI Design and Visual Acceptance
+
+Для нового визуально важного экрана или redesign используй `ruslan-project-workflows:frontend-design`: до кода определи задачу страницы, аудиторию, primary action и product-specific visual direction. Для UX/UI-аудита hierarchy, controls, feedback, forms, accessibility и состояний используй `ruslan-project-workflows:web-interface-guidelines`. Для responsive/grid-риска используй `ruslan-project-workflows:frontend-responsive-layout-audit`.
+
+Для любой UI-задачи обязательно используй `ruslan-project-workflows:web-ui-verify`: код, tests, build, DOM assertions и headless screenshot не доказывают, что пользователь видит правильный экран. До проверки назови URL, user state, действие, ожидаемый видимый результат и viewports; затем открой актуальную страницу в живом browser, прожми действие и наблюдай результат. В финале укажи `Visual verification: passed/not performed`, URL/state, viewports, действие, наблюдаемый результат, console errors и конкретный blocker для непроверенного. Без этого не говори, что UI готов.
+
 Если пользователь просит несколько параллельных разработок или другой пишущий чат уже активен в том же проекте, используй `ruslan-project-workflows:parallel-project-lanes`: отдельный Git worktree/branch на worker и один coordinator для integration/release.
 
 Hook не блокирует редактирование файлов: при активном `.git/codex-parallel/lanes.json` новый пишущий чат до первой правки проверяет lane status и не переиспользует worktree другого lane.
