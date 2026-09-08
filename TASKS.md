@@ -1,69 +1,97 @@
-# Tasks
+# Tasks — Niche Factory
 
-## Done
+Статус системы: `configured`, но ещё не `validated` полным проходом. История
+завершённых изменений хранится в Git и `docs/history/`; этот файл показывает
+текущую очередь, а не заменяет changelog.
 
-- [x] Создать docs-first skeleton проекта.
-- [x] Добавить проектные правила агента в `AGENTS.md`.
-- [x] Описать P0 scope и data model в `PROJECT_SPEC.md`.
-- [x] Добавить модель скоринга ниш.
-- [x] Добавить шаблоны входа, обязательного опросника, отчета и hit parade.
-- [x] Настроить project memory в `docs/history/`.
-- [x] Добавить локальную проверку структуры проекта.
-- [x] Добавить read-only dashboard для хит-парада и критериев.
-- [x] Перевести локальный dashboard на стабильный Docker Compose runtime.
-- [x] Зафиксировать первичную цель проекта: фильтр потока идей, снижение незавершенных обязательств и выбор фокуса.
-- [x] Добавить `data/IDEA_INBOX.md` для сырых идей до оценки.
-- [x] Изучить перенесенные `rule24-landing` и `Rule27_Progect`, добавить Rule24 в hit parade.
-- [x] Изучить `EventBudjet/profi_watcher`, добавить предварительную оценку ProfiWatcher для Profi.ru в hit parade.
-- [x] Добавить правило: новая ниша по умолчанию попадает в hit parade и карточку, если пользователь явно не просит не записывать.
-- [x] Добавить предварительную оценку ассистента по женскому циклу в hit parade.
-- [x] Инициализировать Git и подключить `origin` к `timurgromov/analiznish`.
-- [x] Добавить workflow GitHub Pages для read-only dashboard.
-- [x] Включить GitHub Pages c источником `GitHub Actions` и проверить публичный dashboard.
-- [x] Разделить единый рейтинг на карту рынков/референсов и очередь конкретных ставок, чтобы готовый актив не выглядел сильнее подтверждённого рынка только из-за личного fit.
-- [x] Провести полный audit семи активных карточек, детерминировать базовые блоки v0.7 и добавить автоматическую проверку формул/сортировки.
-- [x] Убрать «Фотушку» как дублирующий активный объект, оставить её только архивным конкурентным референсом «КАДРЫ».
-- [x] Провести quick scan OnSud и автомобильного SEO/CPA-лидогенератора.
-- [x] Построить Niche Discovery Loop v1.0: десятиэтапный scan, реальный CustDev, evidence ladder и gates перед B2B build.
-- [x] Добавить режим нового чата `niche_factory`, шаблоны интервью/экспериментов и готовые prompts.
-- [x] Интегрировать полезные части двух роликов SIGMA и проверить ограничения по независимым Customer Development/JTBD/evidence-based источникам.
+## Current Objective
 
-## Next
+Доказать Niche Factory v1 одним реальным циклом поиска B2B AI-продукта: от
+неопределённого направления до одной ставки и первого рыночного действия без
+преждевременной разработки.
 
-- [ ] Запустить первый полный `niche_factory` для поиска B2B AI-продукта.
-  - Acceptance: 5–10 кандидатов → 3–5 quick scans → 1–2 deep research → одна ставка с CustDev-планом, experiment и kill criteria.
-- [ ] Провести recovery discovery sprint для PastLife AI / Sansara без новой большой разработки.
-  - Acceptance: выбран один B2B-сегмент, проведено 8–12 подходящих problem interviews, проверены 2–3 оффера и получен платный пилот либо documented pivot/park/kill.
-- [ ] Загрузить оставшиеся сырые идеи в `data/IDEA_INBOX.md` без обязательного score.
-  - Acceptance: у каждой идеи есть статус и next handling.
-- [ ] Выбрать 1-2 идеи для `deep_score`.
-  - Acceptance: есть карточки в `data/niches/`, источники и обновленный `data/HIT_PARADE.md`.
-- [ ] Проверить OnSud перед rescore: трафик, funnel conversion, CAC, долю ручного QA/возвратов и cross-sell.
-  - Acceptance: есть фактические `визит → анкета → оплата`, contribution margin, доля переделок и LTV по связанным документам.
-- [ ] Проверить автомобильный SEO/CPA-референс перед rescore: органический трафик, affiliate EPC, оплаченные полисы, годовые продления и позиционный/legal risk.
-  - Acceptance: есть Search Console/Метрика, affiliate dashboard, доход по страницам, 12-месячный repeat и отдельный вывод по допустимому позиционированию.
-- [ ] Проверить ProfiWatcher перед rescore: правила Profi.ru, 3-5 платных пилотов, uptime/support cost за 30 дней.
-  - Acceptance: есть legal/platform вывод, пилотные оплаты или отказы, фактическая частота login_required/captcha и пересчитанный score.
-- [ ] Проверить ассистента по женскому циклу перед rescore: оффер для пары, privacy-first позиционирование, payment intent и доверие к данным.
-  - Acceptance: есть лендинг/ручной Telegram-прототип, 20+ заявок, 5+ payment intents или зафиксированные причины отказа.
-- [ ] Проверить узкую вертикаль AI-фотосессий перед rescore: выбрать один job, продать 10 пакетов вручную и измерить реальную экономику.
-  - Acceptance: выбрана одна вертикаль, есть 30 целевых офферов, 10 оплат или документированные отказы, gross margin после retries/QA/support и 30-дневный repeat test.
-- [ ] Проверить, достаточно ли read-only dashboard поверх Markdown или нужно зеркало в CSV/Google Sheets/Notion.
-  - Acceptance: выбран один источник правды, остальные форматы только производные.
-- [ ] После 10 оцененных ниш откалибровать веса скоринга.
-  - Acceptance: documented decision в `docs/history/DECISIONS.md`.
+## NF-1 — Find And Select One Bet
 
-## Backlog
+- [ ] Запустить новый чат фразой «Хочу искать нишу» и заполнить hunting constraints.
+  - Acceptance: зафиксированы география, B2B-сегменты/доступ, желаемый чек и sales cycle, лимит времени/денег, capabilities и hard exclusions.
+- [ ] Сформировать candidate universe из 5–10 направлений.
+  - Acceptance: каждый кандидат связан с наблюдаемым процессом/расходом, плательщиком и референсом; случайные AI-идеи без рынка удалены.
+- [ ] Провести 3–5 `quick_scan`.
+  - Acceptance: есть карточки E0/E1, hard filters, сильнейший источник, главный риск, следующий дешёвый тест и предварительное место в портфеле.
+- [ ] Провести `deep_score` для 1–2 финалистов.
+  - Acceptance: проверены конкуренты/альтернативы, локальный сегмент, цены, канал, экономика диапазоном, TAM/SAM/SOM и противоречащие данные.
+- [ ] Выбрать одну `concrete_bet` для problem discovery.
+  - Acceptance: owner decision, один сегмент, плательщик, JTBD, самый рискованный тезис, лимит следующего цикла и kill conditions записаны в карточке.
 
-- [ ] По мере следующего `rescore` переводить legacy v0.7 карточки на `validation_stage` и E0–E5; не использовать старое confidence как доказательство build gate.
-- [ ] Добавить `data/niches/_example.md` после первой реальной оценки.
-- [ ] Добавить скрипт пересчета score, если ручная таблица начнет мешать.
-- [ ] Добавить Notion/Sheets sync только после подтверждения, что Markdown недостаточно.
-- [ ] После 10-20 карточек решить, нужен ли полноценный React/Next интерфейс с редактированием.
+## NF-2 — Obtain Real Customer Evidence
 
-## Acceptance For Changes
+- [ ] Спроектировать problem research до рекрутинга.
+  - Acceptance: research question, screener, роли user/payer/budget owner, 3–5 гипотез и критерий остановки записаны.
+- [ ] Найти 8–12 подходящих участников одного сегмента и провести минимум 5 интервью.
+  - Acceptance: участники отобраны по недавнему поведению; обезличенные записи находятся в `data/interviews/`; первая половина разговоров не содержит pitch.
+- [ ] Пройти problem gate либо принять `pivot_segment`, `park` или `kill`.
+  - Acceptance: проблема независимо повторилась минимум у трёх подходящих участников, есть последствия, workaround/расход и противоречащие случаи.
 
-- [ ] `README.md` не обещает несуществующие команды или runtime.
-- [ ] `docs/SCORING_MODEL.md` и `data/HIT_PARADE.md` не противоречат друг другу.
-- [ ] Новые ниши имеют уровень доказательности, а не только баллы.
-- [ ] В проекте нет `.env`, секретов, cookies, dumps, local DB, screenshots или debug artifacts.
+## NF-3 — Test Action And Money
+
+- [ ] Сформировать один оффер и один измеримый результат для выбранного JTBD.
+  - Acceptance: определены цена/диапазон, scope, CTA, бюджетодержатель, процесс покупки и главное возражение.
+- [ ] Провести offer/action experiment.
+  - Acceptance: success/kill criteria заданы до запуска; учитываются интро, demo, доступ к данным, LOI или другой наблюдаемый шаг, а не комплименты.
+- [ ] Получить paid pilot либо принять `pivot_offer`, `park` или `kill`.
+  - Acceptance: есть оплата/подтверждённый бюджет и дата, либо задокументировано, почему money gate не пройден.
+- [ ] Открыть только bounded MVP после build gate.
+  - Acceptance: автоматизируется доказанное ядро; зафиксированы лимит бюджета/срока, ручной fallback, метрика результата и условия остановки.
+- [ ] Закрыть первый factory-loop.
+  - Acceptance: обновлены карточка, эксперимент, hit parade, `validation_stage`, E-level, решение и worklog; получен `paid_pilot`, `pivot`, `park` или `kill`.
+
+## Recovery Lane — PastLife AI / Sansara
+
+- [ ] Заморозить необязательный feature build на время discovery-sprint.
+- [ ] Выбрать один B2B-сегмент, которому существующий engine может дать измеримый результат.
+- [ ] Провести отдельные problem interviews и проверить 2–3 оффера.
+- [ ] Исполнить первый paid pilot concierge-способом поверх существующих capabilities.
+  - Acceptance всей линии: один сегмент, 8–12 подходящих интервью, доказанный/опровергнутый problem gate, 2–3 проверенных оффера и paid pilot либо documented pivot/park/kill.
+
+Эта линия не должна конкурировать с NF-1 за фокус одновременно. Owner выбирает:
+искать новую ставку или временно прогнать через тот же factory существующий актив.
+
+## Existing Portfolio Evidence Queue
+
+Эти задачи не являются автоматическим текущим фокусом. Они активируются только
+при выборе соответствующей ставки или `portfolio_review`.
+
+| Объект | Следующее недостающее evidence |
+| --- | --- |
+| OnSud | Funnel `визит → анкета → оплата`, CAC, ручной QA/возвраты, contribution margin и cross-sell/LTV |
+| Авто SEO/CPA | Search Console/Метрика, affiliate EPC/выплаты, оплаченные полисы, продления и legal/positioning review |
+| ProfiWatcher | Правила Profi.ru, 3–5 платных пилотов, uptime и support cost за 30 дней |
+| Ассистент по женскому циклу | Privacy-first offer, реальный payment action и доверие к данным |
+| КАДРА | Один job/сегмент, ручные продажи, gross margin после retries/QA/support и repeat test |
+| Радарыч | Реальные оплаты, acquisition path, CAC-сигнал и повтор/retention |
+
+## System Hardening After First Run
+
+- [ ] Провести ретроспективу первого factory-loop и откалибровать этапы, gates и объём артефактов.
+- [ ] При следующем `rescore` переводить legacy v0.7 карточки на `validation_stage` и E0–E5; старое confidence не считать build evidence.
+- [ ] После 10 оценённых ниш проверить веса scoring на реальных решениях.
+- [ ] Автоматизировать только повторившиеся ручные операции с доказанной стоимостью времени.
+- [ ] Решить, достаточно ли Markdown/read-only dashboard или нужен structured store/UI.
+
+## Done — Platform Capabilities
+
+- [x] Создан docs-first репозиторий, project memory и локальные проверки.
+- [x] Реализованы scoring v0.7, две независимые портфельные линзы и validator.
+- [x] Созданы idea inbox, карточки ниш/референсов и read-only dashboard.
+- [x] Dashboard опубликован через GitHub Pages и доступен локально через Docker Compose.
+- [x] Созданы Niche Discovery Loop v1.0, CustDev protocol и evidence ladder E0–E5.
+- [x] Добавлены prompts, agent routing, шаблоны интервью/экспериментов и build gates.
+- [x] Полезные элементы SIGMA/AI-CustDev отделены от неподтверждённых claims и синтетического «CustDev».
+
+## Acceptance For Repository Changes
+
+- [ ] `README.md`, `PROJECT_SPEC.md`, `TASKS.md`, `UX.md`, workflow и current state не противоречат друг другу.
+- [ ] `docs/SCORING_MODEL.md` и `data/HIT_PARADE.md` проходят validator.
+- [ ] Новая ставка имеет `object_type`, `validation_stage`, E-level, риск, experiment и kill conditions.
+- [ ] Evidence отделено от assumptions; недоступные данные помечены `unknown`/`unverified`, а не нулём.
+- [ ] В Git нет `.env`, credentials, персональных интервью, dumps, local DB, screenshots или debug artifacts.

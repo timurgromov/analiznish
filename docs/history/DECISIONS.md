@@ -406,11 +406,15 @@ Status: active
 Area: methodology | research | product | agent
 Decision date: 2026-09-08
 Evidence: пользовательский опыт четырёх месяцев разработки Sansara до исследования; два ролика Дмитрия Попова о SIGMA/AI-CustDev; независимые источники Customer Development, The Mom Test, Testing Business Ideas, JTBD и user research
-Commits: `efecdda`
+Commits: `efecdda`, product hierarchy reframe pending
 Supersedes: none
 
 Decision:
-Поверх scoring v0.7 использовать `Niche Discovery Loop v1.0`. Фраза «Хочу искать нишу» запускает `niche_factory`: hunting constraints → shortlist → quick scans → deep research → одна конкретная ставка → реальный CustDev → offer/action test → paid pilot → ограниченный MVP → retention/rescore.
+`Niche Discovery Loop v1.0` является корневым продуктовым контуром проекта, а
+scoring v0.7, hit parade и dashboard — его внутренними модулями. Фраза «Хочу
+искать нишу» запускает `niche_factory`: hunting constraints → shortlist → quick
+scans → deep research → одна конкретная ставка → реальный CustDev → offer/action
+test → paid pilot → ограниченный MVP → retention/rescore.
 
 AI выполняет публичный research, review mining, синтез, подготовку интервью и экспериментов. Пользователь подключается там, где нужен живой контакт, авторизация, закрытый источник или owner decision. По умолчанию применяется `hybrid`-режим и один checkpoint за раз.
 
