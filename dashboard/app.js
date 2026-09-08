@@ -9,7 +9,8 @@ const nicheCardPaths = {
   "Rule24 для психологов": "../data/niches/2026-07-03-rule24-psychologists.md",
   "ProfiWatcher для Profi.ru": "../data/niches/2026-07-05-profiwatcher-profi-ru.md",
   "Ассистент по женскому циклу": "../data/niches/2026-07-05-ai-cycle-assistant.md",
-  "AI-фотосессии / Фотушка": "../data/niches/2026-07-16-ai-photo-sessions-fotushka.md",
+  "Авто SEO/CPA / Российский Союз Автомобилистов": "../data/niches/2026-07-23-auto-seo-cpa-leadgen.md",
+  "LegalTech-документы для развода / OnSud": "../data/niches/2026-07-23-onsud-divorce-documents.md",
 };
 
 const metricDescriptions = [
@@ -55,7 +56,7 @@ const evidenceStatusLabels = {
 const state = {
   market: { headers: [], rows: [] },
   queue: { headers: [], rows: [] },
-  selected: { source: "market", index: 1 },
+  selected: { source: "market", index: 0 },
   criteriaByNiche: {},
   summariesByNiche: {},
 };

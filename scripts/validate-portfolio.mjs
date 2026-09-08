@@ -2,9 +2,10 @@ import fs from "node:fs";
 
 const cards = [
   ["Радарыч", "data/niches/2026-07-01-travel-radar.md", "Конкретная ставка"],
-  ["AI-фотосессии / Фотушка", "data/niches/2026-07-16-ai-photo-sessions-fotushka.md", "Рыночный референс"],
   ["Timur Gromov Business System", "data/niches/2026-07-01-timur-gromov-business-system.md", "Действующий бизнес"],
   ["КАДРА", "data/niches/2026-07-21-kadra-ai-photo.md", "Конкретная ставка"],
+  ["Авто SEO/CPA / Российский Союз Автомобилистов", "data/niches/2026-07-23-auto-seo-cpa-leadgen.md", "Рыночный референс"],
+  ["LegalTech-документы для развода / OnSud", "data/niches/2026-07-23-onsud-divorce-documents.md", "Рыночный референс"],
   ["Ассистент по женскому циклу", "data/niches/2026-07-05-ai-cycle-assistant.md", "Конкретная ставка"],
   ["Rule24 для психологов", "data/niches/2026-07-03-rule24-psychologists.md", "Существующий актив"],
   ["PastLife AI / Sansara", "data/niches/2026-07-01-pastlife-ai-sansara.md", "Существующий актив"],
@@ -143,8 +144,9 @@ for (const [name, path, expectedType] of cards) {
 
 const marketScores = marketTable.rows.map((row) => parseNumber(cell(marketTable, row, "Рыночная возможность")));
 const queueScores = queueTable.rows.map((row) => parseNumber(cell(queueTable, row, "Приоритет ставки")));
+const executableCards = cards.filter(([, , type]) => type !== "Рыночный референс").length;
 assertEqual(marketTable.rows.length, cards.length, "Количество объектов на карте");
-assertEqual(queueTable.rows.length, cards.length - 1, "Количество объектов в очереди");
+assertEqual(queueTable.rows.length, executableCards, "Количество объектов в очереди");
 assertEqual(JSON.stringify(marketScores), JSON.stringify([...marketScores].sort((a, b) => b - a)), "Сортировка карты");
 assertEqual(JSON.stringify(queueScores), JSON.stringify([...queueScores].sort((a, b) => b - a)), "Сортировка очереди");
 
