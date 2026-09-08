@@ -399,3 +399,29 @@ Do not:
 
 Verification:
 Карточка исследования перемещена из `data/niches/` в `data/references/`; активные hit parade, dashboard mapping и validator registry содержат «КАДРУ», но не отдельную «Фотушку».
+
+## DEC-2026-09-08-NICHE-FACTORY — Поиск ниш является evidence-gated контуром
+
+Status: active
+Area: methodology | research | product | agent
+Decision date: 2026-09-08
+Evidence: пользовательский опыт четырёх месяцев разработки Sansara до исследования; два ролика Дмитрия Попова о SIGMA/AI-CustDev; независимые источники Customer Development, The Mom Test, Testing Business Ideas, JTBD и user research
+Commits: pending
+Supersedes: none
+
+Decision:
+Поверх scoring v0.7 использовать `Niche Discovery Loop v1.0`. Фраза «Хочу искать нишу» запускает `niche_factory`: hunting constraints → shortlist → quick scans → deep research → одна конкретная ставка → реальный CustDev → offer/action test → paid pilot → ограниченный MVP → retention/rescore.
+
+AI выполняет публичный research, review mining, синтез, подготовку интервью и экспериментов. Пользователь подключается там, где нужен живой контакт, авторизация, закрытый источник или owner decision. По умолчанию применяется `hybrid`-режим и один checkpoint за раз.
+
+Why:
+Текущий scoring хорошо сравнивает рынки и ставки, но сам по себе не задавал последовательность добычи доказательств и stop-gates до разработки. SIGMA даёт полезную карту desk research, но её synthetic CustDev нельзя считать заменой реальным клиентам. Нужен замкнутый цикл, в котором каждая инвестиция открывается более сильным evidence.
+
+Do:
+Разделять `object_type`, `validation_stage` и `strongest_evidence`. Считать AI-аватары и synthetic interviews только E0/E1. Проверять прошлое поведение в реальных интервью, затем просить действие, деньги и повтор. Хранить обезличенные интервью и заранее спроектированные эксперименты. Для готового актива использовать recovery discovery, а не автоматически продолжать build.
+
+Do not:
+Не считать число отзывов/интервью силой evidence само по себе. Не повышать confidence конкретной ставки выше evidence cap. Не разрешать полный B2B MVP из desk research, красивого отчёта или готового engine. Не копировать бренд, код и защищённые материалы внешней методологии.
+
+Verification:
+Правило отражено в `AGENTS.md`, `.cursor/rules/niche-factory.mdc`, project-local skill, workflow, questionnaire, report template, prompts и data templates. Локальная проверка должна включать эти артефакты.

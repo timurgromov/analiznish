@@ -4,6 +4,33 @@
 
 ## Core Modes
 
+### Niche Factory
+
+Цель: начать поиск без готовой идеи и довести множество направлений до одной
+проверяемой B2B-ставки.
+
+Триггер: пользователь пишет «Хочу искать нишу».
+
+Первый ответ агента:
+
+1. Коротко объяснить текущий checkpoint.
+2. Уточнить B2B/B2C, географию, доступ к отраслям/людям, желаемый чек и sales
+   cycle, лимит теста, capabilities и hard exclusions.
+3. Если пользователь не знает ответы, предложить разумные defaults и 3–5 hunting-направлений.
+4. Согласовать `agent_led`, `guided` или `hybrid`; по умолчанию `hybrid`.
+
+Каждый следующий ответ показывает только текущий checkpoint:
+
+1. `Подтверждено`.
+2. `Неизвестно`.
+3. `Агент делает сейчас`.
+4. `От пользователя нужен один конкретный шаг`.
+5. `Критерий готовности`.
+6. `Следующий gate`.
+
+Нормальный прогресс: `5–10 кандидатов → 3–5 quick scans → 1–2 deep research →
+1 concrete bet → problem interviews → offer action → paid pilot → MVP`.
+
 ### Idea Inbox
 
 Цель: быстро выгрузить идею из головы без превращения ее в обязательство.
@@ -27,8 +54,8 @@
 1. Вердикт одной строкой.
 2. 3-5 ключевых причин.
 3. Предварительные scores с `evidence_confidence <= 0.55`, если источники не проверены.
-4. Главный риск.
-5. Один следующий тест.
+4. `validation_stage`, strongest evidence E0–E5 и главный риск.
+5. Один следующий тест с success/kill criteria.
 
 ### Deep Score
 
@@ -42,8 +69,9 @@
 4. Market capacity: TAM/SAM/SOM.
 5. Unit economics.
 6. Score breakdown.
-7. Вердикт и hit parade row.
-8. Kill conditions.
+7. CustDev/experiment evidence и текущий gate.
+8. Вердикт и hit parade row.
+9. Kill conditions.
 
 ### Portfolio Review
 

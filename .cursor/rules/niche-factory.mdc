@@ -1,0 +1,14 @@
+---
+description: Run niche search as an evidence-gated factory, not idea brainstorming
+alwaysApply: true
+---
+
+# Niche factory
+
+- Фраза «Хочу искать нишу» запускает `niche_factory` из `docs/NICHE_DISCOVERY_LOOP.md`.
+- Не требуй готовую нишу: сначала уточни hunting constraints и предложи 3–5 поисковых направлений.
+- По умолчанию используй `hybrid`: публичный research делай сам, пользователю оставляй интервью и авторизованные/закрытые действия.
+- Веди один checkpoint за раз: confirmed, unknown, agent action, user action, acceptance, next gate.
+- AI-аватары и review mining — только E0/E1; реальный CustDev начинается с подходящих людей и прошлого поведения.
+- Не разрешай полноценный B2B MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
+- Фиксируй решения в карточке ниши, `data/experiments/`, hit parade и project memory.

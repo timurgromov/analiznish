@@ -6,9 +6,11 @@
 # YYYY-MM-DD — Название ниши
 
 Status: draft | active | parked | rejected | rescore-needed
-Mode: quick_scan | deep_score | rescore
+Mode: niche_factory | quick_scan | deep_score | rescore
 Last reviewed: YYYY-MM-DD
 Questionnaire completion: L0 idea stub | L1 quick scan | L2 deep score | L3 investment-grade
+Validation stage: inbox | desk_scan | problem_discovery | offer_test | paid_pilot | mvp_build | retention_test | scale_candidate | parked | rejected
+Strongest evidence: E0 | E1 | E2 | E3 | E4 | E5
 
 ## One-liner
 
@@ -77,6 +79,38 @@ Questionnaire completion: L0 idea stub | L1 quick scan | L2 deep score | L3 inve
 | Claim | Level | Source | Notes |
 | --- | --- | --- | --- |
 | TBD | unverified | TBD | TBD |
+
+## Discovery Synthesis
+
+- Riskiest assumptions:
+- Current alternatives:
+- Repeated complaint patterns:
+- Contradicting evidence:
+- Primary JTBD: Когда ..., клиент хочет ..., чтобы ..., несмотря на ...
+- User / payer / budget owner / influencer:
+- Anti-segment:
+- Trigger to buy now:
+
+## CustDev
+
+- Research question:
+- Eligible interviews completed:
+- Repeated real episodes:
+- Observed artifacts:
+- Current spending/workarounds:
+- Commitments/refusals:
+- Synthetic research used: yes/no; source corpus:
+
+## Experiment Gate
+
+- Current gate: problem | offer | build | scale
+- Riskiest unproven assumption:
+- Next experiment:
+- Primary metric:
+- Success criterion defined before start:
+- Kill criterion defined before start:
+- Time/budget limit:
+- Decision: continue | pivot_segment | pivot_offer | park | kill | build
 
 ## Market Capacity
 

@@ -1,9 +1,9 @@
 # Prompt — Update Hit Parade
 
 ```text
-Model note: GPT-5.5/Высокий — нужно аккуратно обновить рейтинг и память проекта.
+Model note: GPT-5.6 Sol/Высокий — нужно аккуратно обновить рейтинг, evidence stage и память проекта.
 
-Прочитай AGENTS.md, docs/SCORING_MODEL.md, docs/WORKFLOW.md, data/HIT_PARADE.md и последнюю карточку ниши.
+Прочитай AGENTS.md, docs/NICHE_DISCOVERY_LOOP.md, docs/SCORING_MODEL.md, docs/WORKFLOW.md, data/HIT_PARADE.md и последнюю карточку ниши.
 
 Обнови hit parade:
 
@@ -12,8 +12,9 @@ Model note: GPT-5.5/Высокий — нужно аккуратно обнов�
 3. Пересчитай `market_opportunity_score`.
 4. Считай `execution_priority_score` только когда определены наш сегмент, оффер и канал.
 5. Примени caps/penalties.
-6. Отсортируй карту рынков и очередь ставок независимо.
-7. Обнови data/HIT_PARADE.md и карточку в data/niches/.
-8. Добавь worklog, если изменение meaningful.
-9. Не коммить без отдельной просьбы.
+6. Для новой или переоцениваемой конкретной ставки укажи `validation_stage`, strongest evidence E0–E5 и примени evidence cap.
+7. Отсортируй карту рынков и очередь ставок независимо.
+8. Обнови data/HIT_PARADE.md и карточку в data/niches/.
+9. Добавь worklog, если изменение meaningful.
+10. Не коммить без отдельной просьбы.
 ```

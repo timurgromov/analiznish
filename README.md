@@ -8,19 +8,21 @@
 
 ## Быстрый сценарий
 
-1. Сырую идею без обязательств можно записать в `data/IDEA_INBOX.md`.
-2. Новую идею для разбора сначала заполнять по `docs/NICHE_INPUT_TEMPLATE.md`.
-3. Для полноценной оценки заполнять `docs/NICHE_QUESTIONNAIRE.md`.
-4. Оценивать по `docs/SCORING_MODEL.md`.
-5. Для полноценной оценки создавать карточку в `data/niches/`.
-6. Обновлять общий рейтинг в `data/HIT_PARADE.md`.
-7. После важных изменений обновлять `docs/history/`.
+1. Чтобы начать с нуля, открой новый чат и скажи: `Хочу искать нишу`.
+2. Агент запустит `niche_factory`, уточнит ограничения и предложит направления.
+3. Агент сам соберёт доступные публичные данные; пользователю оставит интервью и закрытые/авторизованные шаги.
+4. Shortlist пройдёт hard filters, quick scan и deep research.
+5. Одна ставка перейдёт через реальный CustDev, тест оффера и paid-pilot gate.
+6. Только после build gate допускается полноценный MVP.
+7. Карточки, эксперименты, рейтинг и project memory обновляются по ходу цикла.
+
+Сырую идею без обязательств по-прежнему можно отдельно записать в
+`data/IDEA_INBOX.md`.
 
 Минимальный prompt для будущего чата:
 
 ```text
-Прочитай AGENTS.md, docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
-Оцени нишу по проектной методологии. Если данных не хватает, задай только блокирующие вопросы.
+Хочу искать нишу. Запусти `niche_factory` по prompts/start-niche-factory.md.
 ```
 
 ## Ключевые файлы
@@ -31,6 +33,8 @@
 | `PROJECT_SPEC.md` | Цель, P0 scope, non-goals, data model |
 | `docs/SCORING_MODEL.md` | Математическая модель оценки ниш |
 | `docs/WORKFLOW.md` | Порядок анализа и обновления рейтинга |
+| `docs/NICHE_DISCOVERY_LOOP.md` | Завод поиска: scan → CustDev → action → pay → repeat |
+| `docs/CUSTDEV_PROTOCOL.md` | Реальные B2B-интервью и gates перед build |
 | `docs/NICHE_QUESTIONNAIRE.md` | Полный обязательный опросник для объективной оценки |
 | `docs/NICHE_INPUT_TEMPLATE.md` | Формат входных данных по новой идее |
 | `docs/NICHE_REPORT_TEMPLATE.md` | Формат полноценного отчета по нише |
@@ -38,9 +42,14 @@
 | `data/HIT_PARADE.md` | Живой рейтинг ниш |
 | `data/niches/` | Карточки отдельных ниш |
 | `data/references/` | Архив конкурентных исследований, которые не являются отдельными активными объектами |
+| `data/interviews/` | Обезличенные итоги CustDev |
+| `data/experiments/` | Проверки оффера, канала, цены, пилотов и retention |
 | `dashboard/` | Локальный интерфейс для просмотра хит-парада и критериев |
 | `docs/history/` | Память проекта между чатами |
 | `prompts/` | Готовые prompts для повторяемой работы |
+
+Готовые точки входа: `prompts/start-niche-factory.md` для поиска с нуля и
+`prompts/run-custdev-cycle.md` для проверки выбранной B2B-ставки.
 
 ## Скоринг
 

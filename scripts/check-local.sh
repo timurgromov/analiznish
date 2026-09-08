@@ -11,12 +11,18 @@ required_files=(
   ".gitignore"
   "docs/SCORING_MODEL.md"
   "docs/WORKFLOW.md"
+  "docs/NICHE_DISCOVERY_LOOP.md"
+  "docs/CUSTDEV_PROTOCOL.md"
   "docs/NICHE_QUESTIONNAIRE.md"
   "docs/NICHE_INPUT_TEMPLATE.md"
   "docs/NICHE_REPORT_TEMPLATE.md"
   "docs/METHODOLOGY_SOURCES.md"
   "data/IDEA_INBOX.md"
   "data/HIT_PARADE.md"
+  "data/interviews/README.md"
+  "data/interviews/_template.md"
+  "data/experiments/README.md"
+  "data/experiments/_template.md"
   "data/niches/README.md"
   "dashboard/index.html"
   "dashboard/styles.css"
@@ -26,6 +32,9 @@ required_files=(
   "docs/history/DECISIONS.md"
   "docs/history/RETROSPECTIVE_BOOTSTRAP.md"
   "docs/history/worklog/README.md"
+  "prompts/start-niche-factory.md"
+  "prompts/run-custdev-cycle.md"
+  ".cursor/rules/niche-factory.mdc"
 )
 
 for file in "${required_files[@]}"; do
@@ -34,6 +43,16 @@ for file in "${required_files[@]}"; do
     exit 1
   fi
 done
+
+grep -q 'Хочу искать нишу' docs/NICHE_DISCOVERY_LOOP.md
+grep -q 'Хочу искать нишу' prompts/start-niche-factory.md
+grep -q 'niche_factory' AGENTS.md
+grep -q 'niche_factory' docs/WORKFLOW.md
+grep -q 'niche_factory' skills/niche-scoring/SKILL.md
+for level in E0 E1 E2 E3 E4 E5; do
+  grep -q "$level" docs/NICHE_DISCOVERY_LOOP.md
+done
+grep -q 'Build gate' docs/CUSTDEV_PROTOCOL.md
 
 node scripts/validate-portfolio.mjs
 

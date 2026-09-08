@@ -24,11 +24,16 @@
 - [x] Провести полный audit семи активных карточек, детерминировать базовые блоки v0.7 и добавить автоматическую проверку формул/сортировки.
 - [x] Убрать «Фотушку» как дублирующий активный объект, оставить её только архивным конкурентным референсом «КАДРЫ».
 - [x] Провести quick scan OnSud и автомобильного SEO/CPA-лидогенератора.
+- [x] Построить Niche Discovery Loop v1.0: десятиэтапный scan, реальный CustDev, evidence ladder и gates перед B2B build.
+- [x] Добавить режим нового чата `niche_factory`, шаблоны интервью/экспериментов и готовые prompts.
+- [x] Интегрировать полезные части двух роликов SIGMA и проверить ограничения по независимым Customer Development/JTBD/evidence-based источникам.
 
 ## Next
 
-- [ ] Прогнать 3-5 реальных идей через `quick_scan`.
-  - Acceptance: каждая идея имеет score, главный риск и next action.
+- [ ] Запустить первый полный `niche_factory` для поиска B2B AI-продукта.
+  - Acceptance: 5–10 кандидатов → 3–5 quick scans → 1–2 deep research → одна ставка с CustDev-планом, experiment и kill criteria.
+- [ ] Провести recovery discovery sprint для PastLife AI / Sansara без новой большой разработки.
+  - Acceptance: выбран один B2B-сегмент, проведено 8–12 подходящих problem interviews, проверены 2–3 оффера и получен платный пилот либо documented pivot/park/kill.
 - [ ] Загрузить оставшиеся сырые идеи в `data/IDEA_INBOX.md` без обязательного score.
   - Acceptance: у каждой идеи есть статус и next handling.
 - [ ] Выбрать 1-2 идеи для `deep_score`.
@@ -50,6 +55,7 @@
 
 ## Backlog
 
+- [ ] По мере следующего `rescore` переводить legacy v0.7 карточки на `validation_stage` и E0–E5; не использовать старое confidence как доказательство build gate.
 - [ ] Добавить `data/niches/_example.md` после первой реальной оценки.
 - [ ] Добавить скрипт пересчета score, если ручная таблица начнет мешать.
 - [ ] Добавить Notion/Sheets sync только после подтверждения, что Markdown недостаточно.
