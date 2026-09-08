@@ -406,7 +406,7 @@ Status: active
 Area: methodology | research | product | agent
 Decision date: 2026-09-08
 Evidence: пользовательский опыт четырёх месяцев разработки Sansara до исследования; два ролика Дмитрия Попова о SIGMA/AI-CustDev; независимые источники Customer Development, The Mom Test, Testing Business Ideas, JTBD и user research
-Commits: `efecdda`, product hierarchy reframe pending
+Commits: `efecdda`, `af6b82f`
 Supersedes: none
 
 Decision:

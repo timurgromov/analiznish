@@ -25,6 +25,7 @@ scoring, hit parade и dashboard обслуживают его.
 * `AGENTS.md` — 17 909 bytes, ниже принятого компактного лимита 18 KiB.
 * Инварианты root workflow, internal scoring, `configured/validated`, NF-1/NF-2/NF-3
   и `recovery_discovery` найдены во всех применимых документах.
+* Основная переработка зафиксирована commit `af6b82f`.
 
 ## Result
 
