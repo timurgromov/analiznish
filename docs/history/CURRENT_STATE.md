@@ -95,8 +95,8 @@
 
 ## Last Known Good State
 
-* Последний локальный commit перед Niche Discovery Loop: `d307b13` (`docs: add market references and deduplicate Kadra`) на `main`.
+* Июльский пакет market references зафиксирован commit `d307b13` (`docs: add market references and deduplicate Kadra`).
 * Deploy: local Docker Compose и GitHub Pages.
 * Переоценка 2026-07-21 проверена локально командами `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. GitHub Pages run `29856243208` завершился `success`; публичный dashboard загрузил данные и интерактивные карточки «Радарыча» `76/52/0.82` и «КАДРЫ» `72/34/0.65`.
 * Изменение 2026-07-23 зафиксировано отдельным commit `d307b13`; валидатор подтверждает 9 рынков и 7 исполнимых ставок.
-* Niche Discovery Loop v1.0 на момент этой записи является локальным docs/rules change; commit/push status фиксируется в worklog после завершения.
+* Niche Discovery Loop v1.0 зафиксирован commit `efecdda`, отправлен в `origin/main`; GitHub Pages run `34275935196` завершился `success`, публичный dashboard открылся со статусом «Данные загружены».

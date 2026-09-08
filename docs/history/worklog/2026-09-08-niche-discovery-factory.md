@@ -39,6 +39,10 @@
 * `node --check dashboard/app.js` — passed.
 * Routing-фраза, `niche_factory`, E0–E5 и build gate проверяются в
   `scripts/check-local.sh` — passed.
+* Commit `efecdda` отправлен в `origin/main`.
+* GitHub Pages run `34275935196` — `success`; публичный dashboard открылся,
+  показал «Данные загружены», OnSud/автомобильный reference и новый E0–E5
+  доступны в опубликованных Markdown-артефактах.
 
 ## Result
 

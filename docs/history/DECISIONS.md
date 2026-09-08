@@ -406,7 +406,7 @@ Status: active
 Area: methodology | research | product | agent
 Decision date: 2026-09-08
 Evidence: пользовательский опыт четырёх месяцев разработки Sansara до исследования; два ролика Дмитрия Попова о SIGMA/AI-CustDev; независимые источники Customer Development, The Mom Test, Testing Business Ideas, JTBD и user research
-Commits: pending
+Commits: `efecdda`
 Supersedes: none
 
 Decision:
@@ -424,4 +424,4 @@ Do not:
 Не считать число отзывов/интервью силой evidence само по себе. Не повышать confidence конкретной ставки выше evidence cap. Не разрешать полный B2B MVP из desk research, красивого отчёта или готового engine. Не копировать бренд, код и защищённые материалы внешней методологии.
 
 Verification:
-Правило отражено в `AGENTS.md`, `.cursor/rules/niche-factory.mdc`, project-local skill, workflow, questionnaire, report template, prompts и data templates. Локальная проверка должна включать эти артефакты.
+Правило отражено в `AGENTS.md`, `.cursor/rules/niche-factory.mdc`, project-local skill, workflow, questionnaire, report template, prompts и data templates. `./scripts/check-local.sh`, `git diff --check` и GitHub Pages run `34275935196` прошли.
