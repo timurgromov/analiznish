@@ -44,6 +44,7 @@ read-only представлением портфеля.
 | `docs/WORKFLOW.md` | Маршрутизация режимов и операционный порядок работы |
 | `docs/NICHE_DISCOVERY_LOOP.md` | Завод поиска: scan → CustDev → action → pay → repeat |
 | `docs/REFERENCE_MINING_PROTOCOL.md` | Разбор готовых сервисов, альтернатив и отзывов без копирования продукта |
+| `docs/SIGMA_SOURCE_PLAYBOOK.md` | Точные источники из двух роликов SIGMA: где искать референсы, отзывы и голос клиента |
 | `docs/CUSTDEV_PROTOCOL.md` | Реальные B2B-интервью и gates перед build |
 | `docs/NICHE_QUESTIONNAIRE.md` | Полный обязательный опросник для объективной оценки |
 | `docs/NICHE_INPUT_TEMPLATE.md` | Формат входных данных по новой идее |

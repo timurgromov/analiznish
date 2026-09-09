@@ -47,9 +47,10 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 
 * Первый factory-run перезапущен 2026-09-09 в направлении частных психологов:
   Gate 0 прочитал актуальный трек Rule 24, создал context inventory/Jobs map и
-  провёл первый E1 `reference_mining` по трём широким Jobs. Следующий gate —
-  source-completeness checkpoint с VM/форумными материалами и выбор 1–2 Jobs для
-  интервью, а не разработка и не новый score.
+  провёл первый E1 `reference_mining` по трём широким Jobs. В Rule24 нет списка
+  девяти идей: прежнее VM/форумное исследование было упомянуто владельцем, но его
+  отдельный путь пока не дан. Следующий gate — решить, нужно ли его включать, и
+  выбрать 1–2 Jobs для интервью, а не разработка и не новый score.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
 * Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
 

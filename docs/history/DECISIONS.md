@@ -52,7 +52,8 @@ Do not:
 Verification:
 `AGENTS.md`, `PROJECT_SPEC.md`, `README.md`, `UX.md`, `TASKS.md`,
 `docs/WORKFLOW.md`, `docs/NICHE_DISCOVERY_LOOP.md`,
-`docs/REFERENCE_MINING_PROTOCOL.md`, `data/discovery/` и current state отражают
+`docs/REFERENCE_MINING_PROTOCOL.md`, `docs/SIGMA_SOURCE_PLAYBOOK.md`,
+`data/discovery/` и current state отражают
 это правило. Ранние РПП-карточки 2026-09-09 выведены из active registry и hit
 parade, но сохранены как история.
 
