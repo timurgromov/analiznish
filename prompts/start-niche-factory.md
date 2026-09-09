@@ -5,8 +5,11 @@ Model note: GPT-5.6 Sol/Высокий — нужен исследователь
 
 Хочу искать нишу. Запусти режим `niche_factory`.
 
-Прочитай AGENTS.md, docs/history/CURRENT_STATE.md, последние записи worklog,
+Сначала прочитай data/ACTIVE_RUN.md и docs/RAIL_PROTOCOL.md. Если run активен,
+не начинай поиск заново: продолжи его `Macro phase`, `Current step` и
+`Source board`. Затем прочитай AGENTS.md, docs/history/CURRENT_STATE.md, последние записи worklog,
 docs/NICHE_DISCOVERY_LOOP.md, docs/CUSTDEV_PROTOCOL.md,
+docs/SIGMA_EXECUTION_MODEL.md, docs/INSIGHT_EXECUTION_MODEL.md,
 docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 
 Если я назвал прошлые проекты, документы или исследования, сначала проведи
@@ -23,13 +26,17 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 По умолчанию работай в `hybrid`: публичное исследование делай сам; мне выдавай
 только авторизованные, закрытые и человеческие действия.
 
-Веди один checkpoint за раз. На каждом шаге показывай:
+Веди один checkpoint за раз. Каждый содержательный ответ начинай с
+`Контур: <macro phase> <step> — <step name>`. На каждом шаге показывай:
 1. что подтверждено;
 2. что неизвестно;
 3. что сейчас делаешь сам;
 4. что конкретно требуется от меня;
 5. критерий завершения этапа;
 6. следующий gate.
+
+Новый методологический материал встрой в контур, сохрани решение и вернись к
+текущему этапу. Не переключай run без явного owner decision.
 
 Сначала построй Jobs map и выполни `reference_mining` готовых сервисов,
 альтернатив и независимых отзывов по `docs/REFERENCE_MINING_PROTOCOL.md`. После

@@ -10,18 +10,25 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 ## Read First
 
 1. `AGENTS.md`
-2. `docs/SCORING_MODEL.md`
-3. `docs/WORKFLOW.md`
-4. `docs/NICHE_DISCOVERY_LOOP.md`
-5. `docs/CUSTDEV_PROTOCOL.md`
-6. `docs/NICHE_QUESTIONNAIRE.md`
-7. `docs/NICHE_INPUT_TEMPLATE.md`
-8. `data/HIT_PARADE.md`
+2. `data/ACTIVE_RUN.md` and its `Source board`
+3. `docs/RAIL_PROTOCOL.md`
+4. `docs/SIGMA_EXECUTION_MODEL.md`
+5. `docs/INSIGHT_EXECUTION_MODEL.md`
+6. `docs/SCORING_MODEL.md`
+7. `docs/WORKFLOW.md`
+8. `docs/NICHE_DISCOVERY_LOOP.md`
+9. `docs/CUSTDEV_PROTOCOL.md`
+10. `docs/NICHE_QUESTIONNAIRE.md`
+11. `docs/NICHE_INPUT_TEMPLATE.md`
+12. `data/HIT_PARADE.md`
 
 ## Workflow
 
 0. Пиши пользовательский анализ, карточки ниш, строки hit parade и dashboard-facing текст на русском. Английский допустим только для названий брендов, URL, путей файлов, команд, API/library names, технических идентификаторов и компактных терминов вроде SaaS, MVP, LTV, CAC, churn, webhook, backend/frontend.
 1. Classify mode: `niche_factory`, `quick_scan`, `deep_score`, `rescore`, or `portfolio_review`. «Хочу искать нишу» launches `niche_factory` and does not require a ready idea.
+1a. If `data/ACTIVE_RUN.md` is active, continue its phase and step. Do not reset
+the run for a new chat, methodological link or side discussion; follow
+`docs/RAIL_PROTOCOL.md`.
 2. If the user explicitly only wants to dump ideas, use `idea_inbox` and `data/IDEA_INBOX.md`; do not score. Otherwise, a new niche defaults to score + hit parade row + niche card, even when the score is only `quick_scan`.
 3. Check questionnaire completion level.
 4. For `deep_score`, require block A from `docs/NICHE_QUESTIONNAIRE.md`.
@@ -29,6 +36,8 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 6. Classify `validation_stage` and strongest evidence `E0–E5`; a ready product can still be pre-CustDev.
 7. Run the applicable 10-stage discovery scan from `docs/NICHE_DISCOVERY_LOOP.md`.
 8. Separate facts, assumptions, estimates, and unverified claims. Synthetic research is not a real interview and cannot exceed `E1`.
+8a. Execute `I · INSIGHT` through a provenance-backed corpus and synthetic
+stress test, then require separate real problem/action/pay gates.
 9. Всегда сначала выводи детальные критерии: сформированный рынок, размер рынка, рост/тренд, горячий спрос, конкуренция, референс/модель, одна проблема/сегмент, LTV, X4, cash cycle, защита, реинвестиционный потенциал, операционная масштабируемость, канал роста.
 10. Classify the object: `market_reference`, `concrete_bet`, `existing_asset`, or `active_business`.
 11. Рассчитай `market_score`, `economics_score` и `moat_scale_score` строго по формулам v0.7, затем `personal_filter_score`, `evidence_confidence` и `market_opportunity_score`.

@@ -94,6 +94,22 @@ score или строку hit parade.
 
 ## Core Factory Loop
 
+### Каркас SIGMA и наша доказательная надстройка
+
+| Macro phase | Роль в контуре | Канонический протокол | Условие перехода |
+| --- | --- | --- | --- |
+| `S · SCAN` | Выбор ниши по рынку, референсам, голосу, аудитории, трафику и финансам | `docs/SIGMA_EXECUTION_MODEL.md` | Один конкретный кандидат и заполненный SCAN board |
+| `I · INSIGHT` | Public corpus, сегмент/JTBD, anti-segment, synthetic stress test и реальная проверка | `docs/INSIGHT_EXECUTION_MODEL.md` + `docs/CUSTDEV_PROTOCOL.md` | Реальный problem, action и pay evidence |
+| `G · GENERATE` | Ограниченная спецификация доказанного решения | Пока используется внутренний build gate; отдельный источник автора ещё не интегрирован | Scope не шире оплаченного результата |
+| `M · MAKE` | Сборка bounded MVP с ручным fallback | Текущие project/build rules | Usage gate |
+| `A · ACTIVATE` | Продажи, использование, retention и экономика | `data/experiments/` + scoring/rescore | Повторяемый канал и E5 либо pivot/park/kill |
+
+`data/ACTIVE_RUN.md` указывает единственную текущую точку внутри этого каркаса.
+`docs/RAIL_PROTOCOL.md` определяет, как любой новый чат продолжает её без
+перезапуска и как обрабатывает побочные материалы.
+
+### Внутренние operating phases
+
 | Фаза | Главный вопрос | Обязательный результат | Следующий gate |
 | --- | --- | --- | --- |
 | 0. Context inventory | Что уже известно владельцу и что прочитано? | Карта источников, прежних ставок, активов и gaps; owner checkpoint | Разрешение на Jobs map |
@@ -148,6 +164,7 @@ score или строку hit parade.
 
 | Артефакт | Источник правды |
 | --- | --- |
+| Текущий run, macro phase, этап и gate | `data/ACTIVE_RUN.md` |
 | Сырые идеи без обязательств | `data/IDEA_INBOX.md` |
 | Контекстные карты, Jobs map и разборы референсов до ставки | `data/discovery/` |
 | Карточки конкретных ниш/ставок | `data/niches/` |
@@ -171,6 +188,7 @@ score или строку hit parade.
 * scoring, hit parade и portfolio review;
 * recovery discovery для существующих активов;
 * Markdown-артефакты, prompts, project memory и локальные проверки;
+* machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
 * read-only dashboard как представление портфеля.
 
 ## Non-goals
@@ -211,7 +229,7 @@ Factory v1 считается операционно доказанным, ко�
 
 Только после первого полного factory-run можно решать, нужны ли:
 
-* structured YAML/JSON для состояний и переходов;
+* structured YAML/JSON для всех состояний и переходов кроме минимального `ACTIVE_RUN`;
 * CSV/Sheets/Notion mirror;
 * полуавтоматический сбор разрешённых источников;
 * dashboard этапов, интервью и экспериментов;

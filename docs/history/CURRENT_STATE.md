@@ -29,6 +29,12 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Есть `docs/SIGMA_EXECUTION_MODEL.md`: точный шаг `S · SCAN` из 10 этапов `0–9` и
   обязательный status board. Активный run не переходит к продукту, пока не видны evidence,
   решение и следующий gate каждого пройденного шага.
+* Есть `data/ACTIVE_RUN.md` и `docs/RAIL_PROTOCOL.md`: новый чат продолжает
+  сохранённые macro phase/step и source board, а локальный validator проверяет
+  их связность. Текущий run — психологи, `S · SCAN 2 — Разведка`.
+* Есть `docs/INSIGHT_EXECUTION_MODEL.md`: материал COMANDOS AI про public
+  corpus, ядро аудитории, anti-segment и synthetic interviews интегрирован как
+  E1-подготовка; живые интервью, действие и оплата остаются E2–E4 gates.
 * Перед shortlist теперь обязательны `context_inventory`, Jobs map и
   `reference_mining`; они хранятся в `data/discovery/` и не становятся
   активными ставками без owner checkpoint.
@@ -53,8 +59,9 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   провёл первый E1 `reference_mining` по трём широким Jobs. В Rule24 нет списка
   девяти идей: прежнее VM/форумное исследование было упомянуто владельцем, но его
   отдельный путь пока не дан. SIGMA board фиксирует проход на шагах 2–5/8–9 как
-  частичный и останавливает synthesis: следующий gate — независимый голос пяти
-  практиков, а не разработка и не новый score.
+  частичный и останавливает synthesis. `ACTIVE_RUN` фиксирует один следующий
+  gate: этап 2 — проверить динамику и живые обсуждения для трёх Jobs; затем
+  локализация, фильтрация и только после них голос клиента/INSIGHT.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
 * Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
 

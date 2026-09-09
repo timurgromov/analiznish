@@ -31,7 +31,10 @@ production/deploy/database не основание; при экономии вы
 
 ## Working Order
 
-1. Сначала смотри структуру проекта и актуальные файлы: `README.md`, `PROJECT_SPEC.md`, `TASKS.md`, `UX.md`, `docs/*`, `data/*`, `.env.example`, scripts и `git status`, если git инициализирован.
+1. Сначала смотри структуру проекта, `data/ACTIVE_RUN.md`, указанный в нём
+   `Source board` и актуальные файлы: `README.md`, `PROJECT_SPEC.md`, `TASKS.md`,
+   `UX.md`, `docs/*`, `data/*`, `.env.example`, scripts и `git status`, если git
+   инициализирован. Активный run не сбрасывается новым чатом или сменой модели.
 2. Перед оценкой ниши прочитай `docs/SCORING_MODEL.md`, `docs/WORKFLOW.md`, `docs/NICHE_QUESTIONNAIRE.md`, `docs/NICHE_INPUT_TEMPLATE.md`, `data/HIT_PARADE.md` и при необходимости `skills/niche-scoring/SKILL.md`.
 3. Если пользователь дал неполные входные данные, не стопорись из-за мелочей для `quick_scan`. Но для `deep_score` обязателен блок A из `docs/NICHE_QUESTIONNAIRE.md`.
 4. Сначала применяй hard filters и красные флаги, потом обязательно выводи таблицу детальных критериев.
@@ -47,6 +50,27 @@ production/deploy/database не основание; при экономии вы
     В каждом содержательном update показывай `шаг SIGMA → что реально проверено →
     вывод/решение → один следующий gate`. Если шаг не пройден, так и пиши;
     не подменяй неизвестное новой идеей или оценкой.
+14. Всегда соблюдай `docs/RAIL_PROTOCOL.md`. Новый материал методологии сначала
+    встраивай в контур, затем возвращайся к этапу из `data/ACTIVE_RUN.md`.
+    Переключать, парковать или завершать run можно только по явному owner decision
+    либо terminal gate с обновлением state и worklog.
+15. Для `I · INSIGHT` используй `docs/INSIGHT_EXECUTION_MODEL.md`: public corpus,
+    AI-синтез, персонажи и synthetic interview остаются E1. Реальные интервью,
+    действие и деньги проходят отдельно по `docs/CUSTDEV_PROTOCOL.md`.
+
+## Active Run Rail
+
+Если `data/ACTIVE_RUN.md` имеет `Status: active`, каждый содержательный ответ
+должен начинаться с `Контур: <macro phase> <step> — <step name>` и содержать:
+
+1. что реально проверено;
+2. решение или честный статус `этап не пройден`;
+3. одну текущую работу агента;
+4. не более одного действия владельца, только если оно действительно нужно;
+5. измеримый gate следующего перехода.
+
+Побочный вопрос, ссылка или обсуждение архитектуры не начинают новый run. После
+ответа/интеграции агент возвращает разговор к единственной текущей работе.
 
 ## Niche Analysis Protocol
 
@@ -63,7 +87,10 @@ production/deploy/database не основание; при экономии вы
 
 Для `quick_scan`, `deep_score` и `rescore` указывай `validation_stage` и сильнейший уровень `E0–E5`; слабые источники не заменяют `do → pay → repeat`.
 
-По умолчанию новая ниша = оценка + строка в hit parade + карточка ниши. Если данных мало, ставь `quick_scan`, честно снижай `evidence_confidence`, перечисляй gaps и все равно добавляй предварительную строку в рейтинг. Не оставляй оцененную новую нишу только в тексте ответа.
+После owner checkpoint новая оцененная ниша = строка в hit parade + карточка
+ниши. Если данных хватает только на `quick_scan`, честно снижай
+`evidence_confidence` и перечисляй gaps. До owner checkpoint кандидат остаётся
+в discovery-артефактах и не попадает в рейтинг.
 
 Обязательный минимум входа для полноценной оценки задается блоком A в `docs/NICHE_QUESTIONNAIRE.md`:
 

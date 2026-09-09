@@ -12,12 +12,16 @@ required_files=(
   "docs/SCORING_MODEL.md"
   "docs/WORKFLOW.md"
   "docs/NICHE_DISCOVERY_LOOP.md"
+  "docs/SIGMA_EXECUTION_MODEL.md"
+  "docs/INSIGHT_EXECUTION_MODEL.md"
+  "docs/RAIL_PROTOCOL.md"
   "docs/CUSTDEV_PROTOCOL.md"
   "docs/NICHE_QUESTIONNAIRE.md"
   "docs/NICHE_INPUT_TEMPLATE.md"
   "docs/NICHE_REPORT_TEMPLATE.md"
   "docs/METHODOLOGY_SOURCES.md"
   "data/IDEA_INBOX.md"
+  "data/ACTIVE_RUN.md"
   "data/HIT_PARADE.md"
   "data/interviews/README.md"
   "data/interviews/_template.md"
@@ -34,6 +38,8 @@ required_files=(
   "docs/history/worklog/README.md"
   "prompts/start-niche-factory.md"
   "prompts/run-custdev-cycle.md"
+  "data/discovery/_insight-run-template.md"
+  "scripts/validate-active-run.mjs"
   ".cursor/rules/niche-factory.mdc"
 )
 
@@ -53,8 +59,11 @@ for level in E0 E1 E2 E3 E4 E5; do
   grep -q "$level" docs/NICHE_DISCOVERY_LOOP.md
 done
 grep -q 'Build gate' docs/CUSTDEV_PROTOCOL.md
+grep -q 'data/ACTIVE_RUN.md' AGENTS.md
+grep -q 'I · INSIGHT' docs/INSIGHT_EXECUTION_MODEL.md
 
 node scripts/validate-portfolio.mjs
+node scripts/validate-active-run.mjs
 
 if command -v rg >/dev/null 2>&1; then
   if rg -n --hidden --glob '!.git' --glob '!.env.example' --glob '!scripts/check-local.sh' '(sk-[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|password\s*=|api[_-]?key\s*=\s*[^[:space:]]+)' .; then

@@ -5,6 +5,11 @@ experiments являются его этапами/инструментами, �
 процессами. Готовая идея входит в цикл с подходящего этапа; существующий кодовый
 актив не перепрыгивает evidence gates.
 
+Перед intake всегда прочитай `data/ACTIVE_RUN.md`. При `Status: active` не
+создавай новый intake: продолжай указанные phase/step и `Source board` по
+`docs/RAIL_PROTOCOL.md`. Новый run начинается только после явной смены,
+парковки или завершения текущего.
+
 ## 1. Intake
 
 Определи режим:
@@ -105,6 +110,11 @@ JTBD/аудитория, канал, финансы и синтез. Для ра
 AI review mining и synthetic research храни отдельно от реального CustDev. Они могут выявить язык и гипотезы, но не повышают `strongest_evidence` выше `E1`. Для `E2+` используй `docs/CUSTDEV_PROTOCOL.md` и реальные действия участников.
 
 ## 5. CustDev And Experiment Gate
+
+Перед реальными интервью выполни E1-подготовку `I · INSIGHT` по
+`docs/INSIGHT_EXECUTION_MODEL.md`: provenance-backed corpus, synthesis,
+segment/JTBD, anti-segment, synthetic stress test и positioning hypotheses.
+Это не повышает evidence выше E1 и не заменяет шаги ниже.
 
 Для конкретной B2B-ставки после desk scan:
 
