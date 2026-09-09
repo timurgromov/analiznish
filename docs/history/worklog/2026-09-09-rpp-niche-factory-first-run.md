@@ -53,6 +53,10 @@ AI-кабинетов психолога, поэтому общий CRM или �
 * Local dashboard `http://127.0.0.1:8765/dashboard/` — загрузил 12 строк и
   карточку RPP Practice Lab через новый реестр; проверены desktop и 390×844,
   console errors отсутствуют.
+* Commit `b54034d` отправлен в `origin/main`.
+* Published dashboard `https://timurgromov.github.io/analiznish/dashboard/` —
+  после reload показал статус «Данные загружены», все 12 строк и открытую
+  карточку RPP Practice Lab; console errors отсутствуют.
 
 ## Result
 

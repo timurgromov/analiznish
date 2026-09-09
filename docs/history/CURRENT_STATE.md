@@ -107,6 +107,6 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Deploy: local Docker Compose и GitHub Pages.
 * Переоценка 2026-07-21 проверена локально командами `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. GitHub Pages run `29856243208` завершился `success`; публичный dashboard загрузил данные и интерактивные карточки «Радарыча» `76/52/0.82` и «КАДРЫ» `72/34/0.65`.
 * Изменение 2026-07-23 зафиксировано отдельным commit `d307b13`; валидатор подтверждает 9 рынков и 7 исполнимых ставок.
-* Первый quick-scan checkpoint 2026-09-09 локально подтверждает 12 рынков и 10 исполнимых ставок; dashboard загрузил новые три карточки через реестр. Commit/push/deploy ещё не выполнены.
+* Первый quick-scan checkpoint 2026-09-09 зафиксирован commit `b54034d` и отправлен в `origin/main`. GitHub Pages после обновления загрузил 12 строк и открытую карточку RPP Practice Lab без console errors.
 * Niche Discovery Loop v1.0 зафиксирован commit `efecdda`, отправлен в `origin/main`; GitHub Pages run `34275935196` завершился `success`, публичный dashboard открылся со статусом «Данные загружены».
 * Продуктовая иерархия «Niche Factory → evidence gates → scoring/portfolio» зафиксирована commit `af6b82f`; `PROJECT_SPEC.md` и `TASKS.md` переписаны вокруг первого полного цикла.
