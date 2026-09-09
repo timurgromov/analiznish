@@ -43,7 +43,7 @@ read-only представлением портфеля.
 | `docs/SCORING_MODEL.md` | Внутренняя математическая модель сравнения рынков и ставок |
 | `docs/WORKFLOW.md` | Маршрутизация режимов и операционный порядок работы |
 | `docs/NICHE_DISCOVERY_LOOP.md` | Завод поиска: scan → CustDev → action → pay → repeat |
-| `docs/SIGMA_EXECUTION_MODEL.md` | Исполняемая карта SIGMA: 4 зоны, 10 шагов и обязательный статус каждого прохода |
+| `docs/SIGMA_EXECUTION_MODEL.md` | Исполняемый `S · SCAN`: точные 10 этапов `0–9`, переходы и обязательный статус каждого прохода |
 | `docs/REFERENCE_MINING_PROTOCOL.md` | Разбор готовых сервисов, альтернатив и отзывов без копирования продукта |
 | `docs/SIGMA_SOURCE_PLAYBOOK.md` | Точные источники из двух роликов SIGMA: где искать референсы, отзывы и голос клиента |
 | `docs/CUSTDEV_PROTOCOL.md` | Реальные B2B-интервью и gates перед build |

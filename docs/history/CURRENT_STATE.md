@@ -26,8 +26,8 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Есть скоринговая модель в `docs/SCORING_MODEL.md`.
 * Есть workflow анализа в `docs/WORKFLOW.md`.
 * Есть управляемый `niche_factory` в `docs/NICHE_DISCOVERY_LOOP.md`: shortlist → scan → реальный CustDev → action → pay → repeat.
-* Есть `docs/SIGMA_EXECUTION_MODEL.md`: 4 зоны SIGMA, 10 шагов и обязательный
-  status board. Активный run не переходит к продукту, пока не видны evidence,
+* Есть `docs/SIGMA_EXECUTION_MODEL.md`: точный шаг `S · SCAN` из 10 этапов `0–9` и
+  обязательный status board. Активный run не переходит к продукту, пока не видны evidence,
   решение и следующий gate каждого пройденного шага.
 * Перед shortlist теперь обязательны `context_inventory`, Jobs map и
   `reference_mining`; они хранятся в `data/discovery/` и не становятся
