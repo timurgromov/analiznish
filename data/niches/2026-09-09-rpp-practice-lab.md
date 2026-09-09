@@ -1,11 +1,14 @@
 # 2026-09-09 — RPP Practice Lab для программ обучения психологов
 
-Status: active
+Status: historical_pre_gate
 Mode: quick_scan
 Last reviewed: 2026-09-09
 Questionnaire completion: L1 quick scan
 Validation stage: desk_scan
 Strongest evidence: E1
+
+> 2026-09-09: создано до обязательного `context_inventory` и owner checkpoint.
+> Сохранено как история ошибочного прохода; не является активной ставкой.
 
 ## One-liner
 

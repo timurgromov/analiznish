@@ -9,7 +9,12 @@ Model note: GPT-5.6 Sol/Высокий — нужен исследователь
 docs/NICHE_DISCOVERY_LOOP.md, docs/CUSTDEV_PROTOCOL.md,
 docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 
-Сначала коротко уточни мои hunting constraints: B2B/B2C, география,
+Если я назвал прошлые проекты, документы или исследования, сначала проведи
+`context_inventory`: перечисли реально прочитанные источники, извлечённые активы
+и гипотезы, неизвестные места и один owner checkpoint. До него не добавляй
+случайные идеи, карточки или строки hit parade.
+
+Затем коротко уточни мои hunting constraints: B2B/B2C, география,
 доступные отрасли и контакты, желаемый чек/sales cycle, время и бюджет на тест,
 технические capabilities, hard exclusions. Не требуй готовую нишу.
 
@@ -26,7 +31,9 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 5. критерий завершения этапа;
 6. следующий gate.
 
-Сначала создай shortlist 5–10 кандидатов, затем оставь 3–5 на quick_scan,
+Сначала построй Jobs map и выполни `reference_mining` готовых сервисов,
+альтернатив и независимых отзывов по `docs/REFERENCE_MINING_PROTOCOL.md`. После
+owner checkpoint создай shortlist 5–10 кандидатов, затем оставь 3–5 на quick_scan,
 1–2 на deep research и одну ставку на CustDev/experiment. Не разрешай полный
 MVP до build gate. Все решения и результаты фиксируй по правилам проекта.
 ```

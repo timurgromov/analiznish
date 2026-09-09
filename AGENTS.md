@@ -37,11 +37,12 @@ production/deploy/database не основание; при экономии вы
 4. Сначала применяй hard filters и красные флаги, потом обязательно выводи таблицу детальных критериев.
 5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Не сравнивай чужой референс и существующий актив одним итоговым числом.
 6. Всегда отделяй факты, оценки и допущения. Если источник не проверен, пиши `unverified`.
-7. Если пользователь приносит новую нишу/идею на оценку, по умолчанию анализируй ее и добавляй в `data/HIT_PARADE.md` с карточкой в `data/niches/`, даже если данных хватает только на `quick_scan`. Исключение только если пользователь явно просит `idea_inbox`, "только быстрый разбор", "не добавлять в рейтинг" или "без записи".
-8. После meaningful change обновляй `docs/history/`.
-9. Не трогай несвязанные файлы и не откатывай чужие изменения.
-10. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md` и `docs/CUSTDEV_PROTOCOL.md`: market scan → реальный CustDev → проверка действием/деньгами → build gate.
-11. AI/synthetic research строит гипотезы, но не заменяет клиентов; каждый цикл заканчивай дешёвым экспериментом с заранее заданными success/kill criteria.
+7. Перед поиском в новом для пользователя домене сначала проведи `context_inventory`: прочитай названные владельцем проекты и исследования, покажи список реально прочитанных источников, извлечённые ставки и неизвестные места. До явного owner checkpoint не генерируй replacement-идеи, не меняй активный hit parade и не выдавай сырую гипотезу за текущую ставку.
+8. Новая идея может попасть в `data/HIT_PARADE.md` только после owner checkpoint: владелец увидел входные источники, конкретную модель и согласовал перевод из inbox/карты Jobs в `quick_scan`. Явный запрос «добавь в рейтинг» остаётся достаточным. Идея, сохранённая как `idea_inbox`, контекстная карта или карта Jobs, не получает score и не попадает в рейтинг.
+9. После meaningful change обновляй `docs/history/`.
+10. Не трогай несвязанные файлы и не откатывай чужие изменения.
+11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.
+12. AI/synthetic research строит гипотезы, но не заменяет клиентов; каждый цикл заканчивай дешёвым экспериментом с заранее заданными success/kill criteria.
 
 ## Niche Analysis Protocol
 
