@@ -6,7 +6,7 @@
 проверки и выбора бизнес-ниш от неопределённого направления до evidence-backed
 ставки, paid pilot и ограниченного решения о разработке.
 
-Текущий этап: factory `configured`, но не `validated` полным рыночным проходом.
+Текущий этап: factory `active`, но не `validated` полным рыночным проходом.
 Scoring v0.7, hit parade и dashboard работают как внутренние модули; следующим
 операционным milestone остаётся первый end-to-end цикл.
 
@@ -40,11 +40,13 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 
 ## Known Blockers
 
-* Niche Discovery Loop v1.0 методологически оформлен и проверен локально, но ещё не прогнан end-to-end на новой серии B2B-кандидатов; первый factory-cycle остаётся следующим операционным тестом.
+* Первый factory-run запущен 2026-09-09 в B2B-вертикали РПП: constraints, candidate universe и три E1 quick scan зафиксированы. Следующий gate — пять интервью с покупателями RPP Practice Lab, а не разработка.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
 * Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
 
-* В активном портфеле девять объектов: Timur Gromov Business System, Радарыч, КАДРА, PastLife AI / Sansara, Rule24 для психологов, ProfiWatcher для Profi.ru, Ассистент по женскому циклу и два внешних рыночных референса — OnSud и автомобильный SEO/CPA-лидогенератор.
+* В активном портфеле двенадцать объектов: прежние девять плюс RPP Practice Lab, RPP Supervision OS и RPP Between-Session Companion. Все три новых объекта находятся на `desk_scan` с E1 и confidence `0.55`.
+* RPP Practice Lab — текущий лидер новой вертикали по приоритету (`32`): B2B-практикум для программ РПП-обучения на синтетических кейсах. Нельзя строить до 5 интервью с покупателями и одного paid/budget-confirmed concierge-пилота.
+* RPP Supervision OS (`31`) допускает только ручной кейс-пакет с обезличенным материалом. RPP Between-Session Companion (`26`) припаркован до safety, privacy и problem evidence.
 * ProfiWatcher добавлен только как `quick_scan` с низким доверием `0.55`: кодовый актив проверен, но продажа внешним пользователям заблокирована до проверки правил Profi.ru, платных пилотов и фактической надежности сессий.
 * Ассистент по женскому циклу после v0.7 имеет рыночную возможность `68`, приоритет ставки `24`, доверие `0.55`. Категория сильная, но basic Flo for Partners бесплатен, поэтому платный pair-mode, LTV и канал не считаются доказанными.
 * КАДРА — `concrete_bet`: рыночная возможность `72`, приоритет ставки `34`, доверие `0.65`. Hands-on research Фотушки, НейроКадра и Facee подтверждает рынок; собственного runtime, точной цены, cost model, повторяемого канала и оплат ещё нет.
@@ -58,6 +60,7 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Git инициализирован на ветке `main`; `origin` подключен к `https://github.com/timurgromov/analiznish.git`. До initial commit удалённый репозиторий был пустым; видимость repo — public по настройке пользователя.
 * GitHub Pages включён с источником `GitHub Actions`. Workflow публикует dashboard по адресу `https://timurgromov.github.io/analiznish/dashboard/` при изменениях в `dashboard/`, `data/` или `docs/SCORING_MODEL.md` на `main`.
 * Score не записывается автоматически, но `scripts/validate-portfolio.mjs` пересчитывает блоки из критериев и падает при расхождении карточек, hit parade, формул или сортировки.
+* `data/niches/INDEX.md` — единый реестр карточек для dashboard и валидатора. Его отсутствие или несовпадение с hit parade теперь проявится при локальной проверке, а не оставит новую нишу невидимой.
 * Dashboard read-only и не редактирует Markdown.
 * Нет интеграции с Wordstat/Trends/Sheets/Notion.
 
@@ -104,5 +107,6 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Deploy: local Docker Compose и GitHub Pages.
 * Переоценка 2026-07-21 проверена локально командами `node scripts/validate-portfolio.mjs`, `./scripts/check-local.sh`, `node --check dashboard/app.js`, `git diff --check`; валидатор подтверждает 8 рынков и 7 исполнимых ставок. GitHub Pages run `29856243208` завершился `success`; публичный dashboard загрузил данные и интерактивные карточки «Радарыча» `76/52/0.82` и «КАДРЫ» `72/34/0.65`.
 * Изменение 2026-07-23 зафиксировано отдельным commit `d307b13`; валидатор подтверждает 9 рынков и 7 исполнимых ставок.
+* Первый quick-scan checkpoint 2026-09-09 локально подтверждает 12 рынков и 10 исполнимых ставок; dashboard загрузил новые три карточки через реестр. Commit/push/deploy ещё не выполнены.
 * Niche Discovery Loop v1.0 зафиксирован commit `efecdda`, отправлен в `origin/main`; GitHub Pages run `34275935196` завершился `success`, публичный dashboard открылся со статусом «Данные загружены».
 * Продуктовая иерархия «Niche Factory → evidence gates → scoring/portfolio» зафиксирована commit `af6b82f`; `PROJECT_SPEC.md` и `TASKS.md` переписаны вокруг первого полного цикла.

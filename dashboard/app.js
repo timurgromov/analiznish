@@ -1,17 +1,6 @@
 const HIT_PARADE_PATH = "../data/HIT_PARADE.md";
 const SCORING_PATH = "../docs/SCORING_MODEL.md";
-
-const nicheCardPaths = {
-  "Радарыч": "../data/niches/2026-07-01-travel-radar.md",
-  "КАДРА": "../data/niches/2026-07-21-kadra-ai-photo.md",
-  "Timur Gromov Business System": "../data/niches/2026-07-01-timur-gromov-business-system.md",
-  "PastLife AI / Sansara": "../data/niches/2026-07-01-pastlife-ai-sansara.md",
-  "Rule24 для психологов": "../data/niches/2026-07-03-rule24-psychologists.md",
-  "ProfiWatcher для Profi.ru": "../data/niches/2026-07-05-profiwatcher-profi-ru.md",
-  "Ассистент по женскому циклу": "../data/niches/2026-07-05-ai-cycle-assistant.md",
-  "Авто SEO/CPA / Российский Союз Автомобилистов": "../data/niches/2026-07-23-auto-seo-cpa-leadgen.md",
-  "LegalTech-документы для развода / OnSud": "../data/niches/2026-07-23-onsud-divorce-documents.md",
-};
+const NICHE_CARD_INDEX_PATH = "../data/niches/INDEX.md";
 
 const metricDescriptions = [
   {
@@ -85,6 +74,15 @@ function parseTable(markdown, firstHeader) {
     headers: splitMarkdownRow(tableLines[0]),
     rows: tableLines.slice(2).map((line) => splitMarkdownRow(line)),
   };
+}
+
+function parseCardInventory(markdown) {
+  const table = parseTable(markdown, "Ниша");
+  const pathIndex = table.headers.indexOf("Путь");
+  if (pathIndex === -1) return [];
+  return table.rows
+    .filter((row) => row[0] && row[pathIndex])
+    .map((row) => ({ name: row[0], path: `../${row[pathIndex]}` }));
 }
 
 function parseCriteria(markdown) {
@@ -350,18 +348,21 @@ async function loadText(path) {
 
 async function init() {
   try {
-    const [hitParade, scoring, ...nicheCards] = await Promise.all([
+    const [hitParade, scoring, inventory] = await Promise.all([
       loadText(HIT_PARADE_PATH),
       loadText(SCORING_PATH),
-      ...Object.values(nicheCardPaths).map((path) => loadText(path)),
+      loadText(NICHE_CARD_INDEX_PATH),
     ]);
+    const nicheCardsIndex = parseCardInventory(inventory);
+    if (!nicheCardsIndex.length) throw new Error("В data/niches/INDEX.md не найден реестр карточек.");
+    const nicheCards = await Promise.all(nicheCardsIndex.map((item) => loadText(item.path)));
     state.market = parseTable(hitParade, "Место на карте");
     state.queue = parseTable(hitParade, "Приоритет");
     state.criteriaByNiche = Object.fromEntries(
-      Object.keys(nicheCardPaths).map((name, index) => [canonicalName(name), parseNicheCriteria(nicheCards[index])]),
+      nicheCardsIndex.map((item, index) => [canonicalName(item.name), parseNicheCriteria(nicheCards[index])]),
     );
     state.summariesByNiche = Object.fromEntries(
-      Object.keys(nicheCardPaths).map((name, index) => [canonicalName(name), parseOneLiner(nicheCards[index])]),
+      nicheCardsIndex.map((item, index) => [canonicalName(item.name), parseOneLiner(nicheCards[index])]),
     );
 
     if (!state.market.rows.length || !state.queue.rows.length) {
