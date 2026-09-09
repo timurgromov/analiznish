@@ -26,6 +26,9 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Есть скоринговая модель в `docs/SCORING_MODEL.md`.
 * Есть workflow анализа в `docs/WORKFLOW.md`.
 * Есть управляемый `niche_factory` в `docs/NICHE_DISCOVERY_LOOP.md`: shortlist → scan → реальный CustDev → action → pay → repeat.
+* Есть `docs/SIGMA_EXECUTION_MODEL.md`: 4 зоны SIGMA, 10 шагов и обязательный
+  status board. Активный run не переходит к продукту, пока не видны evidence,
+  решение и следующий gate каждого пройденного шага.
 * Перед shortlist теперь обязательны `context_inventory`, Jobs map и
   `reference_mining`; они хранятся в `data/discovery/` и не становятся
   активными ставками без owner checkpoint.
@@ -49,8 +52,9 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   Gate 0 прочитал актуальный трек Rule 24, создал context inventory/Jobs map и
   провёл первый E1 `reference_mining` по трём широким Jobs. В Rule24 нет списка
   девяти идей: прежнее VM/форумное исследование было упомянуто владельцем, но его
-  отдельный путь пока не дан. Следующий gate — решить, нужно ли его включать, и
-  выбрать 1–2 Jobs для интервью, а не разработка и не новый score.
+  отдельный путь пока не дан. SIGMA board фиксирует проход на шагах 2–5/8–9 как
+  частичный и останавливает synthesis: следующий gate — независимый голос пяти
+  практиков, а не разработка и не новый score.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
 * Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
 
