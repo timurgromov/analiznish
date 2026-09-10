@@ -67,6 +67,19 @@ PostgreSQL пока не вводится. У кабинета один влад
   page overflow отсутствует, одновременно видна одна активная панель;
 * console errors — `0`.
 
+## Production verification
+
+* commit `241644e` отправлен в `origin/main`;
+* GitHub Pages run `34527058751` завершился с `success`;
+* та же уже открытая вкладка браузера загрузила
+  `https://timurgromov.github.io/analiznish/dashboard/?v=241644e#all-ideas`;
+* production показал `Кабинет идей`, `Все идеи 20`, 9 категорий и
+  20 строк реестра;
+* `Воронка → Финалист` оставила 2 идеи, а поиск `travel` — одну строку
+  `Радарыч / Travel Radar`;
+* на production `390×844` и `1180×820` не имеют page overflow; console
+  errors — `0`.
+
 ## Evidence limits
 
 * Реестр объединяет объекты разной природы, поэтому в строках обязательно

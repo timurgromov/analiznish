@@ -210,6 +210,11 @@ Scoring v0.7, hit parade и dashboard v3 работают как внутрен�
   `34518496008` завершился `success`. Публично проверены общий checkpoint,
   фильтр двух финалистов, переключение карты рынков, мобильный `390×844` и
   ноутбучный `1180×820`; console errors и page overflow отсутствуют.
+* Единый кабинет идей v3 зафиксирован commit `241644e`; GitHub Pages run
+  `34527058751` завершился `success`. Production-версия
+  `?v=241644e#all-ideas` показывает 20 идей из 9 категорий; переход к
+  финалистам и поиск `travel` работают. На `390×844` и `1180×820` page
+  overflow отсутствует, console errors — `0`.
 * Продуктовая иерархия «Niche Factory → evidence gates → scoring/portfolio» зафиксирована commit `af6b82f`; `PROJECT_SPEC.md` и `TASKS.md` переписаны вокруг первого полного цикла.
 * 2026-09-10 рамка цели расширена до устойчивой прибыли, а повторяемый cashflow
   закреплён как предпочтение, не hard filter. Ранний Portfolio Gate и шаг 5
