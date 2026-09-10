@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-dashboard-remove-gate-summary-v34",
+  "change_kind": "frontend-clarity",
+  "status": "passed",
+  "requested_visible_change": "Убрать со страницы «Этапы» крупный дублирующий блок результатов проверок, сохранив сами результаты в карточках идей и фильтре выбранного этапа.",
+  "expected_visible_delta": "После карты этапов отображается только выбранная полка с фильтрами и списком идей; блока «Результаты проверок» с шестью карточками больше нет.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "6523a85533565e8cfa7d56dc77d2677a173b71e1b561239c2a1dfc37ae9c85f3",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=local-v34#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel",
+    "state": "выбран этап «Финалисты», затем выбран результат «Прошла дальше»",
+    "selector_or_slide_id": "#view-funnel, #funnel-selection-panel, #funnel-gate-filter, .gate-cell",
+    "action": "Открыть локальный кандидат в существующей вкладке Chrome, выбрать «Финалисты», затем в фильтре результата выбрать «Прошла дальше»."
+  },
+  "must_remain_unchanged": [
+    "Текущий Chrome-tab остаётся единственным браузером проверки",
+    "Карта этапов раскрывает идеи на этой же странице",
+    "Результат проверки остаётся в фильтре и колонке «Решение»",
+    "Содержимое IDEA_REGISTRY.json не меняется"
+  ],
+  "required_viewports": [
+    "1232x582"
+  ],
+  "observations": [
+    {
+      "viewport": "1232x582",
+      "viewport_source": "фактическое окно уже открытой пользовательской вкладки Chrome",
+      "before_signature": "После inline-списка выбранного этапа видна отдельная панель «Результаты проверок» с шестью карточками статусов.",
+      "after_signature": "После выбора «Финалисты» и «Прошла дальше» видна одна строка «Обращение → оплаченная первая сессия» с решением «Прошла дальше»; после списка сразу footer, отдельной панели со статусами нет.",
+      "observed_visible_result": "Страница короче, а работа со статусом сохранена: фильтр оставил одну идею, в её колонке «Решение» виден тот же результат.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ]
+}

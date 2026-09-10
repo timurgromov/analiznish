@@ -235,10 +235,6 @@ function renderFunnel() {
     const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
     return `<li class="funnel-card"><button type="button" class="stage-jump ${ideas.length ? "" : "is-empty"}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b></div></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
   }).join("");
-  document.querySelector("#gate-grid").innerHTML = state.registry.gateStatuses.map((gate) => {
-    const count = state.registry.ideas.filter((idea) => idea.gateStatus === gate.id).length;
-    return `<div class="gate-stat-wrap"><button type="button" class="gate-stat gate-${gate.id}${state.funnelGate === gate.id ? " selected" : ""}" data-gate-jump="${gate.id}" aria-pressed="${state.funnelGate === gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(gate.description)}" aria-label="Что означает результат «${escapeHtml(gate.label)}»?">?</button></div>`;
-  }).join("");
 }
 
 function renderFunnelSelection() {
@@ -246,11 +242,6 @@ function renderFunnelSelection() {
   panel.hidden = state.funnelStage === null;
   document.querySelectorAll("[data-stage-jump]").forEach((button) => {
     const selected = button.dataset.stageJump === state.funnelStage;
-    button.classList.toggle("selected", selected);
-    button.setAttribute("aria-pressed", String(selected));
-  });
-  document.querySelectorAll("[data-gate-jump]").forEach((button) => {
-    const selected = button.dataset.gateJump === state.funnelGate;
     button.classList.toggle("selected", selected);
     button.setAttribute("aria-pressed", String(selected));
   });
@@ -460,12 +451,6 @@ function bindControls() {
   document.querySelectorAll("[data-stage-jump]").forEach((button) => button.addEventListener("click", () => {
     state.funnelStage = button.dataset.stageJump;
     state.funnelGate = "all";
-    renderFunnelSelection();
-    document.querySelector("#funnel-selection-panel").scrollIntoView({ behavior: "smooth", block: "start" });
-  }));
-  document.querySelectorAll("[data-gate-jump]").forEach((button) => button.addEventListener("click", () => {
-    state.funnelStage = state.funnelStage || "all";
-    state.funnelGate = button.dataset.gateJump;
     renderFunnelSelection();
     document.querySelector("#funnel-selection-panel").scrollIntoView({ behavior: "smooth", block: "start" });
   }));

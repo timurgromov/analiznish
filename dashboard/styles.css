@@ -502,37 +502,6 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .funnel-grid small { color: var(--muted); }
 .card-help { position: absolute; z-index: 2; top: 11px; right: 11px; }
 
-.gate-grid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 10px;
-  padding: 24px;
-}
-
-.gate-stat-wrap {
-  position: relative;
-  min-width: 0;
-}
-
-.gate-stat {
-  width: 100%;
-  min-height: 86px;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  gap: 3px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 12px 38px 12px 12px;
-  background: var(--surface);
-  color: var(--text);
-}
-
-.gate-stat:hover { border-color: #9eb6da; }
-.gate-stat.selected { border-color: var(--blue); background: var(--blue-soft); box-shadow: inset 0 0 0 1px var(--blue); }
-.gate-stat strong { font-size: 1.55rem; color: var(--blue); }
-.gate-stat span { font-size: .74rem; font-weight: 730; text-align: center; }
-
 .funnel-selection-panel {
   overflow: clip;
   scroll-margin-top: 72px;
@@ -669,7 +638,6 @@ footer a { font-weight: 750; text-decoration: none; }
   .idea-details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .idea-details > div:nth-child(2) { border-right: 0; }
   .funnel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .gate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .archive-groups { grid-template-columns: 1fr; }
 }
 
@@ -706,7 +674,6 @@ footer a { font-weight: 750; text-decoration: none; }
   .idea-card.compact .idea-details { grid-template-columns: 1fr; padding: 14px 14px 16px 60px; }
   .idea-details > div { border-right: 0; border-bottom: 1px solid var(--line); padding: 0 0 11px; }
   .funnel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px; }
-  .gate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 18px; }
   .funnel-selection-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 14px 18px; }
   .funnel-selection-controls .reset-button { grid-column: 1 / -1; width: fit-content; }
   .run-list { padding: 0 18px 18px; }
