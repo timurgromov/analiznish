@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-dashboard-v33-cache-delivery",
+  "change_kind": "frontend-cache-delivery",
+  "status": "passed",
+  "requested_visible_change": "Доставить опубликованную compact-v33 карту этапов, а не прежние кэшированные CSS и JS v32.",
+  "expected_visible_delta": "HTML подключает styles.css и app.js с новым cache-key v33, поэтому production получает карточки высотой 60px без повторяющейся строки количества.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "0677b41574e50f9502b834e50ae8668394871a11b597e7e99a1d143b27a0b656",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=local-v33-cache#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel",
+    "state": "локальная страница загружена после нового cache-key",
+    "selector_or_slide_id": "link[href*='cabinet-v33'], script[src*='cabinet-v33'], .stage-jump",
+    "action": "Открыть свежий URL и прочитать подключённые URL ресурсов и геометрию карточки"
+  },
+  "must_remain_unchanged": [
+    "Текущий Chrome-tab остаётся единственным браузером проверки",
+    "Inline-раскрытие этапа сохраняется",
+    "Содержимое данных не меняется"
+  ],
+  "required_viewports": [
+    "1232x582"
+  ],
+  "observations": [
+    {
+      "viewport": "1232x582",
+      "viewport_source": "фактическое окно уже открытой пользовательской вкладки Chrome",
+      "before_signature": "production c76a543 loaded styles.css and app.js with cache-key v32, card height=94 and repeated text visible",
+      "after_signature": "local candidate loads styles.css?v=20260911-cabinet-v33 and app.js?v=20260911-cabinet-v33; card text is number/count/title only; card height=60",
+      "observed_visible_result": "Новый cache-key загружает нужную compact-v33 сборку, поэтому ранее видимый v32-кэш не маскирует изменение.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": "Production проверка обнаружила старый v32 browser cache"
+  }
+}
