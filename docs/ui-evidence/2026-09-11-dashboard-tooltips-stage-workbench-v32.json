@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-dashboard-tooltips-stage-workbench-v32",
+  "change_kind": "dashboard-ux-correction",
+  "status": "passed",
+  "requested_visible_change": "Заменить постоянные определения в раздутых карточках на маленькие вопросики с подсказками и показывать идеи выбранного этапа на той же странице.",
+  "expected_visible_delta": "Карточки этапов и результатов снова компактные; у разделов, этапов и результатов есть маленький знак вопроса; подсказка всплывает поверх экрана; нажатие этапа раскрывает его идеи и фильтры без перехода во Все идеи.",
+  "attempt_number": 2,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "844c946f725fdf9731b5d78257804b94695e573167847c001ef078134d4b3bc2",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=local-v32b#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel, верхняя навигация и /dashboard/#portfolio",
+    "state": "реестр загружен; 8 этапов, 6 результатов, 20 идей",
+    "selector_or_slide_id": "#funnel-grid, .help-trigger, #floating-tooltip, #funnel-selection-panel",
+    "action": "Открыть подсказку, выбрать Финалисты, отфильтровать результат Прошла дальше и открыть Сравнение оценённых"
+  },
+  "must_remain_unchanged": [
+    "Все 20 идей остаются в едином реестре",
+    "Score и confidence не пересчитываются",
+    "Этап и результат проверки остаются разными полями",
+    "Dashboard остаётся read-only",
+    "Проверка выполняется в существующей вкладке Chrome без нового браузера или вкладки"
+  ],
+  "required_viewports": [
+    "1232x582"
+  ],
+  "observations": [
+    {
+      "viewport": "1232x582",
+      "viewport_source": "фактическое окно уже открытой пользовательской вкладки Chrome; innerWidth=1232; innerHeight=582",
+      "before_signature": "stage-card min-height=148px and gate-card min-height=116px; определения постоянно видны внутри карточек; нажатие этапа переключает вкладку на Все идеи; вкладки называются Журнал проверок и Хит-парад",
+      "after_signature": "stage-card min-height=94px and gate-card min-height=86px; постоянных определений в карточках нет; видимые ? открывают floating-tooltip; Финалисты раскрывают 2 идеи в #funnel-selection-panel на той же вкладке; фильтр Прошла дальше оставляет 1 идею; scrollWidth=1232",
+      "observed_visible_result": "Воронка снова занимает компактный блок. По нажатию на ? у Финалистов показана подсказка, выбранный этап и фильтр не сброшены. Идеи Финалистов раскрыты прямо под этапами. Разделы названы Журнал исследований и Сравнение оценённых, а последний экран объясняет, почему строк меньше, чем во всём реестре.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": "Прямой запрос владельца: маленький вопросик с всплывающей подсказкой вместо раздутого блока"
+  }
+}

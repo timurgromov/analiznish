@@ -28,10 +28,15 @@ const state = {
   factory: null,
   activeView: "all-ideas",
   filters: { search: "", category: "all", stage: "all", gate: "all", sort: "current" },
+  funnelStage: null,
+  funnelGate: "all",
+  funnelSort: "current",
   portfolioView: "queue",
   portfolio: { market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
   selectedPortfolioIndex: 0,
 };
+
+let activeTooltipTrigger = null;
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -137,10 +142,22 @@ function renderFilterOptions() {
   categorySelect.innerHTML = `<option value="all">Все категории</option>${categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
   document.querySelector("#stage-filter").innerHTML = `<option value="all">Все этапы</option>${state.registry.stages.map((stage) => `<option value="${stage.id}">${escapeHtml(stage.label)}</option>`).join("")}`;
   document.querySelector("#gate-filter").innerHTML = `<option value="all">Все решения</option>${state.registry.gateStatuses.map((gate) => `<option value="${gate.id}">${escapeHtml(gate.label)}</option>`).join("")}`;
+  document.querySelector("#funnel-gate-filter").innerHTML = `<option value="all">Все результаты</option>${state.registry.gateStatuses.map((gate) => `<option value="${gate.id}">${escapeHtml(gate.label)}</option>`).join("")}`;
 }
 
 function searchableText(idea) {
   return [idea.title, idea.category, idea.rankingReason, idea.mainRisk, idea.nextGate, objectTypeLabels[idea.objectType]].join(" ").toLocaleLowerCase("ru");
+}
+
+function sortIdeas(ideas, sortKey) {
+  const sorters = {
+    current: (a, b) => currentScore(b) - currentScore(a) || b.evidenceConfidence - a.evidenceConfidence || a.title.localeCompare(b.title, "ru"),
+    base: (a, b) => b.baseScore - a.baseScore || b.evidenceConfidence - a.evidenceConfidence,
+    confidence: (a, b) => b.evidenceConfidence - a.evidenceConfidence || currentScore(b) - currentScore(a),
+    stage: (a, b) => (stageById(b.stage)?.order ?? 0) - (stageById(a.stage)?.order ?? 0) || currentScore(b) - currentScore(a),
+    title: (a, b) => a.title.localeCompare(b.title, "ru"),
+  };
+  return [...ideas].sort(sorters[sortKey] || sorters.current);
 }
 
 function filteredIdeas() {
@@ -152,14 +169,7 @@ function filteredIdeas() {
     if (state.filters.gate !== "all" && idea.gateStatus !== state.filters.gate) return false;
     return true;
   });
-  const sorters = {
-    current: (a, b) => currentScore(b) - currentScore(a) || b.evidenceConfidence - a.evidenceConfidence || a.title.localeCompare(b.title, "ru"),
-    base: (a, b) => b.baseScore - a.baseScore || b.evidenceConfidence - a.evidenceConfidence,
-    confidence: (a, b) => b.evidenceConfidence - a.evidenceConfidence || currentScore(b) - currentScore(a),
-    stage: (a, b) => (stageById(b.stage)?.order ?? 0) - (stageById(a.stage)?.order ?? 0) || currentScore(b) - currentScore(a),
-    title: (a, b) => a.title.localeCompare(b.title, "ru"),
-  };
-  return ideas.sort(sorters[state.filters.sort]);
+  return sortIdeas(ideas, state.filters.sort);
 }
 
 function ideaCard(idea, rank, compact = false) {
@@ -223,12 +233,127 @@ function renderIdeas() {
 function renderFunnel() {
   document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
     const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
-    return `<li><button type="button" class="${ideas.length ? "" : "is-empty"}" data-stage-jump="${stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)} сейчас на этапе</small><p>${escapeHtml(stage.description)}</p></div></button></li>`;
+    return `<li class="funnel-card"><button type="button" class="stage-jump ${ideas.length ? "" : "is-empty"}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)} сейчас</small></div></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
   }).join("");
   document.querySelector("#gate-grid").innerHTML = state.registry.gateStatuses.map((gate) => {
     const count = state.registry.ideas.filter((idea) => idea.gateStatus === gate.id).length;
-    return `<button type="button" class="gate-stat gate-${gate.id}" data-gate-jump="${gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span><small>${escapeHtml(gate.description)}</small></button>`;
+    return `<div class="gate-stat-wrap"><button type="button" class="gate-stat gate-${gate.id}${state.funnelGate === gate.id ? " selected" : ""}" data-gate-jump="${gate.id}" aria-pressed="${state.funnelGate === gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(gate.description)}" aria-label="Что означает результат «${escapeHtml(gate.label)}»?">?</button></div>`;
   }).join("");
+}
+
+function renderFunnelSelection() {
+  const panel = document.querySelector("#funnel-selection-panel");
+  panel.hidden = state.funnelStage === null;
+  document.querySelectorAll("[data-stage-jump]").forEach((button) => {
+    const selected = button.dataset.stageJump === state.funnelStage;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  document.querySelectorAll("[data-gate-jump]").forEach((button) => {
+    const selected = button.dataset.gateJump === state.funnelGate;
+    button.classList.toggle("selected", selected);
+    button.setAttribute("aria-pressed", String(selected));
+  });
+  if (state.funnelStage === null) return;
+
+  const stage = state.funnelStage === "all" ? null : stageById(state.funnelStage);
+  const gate = state.funnelGate === "all" ? null : gateById(state.funnelGate);
+  const ideas = sortIdeas(state.registry.ideas.filter((idea) => {
+    if (stage && idea.stage !== stage.id) return false;
+    if (gate && idea.gateStatus !== gate.id) return false;
+    return true;
+  }), state.funnelSort);
+
+  document.querySelector("#funnel-selection-title").textContent = stage ? stage.label : "Все этапы";
+  document.querySelector("#funnel-selection-note").textContent = stage
+    ? `Показаны идеи, которые находятся на этапе «${stage.label}» сейчас. Место считается только внутри этой выборки.`
+    : "Показаны идеи со всех этапов по выбранному результату проверки.";
+  document.querySelector("#funnel-selection-count").textContent = pluralIdeas(ideas.length);
+  document.querySelector("#funnel-selection-filter").textContent = gate ? `результат: ${gate.label}` : "все результаты проверки";
+  document.querySelector("#funnel-gate-filter").value = state.funnelGate;
+  document.querySelector("#funnel-sort-control").value = state.funnelSort;
+  document.querySelector("#funnel-idea-list").innerHTML = ideas.map((idea, index) => ideaCard(idea, index + 1)).join("");
+
+  const empty = document.querySelector("#funnel-idea-empty");
+  empty.hidden = ideas.length !== 0;
+  if (!ideas.length) {
+    document.querySelector("#funnel-empty-title").textContent = stage?.id === "inbox"
+      ? "Чистилище сейчас пусто"
+      : "В этой выборке сейчас нет идей";
+    document.querySelector("#funnel-empty-text").textContent = stage?.id === "inbox"
+      ? `Все ${state.registry.ideas.length} сохранённых идей уже получили хотя бы первичную классификацию. Новая сырая идея сначала появится здесь.`
+      : "Сними дополнительный фильтр результата или выбери другой этап.";
+  }
+}
+
+function positionTooltip(trigger) {
+  const tooltip = document.querySelector("#floating-tooltip");
+  const triggerRect = trigger.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const margin = 10;
+  const gap = 8;
+  const left = Math.min(
+    window.innerWidth - tooltipRect.width - margin,
+    Math.max(margin, triggerRect.left + triggerRect.width / 2 - tooltipRect.width / 2),
+  );
+  const fitsAbove = triggerRect.top >= tooltipRect.height + gap + margin;
+  const top = fitsAbove
+    ? triggerRect.top - tooltipRect.height - gap
+    : Math.min(window.innerHeight - tooltipRect.height - margin, triggerRect.bottom + gap);
+  tooltip.style.left = `${Math.round(left)}px`;
+  tooltip.style.top = `${Math.max(margin, Math.round(top))}px`;
+}
+
+function showTooltip(trigger) {
+  const tooltip = document.querySelector("#floating-tooltip");
+  if (activeTooltipTrigger && activeTooltipTrigger !== trigger) {
+    activeTooltipTrigger.removeAttribute("aria-describedby");
+    activeTooltipTrigger.setAttribute("aria-expanded", "false");
+  }
+  activeTooltipTrigger = trigger;
+  tooltip.textContent = trigger.dataset.tooltip;
+  tooltip.hidden = false;
+  trigger.setAttribute("aria-describedby", "floating-tooltip");
+  trigger.setAttribute("aria-expanded", "true");
+  requestAnimationFrame(() => positionTooltip(trigger));
+}
+
+function hideTooltip(trigger = activeTooltipTrigger) {
+  if (!trigger || trigger !== activeTooltipTrigger) return;
+  const tooltip = document.querySelector("#floating-tooltip");
+  tooltip.hidden = true;
+  trigger.removeAttribute("aria-describedby");
+  trigger.setAttribute("aria-expanded", "false");
+  activeTooltipTrigger = null;
+}
+
+function bindTooltips() {
+  document.querySelectorAll("[data-tooltip]").forEach((trigger) => {
+    trigger.setAttribute("aria-expanded", "false");
+    trigger.addEventListener("mouseenter", () => showTooltip(trigger));
+    trigger.addEventListener("mouseleave", () => {
+      if (!trigger.matches(":focus-visible")) hideTooltip(trigger);
+    });
+    trigger.addEventListener("focus", () => {
+      requestAnimationFrame(() => {
+        if (trigger.matches(":focus-visible")) showTooltip(trigger);
+      });
+    });
+    trigger.addEventListener("blur", () => hideTooltip(trigger));
+    trigger.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      showTooltip(trigger);
+    });
+  });
+  document.addEventListener("pointerdown", (event) => {
+    if (!event.target.closest("[data-tooltip]")) hideTooltip();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") hideTooltip();
+  });
+  window.addEventListener("resize", () => hideTooltip());
+  window.addEventListener("scroll", () => hideTooltip(), true);
 }
 
 function renderRuns() {
@@ -287,6 +412,7 @@ function renderPortfolioDetail() {
 }
 
 function switchView(view, updateHash = true) {
+  hideTooltip();
   const available = new Set(["all-ideas", "funnel", "research", "portfolio", "archive"]);
   state.activeView = available.has(view) ? view : "all-ideas";
   document.querySelectorAll(".view-tab").forEach((button) => {
@@ -332,17 +458,31 @@ function bindControls() {
   document.querySelector("#reset-filters").addEventListener("click", resetIdeaFilters);
   document.querySelector("#show-all-ideas").addEventListener("click", resetIdeaFilters);
   document.querySelectorAll("[data-stage-jump]").forEach((button) => button.addEventListener("click", () => {
-    state.filters.stage = button.dataset.stageJump;
-    document.querySelector("#stage-filter").value = state.filters.stage;
-    switchView("all-ideas");
-    renderIdeas();
+    state.funnelStage = button.dataset.stageJump;
+    state.funnelGate = "all";
+    renderFunnelSelection();
+    document.querySelector("#funnel-selection-panel").scrollIntoView({ behavior: "smooth", block: "start" });
   }));
   document.querySelectorAll("[data-gate-jump]").forEach((button) => button.addEventListener("click", () => {
-    state.filters.gate = button.dataset.gateJump;
-    document.querySelector("#gate-filter").value = state.filters.gate;
-    switchView("all-ideas");
-    renderIdeas();
+    state.funnelStage = state.funnelStage || "all";
+    state.funnelGate = button.dataset.gateJump;
+    renderFunnelSelection();
+    document.querySelector("#funnel-selection-panel").scrollIntoView({ behavior: "smooth", block: "start" });
   }));
+  document.querySelector("#funnel-gate-filter").addEventListener("change", (event) => {
+    state.funnelGate = event.target.value;
+    renderFunnelSelection();
+  });
+  document.querySelector("#funnel-sort-control").addEventListener("change", (event) => {
+    state.funnelSort = event.target.value;
+    renderFunnelSelection();
+  });
+  document.querySelector("#clear-funnel-selection").addEventListener("click", () => {
+    state.funnelStage = null;
+    state.funnelGate = "all";
+    state.funnelSort = "current";
+    renderFunnelSelection();
+  });
   document.querySelectorAll(".portfolio-tab").forEach((button) => button.addEventListener("click", () => {
     state.portfolioView = button.dataset.portfolio;
     state.selectedPortfolioIndex = 0;
@@ -380,10 +520,12 @@ async function init() {
     renderFilterOptions();
     renderIdeas();
     renderFunnel();
+    renderFunnelSelection();
     renderRuns();
     renderArchive();
     renderPortfolioTable();
     renderPortfolioDetail();
+    bindTooltips();
     bindControls();
     const requestedView = location.hash.replace("#", "") || factory.dashboard.defaultView;
     switchView(requestedView, false);
