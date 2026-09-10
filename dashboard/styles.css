@@ -406,6 +406,18 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
   text-align: center;
 }
 
+.empty-state strong { display: block; margin-bottom: 6px; color: var(--text); font-size: 1rem; }
+.empty-state p { max-width: 720px; margin: 0 auto 14px; }
+.empty-reset-button {
+  min-height: 40px;
+  border: 1px solid #91acd3;
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: var(--surface);
+  color: var(--blue);
+  font-weight: 750;
+}
+
 .error-message {
   margin-bottom: 18px;
   border: 1px solid #ebbbbb;
@@ -432,10 +444,10 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .funnel-grid button {
   position: relative;
   width: 100%;
-  min-height: 96px;
+  min-height: 148px;
   display: grid;
   grid-template-columns: 28px 48px 1fr;
-  align-items: center;
+  align-items: start;
   gap: 10px;
   border: 1px solid var(--line);
   border-radius: 13px;
@@ -446,11 +458,13 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 }
 
 .funnel-grid button:hover { border-color: #9eb6da; background: #f5f9ff; }
+.funnel-grid button.is-empty { border-style: dashed; background: #fbfcfe; }
 .funnel-grid button > span { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 999px; background: #e7edf5; color: var(--muted); font-size: .7rem; font-weight: 800; }
 .funnel-grid button > strong { color: var(--blue); font-size: 1.7rem; }
 .funnel-grid div { display: grid; min-width: 0; }
 .funnel-grid b { font-size: .82rem; }
 .funnel-grid small { color: var(--muted); }
+.funnel-grid p { margin: 8px 0 0; color: #4e5c72; font-size: .74rem; line-height: 1.35; }
 
 .gate-grid {
   display: grid;
@@ -460,7 +474,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 }
 
 .gate-stat {
-  min-height: 88px;
+  min-height: 116px;
   display: grid;
   place-items: center;
   align-content: center;
@@ -474,6 +488,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .gate-stat:hover { border-color: #9eb6da; }
 .gate-stat strong { font-size: 1.55rem; color: var(--blue); }
 .gate-stat span { font-size: .74rem; font-weight: 730; text-align: center; }
+.gate-stat small { max-width: 150px; color: var(--muted); font-size: .68rem; line-height: 1.3; text-align: center; }
 
 .run-list { display: grid; padding: 0 24px 24px; }
 .run-item { display: grid; grid-template-columns: 12px 1fr; gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--line); }

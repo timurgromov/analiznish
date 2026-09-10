@@ -23,6 +23,12 @@ const stages = new Map(registry.stages.map((stage) => [stage.id, stage]));
 const gateStatuses = new Set(registry.gateStatuses.map((status) => status.id));
 assert(stages.size === registry.stages.length && stages.size === 8, "этапы должны быть уникальными и покрывать 8 стадий");
 assert(gateStatuses.size === registry.gateStatuses.length && gateStatuses.size === 6, "gate statuses должны быть уникальными и покрывать 6 исходов");
+for (const stage of registry.stages) {
+  for (const key of ["id", "label", "shortLabel", "description"]) assert(typeof stage[key] === "string" && stage[key].trim(), `stage.${stage.id}.${key} обязателен`);
+}
+for (const gate of registry.gateStatuses) {
+  for (const key of ["id", "label", "description"]) assert(typeof gate[key] === "string" && gate[key].trim(), `gateStatus.${gate.id}.${key} обязателен`);
+}
 
 const runIds = new Set();
 for (const run of registry.runs) {

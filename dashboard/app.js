@@ -120,7 +120,7 @@ function renderTopSummary() {
     [categories, "категорий", "Только фильтры"],
     [finalists, "финалиста", "Ждут подтверждения"],
     [money, "с деньгами", "Оплата или повтор"],
-    [archive, "в архиве", "История не удалена"],
+    [archive, "остановлено", "Можно вернуть позже"],
   ];
   document.querySelector("#summary-strip").innerHTML = stats.map(([value, label, note]) => `<article><strong>${value}</strong><div><span>${escapeHtml(label)}</span><small>${escapeHtml(note)}</small></div></article>`).join("");
   document.querySelector("#tab-total").textContent = ideas.length;
@@ -190,24 +190,44 @@ function ideaCard(idea, rank, compact = false) {
 function renderIdeas() {
   const ideas = filteredIdeas();
   document.querySelector("#idea-list").innerHTML = ideas.map((idea, index) => ideaCard(idea, index + 1)).join("");
-  document.querySelector("#idea-empty").hidden = ideas.length !== 0;
+  const empty = document.querySelector("#idea-empty");
+  empty.hidden = ideas.length !== 0;
+  if (!ideas.length) {
+    const title = document.querySelector("#idea-empty-title");
+    const text = document.querySelector("#idea-empty-text");
+    if (state.filters.stage === "inbox") {
+      title.textContent = "Чистилище сейчас пусто";
+      text.textContent = `Все ${state.registry.ideas.length} сохранённых идей уже получили хотя бы первичную классификацию и находятся на следующих этапах. Новая сырая идея сначала появится здесь.`;
+    } else if (state.filters.stage !== "all") {
+      const stage = stageById(state.filters.stage);
+      title.textContent = `На этапе «${stage?.label || state.filters.stage}» сейчас нет идей`;
+      text.textContent = stage?.description || "Идеи появятся здесь после предыдущей проверки.";
+    } else if (state.filters.gate !== "all") {
+      const gate = gateById(state.filters.gate);
+      title.textContent = `С решением «${gate?.label || state.filters.gate}» сейчас нет идей`;
+      text.textContent = gate?.description || "Измени фильтр, чтобы увидеть остальные идеи.";
+    } else {
+      title.textContent = "По этим фильтрам идей нет";
+      text.textContent = "Измени запрос или покажи весь реестр.";
+    }
+  }
   document.querySelector("#result-count").textContent = pluralIdeas(ideas.length);
   const active = [];
   if (state.filters.search) active.push(`поиск «${state.filters.search}»`);
   if (state.filters.category !== "all") active.push(state.filters.category);
-  if (state.filters.stage !== "all") active.push(stageById(state.filters.stage)?.label);
-  if (state.filters.gate !== "all") active.push(gateById(state.filters.gate)?.label);
+  if (state.filters.stage !== "all") active.push(`этап: ${stageById(state.filters.stage)?.label}`);
+  if (state.filters.gate !== "all") active.push(`решение: ${gateById(state.filters.gate)?.label}`);
   document.querySelector("#filter-description").textContent = active.length ? active.join(" · ") : "без фильтров";
 }
 
 function renderFunnel() {
   document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
     const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
-    return `<li><button type="button" data-stage-jump="${stage.id}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)}</small></div></button></li>`;
+    return `<li><button type="button" class="${ideas.length ? "" : "is-empty"}" data-stage-jump="${stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)} сейчас на этапе</small><p>${escapeHtml(stage.description)}</p></div></button></li>`;
   }).join("");
   document.querySelector("#gate-grid").innerHTML = state.registry.gateStatuses.map((gate) => {
     const count = state.registry.ideas.filter((idea) => idea.gateStatus === gate.id).length;
-    return `<button type="button" class="gate-stat gate-${gate.id}" data-gate-jump="${gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span></button>`;
+    return `<button type="button" class="gate-stat gate-${gate.id}" data-gate-jump="${gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span><small>${escapeHtml(gate.description)}</small></button>`;
   }).join("");
 }
 
@@ -283,8 +303,21 @@ function switchView(view, updateHash = true) {
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
+function resetIdeaFilters() {
+  state.filters = { search: "", category: "all", stage: "all", gate: "all", sort: "current" };
+  document.querySelector("#idea-search").value = "";
+  document.querySelector("#category-filter").value = "all";
+  document.querySelector("#stage-filter").value = "all";
+  document.querySelector("#gate-filter").value = "all";
+  document.querySelector("#sort-control").value = "current";
+  renderIdeas();
+}
+
 function bindControls() {
-  document.querySelectorAll(".view-tab").forEach((button) => button.addEventListener("click", () => switchView(button.dataset.view)));
+  document.querySelectorAll(".view-tab").forEach((button) => button.addEventListener("click", () => {
+    if (button.dataset.view === "all-ideas") resetIdeaFilters();
+    switchView(button.dataset.view);
+  }));
   const bindings = [
     ["#idea-search", "search", "input"],
     ["#category-filter", "category", "change"],
@@ -296,15 +329,8 @@ function bindControls() {
     state.filters[key] = inputEvent.target.value;
     renderIdeas();
   }));
-  document.querySelector("#reset-filters").addEventListener("click", () => {
-    state.filters = { search: "", category: "all", stage: "all", gate: "all", sort: "current" };
-    document.querySelector("#idea-search").value = "";
-    document.querySelector("#category-filter").value = "all";
-    document.querySelector("#stage-filter").value = "all";
-    document.querySelector("#gate-filter").value = "all";
-    document.querySelector("#sort-control").value = "current";
-    renderIdeas();
-  });
+  document.querySelector("#reset-filters").addEventListener("click", resetIdeaFilters);
+  document.querySelector("#show-all-ideas").addEventListener("click", resetIdeaFilters);
   document.querySelectorAll("[data-stage-jump]").forEach((button) => button.addEventListener("click", () => {
     state.filters.stage = button.dataset.stageJump;
     document.querySelector("#stage-filter").value = state.filters.stage;

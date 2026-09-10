@@ -10,22 +10,22 @@
     "explanation": "Предварительная оценка показывает текущую гипотезу о потенциале. Доверие показывает глубину доказательств. При низком доверии итог остаётся ближе к нейтральным 50 и может заметно измениться после исследования."
   },
   "stages": [
-    { "id": "inbox", "order": 0, "label": "Чистилище", "shortLabel": "Идея" },
-    { "id": "quick_scan", "order": 1, "label": "Быстрый отсев", "shortLabel": "Отсев" },
-    { "id": "market_research", "order": 2, "label": "Исследование рынка", "shortLabel": "Рынок" },
-    { "id": "finalist", "order": 3, "label": "Финалист", "shortLabel": "Финал" },
-    { "id": "interviews", "order": 4, "label": "Интервью", "shortLabel": "Люди" },
-    { "id": "action_test", "order": 5, "label": "Проверка действием", "shortLabel": "Действие" },
-    { "id": "paid", "order": 6, "label": "Деньги", "shortLabel": "Оплата" },
-    { "id": "repeat", "order": 7, "label": "Повтор", "shortLabel": "Повтор" }
+    { "id": "inbox", "order": 0, "label": "Чистилище", "shortLabel": "Идея", "description": "Новые идеи, которые только сохранены и ещё не проверялись." },
+    { "id": "quick_scan", "order": 1, "label": "Первичная проверка", "shortLabel": "Проверка", "description": "За 5–10 минут проверяем плательщика, деньги и очевидные стоп-факторы." },
+    { "id": "market_research", "order": 2, "label": "Проверка рынка", "shortLabel": "Рынок", "description": "Ищем спрос, конкурентов, рабочую экономику и применимость в России." },
+    { "id": "finalist", "order": 3, "label": "Финалисты", "shortLabel": "Финал", "description": "Лучшие 1–2 идеи batch, выбранные для проверки на реальных людях." },
+    { "id": "interviews", "order": 4, "label": "Интервью", "shortLabel": "Люди", "description": "Проверяем, повторяется ли дорогая проблема в реальном прошлом поведении." },
+    { "id": "action_test", "order": 5, "label": "Тест действием", "shortLabel": "Действие", "description": "Просим сделать реальный шаг: заявку, предзаказ или участие в ручном пилоте." },
+    { "id": "paid", "order": 6, "label": "Первые деньги", "shortLabel": "Оплата", "description": "Получена реальная оплата или подтверждённый бюджет на пилот." },
+    { "id": "repeat", "order": 7, "label": "Повторные деньги", "shortLabel": "Повтор", "description": "Проверяем повторные покупки, удержание, прибыль и возможность масштабирования." }
   ],
   "gateStatuses": [
-    { "id": "not_researched", "label": "Не исследована" },
-    { "id": "in_progress", "label": "Исследуется" },
-    { "id": "passed", "label": "Прошла дальше" },
-    { "id": "passed_not_selected", "label": "Прошла, но не выбрана" },
-    { "id": "parked", "label": "Припаркована" },
-    { "id": "failed", "label": "Отсеяна" }
+    { "id": "not_researched", "label": "Не проверялась", "description": "Решение ещё не принималось." },
+    { "id": "in_progress", "label": "Проверяется", "description": "Следующая проверка уже идёт." },
+    { "id": "passed", "label": "Прошла дальше", "description": "Данных хватило для перехода на следующий этап." },
+    { "id": "passed_not_selected", "label": "Прошла, не в фокусе", "description": "Этап пройден, но сейчас выбрана другая идея." },
+    { "id": "parked", "label": "На паузе", "description": "Вернёмся только после указанного нового условия." },
+    { "id": "failed", "label": "Отсеяна", "description": "Остановлена из-за конкретного ограничения." }
   ],
   "ideas": [
     {

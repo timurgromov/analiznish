@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>Анализ Ниш — Кабинет идей</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260910-cabinet-v3" />
+    <link rel="stylesheet" href="./styles.css?v=20260910-cabinet-v31" />
   </head>
   <body>
     <header class="topbar">
@@ -23,10 +23,10 @@
 
     <nav class="view-tabs" aria-label="Разделы кабинета" role="tablist">
       <button class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="view-all-ideas" data-view="all-ideas">Все идеи <span id="tab-total">0</span></button>
-      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-funnel" data-view="funnel">Воронка</button>
-      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-research" data-view="research">Исследования <span id="tab-runs">0</span></button>
-      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-portfolio" data-view="portfolio">Портфель</button>
-      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-archive" data-view="archive">Архив <span id="tab-archive">0</span></button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-funnel" data-view="funnel" title="Где каждая идея находится сейчас">Этапы</button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-research" data-view="research" title="История проведённых исследований">Журнал проверок <span id="tab-runs">0</span></button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-portfolio" data-view="portfolio" title="Сравнение рынков и наших ставок">Хит-парад</button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-archive" data-view="archive" title="Идеи на паузе и в отсеве">Остановленные <span id="tab-archive">0</span></button>
     </nav>
 
     <main class="layout" id="main-content">
@@ -80,7 +80,11 @@
             <span>№</span><span>Идея</span><span>Рейтинг</span><span>Доверие</span><span>Этап</span><span>Решение</span><span>Почему здесь</span><span></span>
           </div>
           <div class="idea-list" id="idea-list"></div>
-          <div class="empty-state" id="idea-empty" hidden>По этим фильтрам идей нет. Сбрось фильтры или добавь новую идею через чат.</div>
+          <div class="empty-state" id="idea-empty" hidden>
+            <strong id="idea-empty-title">По этим фильтрам идей нет</strong>
+            <p id="idea-empty-text">Сбрось фильтры или добавь новую идею через чат.</p>
+            <button class="empty-reset-button" id="show-all-ideas" type="button">Показать все идеи</button>
+          </div>
         </section>
 
         <details class="panel model-note">
@@ -96,7 +100,7 @@
       <section class="app-view" id="view-funnel" role="tabpanel" data-panel="funnel" hidden>
         <section class="panel">
           <div class="section-head">
-            <div><div class="section-kicker">Все категории</div><h2>Где находятся идеи</h2><p>Количество показывает текущую стадию каждой идеи, а не красивую накопительную воронку.</p></div>
+            <div><div class="section-kicker">Все категории</div><h2>Где каждая идея находится сейчас</h2><p><strong>Одна идея находится только на одном этапе.</strong> Число показывает текущую полку, а не сколько идей когда-либо проходили этот шаг.</p></div>
           </div>
           <ol class="funnel-grid" id="funnel-grid"></ol>
         </section>
@@ -108,7 +112,7 @@
 
       <section class="app-view" id="view-research" role="tabpanel" data-panel="research" hidden>
         <section class="panel">
-          <div class="section-head"><div><div class="section-kicker">История</div><h2>Исследования и прогоны</h2><p>Каждый прогон — отдельный пакет доказательств. Он может затрагивать одну или несколько идей.</p></div></div>
+          <div class="section-head"><div><div class="section-kicker">История работы</div><h2>Журнал проведённых проверок</h2><p>Здесь не ещё один список идей. Каждая запись — отдельный исследовательский прогон с результатом и исходными материалами.</p></div></div>
           <div class="run-list" id="run-list"></div>
         </section>
       </section>
@@ -116,10 +120,10 @@
       <section class="app-view" id="view-portfolio" role="tabpanel" data-panel="portfolio" hidden>
         <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
           <div class="section-head portfolio-heading">
-            <div><div class="section-kicker">Проверенный портфель v0.7</div><h2 id="portfolio-title">Две разные линзы</h2><p>Чужой сильный рынок не становится нашей готовой ставкой автоматически.</p></div>
+            <div><div class="section-kicker">Сравнение после проверки</div><h2 id="portfolio-title">Два хит-парада, а не один</h2><p><strong>Наши ставки</strong> отвечают «что делать нам», а <strong>рынки</strong> — «где вообще видны спрос и деньги».</p></div>
             <div class="portfolio-tabs" role="tablist" aria-label="Представление портфеля">
-              <button class="portfolio-tab active" type="button" role="tab" aria-selected="true" data-portfolio="queue">Наши ставки</button>
-              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="market">Карта рынков</button>
+              <button class="portfolio-tab active" type="button" role="tab" aria-selected="true" data-portfolio="queue">Приоритет наших ставок</button>
+              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="market">Сильные рынки</button>
             </div>
           </div>
           <div class="table-scroll" tabindex="0"><table><thead id="portfolio-head"></thead><tbody id="portfolio-body"></tbody></table></div>
@@ -129,7 +133,7 @@
 
       <section class="app-view" id="view-archive" role="tabpanel" data-panel="archive" hidden>
         <section class="panel">
-          <div class="section-head"><div><div class="section-kicker">Не удаляем историю</div><h2>Архив и отсев</h2><p>Припаркованные и отсеянные идеи сохраняют причину решения и условие возврата.</p></div></div>
+          <div class="section-head"><div><div class="section-kicker">Не удаляем историю</div><h2>Идеи на паузе и в отсеве</h2><p><strong>На паузе</strong> — ждут нового условия. <strong>Отсеяны</strong> — не продолжаем без изменения ключевого ограничения.</p></div></div>
           <div class="archive-groups" id="archive-groups"></div>
         </section>
       </section>
@@ -140,6 +144,6 @@
       <a href="../data/IDEA_REGISTRY.json" target="_blank" rel="noreferrer">Открыть данные ↗</a>
     </footer>
 
-    <script src="./app.js?v=20260910-cabinet-v3" defer></script>
+    <script src="./app.js?v=20260910-cabinet-v31" defer></script>
   </body>
 </html>

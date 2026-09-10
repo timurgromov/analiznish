@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-10-dashboard-stage-clarity-v31",
+  "change_kind": "dashboard-ux-clarity",
+  "status": "passed",
+  "requested_visible_change": "Объяснить нулевое Чистилище, назначение этапов и разделов, а также вернуть все 20 идей по явному нажатию Все идеи.",
+  "expected_visible_delta": "Разделы и этапы получают понятные названия и определения; пустое Чистилище объясняет ноль; Все идеи сбрасывает stage-фильтр и показывает 20 строк.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "59ca047b89bb4db145e24b988bb23c86e1960fb2e9cda2c18b9173e1af19bd2d",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel and /dashboard/#all-ideas",
+    "state": "реестр загружен; Чистилище содержит 0 идей",
+    "selector_or_slide_id": ".view-tabs, #funnel-grid, #idea-empty, #idea-list",
+    "action": "Нажать Этапы, затем Чистилище, затем Все идеи"
+  },
+  "must_remain_unchanged": [
+    "В реестре остаются 20 идей из 9 категорий",
+    "Этап и результат gate остаются разными полями",
+    "Score и confidence не пересчитываются",
+    "Dashboard остаётся read-only",
+    "Припаркованный психологический run не возобновляется"
+  ],
+  "required_viewports": [
+    "390x844",
+    "1232x582"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "уже открытая пользовательская вкладка Chrome; viewport override; innerWidth=390; innerHeight=844",
+      "before_signature": "tabs=Все идеи|Воронка|Исследования|Портфель|Архив; inbox-click=0; all-ideas-click keeps stage=inbox and 0 results",
+      "after_signature": "tabs=Все идеи|Этапы|Журнал проверок|Хит-парад|Остановленные; inbox-empty explains 20 classified ideas; all-ideas-click stage=all and count=20; scrollWidth=390",
+      "observed_visible_result": "На мобильном новая терминология доступна во вкладках, пустое Чистилище объясняет причину нуля, а Все идеи возвращает полный реестр без page overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1232x582",
+      "viewport_source": "фактическое окно уже открытого Chrome; innerWidth=1232; innerHeight=582",
+      "before_signature": "funnel cards show only step number, count, label and repeated idea count; section purpose remains ambiguous",
+      "after_signature": "heading=Где каждая идея находится сейчас; each of 8 cards has definition; Чистилище=0 with new-idea explanation; tabs use plain-language names",
+      "observed_visible_result": "В первом экране этапов видны правило одной текущей полки и определения Чистилища, Первичной проверки, Проверки рынка и Финалистов.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}
