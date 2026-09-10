@@ -233,7 +233,7 @@ function renderIdeas() {
 function renderFunnel() {
   document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
     const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
-    return `<li class="funnel-card"><button type="button" class="stage-jump ${ideas.length ? "" : "is-empty"}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)} сейчас</small></div></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
+    return `<li class="funnel-card"><button type="button" class="stage-jump ${ideas.length ? "" : "is-empty"}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b></div></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
   }).join("");
   document.querySelector("#gate-grid").innerHTML = state.registry.gateStatuses.map((gate) => {
     const count = state.registry.ideas.filter((idea) => idea.gateStatus === gate.id).length;

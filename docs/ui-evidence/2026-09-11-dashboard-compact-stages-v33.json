@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-dashboard-compact-stages-v33",
+  "change_kind": "dashboard-density",
+  "status": "passed",
+  "requested_visible_change": "Сделать карточки этапов ещё компактнее, сохранив inline-раскрытие идей выбранного этапа.",
+  "expected_visible_delta": "Карточка этапа содержит только номер, количество, название и вопросик; повторяющаяся строка количества исчезает, а высота уменьшается с 94px до 60px.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "08efc12bb46f6df12e75f404fde5fb5204f7342cbf562755014d89728e3cf63e",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=local-v33#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel",
+    "state": "этапы показаны; затем выбрана Первичная проверка",
+    "selector_or_slide_id": ".stage-jump, #funnel-selection-panel",
+    "action": "Нажать Первичная проверка"
+  },
+  "must_remain_unchanged": [
+    "Карта этапов остаётся на вкладке Этапы",
+    "Нажатие этапа не переключает во Все идеи",
+    "Выбранный этап раскрывает идеи ниже",
+    "Данные и рейтинги идей не пересчитываются",
+    "Подсказки по ? остаются доступными"
+  ],
+  "required_viewports": [
+    "1232x582"
+  ],
+  "observations": [
+    {
+      "viewport": "1232x582",
+      "viewport_source": "фактическое окно уже открытой пользовательской вкладки Chrome; innerWidth=1232; innerHeight=582",
+      "before_signature": "8 stage cards; min-height=94px; number, title and repeated line N ideas now",
+      "after_signature": "8 stage cards; min-height=60px; number, title and ? remain; repeated line removed; scrollWidth=1232",
+      "observed_visible_result": "Карта этапов стала двухрядной компактной полосой. После нажатия Первичная проверка активной осталась вкладка Этапы, selectedStage=quick_scan и ниже появился список из 4 идей.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": "Прямой запрос владельца сделать этапы ещё компактнее"
+  }
+}
