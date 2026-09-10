@@ -78,7 +78,9 @@ production/deploy/database не основание; при экономии вы
     генерируй shortlist из головы. Проведи три независимых входа: `pain-first`
     (форумы/спрос), `product-first` (Product Hunt/AppSumo/app stores) и
     `transaction-first` (Acquire.com/Flippa/Microns/брокеры). Listing — lead,
-    а не доказанный бизнес; asking price, seller claims и closed deal не смешивать.
+    а не доказанный бизнес; asking price, seller claims и closed deal не
+    смешивать. Пользователю сначала объясняй доступ и вывод простыми словами;
+    внутренние коды evidence не должны заменять объяснение.
 
 ## Active Run Rail
 
