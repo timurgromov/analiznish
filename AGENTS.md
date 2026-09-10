@@ -46,14 +46,16 @@ production/deploy/database не основание; при экономии вы
 2. Перед оценкой ниши прочитай `docs/SCORING_MODEL.md`, `docs/WORKFLOW.md`, `docs/NICHE_QUESTIONNAIRE.md`, `docs/NICHE_INPUT_TEMPLATE.md`, `data/HIT_PARADE.md` и при необходимости `skills/niche-scoring/SKILL.md`.
 3. Если пользователь дал неполные входные данные, не стопорись из-за мелочей для `quick_scan`. Но для `deep_score` обязателен блок A из `docs/NICHE_QUESTIONNAIRE.md`.
 4. Сначала применяй hard filters и красные флаги, потом обязательно выводи таблицу детальных критериев.
-5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Не сравнивай чужой референс и существующий актив одним итоговым числом.
+5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Общий рейтинг `data/IDEA_REGISTRY.json` служит приблизительным порядком исследования, не заменяет эти линзы и всегда показывается рядом с типом объекта и доверием.
 6. Всегда отделяй факты, оценки и допущения. Если источник не проверен, пиши `unverified`.
 7. Перед поиском в новом для пользователя домене сначала проведи `context_inventory`: прочитай названные владельцем проекты и исследования, покажи список реально прочитанных источников, извлечённые ставки и неизвестные места. До явного owner checkpoint не генерируй replacement-идеи, не меняй активный hit parade и не выдавай сырую гипотезу за текущую ставку.
 8. Любую новую бизнес-идею, которую владелец просит заземлить/сохранить, заноси
-   в `data/IDEA_INBOX.md` по `docs/IDEA_PURGATORY_PROTOCOL.md`: класс `A/B/C/X`,
-   причина позиции и одна дешёвая проверка. Это предварительный порядок E0, не
-   score и не hit parade. В `data/HIT_PARADE.md` идея попадает только после
-   owner checkpoint и `quick_scan`.
+   в `data/IDEA_INBOX.md` и `data/IDEA_REGISTRY.json` по
+   `docs/IDEA_PURGATORY_PROTOCOL.md`: класс `A/B/C/X`, предварительная оценка,
+   доверие E0 не выше `0.25`, причина позиции и одна дешёвая проверка. Это место
+   в общей очереди исследования, а не `market_opportunity_score`,
+   `execution_priority_score` или строка hit parade. В `data/HIT_PARADE.md` идея
+   попадает только после owner checkpoint и `quick_scan`.
 9. После meaningful change обновляй `docs/history/`.
 10. Не трогай несвязанные файлы и не откатывай чужие изменения.
 11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md`, `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → три входа поиска → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.

@@ -12,14 +12,16 @@
 к `100–1 000` плательщикам остаются benchmark micro-SaaS, но не hard filter. Это помогает не терять
 идеи и не превращать каждую из них в новый проект.
 
-Scoring, hit parade и dashboard — внутренние модули контура, а не сам продукт.
-Они сравнивают рынки, показывают приоритет ставок и хранят решения, но не
-разрешают разработку без CustDev, проверки оффера и денежного gate.
+Единый реестр, scoring, hit parade и dashboard — внутренние модули контура, а
+не сам продукт. Они сохраняют все идеи, сравнивают рынки, показывают глубину
+исследования и приоритет ставок, но не разрешают разработку без CustDev,
+проверки оффера и денежного gate.
 
 Система также принимает готовые идеи и существующие активы, включая Sansara:
 они входят в тот же контур на соответствующем этапе и не получают обход gates.
-Источник правды — Markdown-артефакты и project memory; dashboard остаётся
-read-only операторским представлением checkpoint, воронки и портфеля.
+Подробные источники правды — Markdown-артефакты и project memory;
+`data/IDEA_REGISTRY.json` является каноническим индексом всех идей для
+dashboard. Интерфейс остаётся read-only.
 
 ## Быстрый сценарий
 
@@ -39,8 +41,10 @@ read-only операторским представлением checkpoint, во
 6. Только после build gate допускается полноценный MVP.
 7. Карточки, эксперименты, рейтинг и project memory обновляются по ходу цикла.
 
-Сырую идею без обязательств записывай в `data/IDEA_INBOX.md`; правила порядка
-описаны в `docs/IDEA_PURGATORY_PROTOCOL.md`.
+Сырую идею без обязательств записывай одновременно в `data/IDEA_INBOX.md` и
+`data/IDEA_REGISTRY.json`; правила порядка описаны в
+`docs/IDEA_PURGATORY_PROTOCOL.md`. Она сразу появится в кабинете с E0-доверием,
+но не попадёт в hit parade до quick scan.
 
 Минимальный prompt для будущего чата:
 
@@ -69,16 +73,17 @@ read-only операторским представлением checkpoint, во
 | `docs/NICHE_INPUT_TEMPLATE.md` | Формат входных данных по новой идее |
 | `docs/NICHE_REPORT_TEMPLATE.md` | Формат полноценного отчета по нише |
 | `data/IDEA_INBOX.md` | Упорядоченное чистилище сырых идей до доказательного рейтинга |
+| `data/IDEA_REGISTRY.json` | Единый индекс всех идей: осторожный рейтинг, категория, этап, исход, причина места, следующий тест и research-runs |
 | `data/ACTIVE_RUN.md` | Единственный оперативный источник правды: текущая phase, этап, работа и gate |
 | `data/discovery/` | Контекстные карты, Jobs map, product/marketplace archaeology до оценки ставки |
 | `data/HIT_PARADE.md` | Живой рейтинг ниш |
 | `data/niches/` | Карточки отдельных ниш |
-| `data/niches/INDEX.md` | Единый реестр карточек для dashboard и валидатора |
+| `data/niches/INDEX.md` | Реестр только портфельных карточек v0.7 для валидатора |
 | `data/references/` | Архив конкурентных исследований, которые не являются отдельными активными объектами |
 | `data/interviews/` | Обезличенные итоги CustDev |
 | `data/experiments/` | Проверки оффера, канала, цены, пилотов и retention |
-| `data/FACTORY_STATE.json` | Проверяемый routing index текущего checkpoint, batch и прогонов для dashboard |
-| `dashboard/` | Операторский интерфейс: сейчас, воронка, кандидаты, прогоны, портфель и методология |
+| `data/FACTORY_STATE.json` | Состояние dashboard и ссылка на единый реестр; доменный run хранится отдельно |
+| `dashboard/` | Кабинет: все идеи, воронка, исследования, портфель и архив |
 | `docs/history/` | Память проекта между чатами |
 | `prompts/` | Готовые prompts для повторяемой работы |
 
@@ -104,11 +109,11 @@ execution_priority_score = round(
 
 ## Локальный dashboard
 
-Dashboard читает проверяемый routing index и Markdown-файлы:
+Dashboard читает единый реестр, состояние UI и портфель:
 
+* `data/IDEA_REGISTRY.json`;
 * `data/FACTORY_STATE.json`;
 * `data/HIT_PARADE.md`;
-* `docs/SCORING_MODEL.md`.
 
 Запуск:
 
@@ -122,7 +127,7 @@ docker compose up -d dashboard
 http://127.0.0.1:8765/dashboard/
 ```
 
-Контейнер использует `restart: unless-stopped`, поэтому dashboard остается доступен после закрытия Codex-сессии и перезапуска Docker Desktop. Dashboard read-only: чтобы изменить checkpoint, batch, рейтинг или критерии, обновляй проектные источники через workflow; JSON не является второй БД.
+Контейнер использует `restart: unless-stopped`, поэтому dashboard остается доступен после закрытия Codex-сессии и перезапуска Docker Desktop. Dashboard read-only: чтобы добавить идею или изменить этап, рейтинг и решение, обновляй проектные источники через workflow. PostgreSQL пока не нужен: JSON служит проверяемым индексом, а подробные доказательства остаются в Markdown.
 
 ## Публичный dashboard
 

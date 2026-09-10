@@ -1,51 +1,36 @@
+const REGISTRY_PATH = "../data/IDEA_REGISTRY.json";
 const FACTORY_STATE_PATH = "../data/FACTORY_STATE.json";
 const HIT_PARADE_PATH = "../data/HIT_PARADE.md";
-const SCORING_PATH = "../docs/SCORING_MODEL.md";
-const NICHE_CARD_INDEX_PATH = "../data/niches/INDEX.md";
-
-const metricDescriptions = [
-  ["Рыночная возможность", "Сила категории и модели денег: 60% рынка и 40% экономики. Не определяет, что тестировать прямо сейчас."],
-  ["Приоритет ставки", "Сравнивает только наши конкретные модели по экономике, защите, личному фильтру и качеству доказательств."],
-  ["Рынок", "Размер, рост, спрос, конкуренция, рабочие референсы и один понятный сегмент."],
-  ["Экономика", "Повторные продажи, маржа, cash cycle и возможность реинвестировать в рост."],
-  ["Защита и масштаб", "Защита от копирования, операционная масштабируемость и воспроизводимый канал."],
-  ["Личный фильтр", "Скорость денег, свобода, финансовая устойчивость и соответствие текущему фокусу."],
-  ["Доверие", "Качество доказательств. Публичные данные не заменяют разговор, действие, оплату и повтор."],
-];
-
-const evidenceStatusLabels = {
-  verified: "проверено",
-  supported: "косвенно подтверждено",
-  estimated: "оценочно",
-  unverified: "не проверено",
-};
-
-const candidateStageOrder = { finalist: 0, reserve: 1, parked: 2, rejected: 3 };
-const testabilityClasses = {
-  testable_now: "ready",
-  safety_first: "guarded",
-  needs_channel: "blocked",
-  needs_access: "blocked",
-  switching_unproven: "blocked",
-  do_not_invest: "stopped",
-};
 
 const portfolioColumns = {
   queue: ["Приоритет", "Ниша", "Приоритет ставки", "Экономика", "Доверие", "Решение", "Следующий шаг"],
   market: ["Место на карте", "Ниша / референс", "Рыночная возможность", "Рынок", "Экономика", "Доверие", "Вывод"],
 };
 
-const appState = {
+const objectTypeLabels = {
+  market_reference: "Рыночный референс",
+  concrete_bet: "Конкретная ставка",
+  existing_asset: "Готовый актив",
+  active_business: "Действующий бизнес",
+};
+
+const evidenceLabels = {
+  E0: "Гипотеза",
+  E1: "Публичные данные",
+  E2: "Реальные интервью",
+  E3: "Действие",
+  E4: "Оплата",
+  E5: "Повтор и экономика",
+};
+
+const state = {
+  registry: null,
   factory: null,
-  candidateFilter: "all",
+  activeView: "all-ideas",
+  filters: { search: "", category: "all", stage: "all", gate: "all", sort: "current" },
   portfolioView: "queue",
-  portfolio: {
-    market: { headers: [], rows: [] },
-    queue: { headers: [], rows: [] },
-  },
-  selectedPortfolio: { source: "queue", index: 0 },
-  criteriaByNiche: {},
-  summariesByNiche: {},
+  portfolio: { market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
+  selectedPortfolioIndex: 0,
 };
 
 function escapeHtml(value) {
@@ -65,68 +50,8 @@ function parseTable(markdown, firstHeader) {
   const start = lines.findIndex((line) => line.trim().startsWith(`| ${firstHeader} |`));
   if (start === -1) return { headers: [], rows: [] };
   const tableLines = [];
-  for (let index = start; index < lines.length && lines[index].trim().startsWith("|"); index += 1) {
-    tableLines.push(lines[index]);
-  }
+  for (let index = start; index < lines.length && lines[index].trim().startsWith("|"); index += 1) tableLines.push(lines[index]);
   return { headers: splitMarkdownRow(tableLines[0]), rows: tableLines.slice(2).map(splitMarkdownRow) };
-}
-
-function parseCardInventory(markdown) {
-  const table = parseTable(markdown, "Ниша");
-  const pathIndex = table.headers.indexOf("Путь");
-  return table.rows.filter((row) => row[0] && row[pathIndex]).map((row) => ({ name: row[0], path: `../${row[pathIndex]}` }));
-}
-
-function parseCriteria(markdown) {
-  const table = parseTable(markdown, "Критерий");
-  return table.rows.map(([title, points, description]) => ({ title, points, description }));
-}
-
-function parseNicheCriteria(markdown) {
-  const lines = markdown.split("\n");
-  const heading = lines.findIndex((line) => ["## Детальные критерии", "## Нишевой балл"].includes(line.trim()));
-  if (heading === -1) return [];
-  const start = lines.findIndex((line, index) => index > heading && line.trim().startsWith("| Критерий | Балл |"));
-  if (start === -1) return [];
-  const rows = [];
-  for (let index = start + 2; index < lines.length && lines[index].trim().startsWith("|"); index += 1) {
-    const [title, points, status, conclusion] = splitMarkdownRow(lines[index]);
-    if (title && !title.startsWith("**")) rows.push({ title, points, status, conclusion });
-  }
-  return rows;
-}
-
-function parseOneLiner(markdown) {
-  const lines = markdown.split("\n");
-  const heading = lines.findIndex((line) => line.trim() === "## One-liner");
-  if (heading === -1) return "";
-  const parts = [];
-  for (let index = heading + 1; index < lines.length; index += 1) {
-    const line = lines[index].trim();
-    if (line.startsWith("## ") || (!line && parts.length)) break;
-    if (line) parts.push(line);
-  }
-  return parts.join(" ");
-}
-
-function canonicalName(value) {
-  return String(value ?? "").replace(/[«»]/g, "").trim();
-}
-
-function projectSourceHref(path) {
-  return `../${String(path).split("/").map(encodeURIComponent).join("/")}`;
-}
-
-function formatDate(date) {
-  const [year, month, day] = String(date).split("-").map(Number);
-  return Number.isInteger(year) ? new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric" }).format(new Date(year, month - 1, day)) : date;
-}
-
-function scoreTone(value) {
-  const number = Number.parseFloat(value);
-  if (number >= 65) return "strong";
-  if (number >= 50) return "medium";
-  return "weak";
 }
 
 function getRowValue(table, row, header) {
@@ -134,217 +59,275 @@ function getRowValue(table, row, header) {
   return index === -1 ? "" : row[index] || "";
 }
 
-function findRowByName(table, name) {
-  const header = table.headers.includes("Ниша / референс") ? "Ниша / референс" : "Ниша";
-  return table.rows.find((row) => canonicalName(getRowValue(table, row, header)) === canonicalName(name));
+function currentScore(idea) {
+  return Math.round(state.registry.rankingModel.neutralPrior + (idea.baseScore - state.registry.rankingModel.neutralPrior) * idea.evidenceConfidence);
 }
 
-function setStatus(text, type = "") {
-  const element = document.querySelector("#data-status");
-  element.textContent = text;
-  element.className = `status ${type}`.trim();
+function stageById(id) {
+  return state.registry.stages.find((stage) => stage.id === id);
 }
 
-function renderCheckpoint() {
-  const checkpoint = appState.factory.currentCheckpoint;
-  const snapshot = appState.factory.workspaceSnapshot;
-  document.querySelector("#workspace-stats").innerHTML = [
-    [snapshot.ideaInbox, "в чистилище"],
-    [snapshot.discoveryArtifacts, "research-артефактов"],
-    [snapshot.portfolioMarkets, "рынков на карте"],
-    [snapshot.portfolioBets, "ставок в портфеле"],
-  ].map(([value, label]) => `<span><strong>${value}</strong> ${label}</span>`).join("");
-  document.querySelector("#checkpoint-title").textContent = checkpoint.title;
-  document.querySelector("#checkpoint-status").textContent = checkpoint.statusLabel;
-  document.querySelector("#checkpoint-summary").textContent = checkpoint.summary;
-  document.querySelector("#checkpoint-confirmed").textContent = checkpoint.confirmed;
-  document.querySelector("#checkpoint-unknown").textContent = checkpoint.unknown;
-  document.querySelector("#checkpoint-gate").textContent = checkpoint.nextGate;
-  document.querySelector("#checkpoint-decision").textContent = checkpoint.ownerDecision;
-  document.querySelector("#checkpoint-updated").textContent = `Обновлено ${formatDate(appState.factory.updatedAt)}`;
-  const source = document.querySelector("#checkpoint-source");
-  source.href = projectSourceHref(checkpoint.source);
-  source.target = "_blank";
-  source.rel = "noreferrer";
+function gateById(id) {
+  return state.registry.gateStatuses.find((gate) => gate.id === id);
+}
+
+function projectSourceHref(source) {
+  return `../${String(source).split("/").map(encodeURIComponent).join("/")}`;
+}
+
+function formatDate(value) {
+  const [year, month, day] = String(value).split("-").map(Number);
+  if (!Number.isInteger(year)) return value;
+  return new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "long", year: "numeric" }).format(new Date(year, month - 1, day));
+}
+
+function scoreTone(score) {
+  if (score >= 65) return "strong";
+  if (score >= 55) return "promising";
+  if (score >= 48) return "neutral";
+  return "weak";
+}
+
+function confidenceText(confidence) {
+  if (confidence >= 0.85) return "высокое";
+  if (confidence >= 0.65) return "среднее";
+  if (confidence >= 0.45) return "начальное";
+  return "очень низкое";
+}
+
+function pluralIdeas(value) {
+  const mod10 = value % 10;
+  const mod100 = value % 100;
+  if (mod10 === 1 && mod100 !== 11) return `${value} идея`;
+  if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return `${value} идеи`;
+  return `${value} идей`;
+}
+
+function setStatus(text, tone = "") {
+  const target = document.querySelector("#data-status");
+  target.textContent = text;
+  target.className = `status ${tone}`.trim();
+}
+
+function renderTopSummary() {
+  const ideas = state.registry.ideas;
+  const categories = new Set(ideas.map((idea) => idea.category)).size;
+  const finalists = ideas.filter((idea) => idea.stage === "finalist").length;
+  const money = ideas.filter((idea) => (stageById(idea.stage)?.order ?? -1) >= 6).length;
+  const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
+  const stats = [
+    [ideas.length, "всего идей", "В одном реестре"],
+    [categories, "категорий", "Только фильтры"],
+    [finalists, "финалиста", "Ждут подтверждения"],
+    [money, "с деньгами", "Оплата или повтор"],
+    [archive, "в архиве", "История не удалена"],
+  ];
+  document.querySelector("#summary-strip").innerHTML = stats.map(([value, label, note]) => `<article><strong>${value}</strong><div><span>${escapeHtml(label)}</span><small>${escapeHtml(note)}</small></div></article>`).join("");
+  document.querySelector("#tab-total").textContent = ideas.length;
+  document.querySelector("#tab-runs").textContent = state.registry.runs.length;
+  document.querySelector("#tab-archive").textContent = archive;
+  document.querySelector("#updated-at").textContent = `Обновлено ${formatDate(state.registry.updatedAt)}`;
+  document.querySelector("#add-idea-instruction").textContent = state.factory.dashboard.addIdeaInstruction;
+  document.querySelector("#ranking-formula").textContent = state.registry.rankingModel.formula.replace("round", "округлить");
+}
+
+function renderFilterOptions() {
+  const categorySelect = document.querySelector("#category-filter");
+  const categories = [...new Set(state.registry.ideas.map((idea) => idea.category))].sort((a, b) => a.localeCompare(b, "ru"));
+  categorySelect.innerHTML = `<option value="all">Все категории</option>${categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join("")}`;
+  document.querySelector("#stage-filter").innerHTML = `<option value="all">Все этапы</option>${state.registry.stages.map((stage) => `<option value="${stage.id}">${escapeHtml(stage.label)}</option>`).join("")}`;
+  document.querySelector("#gate-filter").innerHTML = `<option value="all">Все решения</option>${state.registry.gateStatuses.map((gate) => `<option value="${gate.id}">${escapeHtml(gate.label)}</option>`).join("")}`;
+}
+
+function searchableText(idea) {
+  return [idea.title, idea.category, idea.rankingReason, idea.mainRisk, idea.nextGate, objectTypeLabels[idea.objectType]].join(" ").toLocaleLowerCase("ru");
+}
+
+function filteredIdeas() {
+  const search = state.filters.search.trim().toLocaleLowerCase("ru");
+  const ideas = state.registry.ideas.filter((idea) => {
+    if (search && !searchableText(idea).includes(search)) return false;
+    if (state.filters.category !== "all" && idea.category !== state.filters.category) return false;
+    if (state.filters.stage !== "all" && idea.stage !== state.filters.stage) return false;
+    if (state.filters.gate !== "all" && idea.gateStatus !== state.filters.gate) return false;
+    return true;
+  });
+  const sorters = {
+    current: (a, b) => currentScore(b) - currentScore(a) || b.evidenceConfidence - a.evidenceConfidence || a.title.localeCompare(b.title, "ru"),
+    base: (a, b) => b.baseScore - a.baseScore || b.evidenceConfidence - a.evidenceConfidence,
+    confidence: (a, b) => b.evidenceConfidence - a.evidenceConfidence || currentScore(b) - currentScore(a),
+    stage: (a, b) => (stageById(b.stage)?.order ?? 0) - (stageById(a.stage)?.order ?? 0) || currentScore(b) - currentScore(a),
+    title: (a, b) => a.title.localeCompare(b.title, "ru"),
+  };
+  return ideas.sort(sorters[state.filters.sort]);
+}
+
+function ideaCard(idea, rank, compact = false) {
+  const score = currentScore(idea);
+  const stage = stageById(idea.stage);
+  const gate = gateById(idea.gateStatus);
+  return `<details class="idea-card tone-${scoreTone(score)} gate-${idea.gateStatus}${compact ? " compact" : ""}">
+    <summary class="idea-summary">
+      <span class="idea-rank">${rank}</span>
+      <span class="idea-identity"><strong>${escapeHtml(idea.title)}</strong><small>${escapeHtml(idea.category)} · ${escapeHtml(objectTypeLabels[idea.objectType] || idea.objectType)}</small></span>
+      <span class="rating-cell"><strong>${score}</strong><small>оценка ${idea.baseScore}</small></span>
+      <span class="confidence-cell"><strong>${Math.round(idea.evidenceConfidence * 100)}%</strong><span class="confidence-track"><i style="width:${Math.round(idea.evidenceConfidence * 100)}%"></i></span><small>${escapeHtml(evidenceLabels[idea.evidenceLevel] || idea.evidenceLevel)}</small></span>
+      <span class="stage-cell"><strong>${escapeHtml(stage?.label || idea.stage)}</strong><small>${escapeHtml(idea.evidenceLevel)}</small></span>
+      <span class="gate-cell"><span>${escapeHtml(gate?.label || idea.gateStatus)}</span></span>
+      <span class="reason-cell">${escapeHtml(idea.rankingReason)}</span>
+      <span class="expand-icon" aria-hidden="true">⌄</span>
+    </summary>
+    <div class="idea-details">
+      <div><span>Почему это место</span><p>${escapeHtml(idea.rankingReason)}</p></div>
+      <div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div>
+      <div><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
+      <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p></div>
+      <a class="source-link" href="${projectSourceHref(idea.source)}" target="_blank" rel="noreferrer">Открыть источник ↗</a>
+    </div>
+  </details>`;
+}
+
+function renderIdeas() {
+  const ideas = filteredIdeas();
+  document.querySelector("#idea-list").innerHTML = ideas.map((idea, index) => ideaCard(idea, index + 1)).join("");
+  document.querySelector("#idea-empty").hidden = ideas.length !== 0;
+  document.querySelector("#result-count").textContent = pluralIdeas(ideas.length);
+  const active = [];
+  if (state.filters.search) active.push(`поиск «${state.filters.search}»`);
+  if (state.filters.category !== "all") active.push(state.filters.category);
+  if (state.filters.stage !== "all") active.push(stageById(state.filters.stage)?.label);
+  if (state.filters.gate !== "all") active.push(gateById(state.filters.gate)?.label);
+  document.querySelector("#filter-description").textContent = active.length ? active.join(" · ") : "без фильтров";
 }
 
 function renderFunnel() {
-  const stats = appState.factory.currentCheckpoint.stats;
-  const stages = [
-    ["Источники", stats.marketplaceLeads, "Публичные сигналы"],
-    ["Кандидаты", stats.candidates, "Конкретные модели"],
-    ["Финалисты", stats.finalists, "До реальных людей"],
-    ["Реальные клиенты", stats.realInterviews, "Прошлое поведение"],
-    ["Деньги", stats.payments, "Оплата или бюджет"],
-    ["Повтор и масштаб", stats.repeatSignals, "Retention и экономика"],
-  ];
-  const currentIndex = stages.findIndex(([, count]) => count === 0);
-  document.querySelector("#funnel-rail").innerHTML = stages
-    .map(([label, count, note], index) => {
-      const state = index < currentIndex ? "passed" : index === currentIndex ? "current" : "future";
-      const stateLabel = state === "passed" ? "есть сигнал" : state === "current" ? "текущий gate" : "ещё не проверено";
-      return `<li class="funnel-stage ${state}">
-        <div class="stage-marker"><span>${count}</span></div>
-        <strong>${escapeHtml(label)}</strong>
-        <small>${escapeHtml(note)}</small>
-        <span class="stage-state">${stateLabel}</span>
-      </li>`;
-    })
-    .join("");
-
-  const parked = appState.factory.candidates.filter((item) => item.stage === "parked").length;
-  const rejected = appState.factory.candidates.filter((item) => item.stage === "rejected").length;
-  document.querySelector("#funnel-aside").innerHTML = `<span><strong>${parked}</strong> в парковке</span><span><strong>${rejected}</strong> отсеяно</span>`;
-}
-
-function candidateCard(candidate) {
-  const testabilityClass = testabilityClasses[candidate.testability] || "blocked";
-  return `<article class="candidate-card stage-${candidate.stage}">
-    <div class="candidate-rank">${escapeHtml(candidate.id)}</div>
-    <div class="candidate-main">
-      <div class="candidate-title-row">
-        <div>
-          <div class="badge-row">
-            <span class="badge stage-badge">${escapeHtml(candidate.stageLabel)}</span>
-            <span class="badge testability ${testabilityClass}">${escapeHtml(candidate.testabilityLabel)}</span>
-          </div>
-          <h3>${escapeHtml(candidate.title)}</h3>
-        </div>
-        <a class="icon-link" href="${projectSourceHref(candidate.source)}" target="_blank" rel="noreferrer" aria-label="Открыть исследование: ${escapeHtml(candidate.title)}">↗</a>
-      </div>
-      <div class="candidate-facts">
-        <div><span>Кто платит</span><strong>${escapeHtml(candidate.payer)}</strong></div>
-        <div><span>Модель денег</span><strong>${escapeHtml(candidate.moneyModel)}</strong></div>
-      </div>
-      <div class="candidate-bottom">
-        <div class="risk-copy"><span>Главный риск</span><p>${escapeHtml(candidate.risk)}</p></div>
-        <div class="gate-copy"><span>Следующий gate</span><p>${escapeHtml(candidate.nextGate)}</p></div>
-      </div>
-    </div>
-    <div class="candidate-scores" aria-label="Оценки кандидата">
-      <div><span>Рынок</span><strong class="score-${scoreTone(candidate.marketOpportunityScore)}">${candidate.marketOpportunityScore}</strong></div>
-      <div><span>Ставка</span><strong class="score-${scoreTone(candidate.executionPriorityScore)}">${candidate.executionPriorityScore}</strong></div>
-      <div><span>Доверие</span><strong>${Math.round(candidate.evidenceConfidence * 100)}%</strong></div>
-      <small>${escapeHtml(candidate.evidenceLabel)}</small>
-    </div>
-  </article>`;
-}
-
-function renderCandidates() {
-  const candidates = [...appState.factory.candidates].sort((a, b) => candidateStageOrder[a.stage] - candidateStageOrder[b.stage]);
-  for (const stage of ["all", "finalist", "reserve", "parked", "rejected"]) {
-    const count = stage === "all" ? candidates.length : candidates.filter((item) => item.stage === stage).length;
-    document.querySelector(`#count-${stage}`).textContent = count;
-  }
-  const visible = appState.candidateFilter === "all" ? candidates : candidates.filter((item) => item.stage === appState.candidateFilter);
-  document.querySelector("#candidate-list").innerHTML = visible.map(candidateCard).join("");
-  document.querySelector("#candidate-empty").hidden = visible.length !== 0;
+  document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
+    const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
+    return `<li><button type="button" data-stage-jump="${stage.id}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b><small>${pluralIdeas(ideas.length)}</small></div></button></li>`;
+  }).join("");
+  document.querySelector("#gate-grid").innerHTML = state.registry.gateStatuses.map((gate) => {
+    const count = state.registry.ideas.filter((idea) => idea.gateStatus === gate.id).length;
+    return `<button type="button" class="gate-stat gate-${gate.id}" data-gate-jump="${gate.id}"><strong>${count}</strong><span>${escapeHtml(gate.label)}</span></button>`;
+  }).join("");
 }
 
 function renderRuns() {
-  document.querySelector("#run-list").innerHTML = appState.factory.runs
+  document.querySelector("#run-list").innerHTML = [...state.registry.runs]
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
     .map((run) => `<article class="run-item">
-      <div class="run-status-dot ${run.status}" aria-hidden="true"></div>
-      <div>
-        <div class="run-title-row"><h3>${escapeHtml(run.title)}</h3><span class="badge">${escapeHtml(run.statusLabel)}</span></div>
+      <div class="run-marker status-${run.status}"></div>
+      <div class="run-body">
+        <div class="run-title"><div><span>${escapeHtml(run.category)}</span><h3>${escapeHtml(run.title)}</h3></div><time>${formatDate(run.updatedAt)}</time></div>
         <p>${escapeHtml(run.result)}</p>
-        <div class="run-meta"><span>${escapeHtml(run.evidenceLevel)} · ${formatDate(run.updatedAt)}</span><a href="${projectSourceHref(run.source)}" target="_blank" rel="noreferrer">Открыть источник ↗</a></div>
+        <div class="run-footer"><span>${escapeHtml(run.evidenceLevel)} · ${run.status === "complete" ? "завершён" : "припаркован"}</span><a href="${projectSourceHref(run.source)}" target="_blank" rel="noreferrer">Открыть исследование ↗</a></div>
       </div>
-    </article>`)
-    .join("");
+    </article>`).join("");
+}
+
+function renderArchive() {
+  const groups = [
+    ["parked", "Припаркованы", "Можно вернуть после указанного условия"],
+    ["failed", "Отсеяны", "Возвращать только при изменении ключевого ограничения"],
+  ];
+  document.querySelector("#archive-groups").innerHTML = groups.map(([status, title, note]) => {
+    const ideas = state.registry.ideas.filter((idea) => idea.gateStatus === status).sort((a, b) => currentScore(b) - currentScore(a));
+    return `<section class="archive-section"><div class="archive-title"><div><h3>${title}</h3><p>${note}</p></div><strong>${ideas.length}</strong></div><div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
+  }).join("");
 }
 
 function renderPortfolioTable() {
-  const source = appState.portfolioView;
-  const table = appState.portfolio[source];
-  const columns = portfolioColumns[source];
-  const head = document.querySelector("#portfolio-head");
-  const body = document.querySelector("#portfolio-body");
-  head.innerHTML = `<tr>${columns.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}<th><span class="visually-hidden">Открыть</span></th></tr>`;
-  body.innerHTML = table.rows
-    .map((row, index) => {
-      const selected = appState.selectedPortfolio.source === source && appState.selectedPortfolio.index === index;
-      const cells = columns.map((header) => {
-        const value = getRowValue(table, row, header);
-        const score = ["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика"].includes(header);
-        return `<td class="${score ? "numeric" : ""}">${score ? `<strong class="score-${scoreTone(value)}">${escapeHtml(value)}</strong>` : escapeHtml(value)}</td>`;
-      }).join("");
-      return `<tr class="${selected ? "selected" : ""}">${cells}<td><button class="row-open" type="button" data-index="${index}" aria-label="Открыть детали строки ${index + 1}">Подробнее</button></td></tr>`;
-    })
-    .join("");
-  body.querySelectorAll(".row-open").forEach((button) => {
-    button.addEventListener("click", () => {
-      appState.selectedPortfolio = { source, index: Number(button.dataset.index) };
-      renderPortfolioTable();
-      renderPortfolioDetail();
-    });
-  });
+  const table = state.portfolio[state.portfolioView];
+  const columns = portfolioColumns[state.portfolioView];
+  document.querySelector("#portfolio-head").innerHTML = `<tr>${columns.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}<th><span class="visually-hidden">Детали</span></th></tr>`;
+  document.querySelector("#portfolio-body").innerHTML = table.rows.map((row, index) => `<tr class="${index === state.selectedPortfolioIndex ? "selected" : ""}">${columns.map((header) => {
+    const value = getRowValue(table, row, header);
+    const numeric = ["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика"].includes(header);
+    return `<td class="${numeric ? "numeric" : ""}">${numeric ? `<strong class="score-${scoreTone(Number(value))}">${escapeHtml(value)}</strong>` : escapeHtml(value)}</td>`;
+  }).join("")}<td><button class="row-open" type="button" data-index="${index}">Подробнее</button></td></tr>`).join("");
+  document.querySelectorAll(".row-open").forEach((button) => button.addEventListener("click", () => {
+    state.selectedPortfolioIndex = Number(button.dataset.index);
+    renderPortfolioTable();
+    renderPortfolioDetail();
+  }));
 }
 
 function renderPortfolioDetail() {
-  const source = appState.selectedPortfolio.source;
-  const table = appState.portfolio[source];
-  const row = table.rows[appState.selectedPortfolio.index];
-  const container = document.querySelector("#portfolio-detail");
+  const table = state.portfolio[state.portfolioView];
+  const row = table.rows[state.selectedPortfolioIndex];
+  const target = document.querySelector("#portfolio-detail");
   if (!row) {
-    container.innerHTML = "<p>Нет данных для выбранного представления.</p>";
+    target.innerHTML = "<p>В этом представлении пока нет данных.</p>";
     return;
   }
   const nameHeader = table.headers.includes("Ниша / референс") ? "Ниша / референс" : "Ниша";
   const name = getRowValue(table, row, nameHeader);
-  const marketRow = findRowByName(appState.portfolio.market, name);
-  const queueRow = findRowByName(appState.portfolio.queue, name);
-  const summary = appState.summariesByNiche[canonicalName(name)] || "Карточка содержит подробную оценку и доказательства по объекту.";
-  const evidence = marketRow ? getRowValue(appState.portfolio.market, marketRow, "Сильнейшее доказательство") : "—";
-  const risk = queueRow ? getRowValue(appState.portfolio.queue, queueRow, "Главный риск") : getRowValue(appState.portfolio.market, marketRow || [], "Вывод");
-  const next = queueRow ? getRowValue(appState.portfolio.queue, queueRow, "Следующий шаг") : "Сначала определить наш сегмент, оффер и канал.";
-  const criteria = appState.criteriaByNiche[canonicalName(name)] || [];
-  container.innerHTML = `<div class="portfolio-detail-head"><div><span>Выбранный объект</span><h3>${escapeHtml(name)}</h3></div><span class="badge">${source === "queue" ? "Наша ставка" : "Рынок / референс"}</span></div>
-    <p>${escapeHtml(summary)}</p>
-    <div class="detail-grid">
-      <div><span>Сильнейшее доказательство</span><p>${escapeHtml(evidence)}</p></div>
-      <div><span>Главный риск / вывод</span><p>${escapeHtml(risk)}</p></div>
-      <div><span>Следующий шаг</span><p>${escapeHtml(next)}</p></div>
-    </div>
-    ${criteria.length ? `<details class="criteria-details"><summary>Показать ${criteria.length} детальных критериев</summary><div class="criteria-table-wrap"><table><thead><tr><th>Критерий</th><th>Балл</th><th>Статус</th><th>Вывод</th></tr></thead><tbody>${criteria.map((item) => `<tr><td>${escapeHtml(item.title)}</td><td><strong>${escapeHtml(item.points)}</strong></td><td>${escapeHtml(evidenceStatusLabels[item.status] || item.status)}</td><td>${escapeHtml(item.conclusion)}</td></tr>`).join("")}</tbody></table></div></details>` : ""}`;
+  const conclusion = getRowValue(table, row, state.portfolioView === "queue" ? "Решение" : "Вывод");
+  const next = getRowValue(table, row, "Следующий шаг") || "Сначала определить нашу конкретную ставку, сегмент и канал.";
+  target.innerHTML = `<div><span>Выбранный объект</span><h3>${escapeHtml(name)}</h3></div><div class="portfolio-detail-grid"><div><span>Вывод</span><p>${escapeHtml(conclusion)}</p></div><div><span>Следующий шаг</span><p>${escapeHtml(next)}</p></div></div>`;
 }
 
-function renderMethodology(criteria) {
-  document.querySelector("#metric-list").innerHTML = metricDescriptions.map(([title, text]) => `<article><strong>${escapeHtml(title)}</strong><p>${escapeHtml(text)}</p></article>`).join("");
-  document.querySelector("#criteria-grid").innerHTML = criteria.map((item) => `<article><div><h3>${escapeHtml(item.title)}</h3><span>${escapeHtml(item.points)}</span></div><p>${escapeHtml(item.description)}</p></article>`).join("");
+function switchView(view, updateHash = true) {
+  const available = new Set(["all-ideas", "funnel", "research", "portfolio", "archive"]);
+  state.activeView = available.has(view) ? view : "all-ideas";
+  document.querySelectorAll(".view-tab").forEach((button) => {
+    const active = button.dataset.view === state.activeView;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
+  document.querySelectorAll(".app-view").forEach((panel) => {
+    const active = panel.dataset.panel === state.activeView;
+    panel.classList.toggle("active", active);
+    panel.hidden = !active;
+  });
+  if (updateHash) history.replaceState(null, "", `#${state.activeView}`);
+  window.scrollTo({ top: 0, behavior: "instant" });
 }
 
 function bindControls() {
-  document.querySelectorAll(".filter-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      appState.candidateFilter = button.dataset.filter;
-      document.querySelectorAll(".filter-button").forEach((item) => {
-        const active = item === button;
-        item.classList.toggle("active", active);
-        item.setAttribute("aria-pressed", String(active));
-      });
-      renderCandidates();
-    });
+  document.querySelectorAll(".view-tab").forEach((button) => button.addEventListener("click", () => switchView(button.dataset.view)));
+  const bindings = [
+    ["#idea-search", "search", "input"],
+    ["#category-filter", "category", "change"],
+    ["#stage-filter", "stage", "change"],
+    ["#gate-filter", "gate", "change"],
+    ["#sort-control", "sort", "change"],
+  ];
+  bindings.forEach(([selector, key, event]) => document.querySelector(selector).addEventListener(event, (inputEvent) => {
+    state.filters[key] = inputEvent.target.value;
+    renderIdeas();
+  }));
+  document.querySelector("#reset-filters").addEventListener("click", () => {
+    state.filters = { search: "", category: "all", stage: "all", gate: "all", sort: "current" };
+    document.querySelector("#idea-search").value = "";
+    document.querySelector("#category-filter").value = "all";
+    document.querySelector("#stage-filter").value = "all";
+    document.querySelector("#gate-filter").value = "all";
+    document.querySelector("#sort-control").value = "current";
+    renderIdeas();
   });
-  document.querySelectorAll(".tab-button").forEach((button) => {
-    button.addEventListener("click", () => {
-      appState.portfolioView = button.dataset.portfolio;
-      appState.selectedPortfolio = { source: appState.portfolioView, index: 0 };
-      document.querySelectorAll(".tab-button").forEach((item) => {
-        const active = item === button;
-        item.classList.toggle("active", active);
-        item.setAttribute("aria-selected", String(active));
-      });
-      renderPortfolioTable();
-      renderPortfolioDetail();
+  document.querySelectorAll("[data-stage-jump]").forEach((button) => button.addEventListener("click", () => {
+    state.filters.stage = button.dataset.stageJump;
+    document.querySelector("#stage-filter").value = state.filters.stage;
+    switchView("all-ideas");
+    renderIdeas();
+  }));
+  document.querySelectorAll("[data-gate-jump]").forEach((button) => button.addEventListener("click", () => {
+    state.filters.gate = button.dataset.gateJump;
+    document.querySelector("#gate-filter").value = state.filters.gate;
+    switchView("all-ideas");
+    renderIdeas();
+  }));
+  document.querySelectorAll(".portfolio-tab").forEach((button) => button.addEventListener("click", () => {
+    state.portfolioView = button.dataset.portfolio;
+    state.selectedPortfolioIndex = 0;
+    document.querySelectorAll(".portfolio-tab").forEach((item) => {
+      const active = item === button;
+      item.classList.toggle("active", active);
+      item.setAttribute("aria-selected", String(active));
     });
-  });
-}
-
-async function loadText(path) {
-  const response = await fetch(path, { cache: "no-store" });
-  if (!response.ok) throw new Error(`Не удалось загрузить ${path}: ${response.status}`);
-  return response.text();
+    renderPortfolioTable();
+    renderPortfolioDetail();
+  }));
 }
 
 async function loadJson(path) {
@@ -353,34 +336,31 @@ async function loadJson(path) {
   return response.json();
 }
 
+async function loadText(path) {
+  const response = await fetch(path, { cache: "no-store" });
+  if (!response.ok) throw new Error(`Не удалось загрузить ${path}: ${response.status}`);
+  return response.text();
+}
+
 async function init() {
   try {
-    const [factory, hitParade, scoring, inventory] = await Promise.all([
-      loadJson(FACTORY_STATE_PATH),
-      loadText(HIT_PARADE_PATH),
-      loadText(SCORING_PATH),
-      loadText(NICHE_CARD_INDEX_PATH),
-    ]);
-    const nicheIndex = parseCardInventory(inventory);
-    const cards = await Promise.all(nicheIndex.map((item) => loadText(item.path)));
-    appState.factory = factory;
-    appState.portfolio.market = parseTable(hitParade, "Место на карте");
-    appState.portfolio.queue = parseTable(hitParade, "Приоритет");
-    appState.criteriaByNiche = Object.fromEntries(nicheIndex.map((item, index) => [canonicalName(item.name), parseNicheCriteria(cards[index])]));
-    appState.summariesByNiche = Object.fromEntries(nicheIndex.map((item, index) => [canonicalName(item.name), parseOneLiner(cards[index])]));
-    const criteria = parseCriteria(scoring);
-    if (!factory.candidates?.length || !appState.portfolio.market.rows.length || !appState.portfolio.queue.rows.length || !criteria.length) {
-      throw new Error("Один из источников не содержит обязательных данных");
-    }
-
-    renderCheckpoint();
+    const [registry, factory, hitParade] = await Promise.all([loadJson(REGISTRY_PATH), loadJson(FACTORY_STATE_PATH), loadText(HIT_PARADE_PATH)]);
+    state.registry = registry;
+    state.factory = factory;
+    state.portfolio.market = parseTable(hitParade, "Место на карте");
+    state.portfolio.queue = parseTable(hitParade, "Приоритет");
+    if (!registry.ideas?.length || !registry.runs?.length || !state.portfolio.market.rows.length || !state.portfolio.queue.rows.length) throw new Error("Один из источников не содержит обязательных данных");
+    renderTopSummary();
+    renderFilterOptions();
+    renderIdeas();
     renderFunnel();
-    renderCandidates();
     renderRuns();
+    renderArchive();
     renderPortfolioTable();
     renderPortfolioDetail();
-    renderMethodology(criteria);
     bindControls();
+    const requestedView = location.hash.replace("#", "") || factory.dashboard.defaultView;
+    switchView(requestedView, false);
     setStatus("Данные актуальны", "ok");
   } catch (error) {
     setStatus("Ошибка данных", "error");

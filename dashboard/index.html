@@ -4,155 +4,142 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <title>Анализ Ниш — Воронка решений</title>
+    <title>Анализ Ниш — Кабинет идей</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260910-factory-v2" />
+    <link rel="stylesheet" href="./styles.css?v=20260910-cabinet-v3" />
   </head>
   <body>
     <header class="topbar">
       <div class="brand-block">
-        <p class="eyebrow">Анализ Ниш · Niche Factory</p>
-        <h1>Воронка решений</h1>
-        <p class="page-summary">От найденных сигналов до реальных клиентов, денег и повторяемой экономики.</p>
-        <div class="workspace-stats" id="workspace-stats" aria-label="Сводка проекта"></div>
+        <p class="eyebrow">Анализ Ниш · личная база решений</p>
+        <h1>Кабинет идей</h1>
+        <p class="page-summary">Все идеи в одном месте: место, доказательность, этап и следующий тест.</p>
       </div>
-      <div class="status" id="data-status" role="status">Загрузка данных</div>
+      <div class="topbar-meta">
+        <span class="updated" id="updated-at"></span>
+        <div class="status" id="data-status" role="status">Загрузка данных</div>
+      </div>
     </header>
+
+    <nav class="view-tabs" aria-label="Разделы кабинета" role="tablist">
+      <button class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="view-all-ideas" data-view="all-ideas">Все идеи <span id="tab-total">0</span></button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-funnel" data-view="funnel">Воронка</button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-research" data-view="research">Исследования <span id="tab-runs">0</span></button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-portfolio" data-view="portfolio">Портфель</button>
+      <button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-archive" data-view="archive">Архив <span id="tab-archive">0</span></button>
+    </nav>
 
     <main class="layout" id="main-content">
       <div class="error-message" id="error-message" hidden></div>
 
-      <section class="checkpoint panel" aria-labelledby="checkpoint-title">
-        <div class="checkpoint-heading">
-          <div>
-            <div class="section-kicker">Сейчас</div>
-            <div class="title-row">
-              <h2 id="checkpoint-title">Загружаем текущий checkpoint…</h2>
-              <span class="badge badge-attention" id="checkpoint-status">Ожидание</span>
+      <section class="app-view active" id="view-all-ideas" role="tabpanel" data-panel="all-ideas">
+        <div class="summary-strip" id="summary-strip" aria-label="Сводка реестра"></div>
+
+        <section class="panel registry-panel" aria-labelledby="registry-title">
+          <div class="section-head registry-head">
+            <div>
+              <div class="section-kicker">Единый реестр</div>
+              <h2 id="registry-title">Все идеи</h2>
+              <p>Рейтинг осторожный: высокая оценка без доказательств остаётся ближе к нейтральным 50.</p>
             </div>
-            <p class="lead" id="checkpoint-summary"></p>
+            <div class="add-instruction"><span>Добавить идею</span><strong id="add-idea-instruction">«Заземли идею: …»</strong></div>
           </div>
-          <div class="updated" id="checkpoint-updated"></div>
-        </div>
 
-        <div class="checkpoint-grid">
-          <article class="signal signal-confirmed">
-            <span class="signal-label">Подтверждено</span>
-            <p id="checkpoint-confirmed">—</p>
-          </article>
-          <article class="signal signal-unknown">
-            <span class="signal-label">Неизвестно</span>
-            <p id="checkpoint-unknown">—</p>
-          </article>
-          <article class="signal signal-gate">
-            <span class="signal-label">Следующий gate</span>
-            <p id="checkpoint-gate">—</p>
-          </article>
-        </div>
-
-        <div class="decision-strip">
-          <div>
-            <span>Нужно решить</span>
-            <strong id="checkpoint-decision">—</strong>
+          <div class="registry-controls" aria-label="Фильтры реестра">
+            <label class="search-control">
+              <span>Поиск</span>
+              <input id="idea-search" type="search" placeholder="Название, категория, риск…" autocomplete="off" />
+            </label>
+            <label>
+              <span>Категория</span>
+              <select id="category-filter"><option value="all">Все категории</option></select>
+            </label>
+            <label>
+              <span>Этап</span>
+              <select id="stage-filter"><option value="all">Все этапы</option></select>
+            </label>
+            <label>
+              <span>Решение</span>
+              <select id="gate-filter"><option value="all">Все решения</option></select>
+            </label>
+            <label>
+              <span>Сортировка</span>
+              <select id="sort-control">
+                <option value="current">Текущий рейтинг</option>
+                <option value="base">Предварительная оценка</option>
+                <option value="confidence">Глубина исследования</option>
+                <option value="stage">Этап воронки</option>
+                <option value="title">По названию</option>
+              </select>
+            </label>
+            <button class="reset-button" id="reset-filters" type="button">Сбросить</button>
           </div>
-          <a class="source-link" id="checkpoint-source" href="#">Открыть доказательства <span aria-hidden="true">↗</span></a>
-        </div>
+
+          <div class="registry-result-line"><strong id="result-count">0 идей</strong><span id="filter-description">без фильтров</span></div>
+          <div class="idea-table-head" aria-hidden="true">
+            <span>№</span><span>Идея</span><span>Рейтинг</span><span>Доверие</span><span>Этап</span><span>Решение</span><span>Почему здесь</span><span></span>
+          </div>
+          <div class="idea-list" id="idea-list"></div>
+          <div class="empty-state" id="idea-empty" hidden>По этим фильтрам идей нет. Сбрось фильтры или добавь новую идею через чат.</div>
+        </section>
+
+        <details class="panel model-note">
+          <summary>Как меняется место в рейтинге</summary>
+          <div class="model-note-body">
+            <p><strong>Предварительная оценка</strong> — что мы сейчас думаем о потенциале. <strong>Доверие</strong> — насколько это подтверждено. <strong>Текущий рейтинг</strong> — осторожное число после поправки на неизвестность.</p>
+            <code id="ranking-formula">50 + (оценка − 50) × доверие</code>
+            <p>Исследование не обязано поднимать идею: хорошая гипотеза поднимается после подтверждения, слабая — опускается. Этап и результат проверки показаны отдельно и не маскируются внутри рейтинга.</p>
+          </div>
+        </details>
       </section>
 
-      <section class="panel funnel-panel" aria-labelledby="funnel-title">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">Последний batch · психологи</div>
-            <h2 id="funnel-title">Насколько далеко дошла проверка</h2>
-            <p>Это не вся база проекта, а последний законченный batch. Следующий переход открывается только более сильным доказательством.</p>
+      <section class="app-view" id="view-funnel" role="tabpanel" data-panel="funnel" hidden>
+        <section class="panel">
+          <div class="section-head">
+            <div><div class="section-kicker">Все категории</div><h2>Где находятся идеи</h2><p>Количество показывает текущую стадию каждой идеи, а не красивую накопительную воронку.</p></div>
           </div>
-          <div class="funnel-aside" id="funnel-aside"></div>
-        </div>
-        <ol class="funnel-rail" id="funnel-rail" aria-label="Этапы проверки"></ol>
+          <ol class="funnel-grid" id="funnel-grid"></ol>
+        </section>
+        <section class="panel">
+          <div class="section-head"><div><div class="section-kicker">Результаты проверок</div><h2>Что прошло, остановлено или ждёт</h2></div></div>
+          <div class="gate-grid" id="gate-grid"></div>
+        </section>
       </section>
 
-      <section class="panel candidates-panel" aria-labelledby="candidates-title">
-        <div class="section-head candidates-head">
-          <div>
-            <div class="section-kicker">Последний проверенный batch</div>
-            <h2 id="candidates-title">Психология: кандидаты для решения</h2>
-            <p>Сила рынка и возможность проверить гипотезу сейчас показаны отдельно.</p>
-          </div>
-          <div class="filters" id="candidate-filters" aria-label="Фильтр кандидатов">
-            <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">Все <span id="count-all">0</span></button>
-            <button class="filter-button" type="button" data-filter="finalist" aria-pressed="false">Финалисты <span id="count-finalist">0</span></button>
-            <button class="filter-button" type="button" data-filter="reserve" aria-pressed="false">Резерв <span id="count-reserve">0</span></button>
-            <button class="filter-button" type="button" data-filter="parked" aria-pressed="false">Парковка <span id="count-parked">0</span></button>
-            <button class="filter-button" type="button" data-filter="rejected" aria-pressed="false">Отсев <span id="count-rejected">0</span></button>
-          </div>
-        </div>
-        <div class="candidate-list" id="candidate-list"></div>
-        <div class="empty-state" id="candidate-empty" hidden>В этом статусе пока нет кандидатов.</div>
+      <section class="app-view" id="view-research" role="tabpanel" data-panel="research" hidden>
+        <section class="panel">
+          <div class="section-head"><div><div class="section-kicker">История</div><h2>Исследования и прогоны</h2><p>Каждый прогон — отдельный пакет доказательств. Он может затрагивать одну или несколько идей.</p></div></div>
+          <div class="run-list" id="run-list"></div>
+        </section>
       </section>
 
-      <section class="panel runs-panel" aria-labelledby="runs-title">
-        <div class="section-head">
-          <div>
-            <div class="section-kicker">История</div>
-            <h2 id="runs-title">Прогоны и точки возврата</h2>
-            <p>Новый поиск не стирает старый: видно, где он остановлен и что было получено.</p>
+      <section class="app-view" id="view-portfolio" role="tabpanel" data-panel="portfolio" hidden>
+        <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
+          <div class="section-head portfolio-heading">
+            <div><div class="section-kicker">Проверенный портфель v0.7</div><h2 id="portfolio-title">Две разные линзы</h2><p>Чужой сильный рынок не становится нашей готовой ставкой автоматически.</p></div>
+            <div class="portfolio-tabs" role="tablist" aria-label="Представление портфеля">
+              <button class="portfolio-tab active" type="button" role="tab" aria-selected="true" data-portfolio="queue">Наши ставки</button>
+              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="market">Карта рынков</button>
+            </div>
           </div>
-        </div>
-        <div class="run-list" id="run-list"></div>
+          <div class="table-scroll" tabindex="0"><table><thead id="portfolio-head"></thead><tbody id="portfolio-body"></tbody></table></div>
+          <article class="portfolio-detail" id="portfolio-detail"></article>
+        </section>
       </section>
 
-      <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
-        <div class="section-head portfolio-head">
-          <div>
-            <div class="section-kicker">Портфель</div>
-            <h2 id="portfolio-title">Старые ставки и карта рынков</h2>
-            <p>Это две разные линзы. Рыночный референс не получает приоритет нашей ставки без выбранного сегмента, оффера и канала.</p>
-          </div>
-          <div class="tablist" role="tablist" aria-label="Представление портфеля">
-            <button class="tab-button active" id="queue-tab" type="button" role="tab" aria-selected="true" aria-controls="portfolio-table" data-portfolio="queue">Наши ставки</button>
-            <button class="tab-button" id="market-tab" type="button" role="tab" aria-selected="false" aria-controls="portfolio-table" data-portfolio="market">Карта рынков</button>
-          </div>
-        </div>
-        <div class="table-note">На узком экране таблица прокручивается только внутри этого блока.</div>
-        <div class="table-wrap">
-          <table id="portfolio-table">
-            <thead id="portfolio-head"></thead>
-            <tbody id="portfolio-body"></tbody>
-          </table>
-        </div>
-        <article class="portfolio-detail" id="portfolio-detail" aria-live="polite"></article>
+      <section class="app-view" id="view-archive" role="tabpanel" data-panel="archive" hidden>
+        <section class="panel">
+          <div class="section-head"><div><div class="section-kicker">Не удаляем историю</div><h2>Архив и отсев</h2><p>Припаркованные и отсеянные идеи сохраняют причину решения и условие возврата.</p></div></div>
+          <div class="archive-groups" id="archive-groups"></div>
+        </section>
       </section>
-
-      <details class="panel methodology-panel">
-        <summary>
-          <span>
-            <span class="section-kicker">Методология</span>
-            <strong>Как считаются оценки и что означают критерии</strong>
-          </span>
-          <span class="summary-action">Показать</span>
-        </summary>
-        <div class="methodology-content">
-          <div class="formula-grid" aria-label="Формулы портфеля">
-            <article>
-              <strong>60 / 40</strong>
-              <span>Рыночная возможность: рынок + экономика</span>
-            </article>
-            <article>
-              <strong>40 / 35 / 25</strong>
-              <span>Приоритет ставки: экономика + защита + личный фильтр, с поправкой на доверие</span>
-            </article>
-          </div>
-          <div class="metric-list" id="metric-list"></div>
-          <div class="criteria-grid" id="criteria-grid"></div>
-        </div>
-      </details>
     </main>
 
-    <footer class="footer">
-      <span>Read-only представление проектных данных</span>
-      <span>Содержание: Markdown · маршрутизация: FACTORY_STATE.json</span>
+    <footer>
+      <span>Кабинет только для просмотра · источник правды: <code>data/IDEA_REGISTRY.json</code></span>
+      <a href="../data/IDEA_REGISTRY.json" target="_blank" rel="noreferrer">Открыть данные ↗</a>
     </footer>
 
-    <script type="module" src="./app.js?v=20260910-factory-v2"></script>
+    <script src="./app.js?v=20260910-cabinet-v3" defer></script>
   </body>
 </html>

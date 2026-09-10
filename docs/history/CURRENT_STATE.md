@@ -6,15 +6,16 @@
 проверки и выбора бизнес-ниш от неопределённого направления до evidence-backed
 ставки, paid pilot и ограниченного решения о разработке.
 
-Текущий этап: factory v1.2 `active`, но не `validated` полным рыночным проходом.
-Scoring v0.7, hit parade и dashboard v2 работают как внутренние модули; следующим
+Текущий этап: factory v1.3 `active`, но не `validated` полным рыночным проходом.
+Scoring v0.7, hit parade и dashboard v3 работают как внутренние модули; следующим
 операционным milestone остаётся первый end-to-end цикл.
 
 ## Current Runtime / Stack
 
 * Frontend: локальный static dashboard в `dashboard/`.
 * Backend: отсутствует.
-* Database: Markdown files.
+* Database: PostgreSQL отсутствует; подробные данные хранятся в Markdown,
+  канонический индекс всех идей — `data/IDEA_REGISTRY.json`.
 * Storage: local project files.
 * Deploy: локальный Docker Compose service на `127.0.0.1:8765` и публичный read-only dashboard на GitHub Pages: `https://timurgromov.github.io/analiznish/dashboard/`.
 * External services: не подключены.
@@ -81,12 +82,15 @@ Scoring v0.7, hit parade и dashboard v2 работают как внутрен�
 * Есть локальная проверка `scripts/check-local.sh`.
 * Есть read-only dashboard для просмотра hit parade и критериев.
 * Dashboard стабильно поднимается через `docker compose up -d dashboard`.
-* Dashboard v2 начинает с общего current checkpoint, показывает последний
-  batch как evidence-воронку, разделяет score и фактическую тестируемость,
-  хранит историю прогонов и сохраняет обе портфельные линзы. Формулы и критерии
-  перенесены в нижний сворачиваемый блок.
-* `data/FACTORY_STATE.json` — минимальный routing index dashboard; Markdown
-  остаётся источником содержания, backend и write-UI отсутствуют.
+* Dashboard v3 начинает с единого реестра 20 идей из 9 категорий. Категория —
+  только фильтр; психология не является главной страницей или активным фокусом.
+* Для каждой идеи раздельно видны предварительная оценка, доверие, осторожный
+  рейтинг, текущий этап, исход проверки, причина места, риск и следующий gate.
+  Общая воронка, история исследований, две портфельные линзы и архив вынесены в
+  отдельные вкладки.
+* `data/IDEA_REGISTRY.json` — канонический индекс всех идей для dashboard;
+  Markdown остаётся источником подробностей. `data/FACTORY_STATE.json` хранит
+  состояние UI и припаркованный domain run; backend и write-UI отсутствуют.
 
 ## Known Blockers
 
@@ -112,7 +116,10 @@ Scoring v0.7, hit parade и dashboard v2 работают как внутрен�
   контура, поэтому run припаркован на этапе 6. Интервью не являются текущей
   работой и будут продолжены только по отдельной команде.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
-* Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
+* Confidence активного портфеля рассчитан до введения evidence ladder E0–E5.
+  Эти значения перенесены в общий реестр как исходная оценка, но остаются
+  legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают
+  прохождение build gate.
 
 * Три РПП-карточки от 2026-09-09 созданы до context gate. Они сохраняются как
   исторические черновики, но исключены из активного портфеля: РПП — возможный

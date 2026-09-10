@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-10-idea-cabinet-v3",
+  "change_kind": "dashboard-information-architecture",
+  "status": "passed",
+  "requested_visible_change": "Сделать главным экраном единый рейтинг всех идей, а домены и психология оставить категориями и фильтрами.",
+  "expected_visible_delta": "Вместо заголовка Воронка решений и последнего психологического batch первый экран показывает Кабинет идей, вкладку Все идеи, общую статистику, фильтры и начало рейтинга 20 идей.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "03150355348e778685abd1fe9dd54c65a20023c895303800a113dbe655990acc",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#all-ideas",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#all-ideas",
+    "state": "успешная загрузка IDEA_REGISTRY и портфельных Markdown",
+    "selector_or_slide_id": "h1, .view-tabs, .summary-strip, #idea-list",
+    "action": "Открыть общий список, перейти Воронка → Финалист, найти travel, сбросить фильтры и раскрыть первую идею"
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Рыночные референсы и наши ставки сохраняют разные портфельные линзы",
+    "Evidence confidence не выдаётся за качество идеи",
+    "Исходные Markdown-исследования доступны по ссылкам",
+    "Припаркованный run психологов не возобновляется"
+  ],
+  "required_viewports": [
+    "390x844",
+    "768x1024",
+    "1024x768",
+    "1180x820",
+    "1366x768",
+    "1440x900",
+    "1984x1046"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=390; innerHeight=844",
+      "before_signature": "h1=Воронка решений; default-panel=последний психологический batch; all-ideas=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; categories=9; visiblePanels=1; scrollWidth=390",
+      "observed_visible_result": "Общая статистика и единый реестр складываются в мобильные карточки без горизонтального переполнения страницы.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "768x1024",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=768; innerHeight=1024",
+      "before_signature": "h1=Воронка решений; candidates=psychology-first; global-ranking=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; visiblePanels=1; scrollWidth=768",
+      "observed_visible_result": "Планшетный экран показывает общий реестр карточками, а скрытые вкладки не участвуют в раскладке.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1024x768",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=1024; innerHeight=768",
+      "before_signature": "h1=Воронка решений; first-job=выбрать доменный run; all-ideas=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; visiblePanels=1; scrollWidth=1024",
+      "observed_visible_result": "На ноутбучной ширине рейтинг остаётся читаемым и не создаёт page overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1180x820",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=1180; innerHeight=820",
+      "before_signature": "h1=Воронка решений; first-panel=общий checkpoint; psychology-batch=primary",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; top=Timur 69 and Радарыч 68; scrollWidth=1180",
+      "observed_visible_result": "До прокрутки видны общая статистика, фильтры и первые строки глобального рейтинга. Переход Воронка → Финалист показывает две идеи, поиск travel — одного Радарыча, раскрытие строки — риск и следующий gate.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1366x768",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=1366; innerHeight=768",
+      "before_signature": "h1=Воронка решений; domain-candidates=primary; category-filter=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; visiblePanels=1; scrollWidth=1366",
+      "observed_visible_result": "Общий рейтинг отображается плотной операторской таблицей без наложения соседних вкладок.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=1440; innerHeight=900",
+      "before_signature": "h1=Воронка решений; default=checkpoint and psychology; all-ideas=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; categories=9; visiblePanels=1; scrollWidth=1440",
+      "observed_visible_result": "Широкий экран показывает единый кабинет и рейтинг; психология присутствует только в данных и фильтре категории.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1984x1046",
+      "viewport_source": "уже открытый Codex in-app browser; viewport override; innerWidth=1984; innerHeight=1046",
+      "before_signature": "h1=Воронка решений; default-domain=psychology; global-registry=absent",
+      "after_signature": "h1=Кабинет идей; active=Все идеи 20; visiblePanels=1; scrollWidth=1984",
+      "observed_visible_result": "Контент сохраняет ограниченную рабочую ширину и не растягивается в нечитаемую таблицу.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

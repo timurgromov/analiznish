@@ -15,7 +15,7 @@
 B2C, комиссионную/транзакционную модель, прибыльный разовый продукт или актив
 для последующей продажи.
 
-Скоринг, hit parade и dashboard — внутренние модули этого контура. Они помогают
+Единый реестр, скоринг, hit parade и dashboard — внутренние модули этого контура. Они помогают
 сравнивать возможности и сохранять решения, но не заменяют поиск клиентов,
 CustDev, проверку оффера и оплату.
 
@@ -98,8 +98,9 @@ capabilities и способом удешевить тест, но не дока
 ### 5. `idea_inbox` / чистилище
 
 Низкофрикционная фиксация идеи с приблизительным классом `A/B/C/X` относительно
-цели устойчивой прибыли и предпочтения повторяемого cashflow. Запись не создаёт обязательство, полный score или
-строку hit parade.
+цели устойчивой прибыли и предпочтения повторяемого cashflow. Запись сразу
+попадает в общий `data/IDEA_REGISTRY.json` с E0-доверием не выше `0.25`, но не
+создаёт обязательство, полный score или строку hit parade.
 
 ## Core Factory Loop
 
@@ -117,11 +118,12 @@ capabilities и способом удешевить тест, но не дока
 `docs/RAIL_PROTOCOL.md` определяет, как любой новый чат продолжает её без
 перезапуска и как обрабатывает побочные материалы.
 
-`data/FACTORY_STATE.json` — отдельный проверяемый read-only индекс для
-dashboard. Он не заменяет `ACTIVE_RUN`, hit parade, discovery-артефакты или
-карточки ниш и не создаёт новую систему score. Индекс связывает текущий
-checkpoint, batch-кандидатов, run history и source paths, чтобы dashboard мог
-показывать воронку без хрупкого разбора всех Markdown-файлов в браузере.
+`data/IDEA_REGISTRY.json` — канонический индекс всех идей для кабинета: одна
+идея, категория, тип объекта, предварительная оценка, доверие, этап, исход,
+причина места, следующая проверка и связи с research-runs. Подробное содержание
+остаётся в Markdown-карточках и исследованиях. `data/FACTORY_STATE.json` хранит
+только состояние UI и ссылку на реестр; он не заменяет `ACTIVE_RUN`, hit parade
+или discovery-артефакты.
 
 ### Внутренние operating phases
 
@@ -181,6 +183,7 @@ checkpoint, batch-кандидатов, run history и source paths, чтобы 
 | --- | --- |
 | Текущий run, macro phase, этап и gate | `data/ACTIVE_RUN.md` |
 | Сырые идеи без обязательств | `data/IDEA_INBOX.md` |
+| Единый индекс всех идей, этапов и research-runs для кабинета | `data/IDEA_REGISTRY.json` |
 | Контекстные карты, Jobs map и разборы референсов до ставки | `data/discovery/` |
 | Карточки конкретных ниш/ставок | `data/niches/` |
 | Конкурентные и рыночные референсы | `data/references/` |
@@ -204,10 +207,10 @@ checkpoint, batch-кандидатов, run history и source paths, чтобы 
 * recovery discovery для существующих активов;
 * Markdown-артефакты, prompts, project memory и локальные проверки;
 * machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
-* read-only dashboard как операторское представление checkpoint, воронки,
-  последнего batch, run history и портфеля;
-* минимальный проверяемый `FACTORY_STATE.json` как routing index без backend и
-  второй базы содержания.
+* read-only dashboard с первой вкладкой всех идей, фильтрами, общим осторожным
+  рейтингом, воронкой, research-runs, портфелем и архивом;
+* проверяемые `IDEA_REGISTRY.json` и `FACTORY_STATE.json` без backend и
+  дублирования подробных Markdown-источников.
 
 ## Non-goals
 
@@ -239,16 +242,19 @@ Factory v1 считается операционно доказанным, ко�
 
 ## Runtime
 
-Основной runtime — новый чат агента и Markdown-файлы проекта. Backend и database
-отсутствуют. Dashboard в `dashboard/` — read-only производное представление,
-доступное локально через Docker Compose и публично через GitHub Pages.
+Основной runtime — новый чат агента, Markdown-файлы и канонический JSON-индекс
+идей. Backend и PostgreSQL пока отсутствуют. Dashboard в `dashboard/` —
+read-only представление, доступное локально через Docker Compose и публично
+через GitHub Pages. Схема реестра намеренно готова к будущему переносу в
+PostgreSQL, но фактическая БД появится только вместе с доказанной потребностью в
+write-UI, многопользовательской работе или сложных запросах.
 
 ## P1 Candidates
 
 Только после первого полного factory-run можно решать, нужны ли:
 
-* полноценный structured store для всех состояний и переходов вместо
-  минимальных `ACTIVE_RUN` и `FACTORY_STATE.json`;
+* PostgreSQL/полноценный structured store для редактирования и истории
+  переходов вместо текущих `ACTIVE_RUN`, `IDEA_REGISTRY.json` и Markdown;
 * CSV/Sheets/Notion mirror;
 * полуавтоматический сбор разрешённых источников;
 * write-UI для изменения этапов, интервью и экспериментов;

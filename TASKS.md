@@ -6,7 +6,7 @@
 
 ## Current Objective
 
-Доказать Niche Factory v1.2 как единое чистилище и воронку идей: находить
+Доказать Niche Factory v1.3 как единое чистилище и воронку идей: находить
 кандидатов по pain-first, product-first и transaction-first источникам,
 заземлять идеи, ранжировать их до интервью по 18 критериям и довести одного финалиста до
 устойчивой прибыли. Повторяемый cashflow предпочтителен; B2B-подписка
@@ -14,6 +14,16 @@
 hard filter. Любая модель проверяется без преждевременной разработки.
 
 ## NF-UI — Visual Operations
+
+- [x] Перестроить dashboard v3 в единый кабинет всех идей.
+  - Gate 1: `data/IDEA_REGISTRY.json` содержит каждую известную идею только один
+    раз, связывает её с категорией, этапом, исходом, доказательствами и runs.
+  - Gate 2: первая вкладка всегда `Все идеи`; категория — фильтр, а не отдельный
+    доменный кабинет; психология не управляет общим экраном.
+  - Gate 3: предварительная оценка, доверие и осторожный рейтинг показаны
+    раздельно; этап и результат проверки не спрятаны внутри score.
+  - Выполнено 2026-09-10: 20 идей, 9 категорий, вкладки `Все идеи`, `Воронка`,
+    `Исследования`, `Портфель`, `Архив`; добавлен validator связности.
 
 - [x] Собрать dashboard v2 одним ограниченным sprint без backend и новой БД.
   - Gate 1: `data/FACTORY_STATE.json` связывает current checkpoint, кандидатов,
@@ -157,8 +167,9 @@ hard filter. Любая модель проверяется без прежде�
 - [ ] Автоматизировать только повторившиеся ручные операции с доказанной стоимостью времени.
 - [x] Решить, достаточно ли Markdown/read-only dashboard или нужен structured store/UI.
   - Решение 2026-09-10: до первого полного factory-run достаточно Markdown +
-    минимального проверяемого `FACTORY_STATE.json`. Backend, write-UI и полный
-    structured store остаются за evidence gate.
+    проверяемых `IDEA_REGISTRY.json` и `FACTORY_STATE.json`. Это
+    PostgreSQL-ready схема, но backend, write-UI и полноценная БД остаются за
+    evidence gate.
 
 ## Done — Platform Capabilities
 
@@ -168,6 +179,8 @@ hard filter. Любая модель проверяется без прежде�
 - [x] Dashboard опубликован через GitHub Pages и доступен локально через Docker Compose.
 - [x] Dashboard v2 показывает current checkpoint, evidence-воронку, кандидатов
   последнего batch, run history и две портфельные линзы.
+- [x] Dashboard v3 начинает со всех 20 идей, показывает осторожный рейтинг с
+  доверием, общую воронку, исследования, портфель и архив.
 - [x] Созданы Niche Discovery Loop v1.1, CustDev protocol, evidence ladder E0–E5,
   context inventory, Jobs map и reference mining.
 - [x] Добавлены prompts, agent routing, шаблоны интервью/экспериментов и build gates.
