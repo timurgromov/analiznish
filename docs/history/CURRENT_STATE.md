@@ -7,7 +7,7 @@
 ставки, paid pilot и ограниченного решения о разработке.
 
 Текущий этап: factory v1.2 `active`, но не `validated` полным рыночным проходом.
-Scoring v0.7, hit parade и dashboard работают как внутренние модули; следующим
+Scoring v0.7, hit parade и dashboard v2 работают как внутренние модули; следующим
 операционным milestone остаётся первый end-to-end цикл.
 
 ## Current Runtime / Stack
@@ -81,6 +81,12 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Есть локальная проверка `scripts/check-local.sh`.
 * Есть read-only dashboard для просмотра hit parade и критериев.
 * Dashboard стабильно поднимается через `docker compose up -d dashboard`.
+* Dashboard v2 начинает с общего current checkpoint, показывает последний
+  batch как evidence-воронку, разделяет score и фактическую тестируемость,
+  хранит историю прогонов и сохраняет обе портфельные линзы. Формулы и критерии
+  перенесены в нижний сворачиваемый блок.
+* `data/FACTORY_STATE.json` — минимальный routing index dashboard; Markdown
+  остаётся источником содержания, backend и write-UI отсутствуют.
 
 ## Known Blockers
 
@@ -126,7 +132,9 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * GitHub Pages включён с источником `GitHub Actions`. Workflow публикует dashboard по адресу `https://timurgromov.github.io/analiznish/dashboard/` при изменениях в `dashboard/`, `data/` или `docs/SCORING_MODEL.md` на `main`.
 * Score не записывается автоматически, но `scripts/validate-portfolio.mjs` пересчитывает блоки из критериев и падает при расхождении карточек, hit parade, формул или сортировки.
 * `data/niches/INDEX.md` — единый реестр карточек для dashboard и валидатора. Его отсутствие или несовпадение с hit parade теперь проявится при локальной проверке, а не оставит новую нишу невидимой.
-* Dashboard read-only и не редактирует Markdown.
+* Dashboard read-only и не редактирует Markdown. Текущий общий checkpoint —
+  owner decision между новым широким `niche_factory` и явным возобновлением
+  одного из психологических финалистов; parked run сам не активируется.
 * Нет интеграции с Wordstat/Trends/Sheets/Notion.
 
 ## Important Defaults

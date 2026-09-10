@@ -19,7 +19,7 @@ Scoring, hit parade и dashboard — внутренние модули конт�
 Система также принимает готовые идеи и существующие активы, включая Sansara:
 они входят в тот же контур на соответствующем этапе и не получают обход gates.
 Источник правды — Markdown-артефакты и project memory; dashboard остаётся
-read-only представлением портфеля.
+read-only операторским представлением checkpoint, воронки и портфеля.
 
 ## Быстрый сценарий
 
@@ -77,7 +77,8 @@ read-only представлением портфеля.
 | `data/references/` | Архив конкурентных исследований, которые не являются отдельными активными объектами |
 | `data/interviews/` | Обезличенные итоги CustDev |
 | `data/experiments/` | Проверки оффера, канала, цены, пилотов и retention |
-| `dashboard/` | Локальный интерфейс для просмотра хит-парада и критериев |
+| `data/FACTORY_STATE.json` | Проверяемый routing index текущего checkpoint, batch и прогонов для dashboard |
+| `dashboard/` | Операторский интерфейс: сейчас, воронка, кандидаты, прогоны, портфель и методология |
 | `docs/history/` | Память проекта между чатами |
 | `prompts/` | Готовые prompts для повторяемой работы |
 
@@ -103,8 +104,9 @@ execution_priority_score = round(
 
 ## Локальный dashboard
 
-Dashboard читает Markdown-файлы напрямую:
+Dashboard читает проверяемый routing index и Markdown-файлы:
 
+* `data/FACTORY_STATE.json`;
 * `data/HIT_PARADE.md`;
 * `docs/SCORING_MODEL.md`.
 
@@ -120,7 +122,7 @@ docker compose up -d dashboard
 http://127.0.0.1:8765/dashboard/
 ```
 
-Контейнер использует `restart: unless-stopped`, поэтому dashboard остается доступен после закрытия Codex-сессии и перезапуска Docker Desktop. Dashboard read-only: чтобы изменить рейтинг или критерии, редактируй Markdown через проектный workflow.
+Контейнер использует `restart: unless-stopped`, поэтому dashboard остается доступен после закрытия Codex-сессии и перезапуска Docker Desktop. Dashboard read-only: чтобы изменить checkpoint, batch, рейтинг или критерии, обновляй проектные источники через workflow; JSON не является второй БД.
 
 ## Публичный dashboard
 

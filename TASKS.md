@@ -13,6 +13,18 @@
 `1 000–5 000 ₽/мес` и `100–1 000` плательщиков — benchmark micro-SaaS, но не
 hard filter. Любая модель проверяется без преждевременной разработки.
 
+## NF-UI — Visual Operations
+
+- [x] Собрать dashboard v2 одним ограниченным sprint без backend и новой БД.
+  - Gate 1: `data/FACTORY_STATE.json` связывает current checkpoint, кандидатов,
+    testability, runs и source paths; validator проверяет схему и существование
+    источников.
+  - Gate 2: первый экран показывает `Сейчас` и evidence-воронку; последний batch,
+    история, портфель и методология разделены по задачам.
+  - Gate 3: перенесены восемь кандидатов marketplace batch; фильтры, обе
+    портфельные линзы и responsive layout проверены локально.
+  - Выполнено 2026-09-10. Production verification фиксируется после Pages deploy.
+
 ## NF-0 — Context, Jobs And References
 
 - [x] Закрепить active-run rail между чатами и интегрировать `I · INSIGHT`.
@@ -142,7 +154,10 @@ hard filter. Любая модель проверяется без прежде�
 - [ ] При следующем `rescore` переводить legacy v0.7 карточки на `validation_stage` и E0–E5; старое confidence не считать build evidence.
 - [ ] После 10 оценённых ниш проверить веса scoring на реальных решениях.
 - [ ] Автоматизировать только повторившиеся ручные операции с доказанной стоимостью времени.
-- [ ] Решить, достаточно ли Markdown/read-only dashboard или нужен structured store/UI.
+- [x] Решить, достаточно ли Markdown/read-only dashboard или нужен structured store/UI.
+  - Решение 2026-09-10: до первого полного factory-run достаточно Markdown +
+    минимального проверяемого `FACTORY_STATE.json`. Backend, write-UI и полный
+    structured store остаются за evidence gate.
 
 ## Done — Platform Capabilities
 
@@ -150,6 +165,8 @@ hard filter. Любая модель проверяется без прежде�
 - [x] Реализованы scoring v0.7, две независимые портфельные линзы и validator.
 - [x] Созданы idea inbox, карточки ниш/референсов и read-only dashboard.
 - [x] Dashboard опубликован через GitHub Pages и доступен локально через Docker Compose.
+- [x] Dashboard v2 показывает current checkpoint, evidence-воронку, кандидатов
+  последнего batch, run history и две портфельные линзы.
 - [x] Созданы Niche Discovery Loop v1.1, CustDev protocol, evidence ladder E0–E5,
   context inventory, Jobs map и reference mining.
 - [x] Добавлены prompts, agent routing, шаблоны интервью/экспериментов и build gates.

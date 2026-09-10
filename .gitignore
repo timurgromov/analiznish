@@ -30,4 +30,4 @@ dist/
 build/
 .next/
 .cache/
-
+.playwright-cli/

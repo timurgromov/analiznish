@@ -704,3 +704,48 @@ Verification:
 playbook, reference mining, idea purgatory, UX, prompts и scoring skill. Созданы
 отдельный execution protocol и E1-пилот; локальная проверка зафиксирована в
 worklog.
+
+## DEC-2026-09-10-DASHBOARD-V2 — Read-only cockpit поверх Markdown
+
+Status: active
+Area: architecture | UX | data | workflow
+Decision date: 2026-09-10
+Evidence: аудит старого dashboard и авторизованный marketplace batch психологов
+Commits: смотреть историю Git после фиксации изменения
+
+Decision:
+Dashboard должен отвечать на операционные вопросы `что сейчас`, `где воронка`,
+`какие кандидаты дошли дальше`, `почему следующий тест не равен максимальному
+score` и `куда открыть доказательства`. Markdown остаётся источником содержания.
+Для браузера вводится только минимальный проверяемый `data/FACTORY_STATE.json`,
+который индексирует checkpoint, последний batch, testability, runs и source
+paths. Он не заменяет `ACTIVE_RUN`, discovery, карточки или hit parade.
+
+Score рынка и готовность к ближайшему дешёвому тесту показываются отдельно.
+Статусы `можно проверить сейчас`, `нужен доступ/канал`, `сначала безопасность`
+и `не вкладывать сейчас` являются gates, а не третьим скрытым score.
+
+Why:
+Старый первый экран начинался с формул и двух широких таблиц, поэтому не
+показывал текущий checkpoint, кандидатов до hit parade и путь к реальным
+клиентам/деньгам. При этом полноценная БД, админка и drag-and-drop создали бы
+вторую систему правды до доказанного end-to-end процесса.
+
+Do:
+
+* показывать общий checkpoint до доменного batch;
+* явно подписывать, когда числа относятся только к последнему batch;
+* связывать каждый кандидат и run с реальным source path;
+* валидировать JSON и связи в `check-local.sh`;
+* оставлять редактирование в docs-first workflow.
+
+Do not:
+
+* не считать routing index новой базой содержания;
+* не возобновлять parked run отображением на dashboard;
+* не добавлять backend/write-UI до первого полного factory-run;
+* не скрывать недоступный канал высоким market score.
+
+Verification:
+Локальный dashboard проверен в браузере; responsive matrix и production Pages
+verification фиксируются в worklog.

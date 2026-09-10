@@ -117,6 +117,12 @@ capabilities и способом удешевить тест, но не дока
 `docs/RAIL_PROTOCOL.md` определяет, как любой новый чат продолжает её без
 перезапуска и как обрабатывает побочные материалы.
 
+`data/FACTORY_STATE.json` — отдельный проверяемый read-only индекс для
+dashboard. Он не заменяет `ACTIVE_RUN`, hit parade, discovery-артефакты или
+карточки ниш и не создаёт новую систему score. Индекс связывает текущий
+checkpoint, batch-кандидатов, run history и source paths, чтобы dashboard мог
+показывать воронку без хрупкого разбора всех Markdown-файлов в браузере.
+
 ### Внутренние operating phases
 
 | Фаза | Главный вопрос | Обязательный результат | Следующий gate |
@@ -198,7 +204,10 @@ capabilities и способом удешевить тест, но не дока
 * recovery discovery для существующих активов;
 * Markdown-артефакты, prompts, project memory и локальные проверки;
 * machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
-* read-only dashboard как представление портфеля.
+* read-only dashboard как операторское представление checkpoint, воронки,
+  последнего batch, run history и портфеля;
+* минимальный проверяемый `FACTORY_STATE.json` как routing index без backend и
+  второй базы содержания.
 
 ## Non-goals
 
@@ -238,8 +247,9 @@ Factory v1 считается операционно доказанным, ко�
 
 Только после первого полного factory-run можно решать, нужны ли:
 
-* structured YAML/JSON для всех состояний и переходов кроме минимального `ACTIVE_RUN`;
+* полноценный structured store для всех состояний и переходов вместо
+  минимальных `ACTIVE_RUN` и `FACTORY_STATE.json`;
 * CSV/Sheets/Notion mirror;
 * полуавтоматический сбор разрешённых источников;
-* dashboard этапов, интервью и экспериментов;
+* write-UI для изменения этапов, интервью и экспериментов;
 * отдельное приложение или оркестратор.

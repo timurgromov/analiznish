@@ -3,101 +3,156 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Анализ Ниш — Хит-парад</title>
+    <meta name="color-scheme" content="light" />
+    <title>Анализ Ниш — Воронка решений</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260720-dual-lens" />
+    <link rel="stylesheet" href="./styles.css?v=20260910-factory-v2" />
   </head>
   <body>
     <header class="topbar">
-      <div>
-        <p class="eyebrow">Анализ Ниш</p>
-        <h1>Карта возможностей и ставки</h1>
+      <div class="brand-block">
+        <p class="eyebrow">Анализ Ниш · Niche Factory</p>
+        <h1>Воронка решений</h1>
+        <p class="page-summary">От найденных сигналов до реальных клиентов, денег и повторяемой экономики.</p>
+        <div class="workspace-stats" id="workspace-stats" aria-label="Сводка проекта"></div>
       </div>
-      <div class="status" id="data-status">Загрузка данных</div>
+      <div class="status" id="data-status" role="status">Загрузка данных</div>
     </header>
 
-    <main class="layout">
-      <section class="panel hero-panel" aria-labelledby="formula-title">
-        <div>
-          <h2 id="formula-title">Два вопроса вместо одного балла</h2>
-          <p class="lead" id="formula-text">
-            Сначала смотрим на силу рынка, затем — на приоритет нашей конкретной ставки. Эти рейтинги нельзя смешивать.
-          </p>
+    <main class="layout" id="main-content">
+      <div class="error-message" id="error-message" hidden></div>
+
+      <section class="checkpoint panel" aria-labelledby="checkpoint-title">
+        <div class="checkpoint-heading">
+          <div>
+            <div class="section-kicker">Сейчас</div>
+            <div class="title-row">
+              <h2 id="checkpoint-title">Загружаем текущий checkpoint…</h2>
+              <span class="badge badge-attention" id="checkpoint-status">Ожидание</span>
+            </div>
+            <p class="lead" id="checkpoint-summary"></p>
+          </div>
+          <div class="updated" id="checkpoint-updated"></div>
         </div>
-        <div class="formula-grid" aria-label="Состав показателей портфеля">
+
+        <div class="checkpoint-grid">
+          <article class="signal signal-confirmed">
+            <span class="signal-label">Подтверждено</span>
+            <p id="checkpoint-confirmed">—</p>
+          </article>
+          <article class="signal signal-unknown">
+            <span class="signal-label">Неизвестно</span>
+            <p id="checkpoint-unknown">—</p>
+          </article>
+          <article class="signal signal-gate">
+            <span class="signal-label">Следующий gate</span>
+            <p id="checkpoint-gate">—</p>
+          </article>
+        </div>
+
+        <div class="decision-strip">
           <div>
-            <strong>60 / 40</strong>
-            <span>Рыночная возможность: рынок + экономика</span>
+            <span>Нужно решить</span>
+            <strong id="checkpoint-decision">—</strong>
           </div>
-          <div>
-            <strong>40 / 35 / 25</strong>
-            <span>Приоритет ставки: экономика + защита + личный фильтр, с поправкой на доверие</span>
-          </div>
+          <a class="source-link" id="checkpoint-source" href="#">Открыть доказательства <span aria-hidden="true">↗</span></a>
         </div>
       </section>
 
-      <section class="panel" aria-labelledby="market-title">
+      <section class="panel funnel-panel" aria-labelledby="funnel-title">
         <div class="section-head">
           <div>
-            <h2 id="market-title">Карта рынков и референсов</h2>
-            <p>Показывает силу категории и модели денег. Реальный конкурент здесь может быть выше нашего готового актива — и это нормально.</p>
+            <div class="section-kicker">Последний batch · психологи</div>
+            <h2 id="funnel-title">Насколько далеко дошла проверка</h2>
+            <p>Это не вся база проекта, а последний законченный batch. Следующий переход открывается только более сильным доказательством.</p>
           </div>
-          <div class="legend">
-            <span><i class="dot strong"></i> 65+</span>
-            <span><i class="dot medium"></i> 50-64</span>
-            <span><i class="dot weak"></i> ниже 50</span>
-          </div>
+          <div class="funnel-aside" id="funnel-aside"></div>
         </div>
-        <div class="scroll-note">Таблица широкая: двигай ее вправо-влево внутри блока, чтобы увидеть все столбцы.</div>
-        <div class="table-wrap">
-          <table class="ranking-table">
-            <thead id="market-head"></thead>
-            <tbody id="market-body"></tbody>
-          </table>
-        </div>
+        <ol class="funnel-rail" id="funnel-rail" aria-label="Этапы проверки"></ol>
       </section>
 
-      <section class="panel" aria-labelledby="queue-title">
+      <section class="panel candidates-panel" aria-labelledby="candidates-title">
+        <div class="section-head candidates-head">
+          <div>
+            <div class="section-kicker">Последний проверенный batch</div>
+            <h2 id="candidates-title">Психология: кандидаты для решения</h2>
+            <p>Сила рынка и возможность проверить гипотезу сейчас показаны отдельно.</p>
+          </div>
+          <div class="filters" id="candidate-filters" aria-label="Фильтр кандидатов">
+            <button class="filter-button active" type="button" data-filter="all" aria-pressed="true">Все <span id="count-all">0</span></button>
+            <button class="filter-button" type="button" data-filter="finalist" aria-pressed="false">Финалисты <span id="count-finalist">0</span></button>
+            <button class="filter-button" type="button" data-filter="reserve" aria-pressed="false">Резерв <span id="count-reserve">0</span></button>
+            <button class="filter-button" type="button" data-filter="parked" aria-pressed="false">Парковка <span id="count-parked">0</span></button>
+            <button class="filter-button" type="button" data-filter="rejected" aria-pressed="false">Отсев <span id="count-rejected">0</span></button>
+          </div>
+        </div>
+        <div class="candidate-list" id="candidate-list"></div>
+        <div class="empty-state" id="candidate-empty" hidden>В этом статусе пока нет кандидатов.</div>
+      </section>
+
+      <section class="panel runs-panel" aria-labelledby="runs-title">
         <div class="section-head">
           <div>
-            <h2 id="queue-title">Очередь конкретных ставок</h2>
-            <p>Показывает, куда разумно вложить ближайшие 7–14 дней. Чужой референс не получает здесь искусственный балл без выбранного нами оффера и канала.</p>
+            <div class="section-kicker">История</div>
+            <h2 id="runs-title">Прогоны и точки возврата</h2>
+            <p>Новый поиск не стирает старый: видно, где он остановлен и что было получено.</p>
           </div>
         </div>
-        <div class="scroll-note">Таблица широкая: двигай ее вправо-влево внутри блока, чтобы увидеть все столбцы.</div>
-        <div class="table-wrap">
-          <table class="ranking-table">
-            <thead id="queue-head"></thead>
-            <tbody id="queue-body"></tbody>
-          </table>
-        </div>
+        <div class="run-list" id="run-list"></div>
       </section>
 
-      <section class="split">
-        <div class="panel detail-panel" aria-labelledby="selected-title">
-          <h2 id="selected-title">Выбранный объект</h2>
-          <div id="selected-niche" class="selected-empty">
-            Выбери строку в таблице, чтобы увидеть расшифровку.
+      <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
+        <div class="section-head portfolio-head">
+          <div>
+            <div class="section-kicker">Портфель</div>
+            <h2 id="portfolio-title">Старые ставки и карта рынков</h2>
+            <p>Это две разные линзы. Рыночный референс не получает приоритет нашей ставки без выбранного сегмента, оффера и канала.</p>
+          </div>
+          <div class="tablist" role="tablist" aria-label="Представление портфеля">
+            <button class="tab-button active" id="queue-tab" type="button" role="tab" aria-selected="true" aria-controls="portfolio-table" data-portfolio="queue">Наши ставки</button>
+            <button class="tab-button" id="market-tab" type="button" role="tab" aria-selected="false" aria-controls="portfolio-table" data-portfolio="market">Карта рынков</button>
           </div>
         </div>
+        <div class="table-note">На узком экране таблица прокручивается только внутри этого блока.</div>
+        <div class="table-wrap">
+          <table id="portfolio-table">
+            <thead id="portfolio-head"></thead>
+            <tbody id="portfolio-body"></tbody>
+          </table>
+        </div>
+        <article class="portfolio-detail" id="portfolio-detail" aria-live="polite"></article>
+      </section>
 
-        <div class="panel metric-panel" aria-labelledby="metrics-title">
-          <h2 id="metrics-title">Иерархия оценки</h2>
+      <details class="panel methodology-panel">
+        <summary>
+          <span>
+            <span class="section-kicker">Методология</span>
+            <strong>Как считаются оценки и что означают критерии</strong>
+          </span>
+          <span class="summary-action">Показать</span>
+        </summary>
+        <div class="methodology-content">
+          <div class="formula-grid" aria-label="Формулы портфеля">
+            <article>
+              <strong>60 / 40</strong>
+              <span>Рыночная возможность: рынок + экономика</span>
+            </article>
+            <article>
+              <strong>40 / 35 / 25</strong>
+              <span>Приоритет ставки: экономика + защита + личный фильтр, с поправкой на доверие</span>
+            </article>
+          </div>
           <div class="metric-list" id="metric-list"></div>
+          <div class="criteria-grid" id="criteria-grid"></div>
         </div>
-      </section>
-
-      <section class="panel" aria-labelledby="criteria-title">
-        <div class="section-head">
-          <div>
-            <h2 id="criteria-title">Общая матрица критериев</h2>
-            <p>Это общий “рецепт” оценки. Конкретные баллы выбранной ниши показаны выше.</p>
-          </div>
-        </div>
-        <div class="criteria-grid" id="criteria-grid"></div>
-      </section>
+      </details>
     </main>
 
-    <script src="./app.js?v=20260720-dual-lens"></script>
+    <footer class="footer">
+      <span>Read-only представление проектных данных</span>
+      <span>Содержание: Markdown · маршрутизация: FACTORY_STATE.json</span>
+    </footer>
+
+    <script type="module" src="./app.js?v=20260910-factory-v2"></script>
   </body>
 </html>

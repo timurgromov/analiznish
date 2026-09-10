@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-10-dashboard-v2",
+  "change_kind": "dashboard-redesign",
+  "status": "passed",
+  "requested_visible_change": "Превратить портфельный экран в понятную воронку всех текущих решений, кандидатов и прогонов.",
+  "expected_visible_delta": "Первый экран начинается с общего checkpoint и evidence-воронки, а формулы и широкие портфельные таблицы перенесены ниже.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "bf548204dccc25fe02b69e9f6e2a53dedae8962f236b1ae6f0b1419c550c1bb7",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/",
+    "state": "успешная загрузка проектных источников",
+    "selector_or_slide_id": ".checkpoint, .funnel-rail, #candidate-filters, #portfolio-table",
+    "action": "Открыть экран, отфильтровать два финалиста и переключить портфель на карту рынков"
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Карта рынков и очередь наших ставок не смешиваются",
+    "Неподтверждённые данные не выдаются за реальные интервью или деньги",
+    "Markdown остаётся источником содержания"
+  ],
+  "required_viewports": [
+    "390x844",
+    "1180x820",
+    "1440x900"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "Codex in-app browser; innerWidth=390; innerHeight=844",
+      "before_signature": "h1=Карта возможностей и ставки; first-panel=Два вопроса вместо одного балла; current-checkpoint=absent",
+      "after_signature": "h1=Воронка решений; checkpoint=Выбрать следующий рабочий прогон; workspace=0/13/9/7; scrollWidth=390",
+      "observed_visible_result": "На мобильном видны сводка проекта и начало общего checkpoint; карточка складывается в одну колонку без горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1180x820",
+      "viewport_source": "Codex in-app browser; innerWidth=1180; innerHeight=820",
+      "before_signature": "h1=Карта возможностей и ставки; first-panel=formulas 60/40 and 40/35/25; next-visible=market-table",
+      "after_signature": "h1=Воронка решений; checkpoint=Сейчас; next-visible=Начало воронки; scrollWidth=1180",
+      "observed_visible_result": "В первом ноутбучном viewport целиком виден общий checkpoint и начало воронки последнего batch; формулы не занимают первый экран.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "Codex in-app browser; innerWidth=1440; innerHeight=900",
+      "before_signature": "h1=Карта возможностей и ставки; portfolio-tables=primary; candidate-filters=absent",
+      "after_signature": "h1=Воронка решений; finalist-filter=2 cards; market-tab selected; first-header=Место на карте; scrollWidth=1440",
+      "observed_visible_result": "Фильтр показывает только P1/P2, переключатель открывает отдельную карту рынков, а страница не получает горизонтальный overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

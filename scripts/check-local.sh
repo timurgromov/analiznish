@@ -23,6 +23,7 @@ required_files=(
   "docs/METHODOLOGY_SOURCES.md"
   "data/IDEA_INBOX.md"
   "data/ACTIVE_RUN.md"
+  "data/FACTORY_STATE.json"
   "data/HIT_PARADE.md"
   "data/interviews/README.md"
   "data/interviews/_template.md"
@@ -41,6 +42,7 @@ required_files=(
   "prompts/run-custdev-cycle.md"
   "data/discovery/_insight-run-template.md"
   "scripts/validate-active-run.mjs"
+  "scripts/validate-factory-state.mjs"
   ".cursor/rules/niche-factory.mdc"
 )
 
@@ -67,6 +69,7 @@ grep -q '18 критер' docs/SIGMA_EXECUTION_MODEL.md
 
 node scripts/validate-portfolio.mjs
 node scripts/validate-active-run.mjs
+node scripts/validate-factory-state.mjs
 
 if command -v rg >/dev/null 2>&1; then
   if rg -n --hidden --glob '!.git' --glob '!.env.example' --glob '!scripts/check-local.sh' '(sk-[A-Za-z0-9_-]{20,}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|password\s*=|api[_-]?key\s*=\s*[^[:space:]]+)' .; then
