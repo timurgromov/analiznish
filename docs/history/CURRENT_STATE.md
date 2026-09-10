@@ -65,6 +65,11 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   полезность marketplace-данных и одновременно ограничения: часть объектов
   продаётся как кодовый актив без traction, sold badge не раскрывает цену
   сделки, а заявленная ARR может относиться не к SaaS-подписке.
+* Авторизованный тест Acquire расширил пилот до 21 marketplace lead с трёх
+  площадок и восьми конкретных моделей. Все модели прошли ранний Portfolio Gate
+  по 18 критериям; P1 `обращение → оплата` и P2 `РПП между сессиями` оставлены
+  двумя финалистами до owner checkpoint. Hit parade и припаркованный run не
+  изменены; strongest evidence остаётся E1.
 * Есть B2B CustDev и build gates в `docs/CUSTDEV_PROTOCOL.md`.
 * Есть шаблоны обезличенных интервью в `data/interviews/` и экспериментов в `data/experiments/`.
 * Фраза «Хочу искать нишу» и prompt `prompts/start-niche-factory.md` запускают guided/hybrid поиск без готовой идеи.
