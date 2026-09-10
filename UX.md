@@ -41,8 +41,8 @@
 checkpoint. После обработки агент прямо возвращает пользователя к текущей
 работе. Менять run можно только по явному owner decision.
 
-Нормальный прогресс: `context inventory → Jobs map → reference mining → 5–10
-кандидатов → 3–5 quick scans → 1–2 deep research → 1 concrete bet → problem
+Нормальный прогресс: `чистилище идей → context inventory → 5–10 кандидатов →
+S · SCAN 0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → problem
 interviews → offer action → paid pilot → MVP`.
 
 ### Reference Mining
@@ -60,17 +60,19 @@ interviews → offer action → paid pilot → MVP`.
 
 ### Idea Inbox
 
-Цель: быстро выгрузить идею из головы без превращения ее в обязательство.
+Цель: быстро выгрузить идею из головы, поставить её в приблизительный порядок и
+не превратить в обязательство.
 
 Формат ответа:
 
 1. Одна строка сути идеи.
 2. Предварительный тип: `business`, `content`, `automation`, `asset`, `research`, `personal tool`.
-3. Статус: `inbox`, `quick_scan_candidate`, `deep_score_candidate`, `parked`, `discarded`.
-4. 1-2 причины, почему статус выбран.
-5. Один минимальный вопрос, если без него невозможно понять, что это за идея.
+3. Класс соответствия цели: `A`, `B`, `C` или `X`.
+4. Статус: `inbox`, `quick_scan_candidate`, `deep_score_candidate`, `parked`, `discarded`.
+5. Почему идея стоит выше или ниже соседних и какая одна проверка следующая.
 
-В этом режиме не считать score и не обновлять hit parade. Идея может быть просто зафиксирована, чтобы не занимать внимание.
+В этом режиме не считать полный score и не обновлять hit parade. Класс — только
+E0-приоритизация относительно цели `1 000–5 000 ₽ × 100–1 000 B2B-клиентов`.
 
 ### Quick Scan
 

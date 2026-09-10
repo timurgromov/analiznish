@@ -14,13 +14,14 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 3. `docs/RAIL_PROTOCOL.md`
 4. `docs/SIGMA_EXECUTION_MODEL.md`
 5. `docs/INSIGHT_EXECUTION_MODEL.md`
-6. `docs/SCORING_MODEL.md`
-7. `docs/WORKFLOW.md`
-8. `docs/NICHE_DISCOVERY_LOOP.md`
-9. `docs/CUSTDEV_PROTOCOL.md`
-10. `docs/NICHE_QUESTIONNAIRE.md`
-11. `docs/NICHE_INPUT_TEMPLATE.md`
-12. `data/HIT_PARADE.md`
+6. `docs/IDEA_PURGATORY_PROTOCOL.md`
+7. `docs/SCORING_MODEL.md`
+8. `docs/WORKFLOW.md`
+9. `docs/NICHE_DISCOVERY_LOOP.md`
+10. `docs/CUSTDEV_PROTOCOL.md`
+11. `docs/NICHE_QUESTIONNAIRE.md`
+12. `docs/NICHE_INPUT_TEMPLATE.md`
+13. `data/HIT_PARADE.md`
 
 ## Workflow
 
@@ -29,12 +30,16 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 1a. If `data/ACTIVE_RUN.md` is active, continue its phase and step. Do not reset
 the run for a new chat, methodological link or side discussion; follow
 `docs/RAIL_PROTOCOL.md`.
-2. If the user explicitly only wants to dump ideas, use `idea_inbox` and `data/IDEA_INBOX.md`; do not score. Otherwise, a new niche defaults to score + hit parade row + niche card, even when the score is only `quick_scan`.
+2. When the user wants to dump, ground or preserve an idea, use `idea_inbox` and
+`data/IDEA_INBOX.md`: assign `A/B/C/X`, explain the position and one cheap next
+check. Do not create a full score, niche card or hit parade row at this stage.
 3. Check questionnaire completion level.
 4. For `deep_score`, require block A from `docs/NICHE_QUESTIONNAIRE.md`.
 5. Apply hard filters before score.
 6. Classify `validation_stage` and strongest evidence `E0–E5`; a ready product can still be pre-CustDev.
-7. Run the applicable 10-stage discovery scan from `docs/NICHE_DISCOVERY_LOOP.md`.
+7. Run the applicable discovery scan. Before interviews, batch 5–10 candidates
+through `S · SCAN 0–3`, then apply the 18-criterion early Portfolio Gate at
+step 4 and retain no more than 1–2 finalists.
 8. Separate facts, assumptions, estimates, and unverified claims. Synthetic research is not a real interview and cannot exceed `E1`.
 8a. Execute `I · INSIGHT` through a provenance-backed corpus and synthetic
 stress test, then require separate real problem/action/pay gates.

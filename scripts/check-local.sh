@@ -10,6 +10,7 @@ required_files=(
   ".env.example"
   ".gitignore"
   "docs/SCORING_MODEL.md"
+  "docs/IDEA_PURGATORY_PROTOCOL.md"
   "docs/WORKFLOW.md"
   "docs/NICHE_DISCOVERY_LOOP.md"
   "docs/SIGMA_EXECUTION_MODEL.md"
@@ -61,6 +62,8 @@ done
 grep -q 'Build gate' docs/CUSTDEV_PROTOCOL.md
 grep -q 'data/ACTIVE_RUN.md' AGENTS.md
 grep -q 'I · INSIGHT' docs/INSIGHT_EXECUTION_MODEL.md
+grep -q '100–1 000' docs/IDEA_PURGATORY_PROTOCOL.md
+grep -q '18 критер' docs/SIGMA_EXECUTION_MODEL.md
 
 node scripts/validate-portfolio.mjs
 node scripts/validate-active-run.mjs

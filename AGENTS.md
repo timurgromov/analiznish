@@ -9,6 +9,10 @@ action/pay test → bounded build. Если идеи нет, агент созд
 shortlist сам. Evidence усиливается `public → behavior → action → pay → repeat`;
 scoring и hit parade только обслуживают этот контур.
 
+Целевая модель фильтра: B2B-подписка `1 000–5 000 ₽/мес`, путь к
+`100–1 000` плательщикам и MRR `100 000–5 000 000 ₽/мес`. Это ориентир
+приоритизации, а не обещание или замена проверки рынка.
+
 Не делать в P0:
 
 * не строить полноценный SaaS/UI до первого доказанного end-to-end factory-run;
@@ -41,7 +45,11 @@ production/deploy/database не основание; при экономии вы
 5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Не сравнивай чужой референс и существующий актив одним итоговым числом.
 6. Всегда отделяй факты, оценки и допущения. Если источник не проверен, пиши `unverified`.
 7. Перед поиском в новом для пользователя домене сначала проведи `context_inventory`: прочитай названные владельцем проекты и исследования, покажи список реально прочитанных источников, извлечённые ставки и неизвестные места. До явного owner checkpoint не генерируй replacement-идеи, не меняй активный hit parade и не выдавай сырую гипотезу за текущую ставку.
-8. Новая идея может попасть в `data/HIT_PARADE.md` только после owner checkpoint: владелец увидел входные источники, конкретную модель и согласовал перевод из inbox/карты Jobs в `quick_scan`. Явный запрос «добавь в рейтинг» остаётся достаточным. Идея, сохранённая как `idea_inbox`, контекстная карта или карта Jobs, не получает score и не попадает в рейтинг.
+8. Любую новую бизнес-идею, которую владелец просит заземлить/сохранить, заноси
+   в `data/IDEA_INBOX.md` по `docs/IDEA_PURGATORY_PROTOCOL.md`: класс `A/B/C/X`,
+   причина позиции и одна дешёвая проверка. Это предварительный порядок E0, не
+   score и не hit parade. В `data/HIT_PARADE.md` идея попадает только после
+   owner checkpoint и `quick_scan`.
 9. После meaningful change обновляй `docs/history/`.
 10. Не трогай несвязанные файлы и не откатывай чужие изменения.
 11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.
@@ -57,6 +65,9 @@ production/deploy/database не основание; при экономии вы
 15. Для `I · INSIGHT` используй `docs/INSIGHT_EXECUTION_MODEL.md`: public corpus,
     AI-синтез, персонажи и synthetic interview остаются E1. Реальные интервью,
     действие и деньги проходят отдельно по `docs/CUSTDEV_PROTOCOL.md`.
+16. До реальных интервью обязателен ранний Portfolio Gate: batch 5–10 идей,
+    публичный `S · SCAN 0–3`, затем шаг 4 с 18 критериями из
+    `docs/SCORING_MODEL.md`. Только 1–2 финалиста переходят в `S · SCAN 5–9`.
 
 ## Active Run Rail
 
@@ -81,9 +92,11 @@ production/deploy/database не основание; при экономии вы
 * `rescore` — переоценка уже существующей ниши после новых данных;
 * `portfolio_review` — сравнение нескольких ниш и изменение приоритетов;
 * `niche_factory` — управляемый поиск с нуля: hunting constraints → shortlist → scan → CustDev → experiment gates;
-* `idea_inbox` — фиксация сырой идеи без score и без hit parade, только если пользователь явно просит просто сохранить поток идей без оценки.
+* `idea_inbox` — фиксация сырой идеи с приблизительным классом `A/B/C/X`, но без score и hit parade.
 
-Для `idea_inbox` используй `data/IDEA_INBOX.md`. Не требуй полный опросник, если цель пользователя — снять идею с головы и вернуться к ней позже.
+Для `idea_inbox` используй `data/IDEA_INBOX.md` и
+`docs/IDEA_PURGATORY_PROTOCOL.md`. Не требуй полный опросник, если цель
+пользователя — снять идею с головы и вернуться к ней позже.
 
 Для `quick_scan`, `deep_score` и `rescore` указывай `validation_stage` и сильнейший уровень `E0–E5`; слабые источники не заменяют `do → pay → repeat`.
 

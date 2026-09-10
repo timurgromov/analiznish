@@ -17,6 +17,11 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 и гипотезы, неизвестные места и один owner checkpoint. До него не добавляй
 случайные идеи, карточки или строки hit parade.
 
+Считай целевым фильтром B2B-подписку `1 000–5 000 ₽/мес`, путь к
+`100–1 000` плательщикам и возможность проверки без большого build. Все новые
+идеи сначала заземляй в `data/IDEA_INBOX.md` по
+`docs/IDEA_PURGATORY_PROTOCOL.md`.
+
 Затем коротко уточни мои hunting constraints: B2B/B2C, география,
 доступные отрасли и контакты, желаемый чек/sales cycle, время и бюджет на тест,
 технические capabilities, hard exclusions. Не требуй готовую нишу.
@@ -40,7 +45,8 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 
 Сначала построй Jobs map и выполни `reference_mining` готовых сервисов,
 альтернатив и независимых отзывов по `docs/REFERENCE_MINING_PROTOCOL.md`. После
-owner checkpoint создай shortlist 5–10 кандидатов, затем оставь 3–5 на quick_scan,
-1–2 на deep research и одну ставку на CustDev/experiment. Не разрешай полный
+owner checkpoint создай batch 5–10 кандидатов, пройди `S · SCAN 0–3`, а на
+этапе 4 примени 18-критериальный Portfolio Gate. Оставь 1–2 на deep research и
+одну ставку на CustDev/experiment. Не разрешай интервью до раннего gate и полный
 MVP до build gate. Все решения и результаты фиксируй по правилам проекта.
 ```
