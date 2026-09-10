@@ -14,6 +14,7 @@ alwaysApply: true
 - AI-аватары и review mining — только E0/E1; реальный CustDev начинается с подходящих людей и прошлого поведения.
 - `I · INSIGHT` выполняй по `docs/INSIGHT_EXECUTION_MODEL.md`: source corpus → synthesis → segment/anti-segment → synthetic stress test → positioning hypotheses → real CustDev/action/pay.
 - До интервью проведи ранний Portfolio Gate: batch 5–10 кандидатов, публичный `S · SCAN 0–3`, затем 18 критериев на шаге 4 и максимум 1–2 финалиста.
-- Не разрешай полноценный B2B MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
+- Считай устойчивую прибыль главной целью; повторяемый cashflow предпочтителен, но B2B и подписка не являются hard filters.
+- Не разрешай полноценный MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
 - Фиксируй решения в карточке ниши, `data/experiments/`, hit parade и project memory.
 - Каждый update active run начинай с `Контур: <phase> <step> — <name>` и заканчивай одним измеримым gate. Методологическое отвлечение после обработки возвращается к текущему этапу.
