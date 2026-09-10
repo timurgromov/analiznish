@@ -48,6 +48,17 @@
 * На `390×844` page overflow отсутствует; одновременно видна одна вкладка;
   console errors — `0`.
 
+## Production verification
+
+* commit `651695d` отправлен в `origin/main`;
+* GitHub Pages run `34528736777` завершился с `success`;
+* в той же пользовательской вкладке Chrome открыта production-версия
+  `https://timurgromov.github.io/analiznish/dashboard/?v=651695d#funnel`;
+* production показывает новые названия разделов и определения этапов;
+* `Этапы → Чистилище` показал объяснение нулевого состояния;
+* последующее нажатие `Все идеи` сбросило stage-фильтр и вернуло 20 строк;
+* console errors — `0`.
+
 ## Evidence limits
 
 Ноль в Чистилище не означает, что все 20 идей полноценно исследованы. Он
