@@ -23,7 +23,8 @@ hard filter. Любая модель проверяется без прежде�
     история, портфель и методология разделены по задачам.
   - Gate 3: перенесены восемь кандидатов marketplace batch; фильтры, обе
     портфельные линзы и responsive layout проверены локально.
-  - Выполнено 2026-09-10. Production verification фиксируется после Pages deploy.
+  - Выполнено 2026-09-10: commit `6ae5f16`, GitHub Pages run `34518496008`
+    (`success`), публично проверены desktop/mobile, finalist filter и market tab.
 
 ## NF-0 — Context, Jobs And References
 

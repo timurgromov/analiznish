@@ -42,4 +42,10 @@ owner decision: начать новый широкий поиск либо яв�
   `1366×768`, `1440×900`, `1984×1046`; horizontal overflow и console errors —
   отсутствуют
 
-Production verification добавляется после GitHub Pages deploy.
+* commit `6ae5f16` отправлен в `origin/main`; GitHub Pages run `34518496008`
+  завершился `success`;
+* публичный URL `https://timurgromov.github.io/analiznish/dashboard/` проверен
+  свежей загрузкой на `1180×820` и `390×844`: показаны `Воронка решений`, общий
+  checkpoint и статус `Данные актуальны`, page overflow отсутствует;
+* на production фильтр `Финалисты` оставил P1/P2, вкладка `Карта рынков`
+  переключила первый столбец на `Место на карте`, console errors — `0`.

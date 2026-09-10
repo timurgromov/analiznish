@@ -199,6 +199,10 @@ Scoring v0.7, hit parade и dashboard v2 работают как внутрен�
 * Изменение 2026-07-23 зафиксировано отдельным commit `d307b13`; валидатор подтверждает 9 рынков и 7 исполнимых ставок.
 * Первый pre-gate quick-scan checkpoint 2026-09-09 был зафиксирован commit `b54034d`; он сохраняется в Git как исторический, но его РПП-карточки более не отражают текущий фокус.
 * Niche Discovery Loop v1.0 зафиксирован commit `efecdda`, отправлен в `origin/main`; GitHub Pages run `34275935196` завершился `success`, публичный dashboard открылся со статусом «Данные загружены».
+* Операторский dashboard v2 зафиксирован commit `6ae5f16`; GitHub Pages run
+  `34518496008` завершился `success`. Публично проверены общий checkpoint,
+  фильтр двух финалистов, переключение карты рынков, мобильный `390×844` и
+  ноутбучный `1180×820`; console errors и page overflow отсутствуют.
 * Продуктовая иерархия «Niche Factory → evidence gates → scoring/portfolio» зафиксирована commit `af6b82f`; `PROJECT_SPEC.md` и `TASKS.md` переписаны вокруг первого полного цикла.
 * 2026-09-10 рамка цели расширена до устойчивой прибыли, а повторяемый cashflow
   закреплён как предпочтение, не hard filter. Ранний Portfolio Gate и шаг 5
