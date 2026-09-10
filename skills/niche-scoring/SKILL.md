@@ -15,13 +15,14 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 4. `docs/SIGMA_EXECUTION_MODEL.md`
 5. `docs/INSIGHT_EXECUTION_MODEL.md`
 6. `docs/IDEA_PURGATORY_PROTOCOL.md`
-7. `docs/SCORING_MODEL.md`
-8. `docs/WORKFLOW.md`
-9. `docs/NICHE_DISCOVERY_LOOP.md`
-10. `docs/CUSTDEV_PROTOCOL.md`
-11. `docs/NICHE_QUESTIONNAIRE.md`
-12. `docs/NICHE_INPUT_TEMPLATE.md`
-13. `data/HIT_PARADE.md`
+7. `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`
+8. `docs/SCORING_MODEL.md`
+9. `docs/WORKFLOW.md`
+10. `docs/NICHE_DISCOVERY_LOOP.md`
+11. `docs/CUSTDEV_PROTOCOL.md`
+12. `docs/NICHE_QUESTIONNAIRE.md`
+13. `docs/NICHE_INPUT_TEMPLATE.md`
+14. `data/HIT_PARADE.md`
 
 ## Workflow
 
@@ -33,6 +34,9 @@ the run for a new chat, methodological link or side discussion; follow
 2. When the user wants to dump, ground or preserve an idea, use `idea_inbox` and
 `data/IDEA_INBOX.md`: assign `A/B/C/X`, explain the position and one cheap next
 check. Do not create a full score, niche card or hit parade row at this stage.
+2a. When the user asks to find a current idea without a niche, run pain-first,
+product-first and transaction-first discovery. Use acquisition marketplaces as
+listing evidence, not as clone instructions or automatically proven revenue.
 3. Check questionnaire completion level.
 4. For `deep_score`, require block A from `docs/NICHE_QUESTIONNAIRE.md`.
 5. Apply hard filters before score.

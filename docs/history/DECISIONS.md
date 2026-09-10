@@ -646,3 +646,61 @@ Verification:
 CustDev, idea inbox, prompts и active run. Ранний Portfolio Gate психологов
 проведён на новой рамке; после сравнения денежных моделей финалист C перешёл на
 `S · SCAN 6`.
+
+## DEC-2026-09-10-TRANSACTION-FIRST-MARKETPLACE-MINING — Проданные бизнесы являются ранним источником идей
+
+Status: active
+Area: methodology | research | portfolio | agent
+Decision date: 2026-09-10
+Evidence: скриншот уведомления Acquire.com; публичные listings и правила
+Acquire.com, Flippa, Microns и Product Hunt; пилотный разбор mental wellness
+Commits: смотреть историю Git после фиксации изменения
+Extends: `DEC-2026-09-08-NICHE-FACTORY`
+
+Decision:
+Команда «найди актуальную идею» должна запускать не свободный brainstorm, а три
+параллельных входа: pain-first, product-first и transaction-first. В третьем
+входе агент собирает актуальные, ended и sold listings с Acquire.com, Flippa,
+Microns и других релевантных брокеров, восстанавливает плательщика, Job,
+механизм денег, активы, канал, P&L/ARR, asking price, multiple, reason for sale
+и противоречия. Перед ранним Portfolio Gate кандидат должен опираться минимум
+на два из трёх входов.
+
+Marketplace evidence остаётся E1. Email headline — `M0`, открытый listing —
+`M1`, точно описанная platform verification — `M2`, законный diligence — `M3`,
+подтверждённая закрытая сделка — `M4`. Эти уровни не заменяют CustDev E2,
+действие E3 и оплату E4.
+
+Отдельно зафиксировано решение владельца: проход психологов сохраняется, но
+припаркован на `S · SCAN 6`. Текущая системная работа не должна автоматически
+возвращать разговор к интервью психологов.
+
+Why:
+Форумы показывают боль, каталоги — продукты, но оба источника плохо показывают,
+что превращается в продаваемый актив и с какой экономикой. Маркетплейсы дают
+ещё одну наблюдаемую плоскость, однако их seller incentives создают риск принять
+рекламное описание и asking price за доказанный бизнес. Раздельные evidence
+levels позволяют пользоваться сигналом, не завышая выводы.
+
+Do:
+
+* собирать batch 20–40 listings минимум с двух площадок;
+* разделять seller claim, platform-verified field и независимое подтверждение;
+* различать asking price, reserve и известную цену закрытой сделки;
+* отделять `asset_only` от бизнеса с клиентами и повторяемой выручкой;
+* проверять найденный кластер через продукты, голос клиента и российскую
+  локализацию до score.
+
+Do not:
+
+* не считать listing доказательством продажи или спроса;
+* не считать sold badge доказательством PMF или известной цены сделки;
+* не переносить иностранную экономику и канал в Россию без проверки;
+* не копировать код, бренд, дизайн, данные или закрытые материалы под NDA;
+* не возобновлять припаркованный доменный run без явного решения владельца.
+
+Verification:
+Правило синхронизировано в agent rules, workflow, discovery loop, SIGMA source
+playbook, reference mining, idea purgatory, UX, prompts и scoring skill. Созданы
+отдельный execution protocol и E1-пилот; локальная проверка зафиксирована в
+worklog.

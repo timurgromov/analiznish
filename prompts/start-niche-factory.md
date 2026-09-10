@@ -10,7 +10,8 @@ Model note: GPT-5.6 Sol/Высокий — нужен исследователь
 `Source board`. Затем прочитай AGENTS.md, docs/history/CURRENT_STATE.md, последние записи worklog,
 docs/NICHE_DISCOVERY_LOOP.md, docs/CUSTDEV_PROTOCOL.md,
 docs/SIGMA_EXECUTION_MODEL.md, docs/INSIGHT_EXECUTION_MODEL.md,
-docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
+docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md, docs/SCORING_MODEL.md,
+docs/WORKFLOW.md и data/HIT_PARADE.md.
 
 Если я назвал прошлые проекты, документы или исследования, сначала проведи
 `context_inventory`: перечисли реально прочитанные источники, извлечённые активы
@@ -29,8 +30,12 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 доступные отрасли и контакты, желаемый чек/sales cycle, время и бюджет на тест,
 технические capabilities, hard exclusions. Не требуй готовую нишу.
 
-Если направления нет, предложи 3–5 поисковых тезисов на основе дорогих
-повторяющихся процессов, существующих бюджетов и моего доступа к покупателям.
+Если направления нет, не генерируй shortlist только из головы. Проведи три
+входа: pain-first по проблемам/спросу, product-first по готовым продуктам и
+transaction-first по Acquire.com/Flippa/Microns/другим marketplaces. Предложи
+3–5 тезисов на пересечении минимум двух входов, существующих бюджетов и моего
+доступа к покупателям. Asking price не выдавай за sale price, seller claims —
+за verified financials, а sold listing — за доказанный российский спрос.
 По умолчанию работай в `hybrid`: публичное исследование делай сам; мне выдавай
 только авторизованные, закрытые и человеческие действия.
 
@@ -47,7 +52,8 @@ docs/SCORING_MODEL.md, docs/WORKFLOW.md и data/HIT_PARADE.md.
 текущему этапу. Не переключай run без явного owner decision.
 
 Сначала построй Jobs map и выполни `reference_mining` готовых сервисов,
-альтернатив и независимых отзывов по `docs/REFERENCE_MINING_PROTOCOL.md`. После
+альтернатив и независимых отзывов по `docs/REFERENCE_MINING_PROTOCOL.md`. Для
+acquisition marketplaces используй отдельный протокол reverse engineering. После
 owner checkpoint создай batch 5–10 кандидатов, пройди `S · SCAN 0–3`, а на
 этапе 4 примени 18-критериальный Portfolio Gate. Оставь 1–2 на deep research и
 одну ставку на CustDev/experiment. Не разрешай интервью до раннего gate и полный

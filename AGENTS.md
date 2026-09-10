@@ -56,7 +56,7 @@ production/deploy/database не основание; при экономии вы
    owner checkpoint и `quick_scan`.
 9. После meaningful change обновляй `docs/history/`.
 10. Не трогай несвязанные файлы и не откатывай чужие изменения.
-11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.
+11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md`, `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → три входа поиска → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.
 12. AI/synthetic research строит гипотезы, но не заменяет клиентов; каждый цикл заканчивай дешёвым экспериментом с заранее заданными success/kill criteria.
 13. Во время активного `niche_factory` не отвечай общими рассуждениями о методе.
     В каждом содержательном update показывай `шаг SIGMA → что реально проверено →
@@ -74,6 +74,11 @@ production/deploy/database не основание; при экономии вы
     `docs/SCORING_MODEL.md`. На gate сравнивай не только подписку, но и механизм
     денег, ожидаемую прибыль, скорость/повторяемость cashflow и стоимость
     исполнения. Только 1–2 финалиста переходят в `S · SCAN 5–9`.
+17. Если пользователь пишет «найди актуальную идею» без готовой ниши, не
+    генерируй shortlist из головы. Проведи три независимых входа: `pain-first`
+    (форумы/спрос), `product-first` (Product Hunt/AppSumo/app stores) и
+    `transaction-first` (Acquire.com/Flippa/Microns/брокеры). Listing — lead,
+    а не доказанный бизнес; asking price, seller claims и closed deal не смешивать.
 
 ## Active Run Rail
 
@@ -88,6 +93,9 @@ production/deploy/database не основание; при экономии вы
 
 Побочный вопрос, ссылка или обсуждение архитектуры не начинают новый run. После
 ответа/интеграции агент возвращает разговор к единственной текущей работе.
+Если владелец явно говорит, что сейчас настраивается весь контур, а доменный run
+не является фокусом, это owner decision поставить domain run в `parked`; такой
+run сохраняет resume point, но больше не управляет каждым ответом.
 
 ## Niche Analysis Protocol
 
@@ -99,6 +107,8 @@ production/deploy/database не основание; при экономии вы
 * `portfolio_review` — сравнение нескольких ниш и изменение приоритетов;
 * `niche_factory` — управляемый поиск с нуля: hunting constraints → shortlist → scan → CustDev → experiment gates;
 * `idea_inbox` — фиксация сырой идеи с приблизительным классом `A/B/C/X`, но без score и hit parade.
+* `marketplace_mining` — transaction-first разбор продаваемых/проданных
+  онлайн-бизнесов до shortlist по `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`.
 
 Для `idea_inbox` используй `data/IDEA_INBOX.md` и
 `docs/IDEA_PURGATORY_PROTOCOL.md`. Не требуй полный опросник, если цель

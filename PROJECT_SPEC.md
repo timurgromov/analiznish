@@ -30,7 +30,7 @@ AI резко удешевил создание прототипов, поэто
 заменить его циклом:
 
 ```text
-чистилище → batch scan → ранний Portfolio Gate → финалист → реальные клиенты → действие → деньги
+чистилище → pain/product/transaction mining → batch scan → ранний Portfolio Gate → финалист → реальные клиенты → действие → деньги
   → узкий build → использование/повтор → rescore
 ```
 
@@ -74,7 +74,7 @@ AI резко удешевил создание прототипов, поэто
 
 Триггер: «Хочу искать нишу» или явный запрос системно найти новый рынок.
 
-Результат: `idea purgatory → context inventory → 5–10 candidates → S · SCAN
+Результат: `idea purgatory → context inventory → pain/product/transaction mining → 5–10 candidates → S · SCAN
 0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → CustDev → offer/action
 test → paid pilot → bounded MVP`.
 
@@ -123,7 +123,7 @@ capabilities и способом удешевить тест, но не дока
 | --- | --- | --- | --- |
 | 0. Idea purgatory and context | Что не потерять и что уже известно? | Упорядоченный inbox, карта источников, активов и gaps | Batch кандидатов |
 | 1. Hunting constraints | Где и с какими ограничениями ищем? | География, B2B/B2C, доступ, чек, цикл сделки, бюджет, capabilities, запреты | Разрешение на карту Jobs |
-| 2. Jobs and reference mining | Какая частая работа и как её уже покупают/решают? | Jobs map, 3–10 готовых референсов, публичный голос клиента, карта альтернатив | Решение о candidate shortlist |
+| 2. Jobs and reference mining | Какая частая работа и как её уже покупают/решают? | Три входа поиска: pain-first, product-first, transaction-first; Jobs map, готовые референсы, продаваемые бизнесы, публичный голос и карта альтернатив | Решение о candidate shortlist |
 | 3. Early Portfolio Gate | Какие конкретные модели быстро отсеять до интервью? | 18-критериальный quick scan 5–10 кандидатов, hard filters, ёмкость, механизм денег, profit path и 1–2 финалиста | Решение о deep research |
 | 4. Deep research | Есть ли рынок, деньги, канал и локальный сегмент? | 1–2 доказательных market dossiers, экономика диапазоном | Выбор одной concrete bet |
 | 5. Problem discovery | Существует ли повторяющаяся дорогая задача? | Реальные интервью, прошлое поведение, альтернативы, payer map | Problem gate |

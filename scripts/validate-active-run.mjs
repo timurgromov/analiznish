@@ -35,7 +35,7 @@ if (!/^E[0-5]$/.test(field("Strongest evidence"))) {
   throw new Error(`${activeRunPath}: Strongest evidence должен быть E0–E5`);
 }
 
-if (status === "active") {
+if (status === "active" || status === "parked") {
   const sourceBoard = field("Source board");
   if (!fs.existsSync(sourceBoard)) {
     throw new Error(`${activeRunPath}: Source board не существует: ${sourceBoard}`);
@@ -50,7 +50,9 @@ if (status === "active") {
   if (!new RegExp(`^\\|\\s*${currentStep}\\.`, "m").test(board)) {
     throw new Error(`${sourceBoard}: нет строки текущего этапа ${currentStep}`);
   }
+}
 
+if (status === "active") {
   for (const heading of ["## Единственная текущая работа", "## Gate этапа", "## Запрещённый переход"]) {
     if (!markdown.includes(heading)) {
       throw new Error(`${activeRunPath}: отсутствует раздел «${heading}»`);
@@ -58,4 +60,12 @@ if (status === "active") {
   }
 }
 
-console.log(`active run ok: ${field("Run ID")} · ${field("Macro phase")} · step ${field("Current step")}`);
+if (status === "parked") {
+  for (const heading of ["## Точка возобновления (не текущая работа)", "## Gate возобновлённого этапа", "## Запрещённый переход"]) {
+    if (!markdown.includes(heading)) {
+      throw new Error(`${activeRunPath}: для parked run отсутствует раздел «${heading}»`);
+    }
+  }
+}
+
+console.log(`run state ok: ${field("Run ID")} · ${status} · ${field("Macro phase")} · step ${field("Current step")}`);

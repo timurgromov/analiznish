@@ -41,7 +41,11 @@
 checkpoint. После обработки агент прямо возвращает пользователя к текущей
 работе. Менять run можно только по явному owner decision.
 
-Нормальный прогресс: `чистилище идей → context inventory → 5–10 кандидатов →
+Если владелец говорит, что сейчас настраивается общий контур, domain run
+переводится в `parked`: точка продолжения сохраняется, но домен больше не
+подставляется в каждый ответ.
+
+Нормальный прогресс: `чистилище идей → context inventory → pain/product/transaction mining → 5–10 кандидатов →
 S · SCAN 0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → problem
 interviews → offer action → paid pilot → MVP`.
 
@@ -57,6 +61,20 @@ interviews → offer action → paid pilot → MVP`.
 3. Что говорят независимые отзывы и форумы; источник, дата и сегмент отделены от вывода агента.
 4. Какой сценарий остаётся недорешённым и почему это пока гипотеза, а не ставка.
 5. Один owner checkpoint: добавить в shortlist, собрать ещё evidence или закрыть тему.
+
+### Marketplace Mining
+
+Цель: использовать Acquire.com, Flippa, Microns и другие marketplaces как
+transaction-first вход, не принимая seller headline за доказанную экономику.
+
+Формат ответа:
+
+1. Какие active/ended/sold listings реально открыты и на какую дату.
+2. Что заявлено о выручке, прибыли, клиентах, asking price и составе актива.
+3. Какие поля platform-verified, какие seller-reported и чего нет.
+4. Какой Job/business model повторяется минимум в нескольких объектах.
+5. С чем кластер пересекается в pain-first или product-first evidence.
+6. Решение: кандидат в batch, `asset_only`, досбор факта или отсев.
 
 ### Idea Inbox
 

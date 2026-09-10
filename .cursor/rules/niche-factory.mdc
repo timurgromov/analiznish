@@ -8,6 +8,10 @@ alwaysApply: true
 - Перед каждым содержательным ответом прочитай `data/ACTIVE_RUN.md`, его `Source board` и `docs/RAIL_PROTOCOL.md`; новый чат не сбрасывает active run.
 - Фраза «Хочу искать нишу» запускает `niche_factory` из `docs/NICHE_DISCOVERY_LOOP.md`.
 - Новую бизнес-идею заземляй в `data/IDEA_INBOX.md` по `docs/IDEA_PURGATORY_PROTOCOL.md`: класс `A/B/C/X`, причина позиции и одна дешёвая проверка; это не score и не hit parade.
+- Для запроса «найди актуальную идею» используй три входа: pain-first,
+  product-first и transaction-first по
+  `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`; не генерируй shortlist
+  только из рассуждений модели.
 - Не требуй готовую нишу: сначала уточни hunting constraints и предложи 3–5 поисковых направлений.
 - По умолчанию используй `hybrid`: публичный research делай сам, пользователю оставляй интервью и авторизованные/закрытые действия.
 - Веди один checkpoint за раз: confirmed, unknown, agent action, user action, acceptance, next gate.
@@ -18,3 +22,5 @@ alwaysApply: true
 - Не разрешай полноценный MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
 - Фиксируй решения в карточке ниши, `data/experiments/`, hit parade и project memory.
 - Каждый update active run начинай с `Контур: <phase> <step> — <name>` и заканчивай одним измеримым gate. Методологическое отвлечение после обработки возвращается к текущему этапу.
+- Parked domain run хранит resume point, но не управляет system work и не
+  возвращается в ответы без явного owner decision.

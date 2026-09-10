@@ -13,6 +13,11 @@ Version: `1.0`
 каждая решает, см. [`docs/SIGMA_SOURCE_PLAYBOOK.md`](SIGMA_SOURCE_PLAYBOOK.md).
 Это каталог источников, а не доказательство спроса и не замена интервью.
 
+Если источник — Acquire.com, Flippa, Microns, Empire Flippers или другой
+маркетплейс покупки бизнеса, дополнительно обязателен
+[`docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`](MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md):
+asking price, verified metrics, sold status и цена сделки не взаимозаменяемы.
+
 ## Вход
 
 Для одного Jobs собрать:

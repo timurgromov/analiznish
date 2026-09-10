@@ -29,13 +29,23 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   `data/IDEA_INBOX.md`: новая идея получает класс `A/B/C/X`, причину позиции и
   одну дешёвую проверку относительно цели устойчивой прибыли. Повторяемый
   cashflow предпочтителен, но B2B и подписка не являются hard filters.
-* Есть управляемый `niche_factory` в `docs/NICHE_DISCOVERY_LOOP.md`: shortlist → scan → реальный CustDev → action → pay → repeat.
+* Есть управляемый `niche_factory` в `docs/NICHE_DISCOVERY_LOOP.md`: три входа
+  поиска → shortlist → scan → реальный CustDev → action → pay → repeat.
+* Поиск кандидатов теперь использует три независимых входа: pain-first
+  (проблемы и обходные пути), product-first (существующие продукты) и
+  transaction-first (выставленные и проданные цифровые бизнесы).
+* Есть `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`: Acquire.com, Flippa,
+  Microns и другие брокеры используются для поиска денежных моделей,
+  продаваемых активов и comparable businesses; listing, seller claim, asking
+  price, verification badge и закрытая сделка не смешиваются.
 * Есть `docs/SIGMA_EXECUTION_MODEL.md`: точный шаг `S · SCAN` из 10 этапов `0–9` и
   обязательный status board. Активный run не переходит к продукту, пока не видны evidence,
   решение и следующий gate каждого пройденного шага.
 * Есть `data/ACTIVE_RUN.md` и `docs/RAIL_PROTOCOL.md`: новый чат продолжает
   сохранённые macro phase/step и source board, а локальный validator проверяет
-  их связность. Текущий run — психологи, `S · SCAN 6 — реальные problem interviews финалиста C`.
+  их связность. Доменный run психологов припаркован на `S · SCAN 6`; он хранит
+  resume point, но не управляет текущими ответами и не возобновляется без
+  явного решения владельца.
 * До реальных интервью обязателен ранний Portfolio Gate: batch 5–10 кандидатов,
   публичный `S · SCAN 0–3`, 18 критериев и максимум 1–2 финалиста.
 * Есть `docs/INSIGHT_EXECUTION_MODEL.md`: материал COMANDOS AI про public
@@ -46,6 +56,11 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   активными ставками без owner checkpoint.
 * Есть `docs/REFERENCE_MINING_PROTOCOL.md`: разбор готовых сервисов, ручных
   альтернатив, независимых отзывов и механизма денег.
+* Пилот transaction-first поиска по mental wellness сохранён в
+  `data/discovery/2026-09-10-marketplace-psychology-pilot.md`. Он показал
+  полезность marketplace-данных и одновременно ограничения: часть объектов
+  продаётся как кодовый актив без traction, sold badge не раскрывает цену
+  сделки, а заявленная ARR может относиться не к SaaS-подписке.
 * Есть B2B CustDev и build gates в `docs/CUSTDEV_PROTOCOL.md`.
 * Есть шаблоны обезличенных интервью в `data/interviews/` и экспериментов в `data/experiments/`.
 * Фраза «Хочу искать нишу» и prompt `prompts/start-niche-factory.md` запускают guided/hybrid поиск без готовой идеи.
@@ -60,7 +75,7 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 
 ## Known Blockers
 
-* Первый factory-run перезапущен 2026-09-09 в направлении частных психологов:
+* Первый factory-run был перезапущен 2026-09-09 в направлении частных психологов:
   Gate 0 прочитал актуальный трек Rule 24, создал context inventory/Jobs map и
   провёл первый E1 `reference_mining` по трём широким Jobs. В Rule24 нет списка
   девяти идей: прежнее VM/форумное исследование было упомянуто владельцем, но его
@@ -78,7 +93,9 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
   (`62`) оставлен в резерве, confidence не выше `0.55`. На этапе 5 плательщиком
   выбран частный психолог с обращениями и свободными слотами, исходом —
   оплаченная первая консультация, тестовым механизмом — success fee с concierge
-  delivery. Run перешёл на этап 6: 5 реальных problem interviews.
+  delivery. 2026-09-10 владелец явно вернул фокус на устройство общего
+  контура, поэтому run припаркован на этапе 6. Интервью не являются текущей
+  работой и будут продолжены только по отдельной команде.
 * PastLife AI / Sansara требует recovery discovery sprint: существующий engine уменьшает стоимость эксперимента, но не заменяет один B2B-сегмент, 8–12 problem interviews и платный pilot gate.
 * Confidence активного портфеля рассчитан до введения evidence ladder E0–E5. Эти значения остаются legacy v0.7 до следующего честного `rescore` каждой карточки и не доказывают прохождение build gate.
 
@@ -106,6 +123,10 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 ## Important Defaults
 
 * По умолчанию поиск новой ниши идёт в режиме `hybrid`: агент сам делает доступный публичный research, пользователь подключается к живым интервью, закрытым источникам и авторизованным действиям.
+* Команда «найди актуальную идею» запускает batch-сбор по pain-first,
+  product-first и transaction-first источникам. Кандидат должен получить
+  поддержку минимум двух входов до раннего Portfolio Gate; иностранный listing
+  не заменяет проверку спроса и альтернатив в России.
 * `niche_factory` — корневой workflow; готовые идеи и существующие активы входят в него с подходящего этапа, а scoring не заменяет evidence gate.
 * AI-аватары, synthetic interviews и review mining не считаются реальным CustDev и не поднимают evidence выше E1. Полный build требует отдельного problem/offer evidence и денежного gate.
 * Главная цель фильтра — устойчивая прибыль. Повторяемый cashflow предпочтителен,
@@ -146,6 +167,7 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Scoring: `docs/SCORING_MODEL.md`
 * Workflow: `docs/WORKFLOW.md`
 * Reference mining: `docs/REFERENCE_MINING_PROTOCOL.md`
+* Marketplace mining: `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`
 * Questionnaire: `docs/NICHE_QUESTIONNAIRE.md`
 * Hit parade: `data/HIT_PARADE.md`
 * Dashboard: `dashboard/index.html`
@@ -163,5 +185,8 @@ Scoring v0.7, hit parade и dashboard работают как внутренни
 * Продуктовая иерархия «Niche Factory → evidence gates → scoring/portfolio» зафиксирована commit `af6b82f`; `PROJECT_SPEC.md` и `TASKS.md` переписаны вокруг первого полного цикла.
 * 2026-09-10 рамка цели расширена до устойчивой прибыли, а повторяемый cashflow
   закреплён как предпочтение, не hard filter. Ранний Portfolio Gate и шаг 5
-  психологов пройдены; active run находится на `S · SCAN 6`, где нужны реальные
-  интервью.
+  психологов пройдены; доменный run припаркован на `S · SCAN 6`.
+* 2026-09-10 transaction-first mining встроен в ранний поиск. Следующий общий
+  запуск должен собрать 20–40 актуальных и sold/ended listings минимум с двух
+  площадок, пересечь кластеры с pain/product evidence и передать 5–10
+  кандидатов в Portfolio Gate.
