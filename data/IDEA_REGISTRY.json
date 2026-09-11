@@ -64,12 +64,12 @@
       "legacyEvidenceConfidence": 0.82,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "parked",
-      "rankingReason": "Legacy-код и прежняя карточка не прошли S · SCAN. Рынок и модель требуют нового Factory-прохода до CustDev, action или оплаты.",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включён в общий S0-batch legacy-портфеля. Production-движок остаётся контекстом, а не доказательством спроса.",
       "mainRisk": "Пользователи могут предпочесть бесплатные travel-каналы персональному платному боту.",
-      "nextGate": "Начать отдельный S0_CONTEXT: инвентаризация legacy-актива, затем пройти S1–S5 до owner choice.",
+      "nextGate": "Завершить S0_CONTEXT: зафиксировать плательщика, фактические затраты, аналитику и неподтверждённые допущения.",
       "source": "data/niches/2026-07-01-travel-radar.md",
-      "runIds": ["portfolio-v07-2026-07-20"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "kadra",
@@ -85,13 +85,13 @@
       "evidenceConfidence": 0.55,
       "legacyEvidenceConfidence": 0.65,
       "evidenceLevel": "E1",
-      "stage": "market_research",
-      "gateStatus": "parked",
-      "rankingReason": "Категория и конкуренты изучены глубоко, но своего оффера, канала, маржи и оплат ещё нет.",
+      "stage": "quick_scan",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включена в общий S0-batch legacy-портфеля. Прошлый разбор конкурентов остаётся входом, но не заменяет выбор одного job и плательщика.",
       "mainRisk": "Широкий продукт будет построен раньше одного понятного сегмента и десяти оплат.",
-      "nextGate": "Начать отдельный S0_CONTEXT, затем пройти S1–S5 до выбора одного job и CustDev.",
+      "nextGate": "Завершить S0_CONTEXT: отделить выбранный product format от непроверенных сегмента, канала, цены и себестоимости.",
       "source": "data/niches/2026-07-21-kadra-ai-photo.md",
-      "runIds": ["kadra-reference-mining-2026-07-16", "portfolio-v07-2026-07-20"]
+      "runIds": ["kadra-reference-mining-2026-07-16", "portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "auto-seo-cpa",
@@ -129,12 +129,12 @@
       "legacyEvidenceConfidence": 0.74,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "parked",
-      "rankingReason": "Глобальная монетизация и удалённое производство привлекательны, но модель зависит от платформы, оригинальности и выбранной аудитории.",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включён в общий S0-batch legacy-портфеля. Исторический quick scan не выбрал аудиторию, поэтому модель ещё не является конкретной ставкой.",
       "mainRisk": "Шаблонный AI-контент может не пройти проверку монетизации или не удерживать аудиторию.",
-      "nextGate": "Выбрать одну аудиторию, проверить зарубежную схему монетизации и выпустить три оригинальных ролика.",
+      "nextGate": "Завершить S0_CONTEXT: определить конкретную аудиторию, владельца канала, модель денег и доступные производственные активы.",
       "source": "data/niches/2026-07-01-ai-youtube-automation.md",
-      "runIds": ["ai-youtube-scan-2026-07-01"]
+      "runIds": ["ai-youtube-scan-2026-07-01", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "onsud-reference",
@@ -255,12 +255,12 @@
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "parked",
-      "rankingReason": "Большая сформированная категория и подписка возможны, но платный pair-mode, доверие к данным и канал не доказаны.",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включён в общий S0-batch legacy-портфеля. Широкая категория не доказывает готовность платить за конкретный Telegram-first оффер.",
       "mainRisk": "Бесплатные приложения закрывают основной job, а чувствительные данные повышают барьер доверия.",
-      "nextGate": "Проверить оффер с защитой приватности и реальное платёжное действие на одной аудитории.",
+      "nextGate": "Завершить S0_CONTEXT: сузить сегмент, границы privacy и проверить, существует ли доступный канал для первого исследования.",
       "source": "data/niches/2026-07-05-ai-cycle-assistant.md",
-      "runIds": ["portfolio-v07-2026-07-20"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "psych-emotional-eating",
@@ -386,12 +386,12 @@
       "legacyEvidenceConfidence": 0.65,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "parked",
-      "rankingReason": "Production-актив реален, но legacy-разработка не прошла Factory S · SCAN; exact-offer, сегмент, канал и спрос нельзя считать проверенными.",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включён в общий S0-batch legacy-портфеля. Production-контур остаётся фактом delivery, но не доказывает спрос именно на текущий оффер.",
       "mainRisk": "Продолжать полировать код вместо проверки платежа и sale-ready спроса.",
-      "nextGate": "Начать recovery S0_CONTEXT: инвентаризация актива и фактов, затем S1–S5 до owner choice.",
+      "nextGate": "Завершить S0_CONTEXT: отделить подтверждённые product/payment факты от спроса на exact-offer, CAC, маржи и повторных покупок.",
       "source": "data/niches/2026-07-01-pastlife-ai-sansara.md",
-      "runIds": ["portfolio-v07-2026-07-20"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "psych-generic-ai",
@@ -428,13 +428,13 @@
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
-      "gateStatus": "parked",
-      "rankingReason": "Есть внутренний код и реальная операционная боль, но внешний рынок, правила платформы и надёжность не доказаны.",
+      "stage": "quick_scan",
+      "gateStatus": "in_progress",
+      "rankingReason": "Включён в общий S0-batch legacy-портфеля. Внутренний watcher подтверждает техническую возможность, но не право продажи и внешний спрос.",
       "mainRisk": "Правила или частые повторные авторизации могут сделать коммерческий watcher невозможным.",
-      "nextGate": "Сначала проверить правила платформы, затем провести 3–5 платных сопровождаемых пилотов и измерить 30 дней стабильности.",
+      "nextGate": "Завершить S0_CONTEXT: отделить внутреннюю пользу от продаваемого оффера, правил Profi.ru, support-cost и внешнего плательщика.",
       "source": "data/niches/2026-07-05-profiwatcher-profi-ru.md",
-      "runIds": ["portfolio-v07-2026-07-20"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
     {
       "id": "psych-session-marketplace",
@@ -525,6 +525,17 @@
       "framework": "legacy_pre_factory",
       "updatedAt": "2026-07-01",
       "source": "data/niches/2026-07-01-ai-youtube-automation.md"
+    },
+    {
+      "id": "legacy-portfolio-sigma-2026-09-11",
+      "title": "Legacy-портфель: первый SIGMA batch",
+      "category": "Несколько категорий",
+      "status": "active",
+      "result": "S0_CONTEXT: шесть непсихологических legacy-ставок выровнены на одном входном checkpoint; сравнение и отсев ещё не проведены.",
+      "evidenceLevel": "E1",
+      "framework": "factory_v2",
+      "updatedAt": "2026-09-11",
+      "source": "data/ACTIVE_RUN.md"
     }
   ]
 }

@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Полный проход от desk research до повторных денег ещё не выполнен.",
-    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; parked run психологов остаётся на owner checkpoint без выбранного фокуса.",
+    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Запущен S0_CONTEXT для первого batch из старых непсихологических ставок; полный проход от desk research до повторных денег ещё не выполнен.",
+    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; шесть legacy-ставок выровнены на S0_CONTEXT, а психологический run сохраняет отдельный parked resume point S4_OWNER.",
     "unknown": "Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе остаётся неподтверждённой.",
-    "nextGate": "Выбрать один run для первого end-to-end подтверждения.",
-    "source": "PROJECT_SPEC.md"
+    "nextGate": "Завершить S0_CONTEXT для legacy-портфельного batch.",
+    "source": "data/ACTIVE_RUN.md"
   }
 }

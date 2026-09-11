@@ -369,10 +369,19 @@ export function validateConsistency({ schema, activeRun, registry, factoryState 
   invariant(registryRun.status === activeRun.status, `статус ACTIVE_RUN (${activeRun.status}) не совпадает с реестром (${registryRun.status})`, label);
   invariant(registryRun.source === "data/ACTIVE_RUN.md", "registry run должен ссылаться на ACTIVE_RUN.md", label);
   const ideas = new Map(registry.ideas.map((idea) => [idea.id, idea]));
+  const activeCheckpoint = schema.checkpoints.find((checkpoint) => checkpoint.id === activeRun.checkpointId);
+  const stageOrder = new Map(schema.stages.map((stage) => [stage.id, stage.order]));
   for (const candidateId of activeRun.candidateIds) {
     const idea = ideas.get(candidateId);
     invariant(idea, `кандидат ${candidateId} отсутствует в реестре`, label);
     invariant(idea.runIds.includes(activeRun.registryRunId), `кандидат ${candidateId} не связан с ${activeRun.registryRunId}`, label);
+    if (activeRun.status === "active") {
+      invariant(
+        stageOrder.get(idea.stage) <= stageOrder.get(activeCheckpoint.dashboardStage),
+        `кандидат ${candidateId} не может опережать checkpoint ${activeRun.checkpointId}: ${idea.stage} выше ${activeCheckpoint.dashboardStage}`,
+        label
+      );
+    }
   }
   if (activeRun.checkpointId === "S4_OWNER" && activeRun.checkpointGateStatus !== "passed") {
     for (const candidateId of activeRun.candidateIds) {

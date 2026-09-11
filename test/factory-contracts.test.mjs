@@ -45,12 +45,16 @@ test("несовпадающее название checkpoint падает", () =
 test("переход вне allowedNext падает", () => {
   const fixture = factoryFixtures();
   fixture.activeRun.previousCheckpoint = "S3_LOCALIZE";
-  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /переход S3_LOCALIZE → S4_OWNER не разрешён/);
+  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /переход S3_LOCALIZE → S0_CONTEXT не разрешён/);
 });
 
 test("checkpoint без обязательного prerequisite падает", () => {
   const fixture = factoryFixtures();
-  fixture.activeRun.completedCheckpoints = fixture.activeRun.completedCheckpoints.filter((id) => id !== "S5_COMPETITORS");
+  fixture.activeRun.checkpointId = "S4_OWNER";
+  fixture.activeRun.currentStep = 4;
+  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
+  fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
+  fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S5_COMPETITORS/);
 });
 
@@ -74,6 +78,7 @@ test("E3 confidence 0.81 превышает cap", () => {
 test("legacy-код не открывает CustDev или action gate", () => {
   const fixture = factoryFixtures();
   const idea = ideaById(fixture.registry, "radarych");
+  idea.runIds = ["portfolio-v07-2026-07-20"];
   idea.evidenceLevel = "E3";
   idea.stage = "action_test";
   idea.gateStatus = "in_progress";
@@ -99,9 +104,27 @@ test("repeat/passed без E5 падает", () => {
 
 test("незавершённый owner checkpoint не может иметь passed", () => {
   const fixture = factoryFixtures();
+  fixture.activeRun.checkpointId = "S4_OWNER";
+  fixture.activeRun.currentStep = 4;
+  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
+  fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
+  fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S5_COMPETITORS"];
   fixture.activeRun.checkpointGateStatus = "passed";
   fixture.activeRun.completedCheckpoints.push("S4_OWNER");
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /passed требует ровно один выбранный фокус/);
+});
+
+test("активный S0 не допускает кандидата выше quick_scan", () => {
+  const fixture = factoryFixtures();
+  const idea = ideaById(fixture.registry, "kadra");
+  idea.stage = "market_research";
+  idea.gateStatus = "in_progress";
+  assert.throws(() => validateConsistency({
+    schema: fixture.schema,
+    activeRun: fixture.activeRun,
+    registry: fixture.registry,
+    factoryState: fixture.factoryState
+  }), /не может опережать checkpoint S0_CONTEXT/);
 });
 
 test("factory state не содержит дублирующий activeDomainRun", () => {

@@ -1,5 +1,19 @@
 # Current State — 2026-09-11
 
+## Active portfolio-rescan
+
+Текущий `ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, checkpoint
+`S0_CONTEXT`. Владелец запустил единый ранний Factory-проход шести
+непсихологических legacy-ставок: Радарыч, КАДРА, AI YouTube Automation,
+ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Все они
+выровнены на `quick_scan / in_progress / E1`; готовность кода и старые score
+не являются evidence спроса. Психологический run сохраняет parked resume point
+`S4_OWNER` и в новый batch не входит.
+
+Текущая работа: закрыть S0-карту фактическими затратами, аналитикой и
+ограничениями каждого объекта. До `S0–S3` и раннего Portfolio Gate не выбирать
+финалиста, не проводить интервью, не покупать трафик и не запускать продажи.
+
 ## Project
 
 `Анализ Ниш` — личная docs-first Niche Factory: агентская система поиска,
@@ -18,8 +32,9 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
 money gates. «Радарыч» и PastLife AI / Sansara возвращены к `quick_scan` /
-`parked`; их следующий корректный шаг — отдельный `S0_CONTEXT`, затем `S1–S5`
-и owner choice.
+`in_progress` в общем `S0_CONTEXT` legacy-портфельном batch; психологические
+кандидаты и Rule24 остаются отдельно parked. Их дальнейший путь после S0 —
+`S1–S5` и owner choice.
 
 ## Current Runtime / Stack
 
