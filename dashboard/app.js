@@ -116,13 +116,24 @@ function setStatus(text, tone = "") {
 
 function renderTopSummary() {
   const ideas = state.registry.ideas;
-  const categories = new Set(ideas.map((idea) => idea.category)).size;
   const finalists = ideas.filter((idea) => idea.stage === "finalist").length;
   const money = ideas.filter((idea) => (stageById(idea.stage)?.order ?? -1) >= 6).length;
   const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
+  const system = state.factory.systemStatus;
+  const sourceHref = projectSourceHref(system.source);
+  const systemState = system.status === "ready" ? "Готов к работе" : system.statusLabel;
+  document.querySelector("#decision-brief").innerHTML = `<div class="decision-lead">
+    <p class="section-kicker">Сейчас</p>
+    <div class="decision-title-row"><h2 id="decision-brief-title">${escapeHtml(system.statusLabel)}</h2><span class="decision-status">${escapeHtml(systemState)}</span></div>
+    <p>${escapeHtml(system.summary)}</p>
+  </div>
+  <dl class="decision-facts">
+    <div class="decision-fact"><dt>Подтверждено</dt><dd>${escapeHtml(system.confirmed)}</dd></div>
+    <div class="decision-fact decision-unknown"><dt>Нужно уточнить</dt><dd>${escapeHtml(system.unknown)}</dd></div>
+    <div class="decision-fact decision-next"><dt>Следующий gate</dt><dd>${escapeHtml(system.nextGate)}</dd><a href="${sourceHref}" target="_blank" rel="noreferrer">Открыть источник ↗</a></div>
+  </dl>`;
   const stats = [
     [ideas.length, "всего идей", "В одном реестре"],
-    [categories, "категорий", "Только фильтры"],
     [finalists, "финалиста", "Ждут подтверждения"],
     [money, "с деньгами", "Оплата или повтор"],
     [archive, "остановлено", "Можно вернуть позже"],
@@ -190,7 +201,7 @@ function ideaCard(idea, rank, compact = false) {
     <div class="idea-details">
       <div><span>Почему это место</span><p>${escapeHtml(idea.rankingReason)}</p></div>
       <div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div>
-      <div><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
+      <div class="next-gate-detail"><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
       <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p></div>
       <a class="source-link" href="${projectSourceHref(idea.source)}" target="_blank" rel="noreferrer">Открыть источник ↗</a>
     </div>

@@ -203,9 +203,71 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
   box-shadow: var(--shadow);
 }
 
+.decision-brief {
+  display: grid;
+  grid-template-columns: minmax(260px, .82fr) minmax(0, 2fr);
+  gap: 0;
+  overflow: clip;
+  border: 1px solid #bed0eb;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.decision-lead {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px 24px;
+  border-right: 1px solid #d6e1f0;
+}
+
+.decision-lead .section-kicker { margin-bottom: 0; }
+.decision-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.decision-title-row h2 { margin: 0; font-size: clamp(1.35rem, 2vw, 1.75rem); }
+.decision-lead > p:last-child { margin: 0; color: #4d5e76; font-size: .84rem; }
+
+.decision-status {
+  display: inline-flex;
+  width: fit-content;
+  padding: 4px 8px;
+  border: 1px solid #add6c1;
+  border-radius: 999px;
+  background: var(--green-soft);
+  color: var(--green);
+  font-size: .67rem;
+  font-weight: 820;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.decision-facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+}
+
+.decision-fact {
+  min-width: 0;
+  padding: 22px 20px;
+  border-right: 1px solid var(--line);
+}
+
+.decision-fact:last-child { border-right: 0; }
+.decision-fact dt,
+.decision-fact dd { margin: 0; }
+.decision-fact dt { margin-bottom: 7px; color: var(--muted); font-size: .67rem; font-weight: 820; letter-spacing: .065em; text-transform: uppercase; }
+.decision-fact dd { color: #36465e; font-size: .81rem; line-height: 1.45; }
+.decision-unknown { background: rgba(255, 244, 221, .42); }
+.decision-next { background: var(--blue-soft); }
+.decision-next dt { color: var(--blue); }
+.decision-next dd { color: #1f406f; font-weight: 650; }
+.decision-next a { display: inline-block; margin-top: 10px; font-size: .78rem; font-weight: 780; text-decoration: none; }
+.decision-next a:hover { text-decoration: underline; }
+
 .summary-strip {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -418,6 +480,9 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .portfolio-detail span { display: block; margin-bottom: 4px; color: var(--muted); font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
 .idea-details p { margin: 0; font-size: 0.8rem; }
 .idea-details .score-explanation strong { color: var(--blue); }
+.idea-details .next-gate-detail { padding: 12px; border: 1px solid #bfd0ec; border-radius: 11px; background: var(--blue-soft); }
+.idea-details .next-gate-detail span { color: var(--blue); }
+.idea-details .next-gate-detail p { color: #1f406f; font-weight: 650; }
 
 .source-link {
   grid-column: 1 / -1;
@@ -614,6 +679,8 @@ footer a { font-weight: 750; text-decoration: none; }
 }
 
 @media (max-width: 1100px) {
+  .decision-brief { grid-template-columns: 1fr; }
+  .decision-lead { border-right: 0; border-bottom: 1px solid #d6e1f0; }
   .summary-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .registry-controls { grid-template-columns: minmax(220px, 2fr) repeat(2, minmax(150px, 1fr)); }
   .reset-button { align-self: end; }
@@ -647,6 +714,10 @@ footer a { font-weight: 750; text-decoration: none; }
   .updated { font-size: .7rem; }
   .view-tabs { padding: 0 18px; }
   .layout, footer { width: min(calc(100% - 36px), var(--content)); }
+  .decision-lead { padding: 20px; }
+  .decision-facts { grid-template-columns: 1fr; }
+  .decision-fact { padding: 16px 20px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .decision-fact:last-child { border-bottom: 0; }
   .summary-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .summary-strip article { padding: 12px; }
   .section-head { padding: 20px; }
@@ -692,6 +763,7 @@ footer a { font-weight: 750; text-decoration: none; }
   .view-tab { padding-left: 11px; padding-right: 4px; }
   .tab-help { margin-right: 7px; }
   .layout { margin-top: 14px; }
+  .decision-title-row { align-items: flex-start; flex-direction: column; gap: 6px; }
   .summary-strip { display: flex; overflow-x: auto; padding-bottom: 3px; scroll-snap-type: x proximity; }
   .summary-strip article { flex: 0 0 160px; scroll-snap-align: start; }
   .registry-controls { grid-template-columns: 1fr; }

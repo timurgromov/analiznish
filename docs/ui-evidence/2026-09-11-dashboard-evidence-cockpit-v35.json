@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-11-dashboard-evidence-cockpit-v35",
+  "change_kind": "frontend-clarity",
+  "status": "passed",
+  "requested_visible_change": "Превратить верх первого экрана кабинета в Evidence cockpit: явно показать текущее состояние, подтверждённое, неизвестное и следующий gate до сводных метрик и реестра.",
+  "expected_visible_delta": "На «Все идеи» вместо пяти равноправных счётчиков первым появляется один decision brief с секциями «Сейчас», «Подтверждено», «Нужно уточнить», «Следующий gate» и ссылкой на источник; в раскрытой идее next gate отделён синим блоком.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "6facbac87e486ed591b7a0ba6c19394c087a99cc3dcc5d0becde88b4a906d6d5",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=local-v35#all-ideas",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#all-ideas",
+    "state": "успешная загрузка 20 идей без фильтра; затем поиск «Радарыч» и сброс",
+    "selector_or_slide_id": "#decision-brief, #summary-strip, #idea-list, .next-gate-detail",
+    "action": "Открыть локальный кандидат, увидеть следующий gate в decision brief, раскрыть карточку идеи, выполнить поиск «Радарыч» и вернуть полный реестр кнопкой «Сбросить»."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only, а IDEA_REGISTRY.json и FACTORY_STATE.json не меняются.",
+    "Вкладки, фильтры, рейтинг, evidence, источник и две портфельные линзы сохраняют прежнюю семантику.",
+    "Статус передаётся текстом вместе с цветом; на mobile нет горизонтального overflow."
+  ],
+  "required_viewports": [
+    "390x844",
+    "1232x582",
+    "1440x900"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "Codex in-app browser viewport; innerWidth=390; innerHeight=844",
+      "before_signature": "Production v3.4: после вкладок сразу пять равноправных счётчиков, без явных «Подтверждено», «Нужно уточнить» и «Следующий gate».",
+      "after_signature": "Local v3.5: #decision-brief шириной 354px, факты собраны в одну колонку; scrollWidth=390 и видны текстовые секции «Сейчас», «Подтверждено», «Нужно уточнить», «Следующий gate».",
+      "observed_visible_result": "Мобильный экран сначала сообщает состояние и следующий gate, а не требует читать счётчики; текст не обрезан и горизонтальной прокрутки страницы нет.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1232x582",
+      "viewport_source": "Codex in-app browser viewport; innerWidth=1232; innerHeight=582",
+      "before_signature": "Production v3.4: #summary-strip содержит пять одинаковых карточек до списка; отдельного #decision-brief нет.",
+      "after_signature": "Local v3.5: #decision-brief шириной 1176px, lead и три факта находятся в один ряд; #summary-strip содержит четыре вторичные метрики; scrollWidth=1232.",
+      "observed_visible_result": "Desktop показывает «Реестр собран», «Подтверждено», «Нужно уточнить» и выделенный «Следующий gate» в первом viewport; раскрытая идея показывает отдельный акцентный next-gate block.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "Codex in-app browser viewport; innerWidth=1440; innerHeight=900",
+      "before_signature": "Production v3.4: первый блок — только пять числовых карточек; owner decision визуально не выделен.",
+      "after_signature": "Local v3.5: #decision-brief имеет две колонки 401.852px и 980.148px, три facts по 326.7px; scrollWidth=1440 без overflow.",
+      "observed_visible_result": "На wide desktop решение читается сверху вниз, вторичные метрики остаются компактным срезом, а реестр и фильтры расположены ниже без изменения данных.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ]
+}
