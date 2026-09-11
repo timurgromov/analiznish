@@ -46,11 +46,14 @@ cockpit после review `design-atlas`.
 * Автоматический Playwright CLI matrix не выполнился: его `npx` не смог
   разрешить `registry.npmjs.org`. Его план с теми же границами сохранён в
   терминальном выводе, а фактические размеры проверены через browser viewport.
-* На момент записи production ещё не обновлён; отдельная Pages-проверка нужна
-  после commit и push.
+* Playwright CLI matrix не заменён альтернативным автоматическим runner: npm
+  registry был недоступен. Его role выполнил browser viewport sweep с теми же
+  anchor и breakpoint-probes.
 
 ## Links
 
 * UI evidence: `docs/ui-evidence/2026-09-11-dashboard-evidence-cockpit-v35.json`
-* Commit: pending
-* Deploy: pending
+* Commit: `d4eebc5` (`feat: add evidence cockpit to dashboard`)
+* Deploy: GitHub Pages production подтверждён после push:
+  `https://timurgromov.github.io/analiznish/dashboard/?v=d4eebc5#all-ideas`.
+  В браузере виден `#decision-brief` с «Реестр собран»; console errors — `0`.
