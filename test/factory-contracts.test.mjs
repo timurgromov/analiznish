@@ -62,8 +62,22 @@ test("E1 confidence 0.56 превышает cap", () => {
 
 test("E3 confidence 0.81 превышает cap", () => {
   const fixture = factoryFixtures();
-  ideaById(fixture.registry, "radarych").evidenceConfidence = 0.81;
+  const idea = ideaById(fixture.registry, "radarych");
+  idea.runIds = ["psychologists-sigma-2026-09-09"];
+  idea.evidenceLevel = "E3";
+  idea.stage = "action_test";
+  idea.gateStatus = "in_progress";
+  idea.evidenceConfidence = 0.81;
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /превышает cap 0.8/);
+});
+
+test("legacy-код не открывает CustDev или action gate", () => {
+  const fixture = factoryFixtures();
+  const idea = ideaById(fixture.registry, "radarych");
+  idea.evidenceLevel = "E3";
+  idea.stage = "action_test";
+  idea.gateStatus = "in_progress";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /legacy-only ставка не может иметь evidence выше E1/);
 });
 
 test("paid без E4 падает", () => {

@@ -15,6 +15,29 @@
     "existing_asset",
     "active_business"
   ],
+  "researchRunFrameworks": [
+    "legacy_pre_factory",
+    "factory_v2"
+  ],
+  "legacyRunGuard": {
+    "appliesToObjectTypes": [
+      "concrete_bet",
+      "existing_asset"
+    ],
+    "maxEvidence": "E1",
+    "allowedStages": [
+      "inbox",
+      "quick_scan",
+      "market_research"
+    ],
+    "allowedGateStatuses": [
+      "not_researched",
+      "parked",
+      "failed"
+    ],
+    "reentryCheckpoint": "S0_CONTEXT",
+    "description": "Legacy-код, production и прежняя карточка не являются Factory evidence. Пока ставка не связана хотя бы с одним factory_v2 run, ей запрещены CustDev, action, money и статус выбранного финалиста."
+  },
   "stages": [
     {
       "id": "inbox",

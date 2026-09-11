@@ -2,6 +2,48 @@
 
 Этот файл — не changelog. Это журнал решений, которые важно помнить и не откатывать случайно.
 
+## DEC-2026-09-11-LEGACY-ASSET-IS-NOT-FACTORY-EVIDENCE — Код не заменяет исследование ниши
+
+Status: active
+Area: methodology | registry | validation | portfolio
+Decision date: 2026-09-11
+Evidence: legacy-карточки «Радарыча» и PastLife AI / Sansara формально имели
+E3/action stage на основании production и старого deep score, хотя не прошли
+`S0–S5`, owner choice, `I_E1`, реальные интервью и action gate.
+
+Decision:
+Factory сначала сравнивает рынки и ставки через одинаковый SIGMA-путь, затем
+допускает 1–2 финалиста к CustDev. Готовность актива к delivery — frontend,
+код, production, paywall, платежный UX, документация или старый score — хранит
+полезный контекст, но не является evidence спроса и не повышает Factory stage.
+
+Каждый registry run помечается `legacy_pre_factory` либо `factory_v2`.
+`concrete_bet` и `existing_asset`, связанные только с legacy-run, ограничены
+E1, стадиями до `market_research` и outcomes `not_researched`/`parked`/`failed`.
+Они возвращаются на `S0_CONTEXT`; interviews, action, traffic, money и build
+открываются только после нового `S0–S5`, owner choice и последующих gates.
+
+Why:
+Иначе система награждает уже написанный продукт и воспроизводит старый цикл
+«сначала build, затем искать рынок». Это смешивает asset readiness с
+market/evidence readiness и делает dashboard-рейтинг опасным для решения.
+
+Do:
+Для B2B повторяемый cashflow остаётся сильным портфельным предпочтением. B2C не
+отсекается автоматически, но обязана отдельно доказать willingness-to-pay,
+repeat, CAC и маржу. Existing asset проходит `recovery_discovery` с того же
+`S0_CONTEXT`, а не получает shortcut к traffic или оплатам.
+
+Do not:
+Не называть legacy E1/E3 Factory прогрессом, не звать респондентов и не
+назначать founder sales только из-за работающего приложения. Не считать
+payment code или готовый frontend продуктовым спросом.
+
+Verification:
+`scripts/factory-validation.mjs` применяет `legacyRunGuard`; native test
+`legacy-код не открывает CustDev или action gate` падает при попытке дать
+legacy-only «Радарычу» E3/action stage.
+
 ## Статусы
 
 * `active` — текущий эталон.

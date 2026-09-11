@@ -89,6 +89,21 @@ Listing с Acquire.com/Flippa/Microns является поисковым lead: 
 `existing_asset` может оставаться на `market_research`, если спрос ещё не
 исследован.
 
+### Legacy asset guard
+
+Сначала различай готовность актива и доказанность ставки. Код, production,
+paywall, документация, payment UX или прежняя карточка могут описывать asset
+readiness, но не являются Factory evidence. Запись, связанная только с
+`legacy_pre_factory` run, остаётся максимум на E1 и в
+`inbox`/`quick_scan`/`market_research` с исходом `parked` или `failed`.
+
+Такой актив возвращается в `S0_CONTEXT`: инвентаризация реальных возможностей,
+фактов, затрат и gaps. Затем он проходит тот же `S0–S5` batch/Portfolio Gate,
+что и новая идея. Нельзя назначать ему founder-сессии, traffic, action или
+оплату, пока owner не выбрал его после scan, не закрыт `I_E1` и не пройдены
+последующие evidence gates. Этот guard реализован в
+`data/FACTORY_SCHEMA.json` и `scripts/factory-validation.mjs`.
+
 ## 2. Hard Filters
 
 Проверь красные флаги до баллов:

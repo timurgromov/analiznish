@@ -1,9 +1,15 @@
 # 2026-07-01 — Радарыч / Travel Radar
 
-Status: active
-Mode: deep_score
+Status: parked — legacy asset awaiting Factory re-entry
+Mode: legacy deep_score; не является SIGMA/Fatory run
 Last reviewed: 2026-07-21
 Questionnaire completion: L2 deep score with gaps
+
+> **Factory boundary, 2026-09-11.** Production-бот, paywall и прежний
+> конкурентный разбор — это описание актива и публичное E1-исследование, а не
+> прохождение `S0–S5`, CustDev, action или money gates. До отдельного
+> `S0_CONTEXT` «Радарыч» не является финалистом, не открывает founder-сессии и
+> не получает право на продажи.
 
 ## One-liner
 
@@ -159,17 +165,19 @@ Commercial review contains scenario math, but these are planning scenarios, not 
 
 ## Вердикт
 
-Вердикт: Ограниченная платная валидация; продуктовую разработку поставить после продаж.
+Вердикт legacy-карточки: не использовать как разрешение на валидацию. Сначала
+нужен новый SIGMA-проход; готовность движка не является доказательством рынка.
 
 Главный риск: продукт может оказаться полезной личной системой и хорошим техническим активом, но не платным бизнесом, если пользователи не захотят платить за персонализацию поверх бесплатных каналов.
 
 Следующий шаг:
 
-1. Провести пять независимых founder usability sessions по готовому runbook.
-2. Исправить только блокеры оплаты, доверия и первого результата.
-3. Получить первые 10 реальных оплат Founders 100 без расширения feature-list.
-4. Только после этого проверить seed placements и публичный канал.
-5. Измерить: starts, preview, application, payment, onboarding, first useful alert, 7/30-day retention и support cost.
+1. Создать `S0_CONTEXT` с инвентаризацией имеющегося движка, реальных
+   коммерческих фактов и неизвестных мест.
+2. Пройти `S1–S5`: рынок, Jobs, локализация, Portfolio Gate и конкурентная
+   рамка одной конкретной ставки.
+3. Только после owner choice и `I_E1` открывать реальные интервью.
+4. Action, founder offer и оплаты допустимы только после E2/E3 gates.
 
 Kill / pause conditions:
 

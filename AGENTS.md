@@ -9,6 +9,12 @@ action/pay test → bounded build. Если идеи нет, агент созд
 shortlist сам. Evidence усиливается `public → behavior → action → pay → repeat`;
 scoring и hit parade только обслуживают этот контур.
 
+Готовность legacy-актива (код, production, paywall, документация) не является
+evidence спроса и не открывает CustDev, traffic, action или оплаты. Legacy-only
+ставка возвращается в `S0_CONTEXT` и проходит `S0–S5` до owner choice; B2B
+повторяемый cashflow — сильное предпочтение портфеля, а B2C несёт отдельное
+бремя доказать willingness-to-pay, повтор, CAC и маржу.
+
 Главная цель фильтра — устойчивая прибыль. Предсказуемый повторяемый денежный
 поток предпочтительнее разовой выручки, но подписка и B2B не являются hard
 filters. Допустимы сильный B2C, комиссия/транзакции, высокомаржинальный разовый

@@ -11,6 +11,16 @@
 Scoring v0.7, hit parade и dashboard v3.8 работают как внутренние модули; следующим
 операционным milestone остаётся первый end-to-end цикл.
 
+## Legacy asset guard
+
+`data/FACTORY_SCHEMA.json` теперь различает `legacy_pre_factory` и
+`factory_v2` runs. Для `concrete_bet` и `existing_asset`, связанных только с
+legacy-run, validator допускает максимум E1 и стадии до `market_research`:
+готовый код, production и paywall не открывают CustDev, action, traffic или
+money gates. «Радарыч» и PastLife AI / Sansara возвращены к `quick_scan` /
+`parked`; их следующий корректный шаг — отдельный `S0_CONTEXT`, затем `S1–S5`
+и owner choice.
+
 ## Current Runtime / Stack
 
 * Frontend: локальный static dashboard в `dashboard/`.

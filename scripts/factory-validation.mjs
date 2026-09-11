@@ -70,6 +70,15 @@ export function validateSchema(schema) {
 
   const objectTypes = new Set(schema.objectTypes);
   invariant(objectTypes.size === 4, "ожидаются четыре object type", label);
+  const runFrameworks = new Set(schema.researchRunFrameworks ?? []);
+  invariant(runFrameworks.has("legacy_pre_factory") && runFrameworks.has("factory_v2"), "контракт должен различать legacy_pre_factory и factory_v2 runs", label);
+  const legacyRunGuard = schema.legacyRunGuard;
+  invariant(legacyRunGuard && typeof legacyRunGuard === "object", "отсутствует legacyRunGuard", label);
+  invariant(Array.isArray(legacyRunGuard.appliesToObjectTypes) && legacyRunGuard.appliesToObjectTypes.length > 0, "legacyRunGuard.appliesToObjectTypes обязателен", label);
+  invariant(Object.hasOwn(schema.evidenceCaps, legacyRunGuard.maxEvidence), "legacyRunGuard.maxEvidence должен быть E0–E5", label);
+  invariant(Array.isArray(legacyRunGuard.allowedStages) && legacyRunGuard.allowedStages.every((stage) => stages.has(stage)), "legacyRunGuard.allowedStages содержит неизвестную стадию", label);
+  invariant(Array.isArray(legacyRunGuard.allowedGateStatuses) && legacyRunGuard.allowedGateStatuses.every((status) => gateStatuses.has(status)), "legacyRunGuard.allowedGateStatuses содержит неизвестный gate status", label);
+  invariant(typeof legacyRunGuard.reentryCheckpoint === "string" && legacyRunGuard.reentryCheckpoint, "legacyRunGuard.reentryCheckpoint обязателен", label);
   const caps = schema.evidenceCaps;
   for (const level of ["E0", "E1", "E2", "E3", "E4", "E5"]) {
     invariant(Number.isFinite(caps[level]), `нет evidence cap для ${level}`, label);
@@ -258,15 +267,18 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   const gateStatuses = new Set(schema.gateStatuses.map((status) => status.id));
   const objectTypes = new Set(schema.objectTypes);
   const runIds = new Set();
+  const runsById = new Map();
   for (const run of registry.runs ?? []) {
     invariant(/^[a-z0-9-]+$/.test(run.id), `некорректный run id: ${run.id}`, label);
     invariant(!runIds.has(run.id), `дублируется run id: ${run.id}`, label);
     runIds.add(run.id);
-    for (const key of ["title", "category", "status", "result", "evidenceLevel", "updatedAt", "source"]) {
+    for (const key of ["title", "category", "status", "result", "evidenceLevel", "updatedAt", "source", "framework"]) {
       invariant(typeof run[key] === "string" && run[key].trim(), `${run.id}.${key} обязателен`, label);
     }
     invariant(schema.runStatuses.includes(run.status), `${run.id}: неизвестный status ${run.status}`, label);
+    invariant(schema.researchRunFrameworks.includes(run.framework), `${run.id}: неизвестный framework ${run.framework}`, label);
     if (checkSources) safeProjectPath(rootDir, run.source, `${label}:${run.id}`);
+    runsById.set(run.id, run);
   }
 
   const ideaIds = new Set();
@@ -302,6 +314,13 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
     invariant(Array.isArray(idea.runIds), `${idea.id}.runIds должен быть массивом`, label);
     invariant(new Set(idea.runIds).size === idea.runIds.length, `${idea.id}.runIds содержит дубликаты`, label);
     for (const runId of idea.runIds) invariant(runIds.has(runId), `${idea.id}: неизвестный runId ${runId}`, label);
+    const hasFactoryRun = idea.runIds.some((runId) => runsById.get(runId).framework === "factory_v2");
+    const legacyGuard = schema.legacyRunGuard;
+    if (!hasFactoryRun && legacyGuard.appliesToObjectTypes.includes(idea.objectType)) {
+      invariant(evidenceRank(idea.evidenceLevel) <= evidenceRank(legacyGuard.maxEvidence), `${idea.id}: legacy-only ставка не может иметь evidence выше ${legacyGuard.maxEvidence}`, label);
+      invariant(legacyGuard.allowedStages.includes(idea.stage), `${idea.id}: legacy-only ставка не может быть на стадии ${idea.stage}`, label);
+      invariant(legacyGuard.allowedGateStatuses.includes(idea.gateStatus), `${idea.id}: legacy-only ставка не может иметь gateStatus ${idea.gateStatus}`, label);
+    }
     for (const alias of idea.aliases ?? []) {
       invariant(!aliases.has(alias), `дублируется alias: ${alias}`, label);
       aliases.add(alias);

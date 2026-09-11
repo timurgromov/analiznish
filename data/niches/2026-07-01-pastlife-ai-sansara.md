@@ -1,9 +1,14 @@
 # 2026-07-01 — PastLife AI / Sansara
 
-Status: active
-Mode: deep_score
+Status: parked — legacy asset awaiting Factory re-entry
+Mode: legacy deep_score; не является SIGMA/Factory run
 Last reviewed: 2026-07-20
 Questionnaire completion: L2 deep score with gaps
+
+> **Factory boundary, 2026-09-11.** Production, frontend, документы и
+> платёжная поверхность описывают готовность актива к delivery. Они не являются
+> доказательством exact-offer спроса и не заменяют `S0–S5`, owner choice,
+> problem interviews, action и money gates.
 
 ## One-liner
 
@@ -164,17 +169,21 @@ PastLife AI нужно учитывать в двух плоскостях:
 
 ## Вердикт
 
-Вердикт: Докрутить модель / sale-ready asset. Высокий личный fit и готовая инфраструктура делают это разумной ставкой на короткий тест, но не доказывают, что PastLife сильнее AI-фотосессий как категория или крупный бизнес.
+Вердикт legacy-карточки: не запускать traffic или CustDev по готовности кода.
+Сначала провести recovery `S0_CONTEXT` и пройти SIGMA до выбора конкретного
+сегмента и оффера.
 
 Главный риск: проект уже технически сильный и потенциально продаваемый как актив, но ещё не доказал оплату, CAC, маржу и buyer interest. Самый опасный сценарий — продолжать полировать админку/каталог вместо доведения payment happy path, метрик и sale package.
 
 Следующий шаг:
 
-1. Проверить live/test payment happy path на production provider.
-2. Посчитать COGS per successful paid generation с retry/fail rate.
-3. Запустить 3-5 промо-ссылок или малый paid/social test.
-4. Собрать минимальный sale package: demo video, admin screenshots, transfer checklist, cost model, roadmap, buyer one-pager.
-5. Принять решение по метрикам: 299 RUB conversion, share rate, paid CAC, ARPU или реалистичность продажи проекта.
+1. Составить `S0_CONTEXT`: подтверждённые product/payment facts, себестоимость,
+   текущая аналитика, ограничения и старые допущения.
+2. Пройти `S1–S5` для точного job, сегмента, референсов, локального спроса и
+   конкурентной рамки.
+3. После owner choice подготовить `I_E1`, затем провести problem interviews.
+4. Малый traffic/payment test возможен только после определения JTBD, канала,
+   экономики и action gate.
 
 Kill conditions:
 
