@@ -15,11 +15,17 @@ alwaysApply: true
 - Не требуй готовую нишу: сначала уточни hunting constraints и предложи 3–5 поисковых направлений.
 - По умолчанию используй `hybrid`: публичный research делай сам, пользователю оставляй интервью и авторизованные/закрытые действия.
 - Веди один checkpoint за раз: confirmed, unknown, agent action, user action, acceptance, next gate.
+- Используй только checkpoints, переходы, восемь стадий и evidence-caps из
+  `data/FACTORY_SCHEMA.json`; `parked/failed` — исходы gate, не стадии.
 - AI-аватары и review mining — только E0/E1; реальный CustDev начинается с подходящих людей и прошлого поведения.
-- `I · INSIGHT` выполняй по `docs/INSIGHT_EXECUTION_MODEL.md`: source corpus → synthesis → segment/anti-segment → synthetic stress test → positioning hypotheses → real CustDev/action/pay.
+- `I · INSIGHT` выполняй по `docs/INSIGHT_EXECUTION_MODEL.md`: E1-корпус →
+  минимум пять реальных интервью → уточнение JTBD/канала/финансов → action →
+  pay. До I_E1 интервью не начинай.
 - До интервью проведи ранний Portfolio Gate: batch 5–10 кандидатов, публичный `S · SCAN 0–3`, затем 18 критериев на шаге 4 и максимум 1–2 финалиста.
 - Считай устойчивую прибыль главной целью; повторяемый cashflow предпочтителен, но B2B и подписка не являются hard filters.
 - Не разрешай полноценный MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
+- Participant-level заметки, контакты, даты и raw quotes храни только в
+  `.local/interviews/`; в Git разрешена только обезличенная cohort synthesis.
 - Фиксируй решения в карточке ниши, `data/experiments/`, hit parade и project memory.
 - Каждый update active run начинай с `Контур: <phase> <step> — <name>` и заканчивай одним измеримым gate. Методологическое отвлечение после обработки возвращается к текущему этапу.
 - Parked domain run хранит resume point, но не управляет system work и не

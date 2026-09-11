@@ -480,6 +480,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .portfolio-detail span { display: block; margin-bottom: 4px; color: var(--muted); font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: .045em; }
 .idea-details p { margin: 0; font-size: 0.8rem; }
 .idea-details .score-explanation strong { color: var(--blue); }
+.legacy-confidence { display: block; margin-top: 8px; color: var(--muted); font-size: .72rem; line-height: 1.45; }
 .idea-details .next-gate-detail { padding: 12px; border: 1px solid #bfd0ec; border-radius: 11px; background: var(--blue-soft); }
 .idea-details .next-gate-detail span { color: var(--blue); }
 .idea-details .next-gate-detail p { color: #1f406f; font-weight: 650; }
@@ -516,6 +517,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .project-score strong { color: var(--blue); font-size: 3rem; line-height: 1; }
 .project-score span { font-size: .74rem; font-weight: 750; }
 .project-score b { margin-top: 7px; color: #1f406f; font-size: .78rem; }
+.project-score .legacy-confidence { max-width: 260px; text-align: right; }
 .project-facts { display: grid; min-width: 0; max-width: 100%; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-bottom: 1px solid var(--line); }
 .project-facts > div,
 .project-research > div { min-width: 0; padding: 24px 26px; }
@@ -800,6 +802,7 @@ footer a { font-weight: 750; text-decoration: none; }
   .project-card-page { border-radius: 14px; }
   .project-card-hero { grid-template-columns: 1fr; gap: 18px; padding: 24px 20px; }
   .project-score { justify-items: start; text-align: left; }
+  .project-score .legacy-confidence { text-align: left; }
   .project-facts,
   .project-research { grid-template-columns: 1fr; }
   .project-facts > div + div,

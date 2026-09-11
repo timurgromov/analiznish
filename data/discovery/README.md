@@ -16,4 +16,6 @@
 карточку в `data/niches/`.
 
 Для `I · INSIGHT` используй `_insight-run-template.md`. Даже заполненный шаблон
-остаётся максимум E1; реальные интервью хранятся в `data/interviews/`.
+остаётся максимум E1. Participant-level записи реальных интервью хранятся
+только в ignored `.local/interviews/`; в `data/interviews/` разрешена лишь
+обезличенная cohort synthesis.

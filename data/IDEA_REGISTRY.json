@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 1,
-  "updatedAt": "2026-09-10",
+  "schemaVersion": 2,
+  "updatedAt": "2026-09-11",
   "purpose": "Единый реестр всех сохранённых идей и рыночных референсов для визуального кабинета.",
   "rankingModel": {
     "id": "evidence_adjusted_opportunity_v1",
@@ -13,19 +13,19 @@
     { "id": "inbox", "order": 0, "label": "Чистилище", "shortLabel": "Идея", "description": "Новые идеи, которые только сохранены и ещё не проверялись." },
     { "id": "quick_scan", "order": 1, "label": "Первичная проверка", "shortLabel": "Проверка", "description": "За 5–10 минут проверяем плательщика, деньги и очевидные стоп-факторы." },
     { "id": "market_research", "order": 2, "label": "Проверка рынка", "shortLabel": "Рынок", "description": "Ищем спрос, конкурентов, рабочую экономику и применимость в России." },
-    { "id": "finalist", "order": 3, "label": "Финалисты", "shortLabel": "Финал", "description": "Лучшие 1–2 идеи batch, выбранные для проверки на реальных людях." },
-    { "id": "interviews", "order": 4, "label": "Интервью", "shortLabel": "Люди", "description": "Проверяем, повторяется ли дорогая проблема в реальном прошлом поведении." },
-    { "id": "action_test", "order": 5, "label": "Тест действием", "shortLabel": "Действие", "description": "Просим сделать реальный шаг: заявку, предзаказ или участие в ручном пилоте." },
-    { "id": "paid", "order": 6, "label": "Первые деньги", "shortLabel": "Оплата", "description": "Получена реальная оплата или подтверждённый бюджет на пилот." },
-    { "id": "repeat", "order": 7, "label": "Повторные деньги", "shortLabel": "Повтор", "description": "Проверяем повторные покупки, удержание, прибыль и возможность масштабирования." }
+    { "id": "finalist", "order": 3, "label": "Финалисты", "shortLabel": "Финал", "description": "Лучшие 1–2 идеи batch, ожидающие owner choice и E1-подготовку." },
+    { "id": "interviews", "order": 4, "label": "Интервью", "shortLabel": "Люди", "description": "Минимум пять разговоров проверяют повторяемую дорогую проблему в прошлом поведении." },
+    { "id": "action_test", "order": 5, "label": "Тест действием", "shortLabel": "Действие", "description": "После уточнения JTBD, канала и финансов просим сделать наблюдаемый затратный шаг." },
+    { "id": "paid", "order": 6, "label": "Первые деньги", "shortLabel": "Оплата", "description": "Получена оплата, платный пилот или подтверждённый бюджет; разрешён только bounded build." },
+    { "id": "repeat", "order": 7, "label": "Повторные деньги", "shortLabel": "Повтор", "description": "Проверяем повтор, удержание, фактическую экономику и масштабируемость." }
   ],
   "gateStatuses": [
     { "id": "not_researched", "label": "Не проверялась", "description": "Решение ещё не принималось." },
     { "id": "in_progress", "label": "Проверяется", "description": "Следующая проверка уже идёт." },
-    { "id": "passed", "label": "Прошла дальше", "description": "Данных хватило для перехода на следующий этап." },
+    { "id": "passed", "label": "Прошла дальше", "description": "Данных хватило для разрешённого перехода." },
     { "id": "passed_not_selected", "label": "Прошла, не в фокусе", "description": "Этап пройден, но сейчас выбрана другая идея." },
-    { "id": "parked", "label": "На паузе", "description": "Вернёмся только после указанного нового условия." },
-    { "id": "failed", "label": "Отсеяна", "description": "Остановлена из-за конкретного ограничения." }
+    { "id": "parked", "label": "На паузе", "description": "Gate остановлен до явного условия возврата; это исход, а не стадия." },
+    { "id": "failed", "label": "Отсеяна", "description": "Gate не пройден из-за зафиксированного ограничения; это исход, а не стадия." }
   ],
   "ideas": [
     {
@@ -60,7 +60,8 @@
       "objectType": "concrete_bet",
       "baseScore": 72,
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
-      "evidenceConfidence": 0.82,
+      "evidenceConfidence": 0.8,
+      "legacyEvidenceConfidence": 0.82,
       "evidenceLevel": "E3",
       "stage": "action_test",
       "gateStatus": "in_progress",
@@ -81,7 +82,8 @@
       "objectType": "concrete_bet",
       "baseScore": 65,
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
-      "evidenceConfidence": 0.65,
+      "evidenceConfidence": 0.55,
+      "legacyEvidenceConfidence": 0.65,
       "evidenceLevel": "E1",
       "stage": "market_research",
       "gateStatus": "passed_not_selected",
@@ -123,7 +125,8 @@
       "objectType": "concrete_bet",
       "baseScore": 61,
       "scoreBasis": "Нормализовано из исторического quick scan v0.4",
-      "evidenceConfidence": 0.74,
+      "evidenceConfidence": 0.55,
+      "legacyEvidenceConfidence": 0.74,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
       "gateStatus": "parked",
@@ -297,7 +300,7 @@
       "gateStatus": "parked",
       "rankingReason": "Публичный batch оставил модель финалистом и есть доступ к экспертам, но willingness-to-pay и безопасный контур не доказаны.",
       "mainRisk": "Чувствительные данные и ожидание мониторинга создают клинический и репутационный риск.",
-      "nextGate": "Пять интервью о последних заданиях; до работы с данными отдельно проверить приватность и клиническую безопасность.",
+      "nextGate": "Owner choice P1/P2; при выборе P2 сначала завершить I_E1 и только затем открыть пять интервью.",
       "source": "data/niches/2026-09-09-rpp-between-session-companion.md",
       "aliases": ["P2"],
       "runIds": ["psychologists-sigma-2026-09-09", "psychologists-marketplace-2026-09-10"]
@@ -316,13 +319,13 @@
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
       "stage": "finalist",
-      "gateStatus": "passed",
+      "gateStatus": "parked",
       "rankingReason": "Финалист раннего Portfolio Gate: дешёво тестируется через доступ к психологам, но сама утечка выручки ещё не подтверждена.",
       "mainRisk": "У практиков может не быть существенной потери между входящим обращением и оплатой.",
-      "nextGate": "Пять интервью по трём последним обращениям; одна точка потери должна повториться у трёх участников.",
+      "nextGate": "Owner choice P1/P2; при выборе P1 сначала завершить I_E1 и только затем открыть пять интервью.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
       "aliases": ["P1"],
-      "runIds": ["psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-marketplace-2026-09-10", "psychologists-sigma-2026-09-09"]
     },
     {
       "id": "psych-practice-crm",
@@ -357,7 +360,8 @@
       "objectType": "existing_asset",
       "baseScore": 52,
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
-      "evidenceConfidence": 0.6,
+      "evidenceConfidence": 0.55,
+      "legacyEvidenceConfidence": 0.6,
       "evidenceLevel": "E1",
       "stage": "market_research",
       "gateStatus": "parked",
@@ -423,7 +427,7 @@
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "action_test",
+      "stage": "market_research",
       "gateStatus": "parked",
       "rankingReason": "Есть внутренний код и реальная операционная боль, но внешний рынок, правила платформы и надёжность не доказаны.",
       "mainRisk": "Правила или частые повторные авторизации могут сделать коммерческий watcher невозможным.",
@@ -500,9 +504,9 @@
       "title": "Психологи: первый SIGMA-проход",
       "category": "Психология",
       "status": "parked",
-      "result": "Сохранён resume point на реальных интервью; доменный run не является текущим фокусом.",
+      "result": "Сохранён resume point S4_OWNER: владелец ещё не выбрал P1/P2; реальные интервью не разрешены.",
       "evidenceLevel": "E1",
-      "updatedAt": "2026-09-10",
+      "updatedAt": "2026-09-11",
       "source": "data/ACTIVE_RUN.md"
     },
     {

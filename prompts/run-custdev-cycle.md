@@ -1,7 +1,7 @@
 # Prompt — Run CustDev Cycle
 
 ```text
-Продолжи выбранную B2B-ставку в режиме `problem_discovery`.
+Продолжи выбранную B2B-ставку со стадии `finalist` по checkpoints I_E1 → I_E2.
 
 Прочитай data/ACTIVE_RUN.md, docs/RAIL_PROTOCOL.md,
 docs/INSIGHT_EXECUTION_MODEL.md, docs/CUSTDEV_PROTOCOL.md,
@@ -14,7 +14,9 @@ docs/NICHE_DISCOVERY_LOOP.md и карточку ниши.
 из трёх типов источников, provenance, противоречия, ядро сегмента, anti-segment
 и synthetic stress test. Публичные источники и review mining собери сам. Мне выдай компактный план:
 кого найти, сколько людей, каким сообщением пригласить, какие 8–10 вопросов
-задать и как обезличенно записать ответы. После интервью синтезируй паттерны,
+задать и как сохранить participant-level ответы только в
+`.local/interviews/`. В Git запиши только обезличенную cohort synthesis.
+После интервью синтезируй паттерны,
 противоречия и следующий поведенческий experiment.
 
 AI-аватары и synthetic interviews маркируй только как E0/E1. Каждый update

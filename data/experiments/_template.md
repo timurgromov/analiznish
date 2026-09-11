@@ -2,7 +2,7 @@
 
 Status: planned | running | passed | failed | inconclusive
 Niche:
-Validation stage: desk_scan | problem_discovery | offer_test | paid_pilot | retention_test
+Validation stage: quick_scan | market_research | finalist | interviews | action_test | paid | repeat
 Start date: YYYY-MM-DD
 End date: YYYY-MM-DD
 Owner:

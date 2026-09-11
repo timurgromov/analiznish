@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "runSchemaVersion": 2,
+  "registrySchemaVersion": 2,
+  "factoryStateSchemaVersion": 3,
+  "runStatuses": [
+    "active",
+    "parked",
+    "complete",
+    "killed"
+  ],
+  "objectTypes": [
+    "market_reference",
+    "concrete_bet",
+    "existing_asset",
+    "active_business"
+  ],
+  "stages": [
+    {
+      "id": "inbox",
+      "order": 0,
+      "label": "Чистилище",
+      "shortLabel": "Идея",
+      "description": "Новые идеи, которые только сохранены и ещё не проверялись."
+    },
+    {
+      "id": "quick_scan",
+      "order": 1,
+      "label": "Первичная проверка",
+      "shortLabel": "Проверка",
+      "description": "За 5–10 минут проверяем плательщика, деньги и очевидные стоп-факторы."
+    },
+    {
+      "id": "market_research",
+      "order": 2,
+      "label": "Проверка рынка",
+      "shortLabel": "Рынок",
+      "description": "Ищем спрос, конкурентов, рабочую экономику и применимость в России."
+    },
+    {
+      "id": "finalist",
+      "order": 3,
+      "label": "Финалисты",
+      "shortLabel": "Финал",
+      "description": "Лучшие 1–2 идеи batch, ожидающие owner choice и E1-подготовку."
+    },
+    {
+      "id": "interviews",
+      "order": 4,
+      "label": "Интервью",
+      "shortLabel": "Люди",
+      "description": "Минимум пять разговоров проверяют повторяемую дорогую проблему в прошлом поведении."
+    },
+    {
+      "id": "action_test",
+      "order": 5,
+      "label": "Тест действием",
+      "shortLabel": "Действие",
+      "description": "После уточнения JTBD, канала и финансов просим сделать наблюдаемый затратный шаг."
+    },
+    {
+      "id": "paid",
+      "order": 6,
+      "label": "Первые деньги",
+      "shortLabel": "Оплата",
+      "description": "Получена оплата, платный пилот или подтверждённый бюджет; разрешён только bounded build."
+    },
+    {
+      "id": "repeat",
+      "order": 7,
+      "label": "Повторные деньги",
+      "shortLabel": "Повтор",
+      "description": "Проверяем повтор, удержание, фактическую экономику и масштабируемость."
+    }
+  ],
+  "gateStatuses": [
+    {
+      "id": "not_researched",
+      "label": "Не проверялась",
+      "description": "Решение ещё не принималось."
+    },
+    {
+      "id": "in_progress",
+      "label": "Проверяется",
+      "description": "Следующая проверка уже идёт."
+    },
+    {
+      "id": "passed",
+      "label": "Прошла дальше",
+      "description": "Данных хватило для разрешённого перехода."
+    },
+    {
+      "id": "passed_not_selected",
+      "label": "Прошла, не в фокусе",
+      "description": "Этап пройден, но сейчас выбрана другая идея."
+    },
+    {
+      "id": "parked",
+      "label": "На паузе",
+      "description": "Gate остановлен до явного условия возврата; это исход, а не стадия."
+    },
+    {
+      "id": "failed",
+      "label": "Отсеяна",
+      "description": "Gate не пройден из-за зафиксированного ограничения; это исход, а не стадия."
+    }
+  ],
+  "evidenceCaps": {
+    "E0": 0.4,
+    "E1": 0.55,
+    "E2": 0.7,
+    "E3": 0.8,
+    "E4": 0.9,
+    "E5": 1
+  },
+  "stageEvidence": {
+    "inbox": {
+      "allowed": ["E0"]
+    },
+    "quick_scan": {
+      "allowed": ["E0", "E1"]
+    },
+    "market_research": {
+      "allowed": ["E1"]
+    },
+    "finalist": {
+      "allowed": ["E1"]
+    },
+    "interviews": {
+      "allowed": ["E1", "E2"],
+      "passedRequires": "E2"
+    },
+    "action_test": {
+      "allowed": ["E2", "E3"],
+      "passedRequires": "E3"
+    },
+    "paid": {
+      "allowed": ["E4"]
+    },
+    "repeat": {
+      "allowed": ["E4", "E5"],
+      "passedRequires": "E5"
+    }
+  },
+  "macroPhases": [
+    {
+      "id": "S_SCAN",
+      "label": "S · SCAN"
+    },
+    {
+      "id": "I_INSIGHT",
+      "label": "I · INSIGHT"
+    },
+    {
+      "id": "G_GENERATE",
+      "label": "G · GENERATE"
+    },
+    {
+      "id": "M_MAKE",
+      "label": "M · MAKE"
+    },
+    {
+      "id": "A_ACTIVATE",
+      "label": "A · ACTIVATE"
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "S0_CONTEXT",
+      "macroPhase": "S · SCAN",
+      "step": 0,
+      "name": "Контекст и стартовая позиция",
+      "dashboardStage": "quick_scan",
+      "prerequisites": [],
+      "allowedNext": ["S1_MARKET"]
+    },
+    {
+      "id": "S1_MARKET",
+      "macroPhase": "S · SCAN",
+      "step": 1,
+      "name": "Рынок, референсы и денежные модели",
+      "dashboardStage": "market_research",
+      "prerequisites": ["S0_CONTEXT"],
+      "allowedNext": ["S2_TREND"]
+    },
+    {
+      "id": "S2_TREND",
+      "macroPhase": "S · SCAN",
+      "step": 2,
+      "name": "Тренд и живые проблемы",
+      "dashboardStage": "market_research",
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET"],
+      "allowedNext": ["S3_LOCALIZE"]
+    },
+    {
+      "id": "S3_LOCALIZE",
+      "macroPhase": "S · SCAN",
+      "step": 3,
+      "name": "Локализация спроса и ограничений",
+      "dashboardStage": "market_research",
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND"],
+      "allowedNext": ["S5_COMPETITORS"]
+    },
+    {
+      "id": "S5_COMPETITORS",
+      "macroPhase": "S · SCAN",
+      "step": 5,
+      "name": "Конкуренты и конкурентная рамка финалистов",
+      "dashboardStage": "finalist",
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"],
+      "allowedNext": ["S4_OWNER"]
+    },
+    {
+      "id": "S4_OWNER",
+      "macroPhase": "S · SCAN",
+      "step": 4,
+      "name": "Owner checkpoint — выбор одного финалиста P1/P2",
+      "dashboardStage": "finalist",
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S5_COMPETITORS"],
+      "allowedNext": ["I_E1"]
+    },
+    {
+      "id": "I_E1",
+      "macroPhase": "I · INSIGHT",
+      "step": 1,
+      "name": "E1-подготовка публичного корпуса",
+      "dashboardStage": "finalist",
+      "prerequisites": ["S4_OWNER"],
+      "allowedNext": ["I_E2"]
+    },
+    {
+      "id": "I_E2",
+      "macroPhase": "I · INSIGHT",
+      "step": 2,
+      "name": "Минимум пять реальных problem interviews",
+      "dashboardStage": "interviews",
+      "prerequisites": ["I_E1"],
+      "allowedNext": ["I_E3"]
+    },
+    {
+      "id": "I_E3",
+      "macroPhase": "I · INSIGHT",
+      "step": 3,
+      "name": "JTBD, канал, финансы и тест действием",
+      "dashboardStage": "action_test",
+      "prerequisites": ["I_E2"],
+      "allowedNext": ["I_E4"]
+    },
+    {
+      "id": "I_E4",
+      "macroPhase": "I · INSIGHT",
+      "step": 4,
+      "name": "Оплата, платный пилот или подтверждённый бюджет",
+      "dashboardStage": "paid",
+      "prerequisites": ["I_E3"],
+      "allowedNext": ["G_SCOPE"]
+    },
+    {
+      "id": "G_SCOPE",
+      "macroPhase": "G · GENERATE",
+      "step": 1,
+      "name": "Спецификация доказанного bounded scope",
+      "dashboardStage": "paid",
+      "prerequisites": ["I_E4"],
+      "allowedNext": ["M_BUILD"]
+    },
+    {
+      "id": "M_BUILD",
+      "macroPhase": "M · MAKE",
+      "step": 1,
+      "name": "Bounded build с ручным fallback",
+      "dashboardStage": "paid",
+      "prerequisites": ["G_SCOPE"],
+      "allowedNext": ["A_E5"]
+    },
+    {
+      "id": "A_E5",
+      "macroPhase": "A · ACTIVATE",
+      "step": 5,
+      "name": "Повтор, retention и фактическая экономика",
+      "dashboardStage": "repeat",
+      "prerequisites": ["M_BUILD"],
+      "allowedNext": []
+    }
+  ],
+  "readinessGates": {
+    "interview_ready": {
+      "requiredCheckpoints": ["S4_OWNER", "S5_COMPETITORS", "I_E1"],
+      "requiredEvidence": "E1",
+      "selectedFocus": {
+        "min": 1,
+        "max": 1
+      },
+      "opens": "I_E2"
+    },
+    "offer_ready": {
+      "requiredCheckpoints": ["I_E2"],
+      "requiredEvidence": "E2",
+      "requiredFindings": ["jtbd", "firstSalesChannel", "financialRange"],
+      "opens": "I_E3"
+    },
+    "build_ready": {
+      "requiredCheckpoints": ["I_E3", "I_E4"],
+      "requiredEvidence": "E4",
+      "requiredFindings": ["paidScope", "successCriteria", "killCriteria", "buildBudgetLimit"],
+      "opens": "G_SCOPE"
+    },
+    "scale_ready": {
+      "requiredCheckpoints": ["A_E5"],
+      "requiredEvidence": "E5",
+      "requiredFindings": ["repeatUse", "retention", "actualEconomics", "repeatableChannel"],
+      "opens": "scale"
+    }
+  },
+  "publicArtifact": {
+    "allowedFiles": [
+      ".nojekyll",
+      "dashboard/app.js",
+      "dashboard/favicon.svg",
+      "dashboard/index.html",
+      "dashboard/project.html",
+      "dashboard/project.js",
+      "dashboard/styles.css",
+      "data/FACTORY_STATE.json",
+      "data/HIT_PARADE.md",
+      "data/IDEA_REGISTRY.json",
+      "docs/SCORING_MODEL.md"
+    ],
+    "allowedPrefixes": [],
+    "forbiddenPrefixes": [
+      "data/ACTIVE_RUN",
+      "data/discovery/",
+      "data/niches/",
+      "data/interviews/",
+      "data/experiments/"
+    ],
+    "registryPrivateFields": [
+      "source"
+    ]
+  }
+}

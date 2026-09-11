@@ -1,44 +1,29 @@
-# Interview — ниша — PXX
+# Cohort synthesis — ниша
 
-Date: YYYY-MM-DD
-Participant ID: PXX
+Cohort period: YYYY-MM-DD — YYYY-MM-DD
 Segment:
-Role: user | payer | budget_owner | influencer
-Fit criteria:
-Channel:
-Consent/handling note:
+Suitable interviews: 0
+Strongest evidence: E2
+Privacy check: participant-level data remains in `.local/interviews/`
 
-## Research Question
+## Research question
 
-## Последний реальный эпизод
+## Агрегированные паттерны
 
-## JTBD
+| Паттерн | Частота в когорте | Последствие | Текущая альтернатива | Fact or interpretation |
+| --- | ---: | --- | --- | --- |
+| TBD | 0/5 | TBD | TBD | fact |
 
-Когда ..., участник хотел ..., чтобы ..., несмотря на ...
+## Противоречащие случаи
 
-## Текущее решение и цена проблемы
+## JTBD и payer map
 
-- Current alternative:
-- Time cost:
-- Money cost:
-- Consequence of inaction:
+## Канал первых продаж
 
-## Процесс покупки
+## Финансовый диапазон
 
-- Trigger:
-- Decision maker:
-- Budget source:
-- Switching cost:
-- Objections:
+## Решение problem gate
 
-## Evidence
-
-| Наблюдение | Уровень | Артефакт/контекст | Fact or interpretation |
-| --- | --- | --- | --- |
-| TBD | E2 | TBD | fact |
-
-## Commitment / Refusal
-
-## Что изменилось в гипотезах
-
-## Next Question
+Decision: continue | pivot_segment | pivot_offer | park | kill
+Reason:
+Next gate:

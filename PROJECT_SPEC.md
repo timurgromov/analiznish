@@ -108,9 +108,9 @@ capabilities и способом удешевить тест, но не дока
 
 | Macro phase | Роль в контуре | Канонический протокол | Условие перехода |
 | --- | --- | --- | --- |
-| `S · SCAN` | Выбор ниши по рынку, референсам, голосу, аудитории, трафику и финансам | `docs/SIGMA_EXECUTION_MODEL.md` | Один конкретный кандидат и заполненный SCAN board |
-| `I · INSIGHT` | Public corpus, сегмент/JTBD, anti-segment, synthetic stress test и реальная проверка | `docs/INSIGHT_EXECUTION_MODEL.md` + `docs/CUSTDEV_PROTOCOL.md` | Реальный problem, action и pay evidence |
-| `G · GENERATE` | Ограниченная спецификация доказанного решения | Пока используется внутренний build gate; отдельный источник автора ещё не интегрирован | Scope не шире оплаченного результата |
+| `S · SCAN` | Desk research, ранний Portfolio Gate, owner choice и конкурентная рамка | `docs/SIGMA_EXECUTION_MODEL.md` | Один выбранный финалист; реальные интервью ещё не начаты |
+| `I · INSIGHT` | E1-корпус → минимум пять интервью → JTBD/канал/финансы → action → pay | `docs/INSIGHT_EXECUTION_MODEL.md` + `docs/CUSTDEV_PROTOCOL.md` | E4 открывает только bounded build |
+| `G · GENERATE` | Ограниченная спецификация доказанного решения | `build_ready` из `data/FACTORY_SCHEMA.json` | Scope не шире оплаченного результата |
 | `M · MAKE` | Сборка bounded MVP с ручным fallback | Текущие project/build rules | Usage gate |
 | `A · ACTIVATE` | Продажи, использование, retention и экономика | `data/experiments/` + scoring/rescore | Повторяемый канал и E5 либо pivot/park/kill |
 
@@ -125,23 +125,21 @@ capabilities и способом удешевить тест, но не дока
 только состояние UI и ссылку на реестр; он не заменяет `ACTIVE_RUN`, hit parade
 или discovery-артефакты.
 
-### Внутренние operating phases
+### Восемь стадий объекта
 
-| Фаза | Главный вопрос | Обязательный результат | Следующий gate |
+| Стадия | Главный вопрос | Обязательный результат | Следующий gate |
 | --- | --- | --- | --- |
-| 0. Idea purgatory and context | Что не потерять и что уже известно? | Упорядоченный inbox, карта источников, активов и gaps | Batch кандидатов |
-| 1. Hunting constraints | Где и с какими ограничениями ищем? | География, B2B/B2C, доступ, чек, цикл сделки, бюджет, capabilities, запреты | Разрешение на карту Jobs |
-| 2. Jobs and reference mining | Какая частая работа и как её уже покупают/решают? | Три входа поиска: pain-first, product-first, transaction-first; Jobs map, готовые референсы, продаваемые бизнесы, публичный голос и карта альтернатив | Решение о candidate shortlist |
-| 3. Early Portfolio Gate | Какие конкретные модели быстро отсеять до интервью? | 18-критериальный quick scan 5–10 кандидатов, hard filters, ёмкость, механизм денег, profit path и 1–2 финалиста | Решение о deep research |
-| 4. Deep research | Есть ли рынок, деньги, канал и локальный сегмент? | 1–2 доказательных market dossiers, экономика диапазоном | Выбор одной concrete bet |
-| 5. Problem discovery | Существует ли повторяющаяся дорогая задача? | Реальные интервью, прошлое поведение, альтернативы, payer map | Problem gate |
-| 6. Offer test | Совершит ли клиент конкретное действие? | Оффер, CTA, возражения, интро/demo/data/LOI | Offer gate |
-| 7. Paid pilot | Выделит ли клиент деньги и ресурс? | Оплата или подтверждённый бюджет/обязательство, scope и критерии результата | Build gate |
-| 8. Bounded MVP | Что минимально автоматизировать? | Только доказанное ядро, лимит времени/денег, ручной fallback | Usage gate |
-| 9. Retention/economics | Возвращается ли ценность и сходится ли delivery? | Использование, повтор, churn, COGS, support, CAC-сигналы | Scale/park/pivot |
-| 10. Portfolio decision | Куда вкладываться дальше? | Rescore, hit parade, decision, следующий эксперимент | Новый цикл |
+| `inbox` | Что не потерять? | Идея, плательщик и дешёвая первая проверка | `quick_scan` |
+| `quick_scan` | Есть ли очевидный рынок и модель денег? | Hard filters и первичные публичные признаки | `market_research` |
+| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | S0–S5, 18 критериев и 1–2 финалиста | `finalist` |
+| `finalist` | Какую одну ставку проверять? | Owner choice и полный I_E1-корпус | `interview_ready` |
+| `interviews` | Повторяется ли дорогая проблема? | Минимум пять интервью, JTBD, канал и финансовый диапазон | `offer_ready` |
+| `action_test` | Совершит ли клиент затратное действие? | Оффер, CTA, интро/demo/data/LOI | I_E4 money gate |
+| `paid` | Выделит ли клиент деньги? | E4 и bounded scope с лимитом | `build_ready` / usage |
+| `repeat` | Возвращается ли ценность и сходится ли экономика? | E5, retention, COGS и повторяемый канал | `scale_ready` либо pivot/park/kill |
 
-Подробные действия этапов определяет `docs/NICHE_DISCOVERY_LOOP.md`. Реальные
+`parked/failed` — исходы gate, а не стадии. Подробные действия определяет
+`docs/NICHE_DISCOVERY_LOOP.md`. Реальные
 интервью и problem/offer/build/scale gates определяет
 `docs/CUSTDEV_PROTOCOL.md`.
 
@@ -227,7 +225,7 @@ capabilities и способом удешевить тест, но не дока
 
 ## P0 Definition Of Done
 
-Factory v1 считается операционно доказанным, когда один реальный цикл:
+Factory v2 считается операционно доказанным, когда один реальный цикл:
 
 1. запущен в новом чате без готовой идеи;
 2. породил 5–10 кандидатов и объяснимо сократил их до одной ставки;
@@ -237,6 +235,8 @@ Factory v1 считается операционно доказанным, ко�
 6. завершился paid pilot либо честным `pivot`, `park` или `kill`;
 7. сохранил все решения, критерии и gaps без персональных данных;
 8. не допустил большой разработки раньше evidence gate.
+9. дошёл после bounded build до E5-повтора и фактической экономики либо честно
+   завершился terminal gate без заявления о scale readiness.
 
 До этого момента система имеет статус `configured`, а не `validated`.
 
@@ -248,6 +248,11 @@ read-only представление, доступное локально чер
 через GitHub Pages. Схема реестра намеренно готова к будущему переносу в
 PostgreSQL, но фактическая БД появится только вместе с доказанной потребностью в
 write-UI, многопользовательской работе или сложных запросах.
+
+Публичный Pages-артефакт строится только через
+`scripts/build-public-dashboard.mjs`: dashboard, очищенный реестр, factory
+state, hit parade и scoring model. `ACTIVE_RUN`, discovery, niches, interviews,
+experiments и внутренние `source`-пути не публикуются.
 
 ## P1 Candidates
 

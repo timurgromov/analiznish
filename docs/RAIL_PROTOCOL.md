@@ -1,7 +1,7 @@
 # Rail-протокол активного Niche Factory
 
-Version: `1.0`
-Updated: 2026-09-10
+Version: `2.0`
+Updated: 2026-09-11
 
 ## Зачем
 
@@ -59,6 +59,10 @@ Gate: измеримое условие перехода к следующему
 4. обновлены `Current step`, `Current step name`, `Source board` и `Gate` в
    `data/ACTIVE_RUN.md`;
 5. пользователю показан один следующий gate.
+
+Schema v2 дополнительно требует `Checkpoint ID`, точную macro phase/имя из
+`data/FACTORY_SCHEMA.json`, допустимый `Previous checkpoint`, выполненные
+prerequisites, список кандидатов и максимум один `Selected focus ID`.
 
 Разговор о следующем шаге без обновления состояния не считается переходом.
 

@@ -1,7 +1,8 @@
 # Реестр портфельных карточек
 
-Это единственный реестр active-card, которые должны отображаться в dashboard и
-проверяться `node scripts/validate-portfolio.mjs`. Новая оценённая ниша
+Это индекс формально оценённых портфельных карточек для
+`node scripts/validate-portfolio.mjs`, а не полный источник dashboard.
+Канонический реестр всех идей — `data/IDEA_REGISTRY.json`. Новая оценённая ниша
 добавляется сюда одновременно с карточкой и строкой в `data/HIT_PARADE.md` только
 после `context_inventory` и owner checkpoint. Исторические pre-gate черновики не
 попадают в реестр.

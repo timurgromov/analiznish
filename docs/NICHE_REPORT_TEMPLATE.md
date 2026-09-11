@@ -9,7 +9,7 @@ Status: draft | active | parked | rejected | rescore-needed
 Mode: niche_factory | quick_scan | deep_score | rescore
 Last reviewed: YYYY-MM-DD
 Questionnaire completion: L0 idea stub | L1 quick scan | L2 deep score | L3 investment-grade
-Validation stage: inbox | desk_scan | problem_discovery | offer_test | paid_pilot | mvp_build | retention_test | scale_candidate | parked | rejected
+Validation stage: inbox | quick_scan | market_research | finalist | interviews | action_test | paid | repeat
 Strongest evidence: E0 | E1 | E2 | E3 | E4 | E5
 
 ## One-liner

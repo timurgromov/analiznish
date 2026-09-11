@@ -1,6 +1,6 @@
 {
-  "schemaVersion": 2,
-  "updatedAt": "2026-09-10",
+  "schemaVersion": 3,
+  "updatedAt": "2026-09-11",
   "registrySource": "data/IDEA_REGISTRY.json",
   "dashboard": {
     "defaultView": "all-ideas",
@@ -9,20 +9,13 @@
     "addIdeaInstruction": "Напиши в чате: «Заземли идею: …»"
   },
   "systemStatus": {
-    "status": "ready",
-    "statusLabel": "Реестр собран",
-    "summary": "Все известные идеи сведены в один реестр. Категории используются только как фильтры; рейтинг, глубина исследования, этап и решение gate показаны отдельно.",
-    "confirmed": "В реестре есть портфельные карточки, исторические идеи и кандидаты research-batch без дублирования P2 и RPP Between-Session Companion.",
-    "unknown": "Legacy-оценки создавались в разное время и требуют планомерного rescore по одной модели при следующем исследовании каждой идеи.",
-    "nextGate": "Добавить следующую сырую идею в реестр или выбрать одну из недоказанных верхних идей для дешёвого quick scan.",
-    "source": "data/IDEA_REGISTRY.json"
-  },
-  "activeDomainRun": {
-    "id": "psychologists-russia-2026-09-09",
-    "category": "Психология",
-    "status": "parked",
-    "statusLabel": "Припаркован",
-    "resumePoint": "S · SCAN 6 — реальные problem interviews",
-    "source": "data/ACTIVE_RUN.md"
+    "status": "configured",
+    "statusLabel": "Контур настроен, но не подтверждён end-to-end",
+    "endToEndValidated": false,
+    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Полный проход от desk research до повторных денег ещё не выполнен.",
+    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; parked run психологов остаётся на owner checkpoint без выбранного фокуса.",
+    "unknown": "Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе остаётся неподтверждённой.",
+    "nextGate": "Выбрать один run для первого end-to-end подтверждения.",
+    "source": "PROJECT_SPEC.md"
   }
 }

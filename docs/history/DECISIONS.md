@@ -796,3 +796,37 @@ Do not:
 * не считать высокую глубину исследования автоматическим плюсом к качеству идеи;
 * не удалять идею только потому, что она не прошла текущий gate;
 * не объявлять JSON фактическим PostgreSQL или готовым write-back хранилищем.
+
+## DEC-2026-09-11-FACTORY-SCHEMA-V2 — Один машинный lifecycle и закрытая public boundary
+
+Status: active
+Area: architecture | data | validation | privacy | deploy
+Decision date: 2026-09-11
+Evidence: аудит текущих docs/JSON/dashboard/Pages и утверждённый владельцем P0-hardening plan
+
+Decision:
+`data/FACTORY_SCHEMA.json` является машинным контрактом восьми стадий объекта,
+checkpoints, переходов, evidence-caps и readiness gates. `parked/failed` —
+только исходы gate. Канонический порядок: S0–S5 desk research → один owner
+choice → I_E1 → минимум пять I_E2-интервью → JTBD/канал/финансы → I_E3 → I_E4
+→ bounded build → A_E5.
+
+`ACTIVE_RUN.md` хранит единственный domain-run state. `FACTORY_STATE.json` не
+может дублировать его и остаётся `configured` до реального end-to-end прохода.
+Participant-level интервью всегда локальны в `.local/interviews/`; Git хранит
+только cohort synthesis. GitHub Pages строится по allowlist и не публикует
+внутренние data-каталоги или registry `source`.
+
+Do:
+
+* изменять lifecycle сначала в schema, затем в docs и fixtures;
+* проверять переход и prerequisites до смены checkpoint;
+* сохранять legacy-confidence отдельно от активного capped confidence;
+* выбирать ровно один focus до I_E1.
+
+Do not:
+
+* не считать P0-hardening разрешением возобновить parked run;
+* не публиковать ACTIVE_RUN, participant notes или внутренние source paths;
+* не открывать полный build после E4: разрешён только bounded scope;
+* не объявлять scale readiness без E5.

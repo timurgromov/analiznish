@@ -1,7 +1,7 @@
 # I · INSIGHT как evidence-gated проход
 
-Version: `1.0`
-Updated: 2026-09-09
+Version: `2.0`
+Updated: 2026-09-11
 
 ## Источник и граница
 
@@ -85,18 +85,23 @@ AI-персонажу можно задать вопросы о текущей �
 
 | Gate | Что делаем | Сильнейший возможный уровень | Разрешённый переход |
 | --- | --- | --- | --- |
-| I-E1 · public insight | Корпус, синтез, JTBD-гипотезы, anti-segment, synthetic stress test | E1 | Подготовить живой problem discovery |
-| I-E2 · real problem | Минимум 5 подходящих интервью о недавнем поведении; паттерн минимум у 3 | E2 | Проверять один оффер |
-| I-E3 · action | Интро, данные, demo, LOI или другое затратное действие | E3 | Проверять бюджет/пилот |
-| I-E4 · pay | Платный пилот/design partner или подтверждённый денежный commitment | E4 | Открыть ограниченный `G · GENERATE` |
+| I-E1 · public insight | Корпус, синтез, JTBD-гипотезы, anti-segment, synthetic stress test и guide выбранного финалиста | E1 | Открыть `interview_ready` |
+| I-E2 · real problem | Минимум 5 подходящих интервью о недавнем поведении; паттерн минимум у 3; затем уточнить JTBD, канал первых продаж и диапазон финансов | E2 | Открыть `offer_ready` и один тест действием |
+| I-E3 · action | Интро, данные, demo, LOI или другое затратное действие по уточнённому офферу | E3 | Проверять бюджет/пилот |
+| I-E4 · pay | Платный пилот/design partner или подтверждённый денежный commitment | E4 | Открыть только bounded `G · GENERATE` |
+| A-E5 · repeat | Повторное использование/покупка, retention и фактическая экономика | E5 | Открыть `scale_ready` либо pivot/park/kill |
 
 Таким образом, «пять AI-промптов выполнены» означает только `I-E1 complete`.
 `I · INSIGHT complete` в нашем контуре означает прохождение money gate.
+`I_E4` не разрешает полный SaaS: он открывает только ограниченный scope с
+лимитом времени/денег и ручным fallback.
 
 ## Артефакты
 
 * public corpus и E1-синтез: `data/discovery/<run>-insight.md`;
-* обезличенные реальные интервью: `data/interviews/`;
+* participant-level записи, контакты, даты и raw quotes: только ignored
+  `.local/interviews/`;
+* обезличенная cohort synthesis минимум пяти интервью: `data/interviews/`;
 * offer/action/pay проверки: `data/experiments/`;
 * текущая точка: `data/ACTIVE_RUN.md`;
 * решение и запрет случайного отката: `docs/history/`.

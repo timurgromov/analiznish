@@ -95,7 +95,9 @@ current_rating = round(50 + (base_score - 50) * evidence_confidence)
   → S · SCAN 0–3 по публичным данным
   → S · SCAN 4: quick scan по 18 критериям
   → 1–2 финалиста
-  → S · SCAN 5–9, включая голос клиента
+  → S5_COMPETITORS и owner choice одного фокуса
+  → I_E1 public corpus
+  → I_E2 минимум 5 реальных интервью
 ```
 
 Восемнадцать критериев — это 14 базовых критериев рынка, экономики и

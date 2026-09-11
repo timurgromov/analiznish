@@ -48,8 +48,8 @@ checkpoint. После обработки агент прямо возвраща
 подставляется в каждый ответ.
 
 Нормальный прогресс: `чистилище идей → context inventory → pain/product/transaction mining → 5–10 кандидатов →
-S · SCAN 0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → problem
-interviews → offer action → paid pilot → MVP`.
+S · SCAN 0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → I_E1 → problem
+interviews → offer action → paid pilot → bounded build → repeat`.
 
 ### Reference Mining
 
@@ -520,3 +520,31 @@ travel, legaltech, AI-photo и будущие темы — равноправн�
 * Acceptance: ссылка не открывает JSON/Markdown; валидатор не принимает
   запись без четырёх описательных полей; на mobile поля складываются без
   горизонтального overflow.
+
+### UI change contract — 2026-09-11, P0-hardening state truth
+
+* Target: `/dashboard/#all-ideas`, `/dashboard/#funnel` и
+  `/dashboard/project.html?id=<id>` после успешной загрузки публичного
+  артефакта.
+* Baseline signature: интерфейс пишет `Данные актуальны`, хотя загрузка JSON не
+  доказывает актуальность или полный end-to-end проход; публичные карточки
+  всегда показывают ссылку на внутренний Markdown-путь; legacy-confidence
+  визуально не отличается от confidence, ограниченного evidence-cap.
+* Expected delta: статус загрузки пишет `Данные загружены`; decision brief явно
+  сообщает `Контур настроен, но не подтверждён end-to-end`; у записей с
+  `legacyEvidenceConfidence` показано короткое пояснение исходного значения и
+  активного cap; source-ссылка отсутствует, если безопасный публичный URL не
+  передан.
+* Preserved invariants: восемь этапов, вкладки, фильтры, сортировка, раскрытие
+  строки, карточка объекта, формула текущего рейтинга и read-only граница не
+  меняются. Новая дизайн-система, новые зависимости и write-UI не добавляются.
+* Layout contract: режимы `390x844`, `768x1024`, `1024x768`, `1180x820`,
+  `1366x768`, `1440x900`, `1984x1046`; границы `559/560/561`,
+  `759/760/761`, `1099/1100/1101`; во всех режимах
+  `scrollWidth === innerWidth`, статус и legacy-пояснение не обрезаются.
+* Primary action: отфильтровать этап, раскрыть идею и открыть её читаемую
+  карточку; отсутствие технической source-ссылки не должно блокировать этот
+  путь.
+* Acceptance: candidate загружен свежо; видимый before/after подтверждён на
+  desktop и `390x844`; фильтр и карточка работают; console errors и
+  горизонтальный overflow отсутствуют.

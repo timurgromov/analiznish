@@ -28,6 +28,7 @@ node_modules/
 venv/
 dist/
 build/
+_site/
 .next/
 .cache/
 .playwright-cli/

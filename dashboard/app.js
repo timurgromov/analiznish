@@ -80,6 +80,16 @@ function projectSourceHref(source) {
   return `../${String(source).split("/").map(encodeURIComponent).join("/")}`;
 }
 
+function sourceLink(source, label = "Исходный материал (Markdown) ↗", className = "source-link") {
+  if (!source) return "";
+  return `<a class="${className}" href="${projectSourceHref(source)}" target="_blank" rel="noreferrer">${escapeHtml(label)}</a>`;
+}
+
+function legacyConfidenceNote(idea) {
+  if (!Number.isFinite(idea.legacyEvidenceConfidence) || idea.legacyEvidenceConfidence === idea.evidenceConfidence) return "";
+  return `<small class="legacy-confidence">Legacy: ${Math.round(idea.legacyEvidenceConfidence * 100)}%; активное доверие ограничено evidence-cap ${idea.evidenceLevel} до ${Math.round(idea.evidenceConfidence * 100)}%.</small>`;
+}
+
 function projectCardHref(id) {
   return `./project.html?id=${encodeURIComponent(id)}`;
 }
@@ -124,7 +134,7 @@ function renderTopSummary() {
   const money = ideas.filter((idea) => (stageById(idea.stage)?.order ?? -1) >= 6).length;
   const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
   const system = state.factory.systemStatus;
-  const systemState = system.status === "ready" ? "Готов к работе" : system.statusLabel;
+  const systemState = system.status === "configured" ? "Настроен" : system.statusLabel;
   document.querySelector("#decision-brief").innerHTML = `<div class="decision-lead">
     <p class="section-kicker">Сейчас</p>
     <div class="decision-title-row"><h2 id="decision-brief-title">${escapeHtml(system.statusLabel)}</h2><span class="decision-status">${escapeHtml(systemState)}</span></div>
@@ -206,9 +216,9 @@ function ideaCard(idea, rank, compact = false) {
       <div><span>Почему это место</span><p>${escapeHtml(idea.rankingReason)}</p></div>
       <div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div>
       <div class="next-gate-detail"><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
-      <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p></div>
+      <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p>${legacyConfidenceNote(idea)}</div>
       <a class="project-card-link" href="${projectCardHref(idea.id)}">Открыть карточку проекта →</a>
-      <a class="source-link" href="${projectSourceHref(idea.source)}" target="_blank" rel="noreferrer">Исходный материал (Markdown) ↗</a>
+      ${sourceLink(idea.source)}
     </div>
   </details>`;
 }
@@ -371,7 +381,7 @@ function renderRuns() {
       <div class="run-body">
         <div class="run-title"><div><span>${escapeHtml(run.category)}</span><h3>${escapeHtml(run.title)}</h3></div><time>${formatDate(run.updatedAt)}</time></div>
         <p>${escapeHtml(run.result)}</p>
-        <div class="run-footer"><span>${escapeHtml(run.evidenceLevel)} · ${run.status === "complete" ? "завершён" : "припаркован"}</span><a href="${projectSourceHref(run.source)}" target="_blank" rel="noreferrer">Исходный материал (Markdown) ↗</a></div>
+        <div class="run-footer"><span>${escapeHtml(run.evidenceLevel)} · ${run.status === "complete" ? "завершён" : "припаркован"}</span>${sourceLink(run.source, "Исходный материал (Markdown) ↗", "")}</div>
       </div>
     </article>`).join("");
 }
@@ -531,7 +541,7 @@ async function init() {
     const requestedView = location.hash.replace("#", "") || factory.dashboard.defaultView;
     switchView(requestedView, false);
     window.addEventListener("hashchange", () => switchView(location.hash.replace("#", ""), false));
-    setStatus("Данные актуальны", "ok");
+    setStatus("Данные загружены", "ok");
   } catch (error) {
     setStatus("Ошибка данных", "error");
     const message = document.querySelector("#error-message");

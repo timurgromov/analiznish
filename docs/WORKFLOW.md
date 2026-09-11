@@ -82,7 +82,12 @@ Listing с Acquire.com/Flippa/Microns является поисковым lead: 
 
 Если блок A неполный, не делай полноценную оценку. Верни список недостающих обязательных вопросов. Если пользователь просит "без вопросов", делай только `quick_scan` с `evidence_confidence <= 0.55`.
 
-Определи `validation_stage` (`inbox`, `desk_scan`, `problem_discovery`, `offer_test`, `paid_pilot`, `mvp_build`, `retention_test`, `scale_candidate`, `parked`, `rejected`) и `strongest_evidence` (`E0`–`E5`) по `docs/NICHE_DISCOVERY_LOOP.md`. Готовый `existing_asset` может оставаться на `problem_discovery`, если спрос ещё не исследован.
+Определи одну из восьми стадий объекта: `inbox`, `quick_scan`,
+`market_research`, `finalist`, `interviews`, `action_test`, `paid`, `repeat` —
+и `strongest_evidence` (`E0`–`E5`) по `data/FACTORY_SCHEMA.json`.
+`parked/failed` являются исходами gate, а не стадиями. Готовый
+`existing_asset` может оставаться на `market_research`, если спрос ещё не
+исследован.
 
 ## 2. Hard Filters
 
@@ -99,9 +104,9 @@ Listing с Acquire.com/Flippa/Microns является поисковым lead: 
 
 ## 3. Discovery Scan
 
-Пройди применимые этапы `0–10` из `docs/NICHE_DISCOVERY_LOOP.md`: контекст,
-фундамент, три входа поиска, Jobs, референсы/альтернативы, голос клиента, локализация, фильтрация,
-JTBD/аудитория, канал, финансы и синтез. Для разбора готовых сервисов используй
+Пройди применимые desk-research checkpoints `S0_CONTEXT`–`S5_COMPETITORS`:
+контекст, три входа поиска, Jobs, референсы/альтернативы, локализация, ранний
+Portfolio Gate и конкурентная рамка. Для разбора готовых сервисов используй
 `docs/REFERENCE_MINING_PROTOCOL.md`. Продаваемые и проданные онлайн-бизнесы
 разбирай отдельно по `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`.
 
@@ -113,8 +118,9 @@ JTBD/аудитория, канал, финансы и синтез. Для ра
 на `S · SCAN 4` обязателен quick scan по 18 критериям из
 `docs/SCORING_MODEL.md`, включая приблизительную ёмкость, механизм денег, путь
 к значимой прибыли и профиль cashflow. Подписка предпочтительна за
-повторяемость, но не является hard filter. Только 1–2 финалиста переходят к этапам 5–9 и
-реальным интервью. Если кандидат не прошёл ранний gate, отсутствие CustDev не
+повторяемость, но не является hard filter. Только 1–2 финалиста переходят к
+`S5_COMPETITORS`, после чего владелец выбирает ровно один фокус на
+`S4_OWNER`. Если кандидат не прошёл ранний gate, отсутствие CustDev не
 является причиной продолжать исследование.
 
 ## 4. Evidence Pass
@@ -144,16 +150,19 @@ AI review mining и synthetic research храни отдельно от реал
 Перед реальными интервью выполни E1-подготовку `I · INSIGHT` по
 `docs/INSIGHT_EXECUTION_MODEL.md`: provenance-backed corpus, synthesis,
 segment/JTBD, anti-segment, synthetic stress test и positioning hypotheses.
-Это не повышает evidence выше E1 и не заменяет шаги ниже.
+Это не повышает evidence выше E1 и не заменяет шаги ниже. Реальные интервью
+разрешены только после owner choice и `interview_ready`.
 
 Для конкретной ставки после desk scan:
 
 1. Составь research question и список рискованных гипотез.
-2. Проведи problem interviews по `docs/CUSTDEV_PROTOCOL.md`.
-3. Синтезируй паттерны без выдуманного среднего «аватара».
+2. Проведи минимум пять problem interviews по `docs/CUSTDEV_PROTOCOL.md`.
+3. Синтезируй паттерны без выдуманного среднего «аватара» и до `I_E3`
+   уточни JTBD, канал первых продаж и диапазон финансов.
 4. Проверь оффер конкретным действием.
 5. Запиши эксперимент в `data/experiments/` с критериями до старта.
-6. Не разрешай полноценный build до прохождения build gate.
+6. Открой только bounded build после `I_E4`; полноценный build не разрешается
+   денежным сигналом без ограниченного scope.
 
 Если пользователь просит только оценить рынок, не блокируй `market_opportunity_score` отсутствием CustDev. Ограничение относится к confidence и инвестиции в конкретную ставку.
 

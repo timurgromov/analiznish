@@ -62,9 +62,10 @@ dashboard. Интерфейс остаётся read-only.
 | `docs/IDEA_PURGATORY_PROTOCOL.md` | Чистилище идей, классы A/B/C/X и ранний Portfolio Gate |
 | `docs/WORKFLOW.md` | Маршрутизация режимов и операционный порядок работы |
 | `docs/NICHE_DISCOVERY_LOOP.md` | Завод поиска: scan → CustDev → action → pay → repeat |
-| `docs/SIGMA_EXECUTION_MODEL.md` | Исполняемый `S · SCAN`: точные 10 этапов `0–9`, переходы и обязательный статус каждого прохода |
+| `docs/SIGMA_EXECUTION_MODEL.md` | Источник десяти шагов SCAN и исполняемая desk-research граница S0–S5 |
 | `docs/INSIGHT_EXECUTION_MODEL.md` | Исполняемый `I · INSIGHT`: public corpus, AI-синтез и обязательные real/action/pay gates |
 | `docs/RAIL_PROTOCOL.md` | Правила удержания активного run и обязательный формат каждого checkpoint |
+| `docs/DEPLOY_HANDOFF.md` | Allowlist, команды и live-проверка GitHub Pages |
 | `docs/REFERENCE_MINING_PROTOCOL.md` | Разбор готовых сервисов, альтернатив и отзывов без копирования продукта |
 | `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md` | Разбор продаваемых онлайн-бизнесов, seller claims, проверенных метрик и sold comparables |
 | `docs/SIGMA_SOURCE_PLAYBOOK.md` | Проверенные источники SIGMA: где искать референсы, отзывы и голос клиента |
@@ -73,6 +74,7 @@ dashboard. Интерфейс остаётся read-only.
 | `docs/NICHE_INPUT_TEMPLATE.md` | Формат входных данных по новой идее |
 | `docs/NICHE_REPORT_TEMPLATE.md` | Формат полноценного отчета по нише |
 | `data/IDEA_INBOX.md` | Упорядоченное чистилище сырых идей до доказательного рейтинга |
+| `data/FACTORY_SCHEMA.json` | Машинный контракт стадий, checkpoints, evidence-caps, переходов и readiness gates |
 | `data/IDEA_REGISTRY.json` | Единый индекс всех идей: осторожный рейтинг, категория, этап, исход, причина места, следующий тест и research-runs |
 | `data/ACTIVE_RUN.md` | Единственный оперативный источник правды: текущая phase, этап, работа и gate |
 | `data/discovery/` | Контекстные карты, Jobs map, product/marketplace archaeology до оценки ставки |
@@ -80,7 +82,7 @@ dashboard. Интерфейс остаётся read-only.
 | `data/niches/` | Карточки отдельных ниш |
 | `data/niches/INDEX.md` | Реестр только портфельных карточек v0.7 для валидатора |
 | `data/references/` | Архив конкурентных исследований, которые не являются отдельными активными объектами |
-| `data/interviews/` | Обезличенные итоги CustDev |
+| `data/interviews/` | Только обезличенная cohort synthesis; participant-level данные остаются в `.local/interviews/` |
 | `data/experiments/` | Проверки оффера, канала, цены, пилотов и retention |
 | `data/FACTORY_STATE.json` | Состояние dashboard и ссылка на единый реестр; доменный run хранится отдельно |
 | `dashboard/` | Кабинет: все идеи, воронка, исследования, портфель и архив |
@@ -137,7 +139,12 @@ http://127.0.0.1:8765/dashboard/
 https://timurgromov.github.io/analiznish/dashboard/
 ```
 
-Workflow `.github/workflows/deploy-pages.yml` публикует только dashboard, папку `data/` и `docs/SCORING_MODEL.md`, который нужен для расшифровки критериев. Источник GitHub Pages уже настроен на `GitHub Actions`; каждый push изменений в них на `main` автоматически обновляет страницу.
+Workflow `.github/workflows/deploy-pages.yml` сначала запускает полный validation
+suite, затем `scripts/build-public-dashboard.mjs`. В Pages попадают только
+dashboard assets, очищенный `IDEA_REGISTRY.json`, `FACTORY_STATE.json`,
+`HIT_PARADE.md` и `docs/SCORING_MODEL.md`. Внутренние `source`-пути удаляются;
+`ACTIVE_RUN`, `discovery`, `niches`, `interviews` и `experiments` не
+публикуются. Источник Pages настроен на `GitHub Actions`.
 
 Проверка статуса:
 
@@ -155,6 +162,10 @@ docker compose down
 
 ```bash
 ./scripts/check-local.sh
+node --test
+node --check dashboard/app.js
+node --check dashboard/project.js
+node scripts/build-public-dashboard.mjs --output _site
 ```
 
 Проверка убеждается, что базовые документы на месте и в проект случайно не попали очевидные секреты.
