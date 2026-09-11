@@ -80,6 +80,10 @@ function projectSourceHref(source) {
   return `../${String(source).split("/").map(encodeURIComponent).join("/")}`;
 }
 
+function projectCardHref(id) {
+  return `./project.html?id=${encodeURIComponent(id)}`;
+}
+
 function formatDate(value) {
   const [year, month, day] = String(value).split("-").map(Number);
   if (!Number.isInteger(year)) return value;
@@ -120,7 +124,6 @@ function renderTopSummary() {
   const money = ideas.filter((idea) => (stageById(idea.stage)?.order ?? -1) >= 6).length;
   const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
   const system = state.factory.systemStatus;
-  const sourceHref = projectSourceHref(system.source);
   const systemState = system.status === "ready" ? "Готов к работе" : system.statusLabel;
   document.querySelector("#decision-brief").innerHTML = `<div class="decision-lead">
     <p class="section-kicker">Сейчас</p>
@@ -130,7 +133,7 @@ function renderTopSummary() {
   <dl class="decision-facts">
     <div class="decision-fact"><dt>Подтверждено</dt><dd>${escapeHtml(system.confirmed)}</dd></div>
     <div class="decision-fact decision-unknown"><dt>Нужно уточнить</dt><dd>${escapeHtml(system.unknown)}</dd></div>
-    <div class="decision-fact decision-next"><dt>Следующий gate</dt><dd>${escapeHtml(system.nextGate)}</dd><a href="${sourceHref}" target="_blank" rel="noreferrer">Открыть источник ↗</a></div>
+    <div class="decision-fact decision-next"><dt>Следующий gate</dt><dd>${escapeHtml(system.nextGate)}</dd><a href="#research">Открыть журнал исследований →</a></div>
   </dl>`;
   const stats = [
     [ideas.length, "всего идей", "В одном реестре"],
@@ -199,11 +202,13 @@ function ideaCard(idea, rank, compact = false) {
       <span class="expand-icon" aria-hidden="true">⌄</span>
     </summary>
     <div class="idea-details">
+      <div class="project-summary-detail"><span>Что это за проект</span><p>${escapeHtml(idea.projectSummary)}</p></div>
       <div><span>Почему это место</span><p>${escapeHtml(idea.rankingReason)}</p></div>
       <div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div>
       <div class="next-gate-detail"><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
       <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p></div>
-      <a class="source-link" href="${projectSourceHref(idea.source)}" target="_blank" rel="noreferrer">Открыть источник ↗</a>
+      <a class="project-card-link" href="${projectCardHref(idea.id)}">Открыть карточку проекта →</a>
+      <a class="source-link" href="${projectSourceHref(idea.source)}" target="_blank" rel="noreferrer">Исходный материал (Markdown) ↗</a>
     </div>
   </details>`;
 }
@@ -366,7 +371,7 @@ function renderRuns() {
       <div class="run-body">
         <div class="run-title"><div><span>${escapeHtml(run.category)}</span><h3>${escapeHtml(run.title)}</h3></div><time>${formatDate(run.updatedAt)}</time></div>
         <p>${escapeHtml(run.result)}</p>
-        <div class="run-footer"><span>${escapeHtml(run.evidenceLevel)} · ${run.status === "complete" ? "завершён" : "припаркован"}</span><a href="${projectSourceHref(run.source)}" target="_blank" rel="noreferrer">Открыть исследование ↗</a></div>
+        <div class="run-footer"><span>${escapeHtml(run.evidenceLevel)} · ${run.status === "complete" ? "завершён" : "припаркован"}</span><a href="${projectSourceHref(run.source)}" target="_blank" rel="noreferrer">Исходный материал (Markdown) ↗</a></div>
       </div>
     </article>`).join("");
 }
@@ -525,6 +530,7 @@ async function init() {
     bindControls();
     const requestedView = location.hash.replace("#", "") || factory.dashboard.defaultView;
     switchView(requestedView, false);
+    window.addEventListener("hashchange", () => switchView(location.hash.replace("#", ""), false));
     setStatus("Данные актуальны", "ok");
   } catch (error) {
     setStatus("Ошибка данных", "error");

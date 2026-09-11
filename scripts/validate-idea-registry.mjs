@@ -47,7 +47,7 @@ for (const idea of registry.ideas) {
   assert(/^[a-z0-9-]+$/.test(idea.id), `некорректный idea id: ${idea.id}`);
   assert(!ideaIds.has(idea.id), `дублируется idea id: ${idea.id}`);
   ideaIds.add(idea.id);
-  for (const key of ["title", "category", "objectType", "scoreBasis", "evidenceLevel", "rankingReason", "mainRisk", "nextGate"]) {
+  for (const key of ["title", "projectSummary", "customer", "customerOutcome", "moneyModel", "category", "objectType", "scoreBasis", "evidenceLevel", "rankingReason", "mainRisk", "nextGate"]) {
     assert(typeof idea[key] === "string" && idea[key].trim(), `${idea.id}.${key} обязателен`);
   }
   assert(Number.isFinite(idea.baseScore) && idea.baseScore >= 0 && idea.baseScore <= 100, `${idea.id}.baseScore должен быть 0–100`);
