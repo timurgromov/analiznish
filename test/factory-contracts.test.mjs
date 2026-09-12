@@ -44,6 +44,11 @@ test("несовпадающее название checkpoint падает", () =
 
 test("переход вне allowedNext падает", () => {
   const fixture = factoryFixtures();
+  fixture.activeRun.checkpointId = "S0_CONTEXT";
+  fixture.activeRun.macroPhase = "S · SCAN";
+  fixture.activeRun.currentStep = 0;
+  fixture.activeRun.currentStepName = "Контекст и стартовая позиция";
+  fixture.activeRun.completedCheckpoints = [];
   fixture.activeRun.previousCheckpoint = "S3_LOCALIZE";
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /переход S3_LOCALIZE → S0_CONTEXT не разрешён/);
 });
@@ -116,6 +121,12 @@ test("незавершённый owner checkpoint не может иметь pas
 
 test("активный S0 не допускает кандидата выше quick_scan", () => {
   const fixture = factoryFixtures();
+  fixture.activeRun.checkpointId = "S0_CONTEXT";
+  fixture.activeRun.macroPhase = "S · SCAN";
+  fixture.activeRun.currentStep = 0;
+  fixture.activeRun.currentStepName = "Контекст и стартовая позиция";
+  fixture.activeRun.previousCheckpoint = "—";
+  fixture.activeRun.completedCheckpoints = [];
   const idea = ideaById(fixture.registry, "kadra");
   idea.stage = "market_research";
   idea.gateStatus = "in_progress";

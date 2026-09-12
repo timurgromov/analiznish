@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updatedAt": "2026-09-11",
+  "updatedAt": "2026-09-12",
   "registrySource": "data/IDEA_REGISTRY.json",
   "dashboard": {
     "defaultView": "all-ideas",
@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Запущен S0_CONTEXT для первого batch из старых непсихологических ставок; полный проход от desk research до повторных денег ещё не выполнен.",
-    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; шесть legacy-ставок выровнены на S0_CONTEXT, а психологический run сохраняет отдельный parked resume point S4_OWNER.",
+    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. S0_CONTEXT завершён для первого batch из старых непсихологических ставок; начат S1_MARKET, а полный проход до повторных денег ещё не выполнен.",
+    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; шесть legacy-ставок синхронно перешли к S1_MARKET, а психологический run сохраняет отдельный parked resume point S4_OWNER.",
     "unknown": "Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе остаётся неподтверждённой.",
-    "nextGate": "Завершить S0_CONTEXT для legacy-портфельного batch.",
+    "nextGate": "Завершить source-backed S1_MARKET для legacy-портфельного batch.",
     "source": "data/ACTIVE_RUN.md"
   }
 }

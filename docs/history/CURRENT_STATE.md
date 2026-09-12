@@ -1,18 +1,20 @@
-# Current State — 2026-09-11
+# Current State — 2026-09-12
 
 ## Active portfolio-rescan
 
 Текущий `ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, checkpoint
-`S0_CONTEXT`. Владелец запустил единый ранний Factory-проход шести
+`S1_MARKET`. `S0_CONTEXT` пройден для единого раннего Factory-прохода шести
 непсихологических legacy-ставок: Радарыч, КАДРА, AI YouTube Automation,
 ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Все они
-выровнены на `quick_scan / in_progress / E1`; готовность кода и старые score
-не являются evidence спроса. Психологический run сохраняет parked resume point
-`S4_OWNER` и в новый batch не входит.
+выровнены на `market_research / in_progress / E1`; готовность кода и старые
+score не являются evidence спроса. S0 зафиксировал отсутствие внешних оплат,
+CAC, cohort-retention и готовой unit economics у каждой ставки. Психологический
+run сохраняет parked resume point `S4_OWNER` и в новый batch не входит.
 
-Текущая работа: закрыть S0-карту фактическими затратами, аналитикой и
-ограничениями каждого объекта. До `S0–S3` и раннего Portfolio Gate не выбирать
-финалиста, не проводить интервью, не покупать трафик и не запускать продажи.
+Текущая работа: собрать source-backed `S1_MARKET` — альтернативы, цены,
+плательщиков и механизм денег — одинаково для всех шести. До `S0–S3` и раннего
+Portfolio Gate не выбирать финалиста, не проводить интервью, не покупать трафик
+и не запускать продажи.
 
 ## Project
 
@@ -31,10 +33,10 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 `factory_v2` runs. Для `concrete_bet` и `existing_asset`, связанных только с
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
-money gates. «Радарыч» и PastLife AI / Sansara возвращены к `quick_scan` /
-`in_progress` в общем `S0_CONTEXT` legacy-портфельном batch; психологические
-кандидаты и Rule24 остаются отдельно parked. Их дальнейший путь после S0 —
-`S1–S5` и owner choice.
+money gates. «Радарыч» и PastLife AI / Sansara прошли `S0_CONTEXT` и находятся
+на `market_research / in_progress` в общем `S1_MARKET` legacy-портфельном
+batch; психологические кандидаты и Rule24 остаются отдельно parked. Их
+дальнейший путь — `S1–S5` и owner choice.
 
 ## Current Runtime / Stack
 

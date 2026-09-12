@@ -6,18 +6,18 @@ Registry run ID: legacy-portfolio-sigma-2026-09-11
 Mode: niche_factory
 Status: active
 Direction: проверить существующие непсихологические ставки и активы единым SIGMA-ситом; выбрать только доказуемого кандидата для дальнейшей проверки спроса
-Checkpoint ID: S0_CONTEXT
+Checkpoint ID: S1_MARKET
 Checkpoint gate status: in_progress
 Macro phase: S · SCAN
-Current step: 0
-Current step name: Контекст и стартовая позиция
-Previous checkpoint: —
-Completed checkpoints: —
+Current step: 1
+Current step name: Рынок, референсы и денежные модели
+Previous checkpoint: S0_CONTEXT
+Completed checkpoints: S0_CONTEXT
 Candidate IDs: radarych, kadra, ai-youtube-automation, cycle-assistant, pastlife-sansara, profiwatcher
 Selected focus IDs: —
 Strongest evidence: E1
 Source board: data/discovery/2026-09-11-legacy-portfolio-sigma-run.md
-Last updated: 2026-09-11
+Last updated: 2026-09-12
 
 ## Решение владельца
 
@@ -29,22 +29,21 @@ Rule24 и все психологические кандидаты не смеш
 
 ## Единственная текущая работа
 
-Собрать `S0_CONTEXT` для шести ставок: реальный актив и его состояние,
-плательщик, предполагаемый Job, модель денег, уже подтверждённые факты,
-затраты/ограничения и первое недоказанное допущение. Legacy score, production
-и документация учитываются только как контекст, не как разрешение на CustDev,
-traffic, action или оплату.
+Для каждого из шести кандидатов собрать одинаковый public корпус `S1_MARKET`:
+готовые продукты и альтернативы, цены, плательщика, механизм денег и, где
+уместно, активные или завершённые продажи бизнесов. Отделять наблюдаемые факты
+от заявлений продавцов и не считать готовый legacy-код рыночным доказательством.
 
 ## Gate этапа
 
-Для всех шести кандидатов есть одна source-backed карта: что реально прочитано,
-что подтверждено, чего нет и с какого question начинается `S1_MARKET`.
-После этого batch может перейти в `S1_MARKET`; ранний Portfolio Gate наступит
-только после `S0–S3` для всей пачки.
+Для каждого кандидата есть минимум пять актуальных публичных альтернатив или
+референсов там, где рынок существует, с источником, ценой/механизмом денег и
+отдельной пометкой о недостающей локальной проверке. Ранний Portfolio Gate
+наступит только после `S0–S3` для всей пачки.
 
 ## Запрещённый переход
 
 Не выбирать финалиста, не проводить интервью, не покупать трафик, не делать
 продажи и не дорабатывать продукт до завершения `S0–S3` и раннего Portfolio
-Gate. Нельзя считать production, payment UX, internal watcher или прежний
-score доказательством спроса.
+Gate. Нельзя считать production, payment UX, internal watcher, прежний score
+или маркетинговую страницу референса доказательством спроса.
