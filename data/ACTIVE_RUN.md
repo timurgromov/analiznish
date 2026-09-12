@@ -11,8 +11,8 @@ Checkpoint gate status: passed
 Macro phase: S · SCAN
 Current step: 5
 Current step name: Конкуренты и конкурентная рамка финалистов
-Previous checkpoint: S3_LOCALIZE
-Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE, S5_COMPETITORS
+Previous checkpoint: S4_PORTFOLIO_GATE
+Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE, S4_PORTFOLIO_GATE, S5_COMPETITORS
 Candidate IDs: rule24
 Selected focus IDs: —
 Strongest evidence: E1

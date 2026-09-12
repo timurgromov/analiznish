@@ -19,8 +19,9 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 | Сейчас | Количество | Решение |
 | --- | ---: | --- |
 | CustDev-ready | 0 | Ни у кого нет одновременно S4 owner choice и I_E1. |
-| Finalist parked | 2 | Психологические P1/P2 ожидают owner choice после Portfolio Closure. |
-| Terminal failed | 15 | Не возвращать без конкретного external fact из реестра. |
+| Finalist parked | 3 | Радарыч и психологические P1/P2 ожидают общего owner choice после Portfolio Closure. |
+| Обоснованный failed | 5 | У каждого есть blockerCode и отдельный failed-критерий; конкуренция не является причиной. |
+| Parked до недостающего evidence | 9 | Cycle, Sansara и семь B2B-гипотез ждут корректного продолжения S2/S3. |
 | Незакрытый legacy asset | 0 | Rule24 прошёл S0–S5 как passed_not_selected; конкуренция учтена как market signal, не причина отсева. |
 | Сырая inbox-идея | 1 | Codex Project Starter не является текущим Factory-кандидатом. |
 | Active business / market reference | 3 | Benchmark и карта рынка, не кандидаты Factory. |
@@ -31,9 +32,9 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 очереди; legacy-число не открывает evidence gate.
 
 Legacy-код и legacy-карточки не являются Factory-прогрессом. Последующий
-Factory v2-screen уже завершил «Радарыч» и PastLife AI / Sansara как terminal
-failed; строки ниже сохраняют прежние оценки только как историю. Они не
-разрешают founder-сессии, traffic или продажи.
+Factory v2-screen после аудита оставил «Радарыч» finalist/parked, а PastLife AI
+/ Sansara parked на S2 до exact-offer signals. Строки ниже сохраняют прежние
+оценки только как историю и не разрешают founder-сессии, traffic или продажи.
 
 ## Историческая карта рынков и референсов
 

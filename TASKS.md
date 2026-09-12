@@ -109,24 +109,21 @@ hard filter. Любая модель проверяется без прежде�
     четыре платные/бесплатные альтернативы и пять моделей денег; для теста выбран
     success fee с concierge delivery. Боль и цена ещё не подтверждены людьми.
 - [x] Провести `S0–S3` для legacy-портфельного batch.
-  - 2026-09-12: terminal gate завершён без финалиста. Sansara отсеян на S2;
-    Радарыч, AI YouTube Automation, ассистент по женскому циклу и ProfiWatcher
-    отсеяны на S3; КАДРА дошла до ранней 18-критериальной матрицы, но не прошла
-    hard filter commodity без защищённого канала.
-  - Outcome: все отсевы привязаны к конкретному external fact; готовность
-    legacy-кода не открыла CustDev, traffic, action, деньги или build.
-- [x] Пропустить первый новый B2B operations batch через S0–S1.
-  - Выполнено 2026-09-12: семь сырых workflow-гипотез прошли context и
-    reference screen без финалиста. Широкие field-service, оптовые, договорные
-    и бухгалтерские Jobs уже закрыты native products/services; для дебиторки и
-    security questionnaire не найден локальный buyer. Все семь получили failed
-    и не открыли CustDev.
-- [x] Закрыть Portfolio Closure существующих assets.
+  - Исправлено 2026-09-12: Радарыч прошёл S0–S5 и стал finalist/parked;
+    Sansara и Cycle parked из-за missing evidence; КАДРА, AI YouTube и
+    ProfiWatcher остановлены по отдельным blocker-ам. Конкуренция не является
+    причиной failed; CustDev, traffic, action, деньги и build не открыты.
+- [ ] Продолжить B2B operations batch с S2.
+  - S0–S1 пройдены: российские products/services подтверждают рынок всех семи
+    Jobs. Прежние competition-based failed отменены; для каждого нужны два
+    независимых свежих problem signals конкретного локального сегмента.
+- [ ] Закрыть Portfolio Closure существующих assets.
   - Выполнено 2026-09-12: Rule24 прошёл Factory v2 S0–S5 без shortcut за
     готовый код. Российские конкуренты подтвердили рынок и не стали причиной
     отсева; на раннем Portfolio Gate ставка получила `passed_not_selected`.
-    CustDev, трафик, оффер и build не открыты. Действующий свадебный бизнес и
-    market reference не подменяли кандидатов.
+    CustDev, трафик, оффер и build не открыты. Closure снова открыт после
+    аудита: B2B batch требуется довести с S2 до S4, затем сравнить всех
+    выживших финалистов.
 - [ ] Собрать новый S0 batch только при пустом Portfolio Closure.
   - Acceptance: owner не оставил surviving finalist без решения либо выбранный
     финалист получил terminal outcome; каждый новый кандидат имеет заранее

@@ -54,7 +54,7 @@ function evidenceRank(level) {
 
 export function validateSchema(schema) {
   const label = "data/FACTORY_SCHEMA.json";
-  invariant(schema.schemaVersion === 1, "поддерживается только schemaVersion 1", label);
+  invariant(schema.schemaVersion === 2, "поддерживается только schemaVersion 2", label);
   for (const key of ["runSchemaVersion", "registrySchemaVersion", "factoryStateSchemaVersion"]) {
     invariant(Number.isInteger(schema[key]), `${key} должен быть целым`, label);
   }
@@ -67,6 +67,23 @@ export function validateSchema(schema) {
   const gateStatuses = ids(schema.gateStatuses, label);
   invariant(gateStatuses.has("parked") && gateStatuses.has("failed"), "parked/failed должны быть исходами gate", label);
   invariant(!stages.has("parked") && !stages.has("failed"), "parked/failed не могут быть стадиями", label);
+
+  const criterionResults = new Set(schema.criterionResults ?? []);
+  for (const result of ["passed", "failed", "unknown", "not_applicable"]) {
+    invariant(criterionResults.has(result), `нет criterion result ${result}`, label);
+  }
+  const checkpointAuditStatuses = new Set(schema.checkpointAuditStatuses ?? []);
+  for (const status of ["passed", "failed", "parked", "in_progress", "not_started", "legacy_only"]) {
+    invariant(checkpointAuditStatuses.has(status), `нет checkpoint audit status ${status}`, label);
+  }
+  const decisionClasses = new Set(schema.decisionClasses ?? []);
+  const blockerCodes = new Set(schema.blockerCodes ?? []);
+  invariant(decisionClasses.size > 0, "decisionClasses обязателен", label);
+  invariant(blockerCodes.size > 0, "blockerCodes обязателен", label);
+  invariant(schema.decisionRules?.competitionEffect === "confirms_market", "competitionEffect должен подтверждать рынок", label);
+  invariant(schema.decisionRules?.competitionCannotBeSoleFailure === true, "конкуренция не может быть самостоятельной причиной failed", label);
+  invariant(schema.decisionRules?.missingEvidenceOutcome === "parked", "missing evidence должен давать parked", label);
+  invariant(schema.decisionRules?.failedRequiresBlockerCode === true, "failed должен требовать blockerCode", label);
 
   const objectTypes = new Set(schema.objectTypes);
   invariant(objectTypes.size === 4, "ожидаются четыре object type", label);
@@ -86,11 +103,15 @@ export function validateSchema(schema) {
 
   const phases = new Set((schema.macroPhases ?? []).map((phase) => phase.label));
   const checkpoints = ids(schema.checkpoints, label);
+  invariant(checkpoints.has("S4_PORTFOLIO_GATE"), "нет отдельного S4_PORTFOLIO_GATE", label);
   for (const checkpoint of checkpoints.values()) {
     invariant(phases.has(checkpoint.macroPhase), `${checkpoint.id}: неизвестная macro phase`, label);
     invariant(stages.has(checkpoint.dashboardStage), `${checkpoint.id}: неизвестная dashboard stage`, label);
     invariant(Number.isInteger(checkpoint.step), `${checkpoint.id}: step должен быть целым`, label);
     invariant(typeof checkpoint.name === "string" && checkpoint.name.trim(), `${checkpoint.id}: name обязателен`, label);
+    invariant(typeof checkpoint.gateQuestion === "string" && checkpoint.gateQuestion.trim(), `${checkpoint.id}: gateQuestion обязателен`, label);
+    invariant(Array.isArray(checkpoint.passCriteria) && checkpoint.passCriteria.length > 0, `${checkpoint.id}: passCriteria обязателен`, label);
+    invariant(typeof checkpoint.failurePolicy === "string" && checkpoint.failurePolicy.trim(), `${checkpoint.id}: failurePolicy обязателен`, label);
   }
   for (const checkpoint of checkpoints.values()) {
     for (const prerequisite of checkpoint.prerequisites ?? []) {
@@ -266,6 +287,11 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   const stageMap = ids(schema.stages, "data/FACTORY_SCHEMA.json");
   const gateStatuses = new Set(schema.gateStatuses.map((status) => status.id));
   const objectTypes = new Set(schema.objectTypes);
+  const checkpoints = new Map(schema.checkpoints.map((checkpoint) => [checkpoint.id, checkpoint]));
+  const criterionResults = new Set(schema.criterionResults);
+  const checkpointAuditStatuses = new Set(schema.checkpointAuditStatuses);
+  const decisionClasses = new Set(schema.decisionClasses);
+  const blockerCodes = new Set(schema.blockerCodes);
   const runIds = new Set();
   const runsById = new Map();
   for (const run of registry.runs ?? []) {
@@ -327,6 +353,65 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
     }
   }
 
+  invariant(registry.decisionAudits && typeof registry.decisionAudits === "object" && !Array.isArray(registry.decisionAudits), "decisionAudits обязателен", label);
+  const auditIds = Object.keys(registry.decisionAudits);
+  invariant(auditIds.length === ideaIds.size, "каждая идея должна иметь ровно один decisionAudit", label);
+  for (const auditId of auditIds) {
+    invariant(ideaIds.has(auditId), `decisionAudit ссылается на неизвестную идею: ${auditId}`, label);
+    const idea = registry.ideas.find((item) => item.id === auditId);
+    const audit = registry.decisionAudits[auditId];
+    const auditLabel = `${label}:decisionAudits.${auditId}`;
+    invariant(audit && typeof audit === "object", "audit должен быть объектом", auditLabel);
+    invariant(checkpoints.has(audit.currentCheckpointId), `неизвестный currentCheckpointId ${audit.currentCheckpointId}`, auditLabel);
+    invariant(decisionClasses.has(audit.decisionClass), `неизвестный decisionClass ${audit.decisionClass}`, auditLabel);
+    invariant(audit.blockerCode === null || blockerCodes.has(audit.blockerCode), `неизвестный blockerCode ${audit.blockerCode}`, auditLabel);
+    invariant(["confirms_market", "not_checked", "not_applicable"].includes(audit.competitionEffect), `неизвестный competitionEffect ${audit.competitionEffect}`, auditLabel);
+    invariant(/^\d{4}-\d{2}-\d{2}$/.test(audit.reviewedAt), "reviewedAt должен быть YYYY-MM-DD", auditLabel);
+    invariant(Array.isArray(audit.geographies) && audit.geographies.length > 0, "geographies обязателен", auditLabel);
+    for (const geography of audit.geographies) {
+      invariant(typeof geography.market === "string" && geography.market.trim(), "geography.market обязателен", auditLabel);
+      invariant(["checked", "partial", "not_checked"].includes(geography.status), `неизвестный geography.status ${geography.status}`, auditLabel);
+      invariant(typeof geography.summary === "string" && geography.summary.trim(), "geography.summary обязателен", auditLabel);
+    }
+    invariant(Array.isArray(audit.criteria) && audit.criteria.length > 0, "criteria обязателен", auditLabel);
+    const criterionIds = new Set();
+    for (const criterion of audit.criteria) {
+      invariant(typeof criterion.id === "string" && criterion.id.trim(), "criterion.id обязателен", auditLabel);
+      invariant(!criterionIds.has(criterion.id), `дублируется criterion.id ${criterion.id}`, auditLabel);
+      criterionIds.add(criterion.id);
+      invariant(typeof criterion.label === "string" && criterion.label.trim(), `${criterion.id}.label обязателен`, auditLabel);
+      invariant(criterionResults.has(criterion.result), `${criterion.id}: неизвестный result ${criterion.result}`, auditLabel);
+      invariant(/^E[0-5]$/.test(criterion.evidenceLevel), `${criterion.id}.evidenceLevel должен быть E0–E5`, auditLabel);
+      invariant(typeof criterion.observation === "string" && criterion.observation.trim(), `${criterion.id}.observation обязателен`, auditLabel);
+      invariant(!(/competit/i.test(criterion.id) && criterion.result === "failed"), "конкуренция не может быть failed-критерием", auditLabel);
+    }
+    invariant(Array.isArray(audit.checkpointHistory) && audit.checkpointHistory.length > 0, "checkpointHistory обязателен", auditLabel);
+    const historyIds = new Set();
+    for (const event of audit.checkpointHistory) {
+      invariant(checkpoints.has(event.checkpointId), `история содержит неизвестный checkpoint ${event.checkpointId}`, auditLabel);
+      invariant(!historyIds.has(event.checkpointId), `дублируется checkpoint history ${event.checkpointId}`, auditLabel);
+      historyIds.add(event.checkpointId);
+      invariant(checkpointAuditStatuses.has(event.status), `${event.checkpointId}: неизвестный history status ${event.status}`, auditLabel);
+      invariant(typeof event.summary === "string" && event.summary.trim(), `${event.checkpointId}.summary обязателен`, auditLabel);
+    }
+    invariant(historyIds.has(audit.currentCheckpointId), "currentCheckpointId должен присутствовать в checkpointHistory", auditLabel);
+    const failedCriteria = audit.criteria.filter((criterion) => criterion.result === "failed");
+    if (idea.gateStatus === "failed") {
+      invariant(audit.blockerCode !== null, "gateStatus failed требует blockerCode", auditLabel);
+      invariant(failedCriteria.length > 0, "gateStatus failed требует хотя бы один failed-критерий", auditLabel);
+      invariant(["hard_blocked", "failed_economics"].includes(audit.decisionClass), "failed требует hard_blocked или failed_economics", auditLabel);
+    } else {
+      invariant(audit.blockerCode === null, "blockerCode допустим только для gateStatus failed", auditLabel);
+    }
+    if (audit.decisionClass === "parked_missing_evidence") {
+      invariant(idea.gateStatus === "parked", "parked_missing_evidence требует gateStatus parked", auditLabel);
+      invariant(audit.criteria.some((criterion) => criterion.result === "unknown"), "parked_missing_evidence требует unknown-критерий", auditLabel);
+    }
+    if (audit.competitionEffect === "confirms_market") {
+      invariant(!failedCriteria.some((criterion) => criterion.id === "market_exists"), "подтверждённая конкуренция несовместима с failed market_exists", auditLabel);
+    }
+  }
+
   if (checkSources) {
     const nicheCards = fs.readdirSync(path.join(rootDir, "data/niches"))
       .filter((name) => name.endsWith(".md") && !["INDEX.md", "README.md"].includes(name))
@@ -344,7 +429,7 @@ export function validateFactoryState(state, { schema, rootDir = defaultRoot, che
   invariant(state.schemaVersion === schema.factoryStateSchemaVersion, `поддерживается только schemaVersion ${schema.factoryStateSchemaVersion}`, label);
   invariant(/^\d{4}-\d{2}-\d{2}$/.test(state.updatedAt), "updatedAt должен быть YYYY-MM-DD", label);
   if (checkSources) safeProjectPath(rootDir, state.registrySource, `${label}:registrySource`);
-  invariant(state.dashboard?.defaultView === "all-ideas", "dashboard.defaultView должен быть all-ideas", label);
+  invariant(state.dashboard?.defaultView === "funnel", "dashboard.defaultView должен быть funnel", label);
   invariant(state.dashboard?.readOnly === true, "dashboard должен оставаться read-only", label);
   for (const key of ["title", "addIdeaInstruction"]) {
     invariant(typeof state.dashboard?.[key] === "string" && state.dashboard[key].trim(), `dashboard.${key} обязателен`, label);

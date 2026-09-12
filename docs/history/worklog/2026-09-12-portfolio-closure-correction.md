@@ -1,5 +1,10 @@
 # 2026-09-12 — Portfolio Closure: корректировка порядка работы
 
+> **Статус: superseded 2026-09-12.** Число `15 terminal failed` было получено
+> с ошибочной трактовкой конкуренции и нехватки evidence. После полного аудита:
+> `5 failed`, `9 parked_missing_evidence`, `3 finalist`; Rule24 уже проверен.
+> Актуальная матрица — `data/PORTFOLIO_CLOSURE.md`.
+
 ## Проблема
 
 После двух terminal batch агент начал искать новые B2B-идеи, хотя старый

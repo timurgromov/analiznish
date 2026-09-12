@@ -1,5 +1,6 @@
 const REGISTRY_PATH = "../data/IDEA_REGISTRY.json";
 const FACTORY_STATE_PATH = "../data/FACTORY_STATE.json";
+const FACTORY_SCHEMA_PATH = "../data/FACTORY_SCHEMA.json";
 const HIT_PARADE_PATH = "../data/HIT_PARADE.md";
 
 const portfolioColumns = {
@@ -23,10 +24,23 @@ const evidenceLabels = {
   E5: "Повтор и экономика",
 };
 
+const decisionClassLabels = {
+  advance: "можно двигать дальше",
+  passed_not_selected: "прошла, но не выбрана",
+  parked_missing_evidence: "не хватает доказательств",
+  hard_blocked: "жёсткий блокер",
+  failed_economics: "экономика не проходит",
+  owner_hold: "ждёт решения владельца",
+  reference_only: "рыночный референс",
+  benchmark: "портфельный benchmark",
+  not_researched: "ещё не исследована",
+};
+
 const state = {
   registry: null,
   factory: null,
-  activeView: "all-ideas",
+  schema: null,
+  activeView: "funnel",
   filters: { search: "", category: "all", stage: "all", gate: "all", sort: "current" },
   funnelStage: null,
   funnelGate: "all",
@@ -74,6 +88,29 @@ function stageById(id) {
 
 function gateById(id) {
   return state.registry.gateStatuses.find((gate) => gate.id === id);
+}
+
+function auditFor(id) {
+  return state.registry.decisionAudits?.[id] || null;
+}
+
+function checkpointById(id) {
+  return state.schema.checkpoints.find((checkpoint) => checkpoint.id === id);
+}
+
+function checkpointStage(id) {
+  return checkpointById(id)?.dashboardStage;
+}
+
+function stageMetrics(stage) {
+  const reached = state.registry.ideas.filter((idea) => {
+    if (idea.stage === stage.id) return true;
+    return auditFor(idea.id)?.checkpointHistory?.some((entry) => checkpointStage(entry.checkpointId) === stage.id);
+  });
+  const current = state.registry.ideas.filter((idea) => idea.stage === stage.id);
+  const stopped = current.filter((idea) => ["parked", "failed", "passed_not_selected"].includes(idea.gateStatus));
+  const advanced = reached.filter((idea) => (stageById(idea.stage)?.order ?? -1) > stage.order);
+  return { reached, current, stopped, advanced };
 }
 
 function projectSourceHref(source) {
@@ -200,6 +237,7 @@ function ideaCard(idea, rank, compact = false) {
   const score = currentScore(idea);
   const stage = stageById(idea.stage);
   const gate = gateById(idea.gateStatus);
+  const audit = auditFor(idea.id);
   return `<details class="idea-card tone-${scoreTone(score)} gate-${idea.gateStatus}${compact ? " compact" : ""}">
     <summary class="idea-summary">
       <span class="idea-rank">${rank}</span>
@@ -208,7 +246,7 @@ function ideaCard(idea, rank, compact = false) {
       <span class="confidence-cell"><strong>${Math.round(idea.evidenceConfidence * 100)}%</strong><span class="confidence-track"><i style="width:${Math.round(idea.evidenceConfidence * 100)}%"></i></span><small>${escapeHtml(evidenceLabels[idea.evidenceLevel] || idea.evidenceLevel)}</small></span>
       <span class="stage-cell"><strong>${escapeHtml(stage?.label || idea.stage)}</strong><small>${escapeHtml(idea.evidenceLevel)}</small></span>
       <span class="gate-cell"><span>${escapeHtml(gate?.label || idea.gateStatus)}</span></span>
-      <span class="reason-cell">${escapeHtml(idea.rankingReason)}</span>
+      <span class="reason-cell">${escapeHtml(idea.rankingReason)}${audit ? `<small class="audit-class">${escapeHtml(audit.currentCheckpointId)} · ${escapeHtml(decisionClassLabels[audit.decisionClass] || audit.decisionClass)}</small>` : ""}</span>
       <span class="expand-icon" aria-hidden="true">⌄</span>
     </summary>
     <div class="idea-details">
@@ -258,8 +296,12 @@ function renderIdeas() {
 
 function renderFunnel() {
   document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
-    const ideas = state.registry.ideas.filter((idea) => idea.stage === stage.id);
-    return `<li class="funnel-card"><button type="button" class="stage-jump ${ideas.length ? "" : "is-empty"}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: ${pluralIdeas(ideas.length)}"><span>${stage.order + 1}</span><strong>${ideas.length}</strong><div><b>${escapeHtml(stage.label)}</b></div></button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
+    const metrics = stageMetrics(stage);
+    const empty = metrics.reached.length === 0;
+    return `<li class="funnel-card"><button type="button" class="stage-jump ${empty ? "is-empty" : ""}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: дошли ${metrics.reached.length}, сейчас ${metrics.current.length}, остановлены ${metrics.stopped.length}">
+      <span class="stage-number">${stage.order + 1}</span><div class="stage-title"><b>${escapeHtml(stage.label)}</b><small>${escapeHtml(stage.description)}</small></div>
+      <dl class="stage-metrics"><div><dt>Дошли</dt><dd>${metrics.reached.length}</dd></div><div><dt>Сейчас</dt><dd>${metrics.current.length}</dd></div><div><dt>Дальше</dt><dd>${metrics.advanced.length}</dd></div><div><dt>Стоп</dt><dd>${metrics.stopped.length}</dd></div></dl>
+    </button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
   }).join("");
 }
 
@@ -276,14 +318,17 @@ function renderFunnelSelection() {
   const stage = state.funnelStage === "all" ? null : stageById(state.funnelStage);
   const gate = state.funnelGate === "all" ? null : gateById(state.funnelGate);
   const ideas = sortIdeas(state.registry.ideas.filter((idea) => {
-    if (stage && idea.stage !== stage.id) return false;
+    if (stage) {
+      const reached = idea.stage === stage.id || auditFor(idea.id)?.checkpointHistory?.some((entry) => checkpointStage(entry.checkpointId) === stage.id);
+      if (!reached) return false;
+    }
     if (gate && idea.gateStatus !== gate.id) return false;
     return true;
   }), state.funnelSort);
 
   document.querySelector("#funnel-selection-title").textContent = stage ? stage.label : "Все этапы";
   document.querySelector("#funnel-selection-note").textContent = stage
-    ? `Показаны идеи, которые находятся на этапе «${stage.label}» сейчас. Место считается только внутри этой выборки.`
+    ? `Показаны все идеи, которые дошли до этапа «${stage.label}»: оставшиеся, остановленные и прошедшие дальше.`
     : "Показаны идеи со всех этапов по выбранному результату проверки.";
   document.querySelector("#funnel-selection-count").textContent = pluralIdeas(ideas.length);
   document.querySelector("#funnel-selection-filter").textContent = gate ? `результат: ${gate.label}` : "все результаты проверки";
@@ -431,7 +476,7 @@ function renderPortfolioDetail() {
 function switchView(view, updateHash = true) {
   hideTooltip();
   const available = new Set(["all-ideas", "funnel", "research", "portfolio", "archive"]);
-  state.activeView = available.has(view) ? view : "all-ideas";
+  state.activeView = available.has(view) ? view : "funnel";
   document.querySelectorAll(".view-tab").forEach((button) => {
     const active = button.dataset.view === state.activeView;
     button.classList.toggle("active", active);
@@ -521,9 +566,10 @@ async function loadText(path) {
 
 async function init() {
   try {
-    const [registry, factory, hitParade] = await Promise.all([loadJson(REGISTRY_PATH), loadJson(FACTORY_STATE_PATH), loadText(HIT_PARADE_PATH)]);
+    const [registry, factory, schema, hitParade] = await Promise.all([loadJson(REGISTRY_PATH), loadJson(FACTORY_STATE_PATH), loadJson(FACTORY_SCHEMA_PATH), loadText(HIT_PARADE_PATH)]);
     state.registry = registry;
     state.factory = factory;
+    state.schema = schema;
     state.portfolio.market = parseTable(hitParade, "Место на карте");
     state.portfolio.queue = parseTable(hitParade, "Приоритет");
     if (!registry.ideas?.length || !registry.runs?.length || !state.portfolio.market.rows.length || !state.portfolio.queue.rows.length) throw new Error("Один из источников не содержит обязательных данных");

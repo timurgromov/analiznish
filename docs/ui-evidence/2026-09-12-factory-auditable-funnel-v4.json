@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-factory-auditable-funnel-v4",
+  "change_kind": "dashboard-information-architecture-and-decision-audit",
+  "status": "passed",
+  "requested_visible_change": "Сделать Niche Factory управляемой воронкой: показать число идей на каждом этапе и дать по каждой идее проверяемые критерии, evidence, причину остановки и полный путь решения.",
+  "expected_visible_delta": "Главный экран открывает сквозную воронку с четырьмя счётчиками на этап; карточка Радарыча показывает checkpoint, gate, blocker, роль конкуренции, критерии, географию и все checkpoints.",
+  "attempt_number": 2,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "81af1f9a2c25f593cb3972ed5c94339ca518c0a2bf32cbd4a052f8d2ca95fc87",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#funnel",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel and /dashboard/project.html?id=radarych",
+    "state": "28 ideas; decisionAudits present; default view funnel",
+    "selector_or_slide_id": "#funnel-grid, .stage-metrics, .decision-strip, .criteria-list, .checkpoint-list",
+    "action": "Открыть воронку, выбрать Проверку рынка, затем открыть карточку Радарыча и проверить текущий gate и историю."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Рейтинг и evidence caps не пересчитываются UI-кодом",
+    "Психологический run не возобновляется",
+    "Внутренние source paths не публикуются",
+    "Контур остаётся configured и не подтверждён end-to-end"
+  ],
+  "required_viewports": [
+    "390x844",
+    "559x844",
+    "560x844",
+    "561x844",
+    "759x900",
+    "760x900",
+    "761x900",
+    "768x1024",
+    "1024x768",
+    "1099x820",
+    "1100x820",
+    "1101x820",
+    "1180x820",
+    "1366x768",
+    "1440x900",
+    "1984x1046"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "isolated Playwright headless Chrome; inner=390x844",
+      "before_signature": "старый mobile: tabs и decision brief обрезались; этап показывал только current count",
+      "after_signature": "inner=390x844; active=funnel; cards=8; scrollWidth=390; tabsClipped=false; market_research reached=26; current=21; advanced=3; stopped=21",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "559x844",
+      "viewport_source": "isolated Playwright headless Chrome; inner=559x844",
+      "before_signature": "старый layout сохранял горизонтальную tab-ленту",
+      "after_signature": "inner=559x844; active=funnel; cards=8; scrollWidth=559; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "560x844",
+      "viewport_source": "isolated Playwright headless Chrome; inner=560x844",
+      "before_signature": "старый layout сохранял горизонтальную tab-ленту",
+      "after_signature": "inner=560x844; active=funnel; cards=8; scrollWidth=560; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "561x844",
+      "viewport_source": "isolated Playwright headless Chrome; inner=561x844",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 561px",
+      "after_signature": "inner=561x844; active=funnel; cards=8; scrollWidth=561; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "759x900",
+      "viewport_source": "isolated Playwright headless Chrome; inner=759x900",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 759px",
+      "after_signature": "inner=759x900; active=funnel; cards=8; scrollWidth=759; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "760x900",
+      "viewport_source": "isolated Playwright headless Chrome; inner=760x900",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 760px",
+      "after_signature": "inner=760x900; active=funnel; cards=8; scrollWidth=760; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "761x900",
+      "viewport_source": "isolated Playwright headless Chrome; inner=761x900",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 761px",
+      "after_signature": "inner=761x900; active=funnel; cards=8; scrollWidth=761; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "768x1024",
+      "viewport_source": "isolated Playwright headless Chrome; inner=768x1024",
+      "before_signature": "старый tablet показывал этапы как текущие полки без audit counters",
+      "after_signature": "inner=768x1024; active=funnel; cards=8; scrollWidth=768; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1024x768",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1024x768",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 1024px",
+      "after_signature": "inner=1024x768; active=funnel; cards=8; scrollWidth=1024; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1099x820",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1099x820",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 1099px",
+      "after_signature": "inner=1099x820; active=funnel; cards=8; scrollWidth=1099; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1100x820",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1100x820",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 1100px",
+      "after_signature": "inner=1100x820; active=funnel; cards=8; scrollWidth=1100; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1101x820",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1101x820",
+      "before_signature": "первая локальная попытка v4 ещё обрезала tabs на 1101px",
+      "after_signature": "inner=1101x820; active=funnel; cards=8; scrollWidth=1101; tabsClipped=false after navigation grid fix",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1180x820",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1180x820",
+      "before_signature": "старый desktop этап показывал одно число current",
+      "after_signature": "inner=1180x820; active=funnel; cards=8; scrollWidth=1180; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1366x768",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1366x768",
+      "before_signature": "старый desktop этап показывал одно число current",
+      "after_signature": "inner=1366x768; active=funnel; cards=8; scrollWidth=1366; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1440x900",
+      "before_signature": "старый desktop: default=all-ideas; этапы содержали только current count",
+      "after_signature": "inner=1440x900; active=funnel; cards=8; four counters per stage; scrollWidth=1440; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1984x1046",
+      "viewport_source": "isolated Playwright headless Chrome; inner=1984x1046",
+      "before_signature": "старый wide desktop этап показывал одно число current",
+      "after_signature": "inner=1984x1046; active=funnel; cards=8; scrollWidth=1984; tabsClipped=false",
+      "observed_visible_result": "Воронка показывает дошедшие, текущие, прошедшие дальше и остановленные идеи; навигация полностью видима, страница не имеет горизонтального overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

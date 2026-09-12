@@ -3,7 +3,7 @@
   "updatedAt": "2026-09-12",
   "registrySource": "data/IDEA_REGISTRY.json",
   "dashboard": {
-    "defaultView": "all-ideas",
+    "defaultView": "funnel",
     "title": "Кабинет идей",
     "readOnly": true,
     "addIdeaInstruction": "Напиши в чате: «Заземли идею: …»"
@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Два ранних batch дали 15 terminal failed; Rule24 прошёл S0–S5 как passed_not_selected. Portfolio Closure завершён.",
-    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; batch работает как сито: candidate без нужных facts фиксируется как failed и не блокирует остальных. Действующий свадебный бизнес и market reference не являются кандидатами Factory.",
-    "unknown": "Для Rule24 неизвестны причина переключения, канал и экономика exact-модели; это не отменяет подтвержденный российскими конкурентами рынок. Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе также не подтверждена.",
-    "nextGate": "S4_OWNER: зафиксировать один выбранный фокус психологического batch из P1/P2.",
+    "summary": "Контур проходит методологическое исправление: competition-based отсевы отменены, у решений появился открытый audit trail. Portfolio Closure снова открыт, потому что семь B2B-кандидатов ещё не прошли S2–S4.",
+    "confirmed": "Конкуренты подтверждают рынок и не могут быть единственной причиной failed. Обоснованный failed требует blockerCode и фактический failed-критерий; отсутствие evidence означает parked. Радарыч прошёл S0–S5 и находится на owner hold.",
+    "unknown": "Семь B2B-гипотез ещё не проверены на повторяемые локальные проблемы; Cycle и Sansara также ждут недостающих evidence. Полный контур на интервью, действии, оплате, bounded build и повторе не подтверждён.",
+    "nextGate": "S2_TREND: собрать по два независимых свежих problem signals для каждого из семи B2B-кандидатов.",
     "source": "data/PORTFOLIO_CLOSURE.md"
   }
 }

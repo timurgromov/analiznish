@@ -1,5 +1,10 @@
 # 2026-09-12 — Новый B2B operations batch: S0–S1 terminal gate
 
+> **Статус: superseded 2026-09-12.** Этот terminal-вывод ошибочен: наличие
+> российских продуктов и услуг подтверждает рынок и денежные workflows. Все
+> семь гипотез прошли S1 и припаркованы на S2 до двух независимых свежих problem
+> signals. Актуальный source board: `data/discovery/2026-09-12-b2b-operations-s0-context.md`.
+
 ## Контекст
 
 После того как legacy-портфель не оставил финалистов, начат новый batch без

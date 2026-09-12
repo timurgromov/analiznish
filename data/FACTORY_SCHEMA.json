@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "runSchemaVersion": 2,
-  "registrySchemaVersion": 2,
+  "registrySchemaVersion": 3,
   "factoryStateSchemaVersion": 3,
   "runStatuses": [
     "active",
@@ -128,6 +128,46 @@
       "description": "Gate не пройден из-за зафиксированного ограничения; это исход, а не стадия."
     }
   ],
+  "criterionResults": [
+    "passed",
+    "failed",
+    "unknown",
+    "not_applicable"
+  ],
+  "checkpointAuditStatuses": [
+    "passed",
+    "failed",
+    "parked",
+    "in_progress",
+    "not_started",
+    "legacy_only"
+  ],
+  "decisionClasses": [
+    "advance",
+    "passed_not_selected",
+    "parked_missing_evidence",
+    "hard_blocked",
+    "failed_economics",
+    "owner_hold",
+    "reference_only",
+    "benchmark",
+    "not_researched"
+  ],
+  "blockerCodes": [
+    "market_absent",
+    "legal_or_platform",
+    "unsafe_delivery",
+    "economics_not_viable",
+    "commodity_without_channel",
+    "two_sided_cold_start"
+  ],
+  "decisionRules": {
+    "competitionEffect": "confirms_market",
+    "competitionCannotBeSoleFailure": true,
+    "missingEvidenceOutcome": "parked",
+    "failedRequiresBlockerCode": true,
+    "description": "Наличие конкурентов подтверждает рынок. Неизвестные сегмент, канал, отличие или экономика не являются доказанным провалом и дают parked до следующего факта. Failed допустим только с явным blockerCode и конкретным failed-критерием, не равным самому факту конкуренции."
+  },
   "evidenceCaps": {
     "E0": 0.4,
     "E1": 0.55,
@@ -195,7 +235,10 @@
       "name": "Контекст и стартовая позиция",
       "dashboardStage": "quick_scan",
       "prerequisites": [],
-      "allowedNext": ["S1_MARKET"]
+      "allowedNext": ["S1_MARKET"],
+      "gateQuestion": "Понятны ли объект, плательщик-гипотеза, механизм денег, география и границы исследования?",
+      "passCriteria": ["object_defined", "payer_hypothesis", "money_mechanism", "geography_declared", "cheap_falsifier"],
+      "failurePolicy": "Неполные данные дают parked или возврат в inbox; наличие готового кода не открывает следующий gate."
     },
     {
       "id": "S1_MARKET",
@@ -204,7 +247,10 @@
       "name": "Рынок, референсы и денежные модели",
       "dashboardStage": "market_research",
       "prerequisites": ["S0_CONTEXT"],
-      "allowedNext": ["S2_TREND"]
+      "allowedNext": ["S2_TREND"],
+      "gateQuestion": "Существует ли денежная категория: покупатели, продавцы, конкуренты, платные или ручные альтернативы?",
+      "passCriteria": ["market_exists", "competitors_or_paid_alternatives", "money_model_observed"],
+      "failurePolicy": "Конкуренты являются положительным evidence. Failed возможен только при подтверждённом отсутствии рынка или механизма денег; отсутствие локального отличия не закрывает S1."
     },
     {
       "id": "S2_TREND",
@@ -213,7 +259,10 @@
       "name": "Тренд и живые проблемы",
       "dashboardStage": "market_research",
       "prerequisites": ["S0_CONTEXT", "S1_MARKET"],
-      "allowedNext": ["S3_LOCALIZE"]
+      "allowedNext": ["S3_LOCALIZE"],
+      "gateQuestion": "Есть ли минимум два независимых актуальных сигнала повторяемой проблемы или покупательского поведения?",
+      "passCriteria": ["two_independent_signals", "signal_dates_recorded", "job_not_confused_with_product_claim"],
+      "failurePolicy": "Недостаток сигналов означает parked_missing_evidence, а не terminal failed; failed требует подтверждённого отсутствия/угасания спроса."
     },
     {
       "id": "S3_LOCALIZE",
@@ -222,7 +271,22 @@
       "name": "Локализация спроса и ограничений",
       "dashboardStage": "market_research",
       "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND"],
-      "allowedNext": ["S5_COMPETITORS"]
+      "allowedNext": ["S4_PORTFOLIO_GATE"],
+      "gateQuestion": "Применима ли категория к выбранной географии и доступен ли законный способ проверить локального плательщика?",
+      "passCriteria": ["geography_checked", "local_payer_hypothesis", "lawful_research_access", "local_alternatives_mapped"],
+      "failurePolicy": "Наличие локальных конкурентов подтверждает рынок. Failed допустим для явного legal/platform blocker; неизвестные канал, отличие или willingness-to-pay идут в Portfolio Gate как unknown."
+    },
+    {
+      "id": "S4_PORTFOLIO_GATE",
+      "macroPhase": "S · SCAN",
+      "step": 4,
+      "name": "Ранний Portfolio Gate по 18 критериям",
+      "dashboardStage": "market_research",
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"],
+      "allowedNext": ["S5_COMPETITORS"],
+      "gateQuestion": "Достаточно ли привлекательна и дёшево проверяема конкретная ставка относительно остальных кандидатов batch?",
+      "passCriteria": ["eighteen_criteria_visible", "market_economics_moat_separated", "unknowns_visible", "top_one_or_two"],
+      "failurePolicy": "Сильный рынок не гарантирует выбор нашей ставки. Отсев здесь требует конкретного hard blocker или сравнительно слабой экономики/канала/защиты; конкуренция сама по себе не является минусом."
     },
     {
       "id": "S5_COMPETITORS",
@@ -230,8 +294,11 @@
       "step": 5,
       "name": "Конкуренты и конкурентная рамка финалистов",
       "dashboardStage": "finalist",
-      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"],
-      "allowedNext": ["S4_OWNER"]
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE"],
+      "allowedNext": ["S4_OWNER"],
+      "gateQuestion": "Понятно ли, за какую работу уже платят, чем конкретная ставка отличается и где искать первых покупателей?",
+      "passCriteria": ["competitors_mapped", "paid_job_observed", "differentiation_hypothesis", "first_channel_hypothesis"],
+      "failurePolicy": "Конкуренты усиливают evidence рынка; отсутствие доказанного отличия снижает приоритет или даёт parked, но не опровергает категорию."
     },
     {
       "id": "S4_OWNER",
@@ -239,8 +306,11 @@
       "step": 4,
       "name": "Owner checkpoint — выбор одного финалиста P1/P2",
       "dashboardStage": "finalist",
-      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S5_COMPETITORS"],
-      "allowedNext": ["I_E1"]
+      "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE", "S5_COMPETITORS"],
+      "allowedNext": ["I_E1"],
+      "gateQuestion": "Какой один финалист владелец выбирает для следующего цикла?",
+      "passCriteria": ["exactly_one_owner_selected_focus"],
+      "failurePolicy": "До явного выбора все финалисты parked; автоматический выбор по score запрещён."
     },
     {
       "id": "I_E1",
@@ -249,7 +319,10 @@
       "name": "E1-подготовка публичного корпуса",
       "dashboardStage": "finalist",
       "prerequisites": ["S4_OWNER"],
-      "allowedNext": ["I_E2"]
+      "allowedNext": ["I_E2"],
+      "gateQuestion": "Готов ли обезличенный E1-корпус, screener и guide для проверки одной выбранной ставки?",
+      "passCriteria": ["public_corpus", "research_question", "screener", "interview_guide", "privacy_boundary"],
+      "failurePolicy": "Без полного E1-пакета реальные интервью не начинаются."
     },
     {
       "id": "I_E2",
@@ -258,7 +331,10 @@
       "name": "Минимум пять реальных problem interviews",
       "dashboardStage": "interviews",
       "prerequisites": ["I_E1"],
-      "allowedNext": ["I_E3"]
+      "allowedNext": ["I_E3"],
+      "gateQuestion": "Подтвердили ли минимум пять реальных интервью повторяемую дорогую проблему в прошлом поведении?",
+      "passCriteria": ["five_real_interviews", "past_behavior", "repeated_problem", "cohort_synthesis"],
+      "failurePolicy": "Synthetic interviews и публичные quotes остаются E1 и не закрывают checkpoint."
     },
     {
       "id": "I_E3",
@@ -267,7 +343,10 @@
       "name": "JTBD, канал, финансы и тест действием",
       "dashboardStage": "action_test",
       "prerequisites": ["I_E2"],
-      "allowedNext": ["I_E4"]
+      "allowedNext": ["I_E4"],
+      "gateQuestion": "Понятны ли JTBD, первый канал и финансовый диапазон, и совершает ли клиент наблюдаемое затратное действие?",
+      "passCriteria": ["jtbd", "first_sales_channel", "financial_range", "observable_action"],
+      "failurePolicy": "Интерес без действия не открывает money gate."
     },
     {
       "id": "I_E4",
@@ -276,7 +355,10 @@
       "name": "Оплата, платный пилот или подтверждённый бюджет",
       "dashboardStage": "paid",
       "prerequisites": ["I_E3"],
-      "allowedNext": ["G_SCOPE"]
+      "allowedNext": ["G_SCOPE"],
+      "gateQuestion": "Получены ли реальные деньги, платный пилот или подтверждённый бюджет за конкретный outcome?",
+      "passCriteria": ["real_payment_or_budget", "paid_scope", "payer_identity", "payment_terms"],
+      "failurePolicy": "LOI без бюджета, обещание и owner payment не считаются E4."
     },
     {
       "id": "G_SCOPE",
@@ -285,7 +367,10 @@
       "name": "Спецификация доказанного bounded scope",
       "dashboardStage": "paid",
       "prerequisites": ["I_E4"],
-      "allowedNext": ["M_BUILD"]
+      "allowedNext": ["M_BUILD"],
+      "gateQuestion": "Зафиксирован ли минимальный оплаченный scope, лимит build и ручной fallback?",
+      "passCriteria": ["paid_scope", "success_criteria", "kill_criteria", "build_budget_limit", "manual_fallback"],
+      "failurePolicy": "Нельзя расширять scope сверх оплаченного результата."
     },
     {
       "id": "M_BUILD",
@@ -294,7 +379,10 @@
       "name": "Bounded build с ручным fallback",
       "dashboardStage": "paid",
       "prerequisites": ["G_SCOPE"],
-      "allowedNext": ["A_E5"]
+      "allowedNext": ["A_E5"],
+      "gateQuestion": "Собран ли только согласованный bounded scope и доставлен ли он покупателю?",
+      "passCriteria": ["bounded_scope_delivered", "manual_fallback_available", "usage_observable"],
+      "failurePolicy": "Полноценный SaaS/UI вне оплаченного bounded scope запрещён."
     },
     {
       "id": "A_E5",
@@ -303,7 +391,10 @@
       "name": "Повтор, retention и фактическая экономика",
       "dashboardStage": "repeat",
       "prerequisites": ["M_BUILD"],
-      "allowedNext": []
+      "allowedNext": [],
+      "gateQuestion": "Повторяется ли использование/оплата и сходится ли фактическая экономика через повторяемый канал?",
+      "passCriteria": ["repeat_use", "retention", "actual_economics", "repeatable_channel"],
+      "failurePolicy": "Первая оплата без повторения не даёт scale_ready."
     }
   ],
   "readinessGates": {
@@ -342,9 +433,10 @@
       "dashboard/favicon.svg",
       "dashboard/index.html",
       "dashboard/project.html",
-      "dashboard/project.js",
-      "dashboard/styles.css",
-      "data/FACTORY_STATE.json",
+    "dashboard/project.js",
+    "dashboard/styles.css",
+    "data/FACTORY_SCHEMA.json",
+    "data/FACTORY_STATE.json",
       "data/HIT_PARADE.md",
       "data/IDEA_REGISTRY.json",
       "docs/SCORING_MODEL.md"

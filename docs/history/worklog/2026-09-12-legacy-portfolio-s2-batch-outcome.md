@@ -1,5 +1,10 @@
 # 2026-09-12 — S2_TREND: первый отсев legacy-портфеля
 
+> **Статус: superseded 2026-09-12.** Запись сохраняет историю ошибки.
+> `pastlife-sansara` должен быть `parked_missing_evidence`, а не `failed`:
+> отсутствие второго сигнала не является доказанным blocker. Актуальный аудит —
+> `docs/FACTORY_AUDIT_2026-09-12.md` и `data/IDEA_REGISTRY.json.decisionAudits`.
+
 ## Что проверено
 
 Для шести legacy-ставок добраны независимые свежие S2-signals и отдельно

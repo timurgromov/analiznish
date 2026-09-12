@@ -20,10 +20,11 @@ Active business и market reference явно исключаются из это�
 код existing asset не даёт shortcut.
 
 Current application:
-После terminal batch 2026-09-12 не начинать новый общий B2B поиск. Rule24
-остаётся единственным legacy asset без Factory v2 recovery screen. Два
+Правило закрытия старых assets выполнено: Rule24 и шесть legacy-ставок получили
+Factory v2 outcomes. После аудита семь уже найденных B2B-гипотез возвращены на
+S2, поэтому новый discovery всё ещё не начинается. Радарыч и два
 психологических finalist parked на S4_OWNER не являются CustDev-ready, пока
-нет owner choice и I_E1.
+нет общего Portfolio Gate, owner choice и I_E1.
 
 Do not:
 Не превращать параллельно развиваемый действующий бизнес в search lane и не
@@ -973,3 +974,45 @@ Do not:
 * не публиковать ACTIVE_RUN, participant notes или внутренние source paths;
 * не открывать полный build после E4: разрешён только bounded scope;
 * не объявлять scale readiness без E5.
+
+## DEC-2026-09-12-AUDITABLE-GATES — Решение только из явного критерия и evidence
+
+Status: active
+Area: methodology | data | validation | UX
+Decision date: 2026-09-12
+Evidence: полный аудит legacy, B2B и Rule24 решений после обнаруженного противоречия
+Commits: смотреть историю Git после фиксации изменения
+Supersedes: ошибочные operational outcomes в `f0b8d26` и `c33bb77`; базовый
+`DEC-2026-07-05-COMPETITION-IS-MARKET-PROOF` не меняется
+
+Decision:
+Каждая идея имеет машинный `decisionAudit`: текущий checkpoint, класс решения,
+географии, проверенные критерии, уровень evidence и историю checkpoints.
+`failed` допустим только с явным `blockerCode` и хотя бы одним фактически
+проваленным критерием. Нехватка evidence всегда даёт `parked`, а конкуренция
+подтверждает рынок и не может быть самостоятельным failed-критерием.
+
+Why:
+Короткий текстовый вывод позволил агенту дважды подменить исходное правило своей
+интерпретацией: бесплатный конкурент закрыл Радарыч, а наличие российских
+решений закрыло семь B2B-гипотез на S1. Оба вывода не следовали ни из методологии,
+ни из owner decision.
+
+Do:
+
+* менять gate только через критерий из `FACTORY_SCHEMA.json`;
+* показывать на dashboard `passed / failed / unknown`, observation и evidence;
+* отдельно показывать географию и влияние конкурентов;
+* хранить неверные исторические worklog-записи с меткой `superseded`.
+
+Do not:
+
+* не превращать «не найдено» в «доказано отсутствие»;
+* не закрывать рынок из-за наличия сильных или бесплатных конкурентов;
+* не оставлять пользователю только краткий вывод без audit trail;
+* не придумывать новый operational rule вне schema и owner decision.
+
+Verification:
+Validator и негативные fixtures запрещают competition-failure, failed без
+blocker и пропуск раннего Portfolio Gate. Dashboard показывает сквозную воронку
+и подробную карточку решения.

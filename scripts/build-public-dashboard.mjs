@@ -2,7 +2,7 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { defaultRoot, invariant, validateAll } from "./factory-validation.mjs";
+import { defaultRoot, invariant, readJson, validateAll } from "./factory-validation.mjs";
 
 function stripPrivateFields(value, privateFields) {
   if (Array.isArray(value)) return value.map((item) => stripPrivateFields(item, privateFields));
@@ -79,7 +79,12 @@ export function buildPublicArtifact({ rootDir = defaultRoot, outputDir = path.jo
 
   const sanitizedRegistry = stripPrivateFields(registry, new Set(schema.publicArtifact.registryPrivateFields));
   fs.writeFileSync(path.join(outputDir, "data/IDEA_REGISTRY.json"), `${JSON.stringify(sanitizedRegistry, null, 2)}\n`);
-  for (const relativePath of ["data/FACTORY_STATE.json", "data/HIT_PARADE.md", "docs/SCORING_MODEL.md"]) {
+  const { publicArtifact: _privateBuildContract, ...sanitizedSchema } = schema;
+  fs.writeFileSync(path.join(outputDir, "data/FACTORY_SCHEMA.json"), `${JSON.stringify(sanitizedSchema, null, 2)}\n`);
+  const factoryState = readJson(rootDir, "data/FACTORY_STATE.json");
+  const sanitizedFactoryState = stripPrivateFields(factoryState, new Set(["source"]));
+  fs.writeFileSync(path.join(outputDir, "data/FACTORY_STATE.json"), `${JSON.stringify(sanitizedFactoryState, null, 2)}\n`);
+  for (const relativePath of ["data/HIT_PARADE.md", "docs/SCORING_MODEL.md"]) {
     fs.copyFileSync(path.join(rootDir, relativePath), path.join(outputDir, relativePath));
   }
   fs.writeFileSync(path.join(outputDir, ".nojekyll"), "");

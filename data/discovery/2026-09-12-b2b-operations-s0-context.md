@@ -2,9 +2,9 @@
 
 Дата старта: 2026-09-12
 Run ID: b2b-ops-scan-russia-2026-09-12
-Текущий checkpoint: S1_MARKET
-Статус: in_progress
-Сильнейшее evidence: E0
+Текущий checkpoint: S2_TREND
+Статус: parked
+Сильнейшее evidence: E1
 
 ## Цель и границы
 
@@ -79,40 +79,47 @@ Asking price, seller claims, platform badge и completed deal не смешив�
 | outsourced-compliance-calendar | Аутсорсинговая бухгалтерия должна вести сроки, документы и статусы для нескольких клиентов в одном проверяемом контуре. | Подписка за портфель клиентов. | pain, product | Публично видна проблема календарей/Excel; юрисдикционные требования не изучены. | Какие российские сроки реально создают платный Job и какие данные можно законно хранить? |
 | vendor-security-evidence | Малый B2B-поставщик должен быстро собирать доказательства для security questionnaire клиента. | Подписка/пакет за assessment. | pain, product, transaction | Категория существует, но доверие, безопасность и интеграции могут быть hard blocker. | Есть ли в РФ buyer с повторным procurement-event и безопасным низкоинтеграционным первым оффером? |
 
-Все семь записаны как E0 / inbox / in_progress: это не shortlist, не
-оценённые ставки и не строки hit parade.
+На старте все семь были записаны как E0 / inbox / in_progress. После S1 и
+методологического аудита они имеют E1 / market_research / parked на S2: это не
+shortlist, не финалисты и не строки hit parade.
 
 ## Status board
 
 | Шаг | Статус | Что сделано | Самое сильное evidence | Решение | Следующий gate |
 | --- | --- | --- | --- | --- | --- |
 | 0. Контекст и стартовая позиция | пройден | Зафиксированы ограничения, семь сырых B2B Jobs и provenance трёх входов; у каждого есть payer-гипотеза, деньги, ограничение и falsifier. | E0: публичные leads; часть user-generated и seller-reported. | Перейти к сравнению референсов, не выбирая и не оценивая финалиста. | S1: денежный референс и ручная альтернатива для каждого выжившего. |
-| 1. Рынок, референсы и денежные модели | пройден | Сопоставлены российские продуктовые поверхности, ручные substitutes и transaction leads для всех семи Jobs. | E1: публичные product/listing surfaces, без локального спроса. | Ни один широкий оффер не оставил локальную дыру, доступный buyer и экономику одновременно. | Terminal gate: все 7 failed; следующий batch ищется с более узким локальным сегментом. |
-| 2. Тренд и живые проблемы | не начат | — | — | — | Проверить повторяемость в независимых источниках. |
+| 1. Рынок, референсы и денежные модели | пройден | Сопоставлены российские продуктовые поверхности, ручные substitutes и transaction leads для всех семи Jobs. | E1: публичные product/listing surfaces, без локального спроса. | Все семь категорий имеют референс или ручную альтернативу; конкуренты подтверждают рынок и не закрывают кандидатов. | S2: проверить повторяемость Job минимум двумя независимыми свежими сигналами в конкретном локальном сегменте. |
+| 2. Тренд и живые проблемы | parked после аудита | Исходный проход не выполнялся: вместо него наличие готовых решений было ошибочно использовано как terminal failure. | — | Все семь возвращены к S2 без повышения evidence или score. | Для каждого кандидата нужны два независимых свежих problem signals; до этого batch остаётся parked. |
 | 3. Локализация спроса и ограничений | не начат | — | — | — | Проверить РФ-сегмент, substitutes, legal и первый канал. |
 | 4. Фильтрация и ранний Portfolio Gate | не начат | — | — | — | Дать 18-критериальную матрицу только пережившим S0–S3. |
 | 5. Конкуренты и конкурентная рамка финалистов | не начат | — | — | — | Разбирать только 1–2 финалиста. |
 
-## S1 outcome: почему ни один кандидат не идёт в S2
+## S1 outcome после методологического аудита
+
+Исход `failed` из первой версии этого раздела отменён. Он противоречил
+каноническому правилу, существующему с первого scoring contract: конкуренты и
+платные alternatives подтверждают сформированный рынок. Отсутствие найденной
+«свободной дыры» на S1 означает только, что сегмент, отличие, канал и экономика
+ещё неизвестны; проверять их надо на S2–S4.
 
 | Кандидат | Референсы и ручная альтернатива | Решение | Точный missing fact для возврата |
 | --- | --- | --- | --- |
-| field-service-next-action | [WhiteSC](https://whitesc.ru/crm-dlya-servisnogo-centra/) и [HubEx](https://hubex.ru/features/uchet-vyezdov-i-rabot) уже публично покрывают заявки, мастеров, статусы и оплату; ручная альтернатива — CRM/таблица с датой следующего контакта. | failed: широкий next-action не имеет отдельного Job сверх native field-service CRM. | Один локальный сервисный сегмент с измеримым провалом после внедрённого CRM и доступным каналом. |
-| agency-ar-control | Пользовательские источники описывают spreadsheet/manual chase; [ЮРРОБОТ](https://www.urrobot.ru/) покрывает уже позднюю взыскательную часть. Ранний отдельный платный сегмент не найден. | failed: между бухгалтерией/CRM и legal collection не найден отдельный buyer. | Локальный сегмент с повторным AR-loss, который платит за workflow без bank-data integration. |
-| wholesale-order-to-cash | [АЛЬФА:B2B](https://marketplace.1c-bitrix.ru/solutions/redsign.b2bportal/?update_sys=Y), [ABcraft](https://abcraftgroup.ru/services/nashi-razrabotki/b2b-portal/) и [OrderLink](https://orderlink.ru/) уже продают portal + 1С-интеграцию; ABcraft заявляет тариф от 50 000 ₽/мес. Ручная альтернатива — телефон/почта/1С. | failed: широкий оффер требует тяжёлой интеграции и уже занят; доступная вертикальная дыра не найдена. | Одна вертикаль опта, где 1С-B2B не закрывает повторяемый Job и есть channel advantage. |
-| field-service-ops | [HubEx](https://hubex.ru/features/uchet-vyezdov-i-rabot), [JobStarter](https://job-starter.ru/) и [РемCRM](https://crmrem.ru/landings/crm-dlya-elektrika/) покрывают заявки, выезды, акты, счёт и оплату. Ручная альтернатива — диспетчер + таблица. | failed: «операционный слой» повторяет готовую категорию без вертикали. | Узкая вертикаль с обязательным процессом, который current field-service CRM не покрывает. |
-| smb-contract-obligations | [Учёт срока действия договоров в 1С](https://rarus-crimea.ru/upload/iblock/c16/5n9smtfmxl7fy520ym687p32tqndta8h/1c-doc-dogovora.pdf) уже включает сроки, продление и уведомления; ручная альтернатива — договорная таблица/календарь. | failed: базовый Job уже native в локальном учётном контуре. | Buyer с конкретным договорным риском, который не покрывает 1С и не требует enterprise CLM. |
-| outsourced-compliance-calendar | [Бухгалтер42](https://buhgalter-42.ru/) и [FINABI](https://finabi.ru/services/outsourcing-buhgalterii/) включают контроль сроков как часть регулярной услуги; manual alternative — 1С/календарь бухгалтера. | failed: не найден самостоятельный платный Job сверх основной бухгалтерской услуги. | Класс сроков и портфельный buyer, готовый покупать отдельный tool без передачи чувствительных данных. |
-| vendor-security-evidence | В РФ найден enterprise-уровень [Security Vision](https://www.securityvision.ru/); публичного малого buyer и безопасного простого оффера не найдено. Ручная альтернатива — заполнение анкеты в таблице и помощь консультанта. | failed: высокий trust/security risk без подтверждённого малого сегмента. | Повторяемый локальный procurement-event и низкоинтеграционный первый оффер без customer secrets. |
+| field-service-next-action | [WhiteSC](https://whitesc.ru/crm-dlya-servisnogo-centra/) и [HubEx](https://hubex.ru/features/uchet-vyezdov-i-rabot) публично покрывают заявки, мастеров, статусы и оплату; ручная альтернатива — CRM/таблица. | `passed` S1; `parked` на S2: рынок подтверждён, частота узкого next-action gap неизвестна. | Два свежих случая в одной локальной сервисной вертикали. |
+| agency-ar-control | Public voice описывает manual chase; [ЮРРОБОТ](https://www.urrobot.ru/) покрывает позднее взыскание. | `passed` S1; `parked` на S2: Job и деньги категории видны, ранний buyer неизвестен. | Два свежих случая повторного AR-loss одного сегмента без bank-data integration. |
+| wholesale-order-to-cash | [АЛЬФА:B2B](https://marketplace.1c-bitrix.ru/solutions/redsign.b2bportal/?update_sys=Y), [ABcraft](https://abcraftgroup.ru/services/nashi-razrabotki/b2b-portal/) и [OrderLink](https://orderlink.ru/) продают portal + 1С; ABcraft заявляет от 50 000 ₽/мес. | `passed` S1; `parked` на S2: конкуренты подтверждают деньги, вертикаль и bounded delivery неизвестны. | Два свежих problem signals одной вертикали малого опта. |
+| field-service-ops | [HubEx](https://hubex.ru/features/uchet-vyezdov-i-rabot), [JobStarter](https://job-starter.ru/) и [РемCRM](https://crmrem.ru/landings/crm-dlya-elektrika/) покрывают готовую категорию. | `passed` S1; `parked` на S2: рынок подтверждён, гипотеза пока слишком широка. | Одна вертикаль и два независимых случая дорогого ручного провала. |
+| smb-contract-obligations | [Учёт срока действия договоров в 1С](https://rarus-crimea.ru/upload/iblock/c16/5n9smtfmxl7fy520ym687p32tqndta8h/1c-doc-dogovora.pdf) подтверждает локальный Job. | `passed` S1; `parked` на S2: native-функция является market evidence, отдельный SMB-risk неизвестен. | Два свежих случая одного договорного риска в конкретном SMB-сегменте. |
+| outsourced-compliance-calendar | [Бухгалтер42](https://buhgalter-42.ru/) и [FINABI](https://finabi.ru/services/outsourcing-buhgalterii/) включают контроль сроков в регулярную услугу. | `passed` S1; `parked` на S2: buyer и повторяемые деньги подтверждены, отдельный tool неизвестен. | Два свежих случая потери срока и безопасный класс данных. |
+| vendor-security-evidence | В РФ есть [Security Vision](https://www.securityvision.ru/), консультанты и ручной questionnaire workflow. | `passed` S1; `parked` на S2: category подтверждена, малый buyer и безопасный оффер неизвестны. | Два повторных procurement-event у малого локального buyer. |
 
 ## Один текущий gate
 
-S0_CONTEXT пройден только когда у каждого кандидата явно есть:
+S2_TREND будет пройден по кандидату только когда есть:
 
-1. конкретный предполагаемый плательщик;
-2. механизм денег и частота;
-3. доступ/ограничение первого локального исследования;
-4. один факт, который быстро снимет кандидата с batch.
+1. одна конкретная российская вертикаль или buyer;
+2. минимум два независимых свежих сигнала одного повторяемого Job;
+3. дата и тип каждого источника;
+4. честное отделение пользовательской проблемы от marketing/seller claim.
 
 До этого ни один кандидат не получает score, интервью, traffic, offer, action,
 оплату или build.

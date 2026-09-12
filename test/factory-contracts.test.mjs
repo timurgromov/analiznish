@@ -62,7 +62,17 @@ test("checkpoint без обязательного prerequisite падает", (
   fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
-  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S5_COMPETITORS/);
+  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
+});
+
+test("S3 не может перепрыгнуть ранний Portfolio Gate", () => {
+  const fixture = factoryFixtures();
+  fixture.activeRun.checkpointId = "S5_COMPETITORS";
+  fixture.activeRun.currentStep = 5;
+  fixture.activeRun.currentStepName = "Конкуренты и конкурентная рамка финалистов";
+  fixture.activeRun.previousCheckpoint = "S3_LOCALIZE";
+  fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
+  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
 });
 
 test("E1 confidence 0.56 превышает cap", () => {
@@ -115,10 +125,32 @@ test("незавершённый owner checkpoint не может иметь pas
   fixture.activeRun.currentStep = 4;
   fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
-  fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S5_COMPETITORS"];
+  fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE", "S5_COMPETITORS"];
   fixture.activeRun.checkpointGateStatus = "passed";
   fixture.activeRun.completedCheckpoints.push("S4_OWNER");
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /passed требует ровно один выбранный фокус/);
+});
+
+test("конкуренция не может быть failed-критерием", () => {
+  const fixture = factoryFixtures();
+  fixture.registry.decisionAudits.radarych.criteria.find((criterion) => criterion.id === "competition").result = "failed";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /конкуренция не может быть failed-критерием/);
+});
+
+test("failed без blockerCode падает", () => {
+  const fixture = factoryFixtures();
+  const idea = ideaById(fixture.registry, "radarych");
+  idea.gateStatus = "failed";
+  fixture.registry.decisionAudits.radarych.decisionClass = "hard_blocked";
+  fixture.registry.decisionAudits.radarych.criteria[0].result = "failed";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /gateStatus failed требует blockerCode/);
+});
+
+test("нехватка evidence не может маскироваться под failed", () => {
+  const fixture = factoryFixtures();
+  const idea = ideaById(fixture.registry, "cycle-assistant");
+  idea.gateStatus = "failed";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /gateStatus failed требует blockerCode/);
 });
 
 test("активный S0 не допускает кандидата выше quick_scan", () => {
@@ -159,8 +191,13 @@ test("public artifact ограничен allowlist и не содержит sour
       assert.equal(fs.existsSync(path.join(outputDir, forbidden)), false, forbidden);
     }
     const publicRegistry = JSON.parse(fs.readFileSync(path.join(outputDir, "data/IDEA_REGISTRY.json"), "utf8"));
+    assert.equal(fs.existsSync(path.join(outputDir, "data/FACTORY_SCHEMA.json")), true);
     assert.equal(publicRegistry.ideas.some((idea) => Object.hasOwn(idea, "source")), false);
     assert.equal(publicRegistry.runs.some((run) => Object.hasOwn(run, "source")), false);
+    const publicSchema = JSON.parse(fs.readFileSync(path.join(outputDir, "data/FACTORY_SCHEMA.json"), "utf8"));
+    const publicFactoryState = JSON.parse(fs.readFileSync(path.join(outputDir, "data/FACTORY_STATE.json"), "utf8"));
+    assert.equal(Object.hasOwn(publicSchema, "publicArtifact"), false);
+    assert.equal(Object.hasOwn(publicFactoryState.systemStatus, "source"), false);
   } finally {
     fs.rmSync(outputDir, { recursive: true, force: true });
   }

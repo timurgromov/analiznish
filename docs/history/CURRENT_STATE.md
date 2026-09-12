@@ -1,30 +1,33 @@
 # Current State — 2026-09-12
 
-## Portfolio Closure завершён: следующий gate — owner choice
+## Portfolio Closure снова открыт после аудита решений
 
 Цель текущего контура уточнена: сначала закончить общий screen всех in-scope
 старых assets, затем выбрать одного surviving finalist; новый discovery batch
 разрешён только если surviving finalist не осталось. Каноническая сводка:
 data/PORTFOLIO_CLOSURE.md.
 
-Текущий факт: 15 объектов terminal failed, два психологических finalist parked
-на S4_OWNER и шесть гипотез невыбраны/parked. Rule24 прошёл Factory v2 S0–S3:
+Текущий факт после исправления: обоснованный `failed` остался у пяти объектов;
+девять ошибочно или преждевременно остановленных ставок переведены в `parked`,
+а «Радарыч» прошёл S0–S5 и стал третьим finalist/parked. Два психологических
+finalist также parked на S4_OWNER. Rule24 прошёл Factory v2 S0–S5:
 поздние отмены, российский booking/payment рынок и правило отмены наблюдаемы.
 Предоплата, напоминания и booking — существующие покупаемые alternatives, то
 есть положительный market signal, а не причина закрыть ставку. S5 подтвердил
 рынок, но поставил Rule24 `passed_not_selected`: причина переключения, канал и
 экономика exact-модели не доказаны и ставка не вошла в два финалиста.
-CustDev-ready кандидатов сейчас ноль, а поиск новых идей преждевременен.
+CustDev-ready кандидатов сейчас ноль, а поиск новых идей преждевременен:
+семь B2B-кандидатов ещё должны пройти S2–S4.
 Действующий свадебный бизнес — parallel active business/benchmark, не Factory
 candidate.
 
-Следующий gate: владелец выбирает ровно один из P1/P2. Только после выбора
-surviving finalist получает I_E1; если финалистов не останется, разрешён новый
-discovery batch.
+Следующий gate: `S2_TREND` для семи B2B-кандидатов. После завершения batch
+владелец сравнивает всех surviving finalist, включая Радарыч и P1/P2, и
+выбирает ровно один фокус. Только после выбора он получает I_E1.
 
-## Исторический B2B operations batch
+## B2B operations batch возвращён на S2
 
-Предыдущий run `b2b-ops-scan-russia-2026-09-12` завершён на `S1_MARKET`.
+Run `b2b-ops-scan-russia-2026-09-12` parked на `S2_TREND`.
 В ходе раннего screen был собран batch из семи сырых B2B
 operations-гипотез: next-action для выездных сервисных бригад, контроль
 дебиторки агентств, order-to-cash малого опта, сервисные операции, договорные
@@ -34,12 +37,12 @@ evidence для небольших поставщиков. Они собраны
 были только leads, не доказательством РФ-спроса, готовности платить или
 экономики.
 
-S0 и S1 закрыты без финалиста: российские field-service, B2B order-to-cash,
-contract dates и accounting deadlines уже покрывают широкие продукты/услуги,
-а дебиторка и security questionnaire не дали узкого локального buyer.
-Все семь остались на ранней стадии с failed и возвращаются только по указанному
-external fact. Этот batch не определяет текущий active run и не разрешает новый
-discovery, пока владелец не закроет `S4_OWNER` психологических финалистов.
+S0 и S1 пройдены: российские field-service, B2B order-to-cash, contract dates,
+accounting deadlines, дебиторка и security tools/services подтверждают
+существование Jobs, покупателей и денежных категорий. Прежний вывод `failed`
+из-за того, что Job уже закрывают продукты/услуги, отменён как противоречащий
+методологии. Все семь находятся на `market_research / parked / E1`; следующий
+gate — по два независимых свежих problem signals одной локальной вертикали.
 
 ## Новая сырая ставка: Codex Project Starter
 
@@ -57,20 +60,19 @@ discovery, пока владелец не закроет `S4_OWNER` психол
 
 ## Завершённый legacy portfolio-rescan
 
-`ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, status `complete` на
-`S3_LOCALIZE`. `S0_CONTEXT`–`S3_LOCALIZE` завершены для единого раннего Factory-прохода шести
+Legacy run `legacy-portfolio-russia-2026-09-11` завершил desk research до
+owner hold. `S0_CONTEXT`–`S5_COMPETITORS` завершены для единого раннего Factory-прохода шести
 непсихологических legacy-ставок: Радарыч, КАДРА, AI YouTube Automation,
-ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Все находятся
-на `market_research / failed / E1`; готовность кода и старые score не являются
-evidence спроса. Sansara не прошёл S2 exact-offer signal, четыре ставки не
-прошли S3 local facts, КАДРА дошла до раннего Portfolio Gate, но не прошла
-hard filter commodity без защищённого канала. S0 зафиксировал отсутствие
+ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Радарыч
+находится на `finalist / parked / E1`; Sansara и Cycle parked до evidence;
+КАДРА, AI YouTube и ProfiWatcher имеют отдельные blocker-ы. Готовность кода и
+старые score не являются evidence спроса. S0 зафиксировал отсутствие
 внешних оплат, CAC, cohort-retention и готовой unit economics у каждой ставки.
 Психологический run сохраняет parked resume point `S4_OWNER` и в новый batch
 не входит.
 
-Новый batch допустим лишь после owner choice психологического финалиста и его
-terminal outcome либо после явного отказа от всех surviving finalist. До этого
+Новый batch допустим лишь после корректного завершения текущего B2B batch и
+owner choice среди всех surviving finalist. До этого
 не возвращать legacy-кандидаты к интервью, трафику, продажам, действию, деньгам
 или build.
 
@@ -82,7 +84,7 @@ terminal outcome либо после явного отказа от всех sur
 
 Текущий этап: factory v2 `configured`, но не `validated` полным end-to-end
 проходом.
-Scoring v0.7, hit parade и dashboard v3.8 работают как внутренние модули; следующим
+Scoring v0.7, hit parade и dashboard funnel v4 работают как внутренние модули; следующим
 операционным milestone остаётся первый end-to-end цикл.
 
 ## Legacy asset guard
@@ -91,10 +93,12 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 `factory_v2` runs. Для `concrete_bet` и `existing_asset`, связанных только с
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
-money gates. Все шесть legacy-кандидатов находятся на
-`market_research / failed`; психологические кандидаты остаются отдельно parked,
-а Rule24 завершил S5 как `passed_not_selected`. Возврат legacy-ставок возможен
-только по указанным в registry новым внешним фактам.
+money gates. Все шесть legacy-кандидатов получили отдельный Factory v2 outcome:
+Радарыч — `finalist / parked`; Sansara и Cycle — `market_research / parked`;
+КАДРА, AI YouTube и ProfiWatcher — `failed` по явным blocker-кодам.
+Психологические кандидаты остаются отдельно parked, а Rule24 завершил S5 как
+`passed_not_selected`. Возврат к следующему gate возможен только по условиям,
+указанным в `decisionAudits` реестра.
 
 ## Current Runtime / Stack
 

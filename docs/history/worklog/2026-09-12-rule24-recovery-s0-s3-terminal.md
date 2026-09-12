@@ -1,5 +1,10 @@
 # 2026-09-12 — Rule24: Factory v2 recovery S0–S3
 
+> **Статус: superseded 2026-09-12.** Rule24 не должен был получить `failed`
+> из-за существующих booking/payment alternatives. После коррекции он прошёл
+> S0–S3, ранний Portfolio Gate и S5, затем получил `passed_not_selected`.
+> Актуальный итог: `data/discovery/2026-09-12-rule24-recovery-s0-context.md`.
+
 ## Контекст
 
 После Portfolio Closure Rule24 оставался единственным in-scope legacy asset без
