@@ -109,9 +109,9 @@ hard filter. Любая модель проверяется без прежде�
     четыре платные/бесплатные альтернативы и пять моделей денег; для теста выбран
     success fee с concierge delivery. Боль и цена ещё не подтверждены людьми.
 - [ ] Провести `S0–S3` для активного legacy-портфельного batch.
-  - 2026-09-12: `S0_CONTEXT` пройден. Радарыч, КАДРА, AI YouTube Automation,
+  - 2026-09-12: `S0_CONTEXT` и `S1_MARKET` пройдены. Радарыч, КАДРА, AI YouTube Automation,
     ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher находятся
-    на `S1_MARKET` в `data/discovery/2026-09-11-legacy-portfolio-sigma-run.md`.
+    на `S2_TREND` в `data/discovery/2026-09-11-legacy-portfolio-sigma-run.md`.
   - Acceptance: по каждому подтверждены контекст, плательщик, модель денег,
     реальные ограничения и source-backed рынок/референсы; затем ранний
     Portfolio Gate оставляет максимум 1–2 финалиста.

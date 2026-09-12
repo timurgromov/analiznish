@@ -531,10 +531,10 @@
       "title": "Legacy-портфель: первый SIGMA batch",
       "category": "Несколько категорий",
       "status": "active",
-      "result": "S0_CONTEXT: шесть непсихологических legacy-ставок выровнены на одном входном checkpoint; сравнение и отсев ещё не проведены.",
+      "result": "S0_CONTEXT и S1_MARKET: шесть legacy-ставок выровнены на одном входе и получили сопоставимый public corpus; начат S2_TREND, сравнение и отсев ещё не проведены.",
       "evidenceLevel": "E1",
       "framework": "factory_v2",
-      "updatedAt": "2026-09-11",
+      "updatedAt": "2026-09-12",
       "source": "data/ACTIVE_RUN.md"
     }
   ]

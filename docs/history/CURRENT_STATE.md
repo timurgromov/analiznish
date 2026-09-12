@@ -3,7 +3,7 @@
 ## Active portfolio-rescan
 
 Текущий `ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, checkpoint
-`S1_MARKET`. `S0_CONTEXT` пройден для единого раннего Factory-прохода шести
+`S2_TREND`. `S0_CONTEXT` и `S1_MARKET` пройдены для единого раннего Factory-прохода шести
 непсихологических legacy-ставок: Радарыч, КАДРА, AI YouTube Automation,
 ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Все они
 выровнены на `market_research / in_progress / E1`; готовность кода и старые
@@ -11,8 +11,8 @@ score не являются evidence спроса. S0 зафиксировал �
 CAC, cohort-retention и готовой unit economics у каждой ставки. Психологический
 run сохраняет parked resume point `S4_OWNER` и в новый batch не входит.
 
-Текущая работа: собрать source-backed `S1_MARKET` — альтернативы, цены,
-плательщиков и механизм денег — одинаково для всех шести. До `S0–S3` и раннего
+Текущая работа: собрать source-backed `S2_TREND` — независимые свежие problem
+signals, динамику и сезонность конкретного Job — одинаково для всех шести. До `S0–S3` и раннего
 Portfolio Gate не выбирать финалиста, не проводить интервью, не покупать трафик
 и не запускать продажи.
 
@@ -34,7 +34,7 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
 money gates. «Радарыч» и PastLife AI / Sansara прошли `S0_CONTEXT` и находятся
-на `market_research / in_progress` в общем `S1_MARKET` legacy-портфельном
+на `market_research / in_progress` в общем `S2_TREND` legacy-портфельном
 batch; психологические кандидаты и Rule24 остаются отдельно parked. Их
 дальнейший путь — `S1–S5` и owner choice.
 
