@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-12-codex-project-starter-idea",
+  "change_kind": "dashboard-data-card",
+  "status": "passed",
+  "requested_visible_change": "Добавить новую сырую ставку Codex Project Starter в общий кабинет идей и отдельную карточку без изменения hit parade или активного run.",
+  "expected_visible_delta": "Production baseline содержит 27 идей и не знает новый id; свежий кандидат содержит 28 идей, новую категорию, одну фильтруемую строку E0/B и доступную детальную карточку.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "a63b6b2cedf5e07da8996d71e19d3d1a4fa4cac8c96f6d36c5edeb376cad5eff",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?v=codex-starter#all-ideas",
+    "source_ref": "staged working tree",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#all-ideas and /dashboard/project.html?id=codex-project-starter-product",
+    "state": "read-only public registry data; search filtered to Codex Project Starter; row expanded; detail card opened",
+    "selector_or_slide_id": "All ideas count, search result codex-project-starter-product, expanded details, project detail article",
+    "action": "Open all ideas, search Codex Project Starter, expand the only result, then open its project card"
+  },
+  "must_remain_unchanged": [
+    "Dashboard remains read-only",
+    "data/HIT_PARADE.md remains unchanged",
+    "data/ACTIVE_RUN.md remains unchanged",
+    "Existing rankings, tabs and filters remain available"
+  ],
+  "required_viewports": [
+    "390x844",
+    "1440x900"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "isolated headed Playwright browser; innerWidth=390; innerHeight=844",
+      "before_signature": "Production detail URL for codex-project-starter-product: status=Ошибка данных; body=Такой проект не найден в едином реестре.",
+      "after_signature": "Local detail URL: title=Codex Project Starter — запуск цифрового проекта без команды; rating=55; confidence=25%; stage=Чистилище; gate=Не проверялась.",
+      "observed_visible_result": "Мобильная карточка показывает название, описание, рейтинг, плательщика и денежную гипотезу одной колонкой без видимого обрезания; ниже доступны риск и следующая проверка.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "isolated headed Playwright browser; innerWidth=1440; innerHeight=900",
+      "before_signature": "Production all-ideas: count=27; category Обучение и цифровые инструменты absent; Codex Project Starter absent.",
+      "after_signature": "Local all-ideas: count=28; search Codex Project Starter returns exactly 1 row; rating=55; base=68; confidence=25%; E0; Чистилище; Не проверялась; expanded details visible.",
+      "observed_visible_result": "Desktop-фильтр оставляет одну новую строку; раскрытие показывает описание, риск, следующую проверку и формулу рейтинга, а ссылка открывает отдельную карточку.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}
