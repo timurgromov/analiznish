@@ -59,6 +59,8 @@ summary:focus-visible,
   align-items: flex-end;
 }
 
+.brand-block { min-width: 0; }
+
 .eyebrow,
 .section-kicker {
   margin: 0 0 5px;
@@ -821,7 +823,8 @@ footer a { font-weight: 750; text-decoration: none; }
 @media (max-width: 560px) {
   h1 { font-size: 2rem; }
   .page-summary { font-size: .82rem; }
-  .topbar { gap: 10px; }
+  .topbar { align-items: flex-start; flex-direction: column; gap: 10px; }
+  .topbar-meta { width: 100%; align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
   .project-topbar { align-items: flex-start; flex-direction: column; }
   .project-topbar .topbar-meta { align-items: flex-start; }
   .status { padding: 6px 9px; font-size: .7rem; }

@@ -548,3 +548,18 @@ travel, legaltech, AI-photo и будущие темы — равноправн�
 * Acceptance: candidate загружен свежо; видимый before/after подтверждён на
   desktop и `390x844`; фильтр и карточка работают; console errors и
   горизонтальный overflow отсутствуют.
+
+### Responsive repair contract — 2026-09-12, mobile topbar
+
+* Target: `/dashboard/` после успешной загрузки публичных данных.
+* Reproduction: CSS viewport `390×844`; в baseline status-chip оказывался за
+  правой границей из-за строки topbar, а не из-за намеренно прокручиваемых
+  вкладок.
+* Expected delta: при ширине до `560px` brand и metadata складываются в одну
+  колонку; status-chip остаётся полностью видимым. Вкладки сохраняют свой
+  внутренний горизонтальный scroll и не увеличивают ширину документа.
+* Preserved invariants: desktop topbar, тексты, статус, вкладки, palette и
+  read-only поведение не меняются.
+* Acceptance: `documentElement.scrollWidth === innerWidth` на `390×844`,
+  `559/560/561`, `760`, `1180×820`, `1366×768`, `1440×900`; status-chip не
+  обрезан, console errors отсутствуют.
