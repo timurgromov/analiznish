@@ -1,5 +1,27 @@
 # Current State — 2026-09-12
 
+## Активный новый B2B operations batch
+
+ACTIVE_RUN — b2b-ops-scan-russia-2026-09-12, status complete на S1_MARKET.
+После terminal gate legacy-портфеля начат новый batch из семи сырых B2B
+operations-гипотез: next-action для выездных сервисных бригад, контроль
+дебиторки агентств, order-to-cash малого опта, сервисные операции, договорные
+обязательства SMB, календарь compliance аутсорсинговых бухгалтерий и security
+evidence для небольших поставщиков. Они собраны через pain-first, product-first
+и transaction-first входы, но все остаются inbox / E0 / in_progress: публичные
+обсуждения, страницы продуктов и listings — leads, не доказательство РФ-спроса,
+готовности платить или экономики.
+
+S0 и S1 закрыты без финалиста: российские field-service, B2B order-to-cash,
+contract dates и accounting deadlines уже покрывают широкие продукты/услуги,
+а дебиторка и security questionnaire не дали узкого локального buyer.
+Все семь остались на ранней стадии с failed и возвращаются только по указанному
+external fact. Следующий run ищет только Jobs, у которых заранее есть локальный
+сегмент и пересечение минимум двух входов. До S0–S3 и Portfolio Gate запрещены
+интервью, трафик, продажи, действие, деньги и build. Психологический run
+остаётся parked на S4_OWNER; legacy-ставки возвращаются только с новым
+external fact.
+
 ## Завершённый legacy portfolio-rescan
 
 `ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, status `complete` на

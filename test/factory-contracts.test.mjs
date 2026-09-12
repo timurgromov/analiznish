@@ -132,7 +132,7 @@ test("активный S0 не допускает кандидата выше qu
   fixture.activeRun.status = "active";
   fixture.activeRun.checkpointGateStatus = "in_progress";
   fixture.registry.runs.find((run) => run.id === fixture.activeRun.registryRunId).status = "active";
-  const idea = ideaById(fixture.registry, "kadra");
+  const idea = ideaById(fixture.registry, fixture.activeRun.candidateIds[0]);
   idea.stage = "market_research";
   idea.gateStatus = "in_progress";
   assert.throws(() => validateConsistency({

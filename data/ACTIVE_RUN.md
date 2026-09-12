@@ -1,47 +1,49 @@
 # Active Niche Factory Run
 
 Schema version: 2
-Run ID: legacy-portfolio-russia-2026-09-11
-Registry run ID: legacy-portfolio-sigma-2026-09-11
+Run ID: b2b-ops-scan-russia-2026-09-12
+Registry run ID: b2b-ops-scan-2026-09-12
 Mode: niche_factory
 Status: complete
-Direction: проверить существующие непсихологические ставки и активы единым SIGMA-ситом; terminal gate: финалистов не найдено, legacy-код не вернул ни одну ставку к build или CustDev
-Checkpoint ID: S3_LOCALIZE
+Direction: новый B2B operations batch закрыт terminal gate на S1_MARKET: семь широких гипотез не оставили локальную дыру, доступного buyer и экономику одновременно
+Checkpoint ID: S1_MARKET
 Checkpoint gate status: passed
 Macro phase: S · SCAN
-Current step: 3
-Current step name: Локализация спроса и ограничений
-Previous checkpoint: S2_TREND
-Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE
-Candidate IDs: radarych, kadra, ai-youtube-automation, cycle-assistant, pastlife-sansara, profiwatcher
+Current step: 1
+Current step name: Рынок, референсы и денежные модели
+Previous checkpoint: S0_CONTEXT
+Completed checkpoints: S0_CONTEXT, S1_MARKET
+Candidate IDs: field-service-next-action, agency-ar-control, wholesale-order-to-cash, field-service-ops, smb-contract-obligations, outsourced-compliance-calendar, vendor-security-evidence
 Selected focus IDs: —
 Strongest evidence: E1
-Source board: data/discovery/2026-09-11-legacy-portfolio-sigma-run.md
+Source board: data/discovery/2026-09-12-b2b-operations-s0-context.md
 Last updated: 2026-09-12
 
 ## Решение владельца
 
-2026-09-11: владелец запустил первый portfolio-rescan. Цель — не выбирать
-самый готовый код и не искать новые идеи преждевременно, а пропустить все
-доступные непсихологические legacy-ставки через одинаковый ранний Factory
-проход и увидеть выживших. Психологический run остаётся parked на `S4_OWNER`;
-Rule24 и все психологические кандидаты не смешиваются с этим batch.
+2026-09-12: после terminal gate legacy-портфеля владелец продолжил поиск.
+Начат новый batch из семи сырых B2B operations-гипотез, собранных через
+pain-first, product-first и transaction-first входы. Это не решение выбрать
+одну из них: психологический run остаётся parked на S4_OWNER, а legacy-ставки
+не возвращаются без нового external fact.
 
 ## Единственная текущая работа
 
-Работа завершена terminal gate. Все шесть кандидатов получили `failed` на
-объяснимом раннем gate; `kadra` единственная дошла до 18-критериального
-Portfolio Gate, но не прошла hard filter commodity без защищённого канала.
+Работа завершена terminal gate. S1 показал: field-service, B2B order-to-cash,
+contract dates и accounting deadlines уже покрыты широкими российскими
+продуктами/услугами, а дебиторка и security questionnaire не дали узкого
+локального buyer. Ни одна идея не переходит к S2.
 
 ## Gate этапа
 
-Gate закрыт: S0–S3 завершены, но S4 не оставил финалистов. Новый run начинается
-с нового `S0_CONTEXT` batch, а отсеянные legacy-ставки возвращаются только при
-новом external fact, указанном в registry.
+Gate закрыт: референсы и ручные alternatives зафиксированы для всех семи
+кандидатов; все получили failed с новым external fact для возврата. Следующий
+run обязан начаться с более узкого локального сегмента, а не с общего workflow.
 
 ## Запрещённый переход
 
 Не выбирать финалиста, не проводить интервью, не покупать трафик, не делать
-продажи и не дорабатывать продукт до завершения `S0–S3` и раннего Portfolio
-Gate. Нельзя считать production, payment UX, internal watcher, прежний score
-или маркетинговую страницу референса доказательством спроса.
+продажи и не дорабатывать продукт до завершения S0–S3 и раннего Portfolio
+Gate. Нельзя возвращать эти семь гипотез без указанного external fact или
+считать user-generated post, seller claim, listing, маркетинговую страницу
+референса или готовность legacy-кода доказательством спроса.
