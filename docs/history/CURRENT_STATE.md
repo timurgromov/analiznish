@@ -1,6 +1,23 @@
 # Current State — 2026-09-12
 
-## Активный новый B2B operations batch
+## Portfolio Closure перед поиском новых идей
+
+Цель текущего контура уточнена: сначала закончить общий screen всех in-scope
+старых assets, затем выбрать одного surviving finalist; новый discovery batch
+разрешён только если surviving finalist не осталось. Каноническая сводка:
+data/PORTFOLIO_CLOSURE.md.
+
+Текущий факт: 15 объектов terminal failed, два психологических finalist parked
+на S4_OWNER, шесть гипотез невыбраны/parked, а Rule24 — единственный
+legacy-asset без Factory v2 S0–S3 recovery screen. Поэтому CustDev-ready
+кандидатов сейчас ноль, а поиск новых идей преждевременен. Действующий
+свадебный бизнес — parallel active business/benchmark, не Factory candidate.
+
+Следующий gate: Rule24 проходит S0_CONTEXT–S3_LOCALIZE без shortcut за
+готовый код. Затем Rule24 получает failed или finalist; только после этого
+владелец выбирает одного из surviving finalist либо фиксирует пустой портфель.
+
+## Завершённый новый B2B operations batch
 
 ACTIVE_RUN — b2b-ops-scan-russia-2026-09-12, status complete на S1_MARKET.
 После terminal gate legacy-портфеля начат новый batch из семи сырых B2B

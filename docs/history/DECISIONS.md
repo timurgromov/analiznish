@@ -2,6 +2,34 @@
 
 Этот файл — не changelog. Это журнал решений, которые важно помнить и не откатывать случайно.
 
+## DEC-2026-09-12-PORTFOLIO-CLOSURE-BEFORE-DISCOVERY — Сначала закрыть старые assets
+
+Status: active
+Area: methodology | portfolio | active run
+Decision date: 2026-09-12
+
+Decision:
+Новая внешняя идея не начинает discovery batch, пока в имеющемся портфеле есть
+in-scope existing asset без объяснимого Factory v2 outcome. Сначала asset
+проходит S0–S3 и получает failed либо finalist. Затем владелец выбирает один
+surviving finalist; новый discovery допустим только когда surviving finalist
+нет.
+
+Active business и market reference явно исключаются из этого обязательства:
+они соответственно benchmark и карта рынка, а не factory candidate. Готовый
+код existing asset не даёт shortcut.
+
+Current application:
+После terminal batch 2026-09-12 не начинать новый общий B2B поиск. Rule24
+остаётся единственным legacy asset без Factory v2 recovery screen. Два
+психологических finalist parked на S4_OWNER не являются CustDev-ready, пока
+нет owner choice и I_E1.
+
+Do not:
+Не превращать параллельно развиваемый действующий бизнес в search lane и не
+называть parked finalist живым CustDev только потому, что он выше других в
+старом рейтинге.
+
 ## DEC-2026-09-12-OPERATOR-AWARD-CATALOGS-ARE-PRODUCT-FIRST — Награждённые операторы дают leads, не доказательство
 
 Status: active
