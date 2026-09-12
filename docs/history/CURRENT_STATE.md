@@ -87,6 +87,9 @@ money gates. Все шесть legacy-кандидатов находятся н
 * Поиск кандидатов теперь использует три независимых входа: pain-first
   (проблемы и обходные пути), product-first (существующие продукты) и
   transaction-first (выставленные и проданные цифровые бизнесы).
+  Внутри `product-first` каталоги награждённых вертикальных операторов, включая
+  HighLevel Awards, дают только E1 `discovery lead`: они не создают четвёртый
+  вход, score, hit parade или переход к build.
 * Есть `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`: Acquire.com, Flippa,
   Microns и другие брокеры используются для поиска денежных моделей,
   продаваемых активов и comparable businesses; listing, seller claim, asking
