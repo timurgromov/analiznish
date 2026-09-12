@@ -231,3 +231,39 @@ External:
 - https://www.yclients.com/
 - https://www.yclients.com/online_payments
 - https://yookassa.ru/developers/payment-acceptance/integration-scenarios/widget/additional-settings/recurring-payments
+
+## Factory v2 recovery — 2026-09-12
+
+Исторические score и строки выше сохранены как снимок до Factory v2. Новый
+recovery screen прошёл `S0_CONTEXT`–`S3_LOCALIZE` без учёта готовности кода как
+доказательства спроса и завершился `market_research / failed / E1`.
+
+Факт: поздние отмены и пропущенные записи существуют. Но публичные российские
+альтернативы уже предлагают психологам предоплату, запись, подтверждение и
+напоминания: Cue, Calink и Recordo. Публичная политика YouTalk также использует
+предоплату и правило отмены за 24 часа. Это доказывает категорию и проблему, но
+не отдельную готовность покупать Rule24.
+
+Вывод S3: не найден внешний факт, что конкретный сегмент психологов уже
+исчерпал эти substitutes и готов выделить отдельный бюджет именно за
+автосписание при поздней отмене. Сохранённый способ оплаты технически потребует
+согласия, может быть отозван и может завершиться неуспехом; публичные споры о
+возврате предоплаты показывают риск поддержки и доверия, а не юридический
+вердикт. Поэтому запрещены интервью, оффер, трафик, пилот, списания и доработка
+продукта в рамках этого run.
+
+Условие возврата: новый внешний факт от определённого сегмента, который уже
+использует предоплату, напоминания и booking, считает их недостаточными и
+называет отдельный бюджет за иной измеримый outcome.
+
+Дополнительные внешние источники recovery screen:
+
+- https://cue-to.ru/industry/psychologists
+- https://calink.ru/l/dlya-psihologov/
+- https://recordo.online/dlya/psy
+- https://youtalk.ru/
+- https://planerka.app/blog/napominanie-klientu-o-zapisi-psiholog/
+- https://pravoved.ru/question/4008712/
+- https://pravoved.ru/question/3869353/
+- https://yookassa.ru/developers/payment-acceptance/scenario-extensions/recurring-payments/pay-with-saved
+- https://www.consultant.ru/document/cons_doc_LAW_61801/6c94959bc017ac80140621762d2ac59f6006b08c/

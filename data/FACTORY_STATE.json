@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Два batch дали 13 terminal failed; два психологических финалиста parked на S4_OWNER. Portfolio Closure ещё не завершён, потому что Rule24 — legacy asset без Factory v2 S0–S3 recovery screen.",
+    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Три ранних screen дали 16 terminal failed; два психологических финалиста parked на S4_OWNER. Portfolio Closure завершён.",
     "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; batch работает как сито: candidate без нужных facts фиксируется как failed и не блокирует остальных. Действующий свадебный бизнес и market reference не являются кандидатами Factory.",
-    "unknown": "Rule24 ещё не получил Factory v2 outcome; после его screen неизвестно, останется ли хотя бы один finalist для owner choice. Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе также не подтверждена.",
-    "nextGate": "Закрыть Portfolio Closure: провести для Rule24 S0_CONTEXT–S3_LOCALIZE recovery screen без последующих стадий.",
+    "unknown": "Из старого портфеля выжили только два психологических finalist; неизвестно, выберет ли владелец один из них. Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе также не подтверждена.",
+    "nextGate": "S4_OWNER: зафиксировать один выбранный фокус психологического batch из P1/P2.",
     "source": "data/PORTFOLIO_CLOSURE.md"
   }
 }

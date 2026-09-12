@@ -1,43 +1,44 @@
 # Current State — 2026-09-12
 
-## Portfolio Closure перед поиском новых идей
+## Portfolio Closure завершён: следующий gate — owner choice
 
 Цель текущего контура уточнена: сначала закончить общий screen всех in-scope
 старых assets, затем выбрать одного surviving finalist; новый discovery batch
 разрешён только если surviving finalist не осталось. Каноническая сводка:
 data/PORTFOLIO_CLOSURE.md.
 
-Текущий факт: 15 объектов terminal failed, два психологических finalist parked
-на S4_OWNER, шесть гипотез невыбраны/parked, а Rule24 — единственный
-legacy-asset без Factory v2 S0–S3 recovery screen. Поэтому CustDev-ready
-кандидатов сейчас ноль, а поиск новых идей преждевременен. Действующий
-свадебный бизнес — parallel active business/benchmark, не Factory candidate.
+Текущий факт: 16 объектов terminal failed, два психологических finalist parked
+на S4_OWNER и шесть гипотез невыбраны/parked. Rule24 завершил Factory v2
+S0–S3 recovery screen как failed: поздние отмены реальны, но локальные
+предоплата, напоминания и booking уже закрывают базовый Job; отдельный
+autodebit не показал дополнительной ценности и добавляет payment/legal/support
+риск. Поэтому CustDev-ready кандидатов сейчас ноль, а поиск новых идей
+преждевременен. Действующий свадебный бизнес — parallel active
+business/benchmark, не Factory candidate.
 
-Следующий gate: Rule24 проходит S0_CONTEXT–S3_LOCALIZE без shortcut за
-готовый код. Затем Rule24 получает failed или finalist; только после этого
-владелец выбирает одного из surviving finalist либо фиксирует пустой портфель.
+Следующий gate: владелец выбирает ровно один из двух surviving finalist —
+`РПП: работа между сессиями` или `Обращение → оплаченная первая сессия`.
+Только после выбора запускается I_E1; если не выбран никто или выбранный
+кандидат получает terminal outcome, разрешён новый discovery batch.
 
-## Завершённый новый B2B operations batch
+## Исторический B2B operations batch
 
-ACTIVE_RUN — b2b-ops-scan-russia-2026-09-12, status complete на S1_MARKET.
-После terminal gate legacy-портфеля начат новый batch из семи сырых B2B
+Предыдущий run `b2b-ops-scan-russia-2026-09-12` завершён на `S1_MARKET`.
+В ходе раннего screen был собран batch из семи сырых B2B
 operations-гипотез: next-action для выездных сервисных бригад, контроль
 дебиторки агентств, order-to-cash малого опта, сервисные операции, договорные
 обязательства SMB, календарь compliance аутсорсинговых бухгалтерий и security
 evidence для небольших поставщиков. Они собраны через pain-first, product-first
-и transaction-first входы, но все остаются inbox / E0 / in_progress: публичные
-обсуждения, страницы продуктов и listings — leads, не доказательство РФ-спроса,
-готовности платить или экономики.
+и transaction-first входы. Публичные обсуждения, страницы продуктов и listings
+были только leads, не доказательством РФ-спроса, готовности платить или
+экономики.
 
 S0 и S1 закрыты без финалиста: российские field-service, B2B order-to-cash,
 contract dates и accounting deadlines уже покрывают широкие продукты/услуги,
 а дебиторка и security questionnaire не дали узкого локального buyer.
 Все семь остались на ранней стадии с failed и возвращаются только по указанному
-external fact. Следующий run ищет только Jobs, у которых заранее есть локальный
-сегмент и пересечение минимум двух входов. До S0–S3 и Portfolio Gate запрещены
-интервью, трафик, продажи, действие, деньги и build. Психологический run
-остаётся parked на S4_OWNER; legacy-ставки возвращаются только с новым
-external fact.
+external fact. Этот batch не определяет текущий active run и не разрешает новый
+discovery, пока владелец не закроет `S4_OWNER` психологических финалистов.
 
 ## Новая сырая ставка: Codex Project Starter
 
@@ -50,9 +51,8 @@ external fact.
 Подтверждены только собственные founder-assets: `../Tamplates`, контент-контур
 и способность доводить отдельные проекты до live. Плательщик, внешний спрос,
 платные референсы именно с таким обещанием и канал продаж не подтверждены.
-Следующая единственная проверка — product-first разбор пяти платных
-русско- и англоязычных офферов `не разработчик → первый работающий проект через
-AI-агента`. Hit parade и завершённый `ACTIVE_RUN` не изменены.
+Эта идея не является текущей работой и не открывает новый batch, пока владелец
+не выберет или не закроет terminal outcome одного психологического финалиста.
 
 ## Завершённый legacy portfolio-rescan
 
@@ -68,9 +68,9 @@ hard filter commodity без защищённого канала. S0 зафик�
 Психологический run сохраняет parked resume point `S4_OWNER` и в новый batch
 не входит.
 
-Следующий корректный шаг: новый batch начинается с `S0_CONTEXT` через три
-входа поиска. До этого не возвращать legacy-кандидаты к интервью, трафику,
-продажам, действию, деньгам или build.
+Новый batch допустим лишь после owner choice психологического финалиста и его
+terminal outcome либо после явного отказа от обоих. До этого не возвращать
+legacy-кандидаты к интервью, трафику, продажам, действию, деньгам или build.
 
 ## Project
 
@@ -90,8 +90,8 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
 money gates. Все шесть legacy-кандидатов находятся на
-`market_research / failed`; психологические кандидаты и Rule24 остаются
-отдельно parked. Возврат возможен только по указанным в registry новым
+`market_research / failed`; психологические кандидаты остаются отдельно parked,
+а Rule24 завершён `failed` на S3. Возврат возможен только по указанным в registry новым
 внешним фактам.
 
 ## Current Runtime / Stack

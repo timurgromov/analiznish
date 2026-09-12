@@ -1,49 +1,47 @@
 # Active Niche Factory Run
 
 Schema version: 2
-Run ID: b2b-ops-scan-russia-2026-09-12
-Registry run ID: b2b-ops-scan-2026-09-12
+Run ID: rule24-recovery-russia-2026-09-12
+Registry run ID: rule24-recovery-2026-09-12
 Mode: niche_factory
 Status: complete
-Direction: новый B2B operations batch закрыт terminal gate на S1_MARKET: семь широких гипотез не оставили локальную дыру, доступного buyer и экономику одновременно
-Checkpoint ID: S1_MARKET
+Direction: Rule24 для психологов завершил Factory v2 recovery screen terminal failed: локальная category есть, но отдельный платный Job сверх предоплаты, напоминаний и booking не найден
+Checkpoint ID: S3_LOCALIZE
 Checkpoint gate status: passed
 Macro phase: S · SCAN
-Current step: 1
-Current step name: Рынок, референсы и денежные модели
-Previous checkpoint: S0_CONTEXT
-Completed checkpoints: S0_CONTEXT, S1_MARKET
-Candidate IDs: field-service-next-action, agency-ar-control, wholesale-order-to-cash, field-service-ops, smb-contract-obligations, outsourced-compliance-calendar, vendor-security-evidence
+Current step: 3
+Current step name: Локализация спроса и ограничений
+Previous checkpoint: S2_TREND
+Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE
+Candidate IDs: rule24
 Selected focus IDs: —
 Strongest evidence: E1
-Source board: data/discovery/2026-09-12-b2b-operations-s0-context.md
+Source board: data/discovery/2026-09-12-rule24-recovery-s0-context.md
 Last updated: 2026-09-12
 
 ## Решение владельца
 
-2026-09-12: после terminal gate legacy-портфеля владелец продолжил поиск.
-Начат новый batch из семи сырых B2B operations-гипотез, собранных через
-pain-first, product-first и transaction-first входы. Это не решение выбрать
-одну из них: психологический run остаётся parked на S4_OWNER, а legacy-ставки
-не возвращаются без нового external fact.
+2026-09-12: владелец явно возобновил единственный незакрытый legacy asset
+Portfolio Closure. Rule24 завершил отдельный S0–S3 screen как failed; это не
+выбор финалиста, не возобновление психологического run на S4_OWNER и не
+разрешение на CustDev.
 
 ## Единственная текущая работа
 
-Работа завершена terminal gate. S1 показал: field-service, B2B order-to-cash,
-contract dates и accounting deadlines уже покрыты широкими российскими
-продуктами/услугами, а дебиторка и security questionnaire не дали узкого
-локального buyer. Ни одна идея не переходит к S2.
+Работа завершена terminal gate. S1 подтвердил существование категории
+booking/payment для психологов; S2 подтвердил поздние отмены как повторяющуюся,
+но конфликтную проблему; S3 показал, что предоплата, напоминания и booking уже
+закрывают базовый Job, а автосписание добавляет payment/legal/support риск.
 
 ## Gate этапа
 
-Gate закрыт: референсы и ручные alternatives зафиксированы для всех семи
-кандидатов; все получили failed с новым external fact для возврата. Следующий
-run обязан начаться с более узкого локального сегмента, а не с общего workflow.
+Gate закрыт: Rule24 получил failed на S3_LOCALIZE. Вернуть его можно только с
+новым external fact о сегменте, который уже исчерпал предоплату, напоминания и
+booking, но назвал отдельный бюджет за другой outcome.
 
 ## Запрещённый переход
 
-Не выбирать финалиста, не проводить интервью, не покупать трафик, не делать
-продажи и не дорабатывать продукт до завершения S0–S3 и раннего Portfolio
-Gate. Нельзя возвращать эти семь гипотез без указанного external fact или
-считать user-generated post, seller claim, listing, маркетинговую страницу
-референса или готовность legacy-кода доказательством спроса.
+Не проводить интервью, не покупать трафик, не предлагать пилот, не делать
+продажи, списания или доработку продукта до terminal outcome S0–S3. Нельзя
+считать готовность legacy-кода, лендинг, маркетинговую страницу, user-generated
+post или seller claim доказательством спроса.
