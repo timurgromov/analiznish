@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. S0_CONTEXT–S2_TREND завершены для первого batch из старых непсихологических ставок: Sansara отсеян на S2 из-за отсутствия exact-offer signals, пять остальных перешли к S3_LOCALIZE; полный проход до повторных денег ещё не выполнен.",
-    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; batch работает как сито: кандидат без нужных S2-фактов фиксируется как failed и не блокирует остальных. Психологический run сохраняет отдельный parked resume point S4_OWNER.",
+    "summary": "Машинный контракт, единые стадии, evidence-caps, переходы и публичная граница настроены. Первый legacy batch завершил S0_CONTEXT–S3_LOCALIZE без финалиста: шесть ставок получили объяснимый failed, а КАДРА отдельно не прошла ранний Portfolio Gate. Полный проход до повторных денег ещё не выполнен.",
+    "confirmed": "Единый реестр связан с FACTORY_SCHEMA и ACTIVE_RUN; batch работает как сито: candidate без нужных facts фиксируется как failed и не блокирует остальных. Психологический run сохраняет отдельный parked resume point S4_OWNER.",
     "unknown": "Работоспособность полного контура на реальных интервью, действии, оплате, bounded build и повторе остаётся неподтверждённой.",
-    "nextGate": "Завершить S3_LOCALIZE для пяти неотсеянных кандидатов: локальный источник по Job, применимость в РФ и доступный канал либо явный локальный blocker.",
+    "nextGate": "Начать новый S0_CONTEXT batch через pain-first, product-first и transaction-first входы; не возобновлять legacy-ставки без нового внешнего факта.",
     "source": "data/ACTIVE_RUN.md"
   }
 }

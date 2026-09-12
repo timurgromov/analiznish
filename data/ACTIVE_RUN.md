@@ -4,15 +4,15 @@ Schema version: 2
 Run ID: legacy-portfolio-russia-2026-09-11
 Registry run ID: legacy-portfolio-sigma-2026-09-11
 Mode: niche_factory
-Status: active
-Direction: проверить существующие непсихологические ставки и активы единым SIGMA-ситом; выбрать только доказуемого кандидата для дальнейшей проверки спроса
+Status: complete
+Direction: проверить существующие непсихологические ставки и активы единым SIGMA-ситом; terminal gate: финалистов не найдено, legacy-код не вернул ни одну ставку к build или CustDev
 Checkpoint ID: S3_LOCALIZE
-Checkpoint gate status: in_progress
+Checkpoint gate status: passed
 Macro phase: S · SCAN
 Current step: 3
 Current step name: Локализация спроса и ограничений
 Previous checkpoint: S2_TREND
-Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND
+Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE
 Candidate IDs: radarych, kadra, ai-youtube-automation, cycle-assistant, pastlife-sansara, profiwatcher
 Selected focus IDs: —
 Strongest evidence: E1
@@ -29,21 +29,15 @@ Rule24 и все психологические кандидаты не смеш
 
 ## Единственная текущая работа
 
-Для пяти неотсеянных кандидатов — `radarych`, `kadra`,
-`ai-youtube-automation`, `cycle-assistant`, `profiwatcher` — проверить
-локальный российский спрос, доступный канал и ограничения конкретного Job.
-`pastlife-sansara` остановлен на S2: для exact-offer «прошлая жизнь по фото»
-не найдено двух независимых свежих сигналов живой проблемы или спроса.
+Работа завершена terminal gate. Все шесть кандидатов получили `failed` на
+объяснимом раннем gate; `kadra` единственная дошла до 18-критериального
+Portfolio Gate, но не прошла hard filter commodity без защищённого канала.
 
 ## Gate этапа
 
-Для каждого из пяти неотсеянных кандидатов есть локальный источник по
-конкретному Job, явная граница применимости и названный доступный канал либо
-честно зафиксировано его отсутствие. Нельзя подменять российский спрос
-зарубежным референсом, а доступность кода — правом на данные, платформу или
-чувствительные данные. Ранний Portfolio Gate наступит только после `S0–S3`
-для всей пачки и не включает `pastlife-sansara`, пока не появится новый
-независимый S2-сигнал exact-offer.
+Gate закрыт: S0–S3 завершены, но S4 не оставил финалистов. Новый run начинается
+с нового `S0_CONTEXT` batch, а отсеянные legacy-ставки возвращаются только при
+новом external fact, указанном в registry.
 
 ## Запрещённый переход
 

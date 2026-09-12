@@ -1,24 +1,22 @@
 # Current State — 2026-09-12
 
-## Active portfolio-rescan
+## Завершённый legacy portfolio-rescan
 
-Текущий `ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, checkpoint
-`S3_LOCALIZE`. `S0_CONTEXT`–`S2_TREND` завершены для единого раннего Factory-прохода шести
+`ACTIVE_RUN` — `legacy-portfolio-russia-2026-09-11`, status `complete` на
+`S3_LOCALIZE`. `S0_CONTEXT`–`S3_LOCALIZE` завершены для единого раннего Factory-прохода шести
 непсихологических legacy-ставок: Радарыч, КАДРА, AI YouTube Automation,
-ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Пять
-неотсеянных ставок находятся на `market_research / in_progress / E1`, а
-PastLife AI / Sansara — на `market_research / failed / E1`; готовность кода и
-старые score не являются evidence спроса. S0 зафиксировал отсутствие внешних
-оплат, CAC, cohort-retention и готовой unit economics у каждой ставки.
+ассистент по женскому циклу, PastLife AI / Sansara и ProfiWatcher. Все находятся
+на `market_research / failed / E1`; готовность кода и старые score не являются
+evidence спроса. Sansara не прошёл S2 exact-offer signal, четыре ставки не
+прошли S3 local facts, КАДРА дошла до раннего Portfolio Gate, но не прошла
+hard filter commodity без защищённого канала. S0 зафиксировал отсутствие
+внешних оплат, CAC, cohort-retention и готовой unit economics у каждой ставки.
 Психологический run сохраняет parked resume point `S4_OWNER` и в новый batch
 не входит.
 
-На `S2_TREND` PastLife AI / Sansara получил `failed`: для exact-offer «прошлая
-жизнь по фото» не найдено двух независимых свежих signals; это не оценка
-качества кода и не запрет на возврат при новых фактах. Текущая работа:
-source-backed `S3_LOCALIZE` для пяти неотсеянных кандидатов — российский спрос,
-канал и локальные ограничения конкретного Job. До `S0–S3` и раннего Portfolio Gate не выбирать финалиста, не проводить интервью, не покупать трафик
-и не запускать продажи.
+Следующий корректный шаг: новый batch начинается с `S0_CONTEXT` через три
+входа поиска. До этого не возвращать legacy-кандидаты к интервью, трафику,
+продажам, действию, деньгам или build.
 
 ## Project
 
@@ -37,10 +35,10 @@ Scoring v0.7, hit parade и dashboard v3.8 работают как внутре�
 `factory_v2` runs. Для `concrete_bet` и `existing_asset`, связанных только с
 legacy-run, validator допускает максимум E1 и стадии до `market_research`:
 готовый код, production и paywall не открывают CustDev, action, traffic или
-money gates. «Радарыч» находится на `market_research / in_progress`, а
-PastLife AI / Sansara — на `market_research / failed` в общем legacy-портфельном
-batch; психологические кандидаты и Rule24 остаются отдельно parked. Их
-дальнейший путь — `S1–S5` и owner choice.
+money gates. Все шесть legacy-кандидатов находятся на
+`market_research / failed`; психологические кандидаты и Rule24 остаются
+отдельно parked. Возврат возможен только по указанным в registry новым
+внешним фактам.
 
 ## Current Runtime / Stack
 

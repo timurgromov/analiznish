@@ -16,14 +16,15 @@
 
 ## Решение
 
-`S3_LOCALIZE` остаётся `in_progress`, E1. Никто не стал финалистом и не получил
-доступ к CustDev. Это не автоматический массовый отсев: у каждого кандидата
-зафиксирован свой measurable missing fact, который нельзя заменить готовностью
-кода или чужой категорией.
+Целевой второй проход закрыл S3 terminal gate, E1. Радарыч получил direct free
+substitute; AI YouTube — domestic-ad blocker; ассистент цикла — отсутствие
+одновременно paid Job, канала и data boundary; ProfiWatcher — отсутствие
+platform permission/right-to-use. КАДРА одна дошла до 18-критериального раннего
+Portfolio Gate, но получила execution priority 15 и hard filter commodity без
+защищённого канала. Финалистов нет, CustDev не открывался.
 
 ## Следующий gate
 
-Собрать для каждого кандидата именно закрывающий факт: платящий локальный
-сегмент и канал у Радарыча/КАДРЫ, законный механизм денег у AI YouTube,
-минимальный lawful data boundary у cycle и явное platform permission либо
-независимый источник у ProfiWatcher.
+Следующий шаг — новый `S0_CONTEXT` batch через pain-first, product-first и
+transaction-first входы. Каждый legacy-кандидат может вернуться только при
+новом external fact, записанном в registry.

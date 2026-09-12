@@ -11,6 +11,8 @@ test("parked → active проходит без изменения validator", (
   const fixture = factoryFixtures();
   fixture.activeRun.status = "active";
   fixture.activeRun.checkpointGateStatus = "in_progress";
+  fixture.activeRun.completedCheckpoints = fixture.activeRun.completedCheckpoints
+    .filter((checkpointId) => checkpointId !== fixture.activeRun.checkpointId);
   fixture.activeRun.markdown = fixture.activeRun.markdown
     .replace("## Точка возобновления (не текущая работа)", "## Единственная текущая работа")
     .replace("## Gate возобновлённого этапа", "## Gate этапа");
@@ -127,6 +129,9 @@ test("активный S0 не допускает кандидата выше qu
   fixture.activeRun.currentStepName = "Контекст и стартовая позиция";
   fixture.activeRun.previousCheckpoint = "—";
   fixture.activeRun.completedCheckpoints = [];
+  fixture.activeRun.status = "active";
+  fixture.activeRun.checkpointGateStatus = "in_progress";
+  fixture.registry.runs.find((run) => run.id === fixture.activeRun.registryRunId).status = "active";
   const idea = ideaById(fixture.registry, "kadra");
   idea.stage = "market_research";
   idea.gateStatus = "in_progress";
