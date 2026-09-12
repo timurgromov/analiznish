@@ -7,19 +7,20 @@
 разрешён только если surviving finalist не осталось. Каноническая сводка:
 data/PORTFOLIO_CLOSURE.md.
 
-Текущий факт: 16 объектов terminal failed, два психологических finalist parked
-на S4_OWNER и шесть гипотез невыбраны/parked. Rule24 завершил Factory v2
-S0–S3 recovery screen как failed: поздние отмены реальны, но локальные
-предоплата, напоминания и booking уже закрывают базовый Job; отдельный
-autodebit не показал дополнительной ценности и добавляет payment/legal/support
-риск. Поэтому CustDev-ready кандидатов сейчас ноль, а поиск новых идей
-преждевременен. Действующий свадебный бизнес — parallel active
-business/benchmark, не Factory candidate.
+Текущий факт: 15 объектов terminal failed, два психологических finalist parked
+на S4_OWNER и шесть гипотез невыбраны/parked. Rule24 прошёл Factory v2 S0–S3:
+поздние отмены, российский booking/payment рынок и правило отмены наблюдаемы.
+Предоплата, напоминания и booking — существующие покупаемые alternatives, то
+есть положительный market signal, а не причина закрыть ставку. S5 подтвердил
+рынок, но поставил Rule24 `passed_not_selected`: причина переключения, канал и
+экономика exact-модели не доказаны и ставка не вошла в два финалиста.
+CustDev-ready кандидатов сейчас ноль, а поиск новых идей преждевременен.
+Действующий свадебный бизнес — parallel active business/benchmark, не Factory
+candidate.
 
-Следующий gate: владелец выбирает ровно один из двух surviving finalist —
-`РПП: работа между сессиями` или `Обращение → оплаченная первая сессия`.
-Только после выбора запускается I_E1; если не выбран никто или выбранный
-кандидат получает terminal outcome, разрешён новый discovery batch.
+Следующий gate: владелец выбирает ровно один из P1/P2. Только после выбора
+surviving finalist получает I_E1; если финалистов не останется, разрешён новый
+discovery batch.
 
 ## Исторический B2B operations batch
 
@@ -69,8 +70,9 @@ hard filter commodity без защищённого канала. S0 зафик�
 не входит.
 
 Новый batch допустим лишь после owner choice психологического финалиста и его
-terminal outcome либо после явного отказа от обоих. До этого не возвращать
-legacy-кандидаты к интервью, трафику, продажам, действию, деньгам или build.
+terminal outcome либо после явного отказа от всех surviving finalist. До этого
+не возвращать legacy-кандидаты к интервью, трафику, продажам, действию, деньгам
+или build.
 
 ## Project
 
@@ -91,8 +93,8 @@ legacy-run, validator допускает максимум E1 и стадии д�
 готовый код, production и paywall не открывают CustDev, action, traffic или
 money gates. Все шесть legacy-кандидатов находятся на
 `market_research / failed`; психологические кандидаты остаются отдельно parked,
-а Rule24 завершён `failed` на S3. Возврат возможен только по указанным в registry новым
-внешним фактам.
+а Rule24 завершил S5 как `passed_not_selected`. Возврат legacy-ставок возможен
+только по указанным в registry новым внешним фактам.
 
 ## Current Runtime / Stack
 

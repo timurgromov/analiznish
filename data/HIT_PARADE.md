@@ -20,8 +20,8 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 | --- | ---: | --- |
 | CustDev-ready | 0 | Ни у кого нет одновременно S4 owner choice и I_E1. |
 | Finalist parked | 2 | Психологические P1/P2 ожидают owner choice после Portfolio Closure. |
-| Terminal failed | 16 | Не возвращать без конкретного external fact из реестра. |
-| Незакрытый legacy asset | 0 | Portfolio Closure завершён; Rule24 получил failed на S3_LOCALIZE. |
+| Terminal failed | 15 | Не возвращать без конкретного external fact из реестра. |
+| Незакрытый legacy asset | 0 | Rule24 прошёл S0–S5 как passed_not_selected; конкуренция учтена как market signal, не причина отсева. |
 | Сырая inbox-идея | 1 | Codex Project Starter не является текущим Factory-кандидатом. |
 | Active business / market reference | 3 | Benchmark и карта рынка, не кандидаты Factory. |
 

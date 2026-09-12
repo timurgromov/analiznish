@@ -122,11 +122,11 @@ hard filter. Любая модель проверяется без прежде�
     security questionnaire не найден локальный buyer. Все семь получили failed
     и не открыли CustDev.
 - [x] Закрыть Portfolio Closure существующих assets.
-  - Выполнено 2026-09-12: Rule24 прошёл Factory v2 S0–S3 без shortcut за
-    готовый код и получил `failed` на `S3_LOCALIZE`: поздние отмены существуют,
-    но базовый Job уже закрывают предоплата, напоминания и booking. Отдельная
-    ценность penalty-layer не найдена; CustDev, трафик, оффер и build не открыты.
-    Действующий свадебный бизнес и market reference не подменяли кандидатов.
+  - Выполнено 2026-09-12: Rule24 прошёл Factory v2 S0–S5 без shortcut за
+    готовый код. Российские конкуренты подтвердили рынок и не стали причиной
+    отсева; на раннем Portfolio Gate ставка получила `passed_not_selected`.
+    CustDev, трафик, оффер и build не открыты. Действующий свадебный бизнес и
+    market reference не подменяли кандидатов.
 - [ ] Собрать новый S0 batch только при пустом Portfolio Closure.
   - Acceptance: owner не оставил surviving finalist без решения либо выбранный
     финалист получил terminal outcome; каждый новый кандидат имеет заранее

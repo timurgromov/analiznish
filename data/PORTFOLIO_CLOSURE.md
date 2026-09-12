@@ -18,27 +18,32 @@
 | Слой | Количество | Объекты | Операционный смысл |
 | --- | ---: | --- | --- |
 | Вне Factory-отбора | 3 | Timur Gromov Business System; Авто SEO/CPA; OnSud | Действующий бизнес и рыночные референсы. Не становятся кандидатами только из-за существования/денег у референса. |
-| Terminal failed | 16 | Радарыч, КАДРА, AI YouTube, ассистент цикла, Sansara, ProfiWatcher, Rule24; Generic AI-психолог, marketplace психологических сессий; 7 B2B workflow-гипотез | У каждого есть конкретное условие возврата в registry. Они не идут в интервью. |
+| Terminal failed | 15 | Радарыч, КАДРА, AI YouTube, ассистент цикла, Sansara, ProfiWatcher; Generic AI-психолог, marketplace психологических сессий; 7 B2B workflow-гипотез | У каждого есть конкретное условие возврата в registry. Они не идут в интервью. |
 | Финалисты, но не interview-ready | 2 | РПП: работа между сессиями; Обращение → оплаченная первая сессия | В своём психологическом batch дошли до finalist, но parked на S4_OWNER. Пока владелец не выбрал ровно один фокус, I_E1 и CustDev запрещены. |
 | Архивные невыбранные/parked hypotheses | 6 | RPP Practice Lab, RPP Supervision OS, emotional-eating B2C, программа результата для работодателя, ежедневные практики для пар, CRM для частной практики | Это не текущие кандидаты и не «скрытые победители». Возврат только по новому факту или отдельному owner decision. |
+| Прошла, не в фокусе | 1 | Rule24 для психологов | Прошёл S0–S5: российские конкуренты подтвердили рынок; на 18-критериальном gate ставка не вошла в два финалиста. |
 | Сырая inbox-идея | 1 | Codex Project Starter | Не существующий legacy asset и не текущий кандидат; не запускает discovery до выбора или закрытия surviving finalist. |
 
-## Закрытый Rule24 recovery screen
+## Rule24: S0–S5 пройдены, ставка не выбрана
 
-Rule24 прошёл S0_CONTEXT → S1_MARKET → S2_TREND → S3_LOCALIZE без shortcut
-за готовый код и получил `failed`. Публичный корпус подтвердил поздние отмены
-как проблему, но не отдельную платную ставку: локальные booking-сервисы и
-платформы уже решают её предоплатой, напоминаниями и политикой отмены. Exact
-autodebit добавляет consent, consumer-dispute, payment-failure и support risk.
+Rule24 прошёл S0_CONTEXT → S1_MARKET → S2_TREND → S3_LOCALIZE → S5_COMPETITORS без shortcut
+за готовый код. Публичный корпус подтвердил поздние отмены, российский рынок
+booking/payment, предоплату и правило отмены как покупаемый workflow.
+Существующие alternatives — положительный market signal, а не доказательство
+плохой ставки. Exact autodebit несёт consent, consumer-dispute, payment-failure
+и support risk, но пока это вопрос конкурентной рамки, не terminal blocker.
 
-Возврат возможен только с новым внешним фактом о сегменте, который исчерпал
-эти alternatives и имеет отдельный бюджет за иной outcome.
+S5 сравнил Rule24 с российскими alternatives и P1/P2 по 18 критериям. Рынок
+прошёл, но при execution priority `27` ставка стала `passed_not_selected`:
+не доказаны switching reason, канал и экономика exact penalty-layer. Это не
+отсев из-за конкуренции; вернуть ставку можно новым сильным фактом о этих трёх
+местах.
 
 ## Что это значит прямо сейчас
 
 * CustDev-ready кандидатов: 0.
-* Новые идеи искать: рано, пока не закрыт выбор surviving finalist.
-* Единственная следующая работа: owner выбирает ровно один из двух финалистов
-  P1/P2 для I_E1; второй остаётся parked.
-* Только если владелец не выберет ни одного финалиста или выбранный кандидат
-  получит terminal outcome, запускается новый discovery batch.
+* Новые идеи искать: рано, пока не закрыт owner choice surviving finalist.
+* Единственная следующая работа: owner выбирает P1/P2 для I_E1; Rule24 прошёл
+  одинаковое сито и остаётся `passed_not_selected`.
+* Только после owner choice surviving finalist запускается I_E1; если
+  финалистов не останется, запускается новый discovery batch.
