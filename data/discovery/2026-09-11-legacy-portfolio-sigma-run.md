@@ -89,6 +89,26 @@ benefit модели в женском здоровье, а также recurring
 свежие сигналы незакрытой проблемы и сезонность/неизвестность именно его Job.
 Никто не становится финалистом, и все запреты до Portfolio Gate сохраняются.
 
+## S2: первые свежие problem signals — 2026-09-12
+
+S2 пока **не пройден**. Это первичный pain-first срез; forum/store reviews и
+маркетинговые страницы не приравнены друг к другу. Сезонность везде остаётся
+`unknown`, пока не будет проверена отдельным датированным источником.
+
+| Кандидат | Свежий независимый сигнал | Что можно сказать честно | Что остаётся непроверенным |
+| --- | --- | --- | --- |
+| Радарыч | [обсуждение покупки билетов](https://www.reddit.com/r/KafkaFPS/comments/1swg8tw/%D0%B2%D1%8B%D0%B3%D0%BE%D0%B4%D0%BD%D0%BE/) 2026-04: пользователь пишет о быстром росте цены при задержке с покупкой; [обсуждение 2026-02](https://www.reddit.com/r/rusAskReddit/comments/1qwpkn5/%D0%BF%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D0%B0_%D0%B0%D0%B2%D0%B8%D0%B0%D0%B1%D0%B8%D0%BB%D0%B5%D1%82%D0%BE%D0%B2/) прямо советует сравнивать варианты в агрегаторах. | Есть слабый актуальный сигнал задачи «успеть поймать/сравнить цену», но не сигнал готовности платить за новый alert-service. | Российский сегмент, частота перелётов, free substitutes, сезонность и willingness-to-pay. |
+| КАДРА | [RuTube-разбор](https://rutube.ru/video/442273f978191ea81f6057ed9057f366/) 2026-04 называет артефакты и качество исходников проблемой; [AITOR](https://aitor.app/blog/neirofotosessiya-v-2026-tekhnologiya-kachestvo-i-tsena) описывает ошибки сходства и деталей. Оба источника принадлежат участникам категории. | Есть повторяемая техническая проблема качества/контроля результата, но не независимое подтверждение острого платного Job. | Независимые отзывы покупателей, конкретный сегмент, сезонность и причина заплатить за КАДРУ. |
+| AI YouTube Automation | Независимые посты [2026-01](https://www.reddit.com/r/aitubers/comments/1q65n5b/channel_suspended_from_ypp_for_inauthentic/) и [2026-06](https://www.reddit.com/r/aitubers/comments/1uiufzp/channel_got_demonetized_due_to_inauthentic/) сообщают о demonetization за inauthentic/reused AI content; это согласуется с официальной policy. | Есть свежая повторяемая проблема создателя: предсказуемо выпускать оригинальный AI-assisted контент, который сохраняет монетизацию. Это не спрос зрителя на автоматический канал. | Платящий сегмент, допустимый оригинальный формат, локальная экономика, сезонность спроса и канал первых просмотров. |
+| Ассистент цикла | [RuStore: Календарь](https://www.rustore.ru/catalog/app/com.periodapp.period/reviews) 2026-08 показывает длительное использование и запрос на простой трекер; [RuStore: Женский календарь](https://www.rustore.ru/catalog/app/com.lbrc.PeriodCalendar/reviews) 2026-03–07 содержит complaints о рекламе, paywall, прогнозах, переносе данных; [Google Play: Clue](https://play.google.com/store/apps/details?hl=ru&id=com.clue.android) 2026-08 фиксирует проблемы загрузки в РФ. | Локальный Job «простой стабильный трекер и сохранность данных» наблюдаем. Из отзывов следует, что basic-функция должна быть доступна, а не что за неё будут платить. | Не-медицинский paid outcome, privacy boundary, канал и сезонность; Telegram-first пока не обоснован. |
+| Sansara | [App Store отзывы Time Travel](https://apps.apple.com/us/app/time-travel-by-photomyne/id6766200794?platform=ipad&see-all=reviews) указывают на качество/доступ к support; [Incarn test](https://www.incarn.co/en/blog/myheritage-livememory-review-2026) 2026-07 отмечает uncanny drift как проблему photo-animation. | У current AI-photo category есть качество/доверие как friction, но это не подтверждает спрос на exact-offer «прошлая жизнь». | Независимый спрос на exact Job в РФ, покупатель, повод возвращаться, сезонность и платёж. |
+| ProfiWatcher | [официальная справка Profi.ru](https://help.profi.ru/ru/articles/2689262-%D0%BC%D0%BD%D0%B5-%D0%BD%D0%B5-%D0%BF%D1%80%D0%B8%D1%85%D0%BE%D0%B4%D1%8F%D1%82-%D1%83%D0%B2%D0%B5%D0%B4%D0%BE%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F-%D0%BE-%D0%BF%D0%BE%D0%B4%D1%85%D0%BE%D0%B4%D1%8F%D1%89%D0%B8%D1%85-%D0%B7%D0%B0%D0%BA%D0%B0%D0%B7%D0%B0%D1%85-%D0%BF%D0%BE%D1%87%D0%B5%D0%BC%D1%83) 2026-02 подтверждает, что notifications могут не прийти/прийти позже; [Otzyvru](https://www.otzyvru.com/profiru?page=3) 2026-04 содержит жалобу на поздние закрытые заказы; [Downradar](https://downradar.ru/reviews/profi.ru) содержит похожую жалобу, но дата там не свежая и поэтому не используется как основной сигнал. | Есть один официальный и один внешний свежий сигнал потери скорости реакции. Это подтверждает проблему, но не разрешает доступ к данным и не подтверждает спрос на наш watcher. | Законный источник, согласие/персональные данные, сегмент с измеримой ценой минуты, сезонность и willingness-to-pay. |
+
+Промежуточно: S2-статус сильнее всего у `AI YouTube Automation` и
+`ProfiWatcher` как у **проблемы**, но оба имеют тяжёлые platform/policy risks.
+У `cycle-assistant` видна стабильная бесплатная задача; у Радарыча, КАДРЫ и
+Sansara пока недостаточно независимых сигналов. Это не рейтинг и не shortlist.
+
 ## Карта S0
 
 | Кандидат | Факт о текущем активе | Гипотеза о плательщике и деньгах | Что не доказано | Вопрос для S1_MARKET |
