@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-dashboard-owner-cockpit-v5",
+  "change_kind": "dashboard-decision-cockpit-and-single-run-funnel",
+  "status": "passed",
+  "requested_visible_change": "Сделать воронку визуально проще: сначала показать решение владельца, затем честный путь одного запуска, а общую карту стадий оставить вторичной.",
+  "expected_visible_delta": "Вместо восьми равнозначных карточек с 32 счётчиками первый экран показывает один следующий gate; ниже виден checkpoint-rail выбранного factory_v2 run и отдельный benchmark действующего бизнеса.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "349c75c909b1696a6aba35aa072ec9a7cd5329c8a2c19b573dce8d4c80ca16e7",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#funnel",
+    "source_ref": "working tree after final UI edit",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel",
+    "state": "active factory_v2 run at S4_OWNER; two finalists; no real interviews",
+    "selector_or_slide_id": "#decision-brief, #run-funnel-body, #run-select, .stage-map-panel, #benchmark-row",
+    "action": "Открыть экран, проверить следующий gate, выбрать run, раскрыть карту стадий и открыть этап Проверка рынка."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Readiness не выводится из score",
+    "Данные checkpoint читаются только из decisionAudits",
+    "Фильтры и переходы в карточки идей сохранены",
+    "Публичная allowlist не расширена"
+  ],
+  "required_viewports": [
+    "390x844",
+    "616x514",
+    "1440x900"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "in-app isolated browser plus responsive QA runner",
+      "before_signature": "Восемь этапов конкурировали за первый экран; каждый этап содержал четыре равнозначных счётчика.",
+      "after_signature": "Owner cockpit занимает первый экран; ширина документа 390px; checkpoint-rail идёт вертикально; 32 старых metric cells отсутствуют.",
+      "observed_visible_result": "Сразу видны ноль интервью, текущий S4_OWNER и один следующий gate; горизонтального overflow нет.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "616x514",
+      "viewport_source": "exact current in-app window and responsive QA runner",
+      "before_signature": "На живом Pages были восемь карточек и 32 пересекающихся stage metrics на ширине 616px.",
+      "after_signature": "На ширине 616px видны owner cockpit и выбранный run; document scrollWidth равен 616px.",
+      "observed_visible_result": "Ключевое решение читается без разбора общей таблицы; содержимое не выходит за viewport.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "in-app isolated browser plus responsive QA runner",
+      "before_signature": "Desktop начинался со сквозной сетки из восьми карточек и 32 чисел, смешивавших разные run.",
+      "after_signature": "Desktop показывает двухколоночный owner cockpit, затем checkpoint-rail одного run; benchmark отделён, карта стадий свёрнута.",
+      "observed_visible_result": "Иерархия ведёт от решения к доказательствам одного запуска; width и scrollWidth равны 1440px, console errors отсутствуют.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 3,
+    "selected_variant": "Экран решения плюс воронка одного выбранного batch",
+    "owner_approval_reference": "После сравнения визуальных вариантов пользователь написал: делай"
+  }
+}

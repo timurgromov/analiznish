@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>Анализ Ниш — Кабинет идей</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260912-funnel-v40" />
+    <link rel="stylesheet" href="./styles.css?v=20260912-funnel-v50" />
   </head>
   <body>
     <header class="topbar">
@@ -97,14 +97,19 @@
 
       <section class="app-view active" id="view-funnel" role="tabpanel" data-panel="funnel">
         <section class="decision-brief" id="decision-brief" aria-labelledby="decision-brief-title"></section>
-        <div class="summary-strip" id="summary-strip" aria-label="Срез портфеля"></div>
-        <section class="panel">
-          <div class="section-head">
-            <div><div class="section-kicker">Сквозной audit trail</div><h2>Как идеи проходят через сито</h2><p>На каждом этапе видно, сколько идей дошло, осталось сейчас, прошло дальше и остановилось.</p></div>
+        <section class="panel run-funnel-panel" aria-labelledby="run-funnel-title">
+          <div class="section-head run-funnel-head">
+            <div><div class="section-kicker">Сопоставимый проход</div><h2 id="run-funnel-title">Воронка одного запуска</h2><p>Здесь складываются только идеи одного Factory-run. Другие запуски и legacy-активы не смешиваются с ним.</p></div>
+            <label class="run-select-control"><span>Исследовательский запуск</span><select id="run-select"></select></label>
           </div>
-          <div class="funnel-legend" aria-label="Расшифровка показателей"><span><i class="legend-reached"></i>Дошли</span><span><i class="legend-current"></i>Сейчас</span><span><i class="legend-advanced"></i>Прошли дальше</span><span><i class="legend-stopped"></i>Остановлены</span></div>
-          <ol class="funnel-grid" id="funnel-grid"></ol>
+          <div class="run-funnel-body" id="run-funnel-body"></div>
         </section>
+        <details class="panel stage-map-panel">
+          <summary><span><span class="section-kicker">Общий реестр</span><strong>Где сейчас лежат все идеи</strong></span><span class="stage-map-summary" id="stage-map-summary">Открыть карту стадий</span></summary>
+          <div class="stage-map-intro"><p>Одна идея показана в одном текущем месте. Нажми этап, чтобы открыть его проекты и причины решений.</p></div>
+          <ol class="funnel-grid" id="funnel-grid"></ol>
+          <div class="benchmark-row" id="benchmark-row"></div>
+        </details>
         <section class="panel funnel-selection-panel" id="funnel-selection-panel" hidden>
           <div class="section-head funnel-selection-head">
             <div><div class="section-kicker">Выбранный этап</div><h2 id="funnel-selection-title">Идеи этапа</h2><p id="funnel-selection-note">Здесь видны все идеи, которые дошли до этапа, включая прошедшие дальше и остановленные.</p></div>
@@ -157,6 +162,6 @@
       <span>Кабинет только для просмотра · источник правды: <code>data/IDEA_REGISTRY.json</code></span>
     </footer>
 
-    <script src="./app.js?v=20260912-funnel-v40" defer></script>
+    <script src="./app.js?v=20260912-funnel-v50" defer></script>
   </body>
 </html>

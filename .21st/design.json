@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "project": {
+    "name": "Анализ Ниш",
+    "productType": "read-only operator dashboard",
+    "stack": ["Static HTML", "CSS", "JavaScript"]
+  },
+  "sources": {
+    "tokens": ["dashboard/styles.css"],
+    "components": ["dashboard/index.html", "dashboard/app.js"],
+    "assets": ["dashboard/favicon.svg"],
+    "instructions": ["AGENTS.md", "dashboard/AGENTS.md", "UX.md"]
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "primary": "--blue",
+      "success": "--green",
+      "waiting": "--amber",
+      "failure": "--red"
+    },
+    "typography": {"family": "Inter/system sans"},
+    "spacing": {"density": "compact operator cockpit"},
+    "radius": {"panel": "--radius"},
+    "shadows": {"panel": "--shadow"},
+    "motion": {"rule": "state clarification only; honor reduced motion"},
+    "density": "dense"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": ["panel", "native button", "native select", "details/summary"],
+    "patterns": ["owner decision cockpit", "single-run checkpoint rail", "secondary current-stage map"]
+  },
+  "constraints": {
+    "must": [
+      "Keep the dashboard read-only and Russian-first",
+      "Build a true funnel from one factory_v2 run and idea.runIds only",
+      "Keep stage drill-down and existing filters",
+      "Separate active_business benchmarks from the Factory flow",
+      "Support 390px without page overflow"
+    ],
+    "avoid": [
+      "Four overlapping metrics on every stage card",
+      "Mixing legacy runs and Factory runs into one arithmetic funnel",
+      "Deriving interview readiness from score",
+      "Adding React, Tailwind or new UI frameworks"
+    ]
+  },
+  "decisions": [
+    {
+      "id": "dashboard-v5-owner-cockpit-single-run",
+      "date": "2026-09-12",
+      "status": "selected",
+      "decision": "Use an owner decision cockpit as the first view, a selectable single-run checkpoint rail as the honest funnel, and a secondary current-stage map with active business benchmarks separated.",
+      "source": "UX.md"
+    }
+  ],
+  "evidence": [
+    {"fact": "project.instructions", "source": "AGENTS.md"},
+    {"fact": "dashboard.instructions", "source": "dashboard/AGENTS.md"},
+    {"fact": "dashboard.tokens", "source": "dashboard/styles.css"},
+    {"fact": "dashboard.v5.contract", "source": "UX.md"}
+  ],
+  "generatedAt": "2026-09-12T20:48:12.750Z"
+}

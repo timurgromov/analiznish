@@ -45,6 +45,7 @@ const state = {
   funnelStage: null,
   funnelGate: "all",
   funnelSort: "current",
+  selectedRunId: null,
   portfolioView: "queue",
   portfolio: { market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
   selectedPortfolioIndex: 0,
@@ -102,15 +103,16 @@ function checkpointStage(id) {
   return checkpointById(id)?.dashboardStage;
 }
 
-function stageMetrics(stage) {
-  const reached = state.registry.ideas.filter((idea) => {
-    if (idea.stage === stage.id) return true;
-    return auditFor(idea.id)?.checkpointHistory?.some((entry) => checkpointStage(entry.checkpointId) === stage.id);
-  });
-  const current = state.registry.ideas.filter((idea) => idea.stage === stage.id);
-  const stopped = current.filter((idea) => ["parked", "failed", "passed_not_selected"].includes(idea.gateStatus));
-  const advanced = reached.filter((idea) => (stageById(idea.stage)?.order ?? -1) > stage.order);
-  return { reached, current, stopped, advanced };
+function factoryRuns() {
+  return state.registry.runs.filter((run) => run.framework === "factory_v2");
+}
+
+function ideasForRun(runId) {
+  return state.registry.ideas.filter((idea) => idea.runIds?.includes(runId));
+}
+
+function checkpointEntry(idea, checkpointId) {
+  return auditFor(idea.id)?.checkpointHistory?.find((entry) => entry.checkpointId === checkpointId) || null;
 }
 
 function projectSourceHref(source) {
@@ -159,6 +161,14 @@ function pluralIdeas(value) {
   return `${value} идей`;
 }
 
+function pluralNoun(value, one, few, many) {
+  const mod10 = value % 10;
+  const mod100 = value % 100;
+  if (mod10 === 1 && mod100 !== 11) return one;
+  if (mod10 >= 2 && mod10 <= 4 && !(mod100 >= 12 && mod100 <= 14)) return few;
+  return many;
+}
+
 function setStatus(text, tone = "") {
   const target = document.querySelector("#data-status");
   target.textContent = text;
@@ -168,27 +178,21 @@ function setStatus(text, tone = "") {
 function renderTopSummary() {
   const ideas = state.registry.ideas;
   const finalists = ideas.filter((idea) => idea.stage === "finalist").length;
-  const money = ideas.filter((idea) => (stageById(idea.stage)?.order ?? -1) >= 6).length;
+  const interviews = ideas.filter((idea) => idea.stage === "interviews").length;
   const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
   const system = state.factory.systemStatus;
   const systemState = system.status === "configured" ? "Настроен" : system.statusLabel;
-  document.querySelector("#decision-brief").innerHTML = `<div class="decision-lead">
-    <p class="section-kicker">Сейчас</p>
-    <div class="decision-title-row"><h2 id="decision-brief-title">${escapeHtml(system.statusLabel)}</h2><span class="decision-status">${escapeHtml(systemState)}</span></div>
-    <p>${escapeHtml(system.summary)}</p>
+  const interviewHeadline = interviews === 0 ? "До интервью не дошла ни одна идея" : `${pluralIdeas(interviews)} дошли до интервью`;
+  document.querySelector("#decision-brief").innerHTML = `<div class="owner-overview">
+    <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(interviewHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
+    <div class="owner-flow" aria-label="Текущее состояние портфеля">
+      <a href="#all-ideas" class="owner-flow-step"><strong>${ideas.length}</strong><span>всего идей</span></a><i aria-hidden="true">→</i>
+      <button type="button" class="owner-flow-step" data-stage-jump="finalist"><strong>${finalists}</strong><span>${pluralNoun(finalists, "финалист", "финалиста", "финалистов")}</span></button><i aria-hidden="true">→</i>
+      <button type="button" class="owner-flow-step owner-flow-target" data-stage-jump="interviews"><strong>${interviews}</strong><span>на интервью</span></button>
+    </div>
   </div>
-  <dl class="decision-facts">
-    <div class="decision-fact"><dt>Подтверждено</dt><dd>${escapeHtml(system.confirmed)}</dd></div>
-    <div class="decision-fact decision-unknown"><dt>Нужно уточнить</dt><dd>${escapeHtml(system.unknown)}</dd></div>
-    <div class="decision-fact decision-next"><dt>Следующий gate</dt><dd>${escapeHtml(system.nextGate)}</dd><a href="#research">Открыть журнал исследований →</a></div>
-  </dl>`;
-  const stats = [
-    [ideas.length, "всего идей", "В одном реестре"],
-    [finalists, "финалиста", "Ждут подтверждения"],
-    [money, "с деньгами", "Оплата или повтор"],
-    [archive, "остановлено", "Можно вернуть позже"],
-  ];
-  document.querySelector("#summary-strip").innerHTML = stats.map(([value, label, note]) => `<article><strong>${value}</strong><div><span>${escapeHtml(label)}</span><small>${escapeHtml(note)}</small></div></article>`).join("");
+  <aside class="owner-next-gate"><p class="section-kicker">Один следующий gate</p><strong>${escapeHtml(system.nextGate)}</strong><a href="#research">Открыть журнал исследований →</a></aside>
+  <details class="decision-context"><summary>Что уже подтверждено и что остаётся неизвестным</summary><div><p><span>Подтверждено</span>${escapeHtml(system.confirmed)}</p><p><span>Неизвестно</span>${escapeHtml(system.unknown)}</p><p><span>Состояние контура</span>${escapeHtml(system.summary)}</p></div></details>`;
   document.querySelector("#tab-total").textContent = ideas.length;
   document.querySelector("#tab-runs").textContent = state.registry.runs.length;
   document.querySelector("#tab-archive").textContent = archive;
@@ -295,14 +299,68 @@ function renderIdeas() {
 }
 
 function renderFunnel() {
+  const benchmarks = state.registry.ideas.filter((idea) => idea.objectType === "active_business");
+  const factoryIdeas = state.registry.ideas.filter((idea) => idea.objectType !== "active_business");
   document.querySelector("#funnel-grid").innerHTML = state.registry.stages.map((stage) => {
-    const metrics = stageMetrics(stage);
-    const empty = metrics.reached.length === 0;
-    return `<li class="funnel-card"><button type="button" class="stage-jump ${empty ? "is-empty" : ""}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Показать этап ${escapeHtml(stage.label)}: дошли ${metrics.reached.length}, сейчас ${metrics.current.length}, остановлены ${metrics.stopped.length}">
-      <span class="stage-number">${stage.order + 1}</span><div class="stage-title"><b>${escapeHtml(stage.label)}</b><small>${escapeHtml(stage.description)}</small></div>
-      <dl class="stage-metrics"><div><dt>Дошли</dt><dd>${metrics.reached.length}</dd></div><div><dt>Сейчас</dt><dd>${metrics.current.length}</dd></div><div><dt>Дальше</dt><dd>${metrics.advanced.length}</dd></div><div><dt>Стоп</dt><dd>${metrics.stopped.length}</dd></div></dl>
-    </button><button class="help-trigger card-help" type="button" data-tooltip="${escapeHtml(stage.description)}" aria-label="Что означает этап «${escapeHtml(stage.label)}»?">?</button></li>`;
+    const current = factoryIdeas.filter((idea) => idea.stage === stage.id);
+    const empty = current.length === 0;
+    return `<li class="funnel-card"><button type="button" class="stage-jump ${empty ? "is-empty" : ""}${state.funnelStage === stage.id ? " selected" : ""}" data-stage-jump="${stage.id}" aria-pressed="${state.funnelStage === stage.id}" aria-label="Открыть этап ${escapeHtml(stage.label)}: сейчас ${current.length}">
+      <span class="stage-number">${stage.order + 1}</span><strong class="stage-current">${current.length}</strong><span class="stage-current-label">сейчас</span><b>${escapeHtml(stage.label)}</b>
+    </button></li>`;
   }).join("");
+  document.querySelector("#stage-map-summary").textContent = `${pluralIdeas(factoryIdeas.length)} в Factory · ${pluralIdeas(benchmarks.length)} benchmark`;
+  document.querySelector("#benchmark-row").innerHTML = benchmarks.length
+    ? `<div><span class="benchmark-mark" aria-hidden="true">↗</span><p><strong>Отдельный действующий benchmark</strong><span>Он подтверждает деньги вне последовательного Factory-run и не рисует ложный проход через предыдущие стадии.</span></p></div>${benchmarks.map((idea) => `<button type="button" data-stage-jump="${idea.stage}">${escapeHtml(idea.title)} →</button>`).join("")}`
+    : "";
+}
+
+function renderRunFunnel() {
+  const runs = factoryRuns();
+  const select = document.querySelector("#run-select");
+  const target = document.querySelector("#run-funnel-body");
+  if (!runs.length) {
+    select.innerHTML = "";
+    target.innerHTML = '<div class="empty-state"><strong>Factory-run ещё не записаны</strong><p>Воронка появится после первого сопоставимого запуска.</p></div>';
+    return;
+  }
+  if (!runs.some((run) => run.id === state.selectedRunId)) state.selectedRunId = runs.at(-1).id;
+  select.innerHTML = runs.map((run) => `<option value="${escapeHtml(run.id)}"${run.id === state.selectedRunId ? " selected" : ""}>${escapeHtml(run.title)}</option>`).join("");
+  const run = runs.find((item) => item.id === state.selectedRunId);
+  const ideas = ideasForRun(run.id);
+  const checkpointIndexes = ideas.flatMap((idea) => (auditFor(idea.id)?.checkpointHistory || []).map((entry) => state.schema.checkpoints.findIndex((checkpoint) => checkpoint.id === entry.checkpointId))).filter((index) => index >= 0);
+  const lastRecordedIndex = checkpointIndexes.length ? Math.max(...checkpointIndexes) : -1;
+  const currentCheckpointIndexes = ideas.map((idea) => state.schema.checkpoints.findIndex((checkpoint) => checkpoint.id === auditFor(idea.id)?.currentCheckpointId)).filter((index) => index >= 0);
+  const runCurrentIndex = currentCheckpointIndexes.length ? Math.max(...currentCheckpointIndexes) : -1;
+  const visibleCheckpoints = state.schema.checkpoints.slice(0, Math.min(state.schema.checkpoints.length, Math.max(1, lastRecordedIndex + 2)));
+  const runStatus = run.status === "complete" ? "Завершён" : run.status === "parked" ? "На паузе" : run.status === "active" ? "В работе" : "Остановлен";
+  const batchStatus = ideas.length >= 5 && ideas.length <= 10 ? "Полный batch 5–10" : `Не batch: ${pluralIdeas(ideas.length)}`;
+  const rows = visibleCheckpoints.map((checkpoint, index) => {
+    const entries = ideas.map((idea) => checkpointEntry(idea, checkpoint.id)).filter(Boolean);
+    const passed = entries.filter((entry) => entry.status === "passed").length;
+    const parked = entries.filter((entry) => entry.status === "parked").length;
+    const failed = entries.filter((entry) => entry.status === "failed").length;
+    const notSelected = entries.filter((entry) => entry.status === "passed_not_selected").length;
+    const legacy = entries.filter((entry) => entry.status === "legacy_only").length;
+    const isCurrent = run.status !== "complete" && index === runCurrentIndex;
+    let tone = "not-opened";
+    if ((failed || notSelected) && (passed || parked)) tone = "mixed";
+    else if (failed) tone = "failed";
+    else if (notSelected) tone = "not-selected";
+    else if (parked) tone = "parked";
+    else if (passed) tone = "passed";
+    else if (legacy) tone = "legacy";
+    const result = [];
+    if (passed) result.push(`${passed} прошли`);
+    if (parked) result.push(`${parked} ждут evidence`);
+    if (failed) result.push(`${failed} отсеяны`);
+    if (notSelected) result.push(`${notSelected} прошли, не выбраны`);
+    if (legacy) result.push(`${legacy} legacy-запись`);
+    if (!result.length) result.push(index === lastRecordedIndex + 1 ? "Следующий, ещё не открыт" : "Нет записи в audit");
+    const marker = tone === "passed" ? "✓" : tone === "failed" ? "×" : tone === "parked" || tone === "mixed" || tone === "not-selected" ? "‖" : "·";
+    return `<li class="run-checkpoint tone-${tone}${isCurrent ? " is-current" : ""}"><span class="run-checkpoint-marker" aria-hidden="true">${marker}</span><div><span>${escapeHtml(checkpoint.id)}</span><strong>${escapeHtml(checkpoint.name)}</strong><small>${escapeHtml(result.join(" · "))}</small></div></li>`;
+  }).join("");
+  const candidateLinks = ideas.map((idea) => `<a href="${projectCardHref(idea.id)}">${escapeHtml(idea.title)}</a>`).join("");
+  target.innerHTML = `<div class="run-rail"><ol>${rows}</ol></div><aside class="run-outcome"><div class="run-outcome-meta"><span class="run-status status-${escapeHtml(run.status)}">${escapeHtml(runStatus)}</span><span>${escapeHtml(batchStatus)}</span></div><h3>${escapeHtml(run.title)}</h3><p>${escapeHtml(run.result)}</p><div class="run-candidates"><span>Состав запуска</span>${candidateLinks || "<small>Связанные идеи не найдены</small>"}</div></aside>`;
 }
 
 function renderFunnelSelection() {
@@ -318,17 +376,14 @@ function renderFunnelSelection() {
   const stage = state.funnelStage === "all" ? null : stageById(state.funnelStage);
   const gate = state.funnelGate === "all" ? null : gateById(state.funnelGate);
   const ideas = sortIdeas(state.registry.ideas.filter((idea) => {
-    if (stage) {
-      const reached = idea.stage === stage.id || auditFor(idea.id)?.checkpointHistory?.some((entry) => checkpointStage(entry.checkpointId) === stage.id);
-      if (!reached) return false;
-    }
+    if (stage && idea.stage !== stage.id) return false;
     if (gate && idea.gateStatus !== gate.id) return false;
     return true;
   }), state.funnelSort);
 
   document.querySelector("#funnel-selection-title").textContent = stage ? stage.label : "Все этапы";
   document.querySelector("#funnel-selection-note").textContent = stage
-    ? `Показаны все идеи, которые дошли до этапа «${stage.label}»: оставшиеся, остановленные и прошедшие дальше.`
+    ? `Показаны идеи, которые сейчас находятся на этапе «${stage.label}». Результат gate и причина остановки видны в каждой строке.`
     : "Показаны идеи со всех этапов по выбранному результату проверки.";
   document.querySelector("#funnel-selection-count").textContent = pluralIdeas(ideas.length);
   document.querySelector("#funnel-selection-filter").textContent = gate ? `результат: ${gate.label}` : "все результаты проверки";
@@ -519,6 +574,10 @@ function bindControls() {
   }));
   document.querySelector("#reset-filters").addEventListener("click", resetIdeaFilters);
   document.querySelector("#show-all-ideas").addEventListener("click", resetIdeaFilters);
+  document.querySelector("#run-select").addEventListener("change", (event) => {
+    state.selectedRunId = event.target.value;
+    renderRunFunnel();
+  });
   document.querySelectorAll("[data-stage-jump]").forEach((button) => button.addEventListener("click", () => {
     state.funnelStage = button.dataset.stageJump;
     state.funnelGate = "all";
@@ -577,6 +636,7 @@ async function init() {
     renderFilterOptions();
     renderIdeas();
     renderFunnel();
+    renderRunFunnel();
     renderFunnelSelection();
     renderRuns();
     renderArchive();
