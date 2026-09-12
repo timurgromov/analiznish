@@ -6,13 +6,13 @@ Registry run ID: legacy-portfolio-sigma-2026-09-11
 Mode: niche_factory
 Status: active
 Direction: проверить существующие непсихологические ставки и активы единым SIGMA-ситом; выбрать только доказуемого кандидата для дальнейшей проверки спроса
-Checkpoint ID: S2_TREND
+Checkpoint ID: S3_LOCALIZE
 Checkpoint gate status: in_progress
 Macro phase: S · SCAN
-Current step: 2
-Current step name: Тренд и живые проблемы
-Previous checkpoint: S1_MARKET
-Completed checkpoints: S0_CONTEXT, S1_MARKET
+Current step: 3
+Current step name: Локализация спроса и ограничений
+Previous checkpoint: S2_TREND
+Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND
 Candidate IDs: radarych, kadra, ai-youtube-automation, cycle-assistant, pastlife-sansara, profiwatcher
 Selected focus IDs: —
 Strongest evidence: E1
@@ -29,17 +29,21 @@ Rule24 и все психологические кандидаты не смеш
 
 ## Единственная текущая работа
 
-Для каждого из шести кандидатов собрать одинаковые свежие признаки `S2_TREND`:
-динамику интереса, сезонность и независимые живые формулировки незакрытой
-проблемы. Отделять наблюдаемый тренд и повторяемый problem signal от роста
-категории, единичной жалобы и продавцовских заявлений.
+Для пяти неотсеянных кандидатов — `radarych`, `kadra`,
+`ai-youtube-automation`, `cycle-assistant`, `profiwatcher` — проверить
+локальный российский спрос, доступный канал и ограничения конкретного Job.
+`pastlife-sansara` остановлен на S2: для exact-offer «прошлая жизнь по фото»
+не найдено двух независимых свежих сигналов живой проблемы или спроса.
 
 ## Gate этапа
 
-Для каждого кандидата есть минимум два независимых свежих сигнала о проблеме
-или спросе и отдельно зафиксирована сезонность/её неизвестность. Сигналы должны
-относиться к конкретному Job, а не к общему интересу к AI, путешествиям или
-здоровью. Ранний Portfolio Gate наступит только после `S0–S3` для всей пачки.
+Для каждого из пяти неотсеянных кандидатов есть локальный источник по
+конкретному Job, явная граница применимости и названный доступный канал либо
+честно зафиксировано его отсутствие. Нельзя подменять российский спрос
+зарубежным референсом, а доступность кода — правом на данные, платформу или
+чувствительные данные. Ранний Portfolio Gate наступит только после `S0–S3`
+для всей пачки и не включает `pastlife-sansara`, пока не появится новый
+независимый S2-сигнал exact-offer.
 
 ## Запрещённый переход
 
