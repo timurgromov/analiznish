@@ -1,5 +1,9 @@
 # 2026-09-12 — Rule24: S5 конкурентная рамка и Portfolio Gate
 
+> **Статус решения: superseded 2026-09-13.** S5 evidence сохранено, но
+> `passed_not_selected` по execution score отменён. Актуальный исход — `parked`;
+> закрыть или не выбрать concrete bet может только владелец.
+
 ## Вход
 
 Rule24 прошёл S0–S3. Российские Cue, Calink, Recordo и правило отмены YouTalk

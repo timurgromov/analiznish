@@ -30,7 +30,9 @@ AI резко удешевил создание прототипов, поэто
 заменить его циклом:
 
 ```text
-чистилище → pain/product/transaction mining → batch scan → ранний Portfolio Gate → финалист → реальные клиенты → действие → деньги
+конкретная идея: Definition Interview → Thesis Contract → single-thesis scan
+поиск с нуля: чистилище → pain/product/transaction mining → batch scan
+обе ветки → ранний Gate → owner decision → реальные клиенты → действие → деньги
   → узкий build → использование/повтор → rescore
 ```
 
@@ -59,6 +61,13 @@ B2B с повторяемым cashflow — предпочтительный пр
 вопрос checkpoint, критерии, фактическое evidence, `passed/failed/unknown`,
 причина исхода и история пересмотра. Конкурент подтверждает рынок; отличие,
 канал и экономика нашей ставки оцениваются отдельно.
+
+Для принесённой владельцем идеи до исследования обязателен Definition Gate по
+`docs/IDEA_DEFINITION_PROTOCOL.md`: короткое интервью, один подтверждённый
+Thesis Contract и перечень запрещённых подмен. Сегмент, delivery, цена и канал
+остаются гипотезами одной ставки. Новая идея по определению может не иметь
+готового продукта, канала, кейсов, аудитории, moat и доказанных CAC/LTV/repeat;
+эта неготовность влияет на план проверки, но не является terminal outcome.
 
 ## Product Promise
 
@@ -108,8 +117,10 @@ test → paid pilot → bounded MVP`.
 
 Триггер: пользователь приносит конкретную модель, сегмент или референс.
 
-Режим выбирается из `quick_scan`, `deep_score` или `rescore`. Идея входит в тот
-же factory-loop на соответствующем этапе и не получает обход build gate.
+Сначала агент проводит Definition Interview, возвращает владельцу один Thesis
+Contract и получает подтверждение. Затем режим выбирается из `quick_scan`,
+`deep_score` или `rescore`. Идея входит в тот же factory-loop, не дробится на
+проекты по упаковке и не получает обход build gate.
 
 ### 3. `recovery_discovery`
 
@@ -163,7 +174,7 @@ CustDev/action/pay gates.
 | --- | --- | --- | --- |
 | `inbox` | Что не потерять? | Идея, плательщик и дешёвая первая проверка | `quick_scan` |
 | `quick_scan` | Есть ли очевидный рынок и модель денег? | Hard filters и первичные публичные признаки | `market_research` |
-| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | S0–S5, 18 критериев и 1–2 финалиста | `finalist` |
+| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | Для batch: S0–S5, 18 критериев и 1–2 финалиста; для single thesis: возможность, business design, readiness и следующий gate | `finalist` либо owner hold |
 | `finalist` | Какую одну ставку проверять? | Owner choice и полный I_E1-корпус | `interview_ready` |
 | `interviews` | Повторяется ли дорогая проблема? | Минимум пять интервью, JTBD, канал и финансовый диапазон | `offer_ready` |
 | `action_test` | Совершит ли клиент затратное действие? | Оффер, CTA, интро/demo/data/LOI | I_E4 money gate |
@@ -196,8 +207,13 @@ CustDev/action/pay gates.
 Скоринг отвечает не на вопрос «можно ли уже строить», а на два отдельных вопроса:
 
 1. `market_opportunity_score` — насколько сильны категория и модель денег;
-2. `execution_priority_score` — насколько оправдана следующая инвестиция именно
-   в нашу конкретную ставку с учётом доказательности.
+2. `execution_priority_score` — какой разрешённый следующий эксперимент
+   разумнее сделать первым для конкретной ставки.
+
+Score не назначает `failed`, `parked` или `passed_not_selected`. `failed`
+требует hard blocker; `passed_not_selected` для конкретной ставки — явное
+решение владельца после сравнения независимых ставок. Opportunity, business
+design, readiness и evidence confidence показываются отдельно.
 
 Обязательные поля: `object_type`, `validation_stage`, `strongest_evidence`,
 `market_score`, `economics_score`, `moat_scale_score`,
@@ -212,6 +228,7 @@ CustDev/action/pay gates.
 | Артефакт | Источник правды |
 | --- | --- |
 | Текущий run, macro phase, этап и gate | `data/ACTIVE_RUN.md` |
+| Канонический смысл конкретной ставки | `docs/IDEA_DEFINITION_PROTOCOL.md` + Thesis Contract в active run/source board |
 | Сырые идеи без обязательств | `data/IDEA_INBOX.md` |
 | Единый индекс всех идей, этапов и research-runs для кабинета | `data/IDEA_REGISTRY.json` |
 | Контекстные карты, Jobs map и разборы референсов до ставки | `data/discovery/` |

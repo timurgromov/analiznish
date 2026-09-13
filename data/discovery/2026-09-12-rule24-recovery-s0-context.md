@@ -1,5 +1,9 @@
 # Rule24: Factory v2 recovery screen
 
+> **Decision layer superseded 2026-09-13.** Публичный corpus остаётся evidence,
+> но `passed_not_selected` отменён: score не заменяет owner decision. Текущий
+> исход Rule24 — `parked` с unknown switching reason, channel и economics.
+
 Дата старта: 2026-09-12
 Run ID: `rule24-recovery-russia-2026-09-12`
 Текущий checkpoint: `S5_COMPETITORS`

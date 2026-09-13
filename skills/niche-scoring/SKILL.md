@@ -1,6 +1,6 @@
 ---
 name: niche-scoring
-description: Use when evaluating a business niche, startup idea, MVP, offer, or business model for fast cash, scale potential, founder focus, hit-parade ranking, or rescore.
+description: Use when capturing, researching, evaluating, comparing, or rescoring a business niche, startup idea, MVP, offer, or business model while preserving the owner's product definition and evidence gates.
 ---
 
 # Niche Scoring
@@ -15,14 +15,15 @@ Use this project-local skill when the user brings a niche or asks what to focus 
 4. `docs/SIGMA_EXECUTION_MODEL.md`
 5. `docs/INSIGHT_EXECUTION_MODEL.md`
 6. `docs/IDEA_PURGATORY_PROTOCOL.md`
-7. `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`
-8. `docs/SCORING_MODEL.md`
-9. `docs/WORKFLOW.md`
-10. `docs/NICHE_DISCOVERY_LOOP.md`
-11. `docs/CUSTDEV_PROTOCOL.md`
-12. `docs/NICHE_QUESTIONNAIRE.md`
-13. `docs/NICHE_INPUT_TEMPLATE.md`
-14. `data/HIT_PARADE.md`
+7. `docs/IDEA_DEFINITION_PROTOCOL.md`
+8. `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`
+9. `docs/SCORING_MODEL.md`
+10. `docs/WORKFLOW.md`
+11. `docs/NICHE_DISCOVERY_LOOP.md`
+12. `docs/CUSTDEV_PROTOCOL.md`
+13. `docs/NICHE_QUESTIONNAIRE.md`
+14. `docs/NICHE_INPUT_TEMPLATE.md`
+15. `data/HIT_PARADE.md`
 
 ## Workflow
 
@@ -37,13 +38,20 @@ check. Do not create a full score, niche card or hit parade row at this stage.
 2a. When the user asks to find a current idea without a niche, run pain-first,
 product-first and transaction-first discovery. Use acquisition marketplaces as
 listing evidence, not as clone instructions or automatically proven revenue.
+2b. When the user brings one concrete idea, run the Definition Interview before
+research or score. Ask no more than four questions per message, then return one
+Thesis Contract for owner confirmation. Do not require the owner to know market,
+channel, pricing or economics. Treat segment, payer, delivery, price and channel
+as hypotheses inside one thesis, not separate ideas.
 3. Check questionnaire completion level.
 4. For `deep_score`, require block A from `docs/NICHE_QUESTIONNAIRE.md`.
 5. Apply hard filters before score.
 6. Classify `validation_stage` and strongest evidence `E0–E5`; a ready product can still be pre-CustDev.
-7. Run the applicable discovery scan. Before interviews, batch 5–10 candidates
-through `S · SCAN 0–3`, then apply the 18-criterion early Portfolio Gate at
-step 4 and retain no more than 1–2 finalists.
+7. Run the applicable discovery scan. For search from scratch, batch 5–10
+independent candidates through `S · SCAN 0–3`, then apply the 18-criterion
+Portfolio Gate at step 4 and retain no more than 1–2 finalists. For a concrete
+owner idea, use one `single_thesis` card through the same checkpoints; never
+manufacture a batch from segments or delivery variants.
 7a. Treat sustainable profit as the objective and predictable recurring
 cashflow as a preference, not a hard gate. Compare subscription, transaction,
 commission, one-off, B2C and sellable-asset models by payer, contribution profit,
@@ -54,7 +62,9 @@ stress test, then require separate real problem/action/pay gates.
 9. Всегда сначала выводи детальные критерии: сформированный рынок, размер рынка, рост/тренд, горячий спрос, конкуренция, референс/модель, одна проблема/сегмент, LTV, X4, cash cycle, защита, реинвестиционный потенциал, операционная масштабируемость, канал роста.
 10. Classify the object: `market_reference`, `concrete_bet`, `existing_asset`, or `active_business`.
 11. Рассчитай `market_score`, `economics_score` и `moat_scale_score` строго по формулам v0.7, затем `personal_filter_score`, `evidence_confidence` и `market_opportunity_score`.
-12. Calculate `execution_priority_score` only when our customer, offer and first channel are defined. Never invent it for a market reference.
+12. Calculate `execution_priority_score` only when testable hypotheses for our
+customer, offer and first channel are defined. Use it to order experiments, not
+to assign gate status. Never invent it for a market reference.
 13. Apply caps and penalties from `docs/SCORING_MODEL.md` and evidence caps from `docs/NICHE_DISCOVERY_LOOP.md`.
 14. For a concrete bet, route the next step through real CustDev and the cheapest experiment. Do not authorize full MVP build before the build gate.
 15. Return verdict, main risk, next action, kill conditions, validation stage, riskiest assumption and next gate; for a reference, return evidence, gaps and the condition for defining our entry.
@@ -68,6 +78,13 @@ stress test, then require separate real problem/action/pay gates.
 * Не ставить высокий score без confidence.
 * Не делать отчет по нише без видимой таблицы детальных критериев.
 * Не штрафовать новую идею только за отсутствие собственных оплат; оценивай открытый рынок, а отсутствие собственных продаж относить к evidence/traction.
+* Не смешивать opportunity, business design, readiness и evidence confidence.
+  Отсутствие готового продукта, канала, кейсов, аудитории, moat и доказанных
+  CAC/LTV/repeat — non-terminal gaps новой идеи.
+* Не назначать `passed_not_selected` concrete bet без явного owner decision с
+  источником; `failed` требует hard blocker из schema.
+* Не менять подтверждённый canonical thesis и не создавать отдельные продукты
+  из ICP, delivery, pricing, channel или sprint без owner-authorized fork.
 * Не давать один мутный вердикт "перспективно" без score breakdown.
 * Не выдавать AI-аватара, review mining или synthetic interview за CustDev.
 * Не рекомендовать полноценную разработку MVP без problem/offer evidence и денежного gate; feasibility spike должен иметь лимит.

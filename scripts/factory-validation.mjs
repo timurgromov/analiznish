@@ -84,6 +84,16 @@ export function validateSchema(schema) {
   invariant(schema.decisionRules?.competitionCannotBeSoleFailure === true, "конкуренция не может быть самостоятельной причиной failed", label);
   invariant(schema.decisionRules?.missingEvidenceOutcome === "parked", "missing evidence должен давать parked", label);
   invariant(schema.decisionRules?.failedRequiresBlockerCode === true, "failed должен требовать blockerCode", label);
+  invariant(schema.earlyStageDecisionRule?.notReadyIsExpected === true, "неготовность новой идеи должна быть ожидаемым состоянием", label);
+  invariant(schema.earlyStageDecisionRule?.readinessCannotCauseFailed === true, "готовность не может быть причиной failed", label);
+  invariant(schema.earlyStageDecisionRule?.readinessCannotCausePassedNotSelected === true, "готовность не может быть причиной passed_not_selected", label);
+  invariant(schema.earlyStageDecisionRule?.scoreCannotSetGateStatus === true, "score не может назначать gate status", label);
+  invariant(schema.earlyStageDecisionRule?.passedNotSelectedRequiresExplicitOwnerDecision === true, "passed_not_selected должен требовать owner decision", label);
+  invariant(schema.thesisDefinitionContract?.canonicalThesisMustMatchRegistry === true, "canonical thesis должен совпадать с реестром", label);
+  invariant(schema.thesisDefinitionContract?.ownerConfirmationRequiredBeforeResearch === true, "single thesis требует подтверждения владельца", label);
+  for (const absence of schema.earlyStageDecisionRule?.nonTerminalAbsences ?? []) {
+    invariant(!blockerCodes.has(absence), `readiness-признак ${absence} не может быть blockerCode`, label);
+  }
 
   const objectTypes = new Set(schema.objectTypes);
   invariant(objectTypes.size === 4, "ожидаются четыре object type", label);
@@ -103,7 +113,9 @@ export function validateSchema(schema) {
 
   const phases = new Set((schema.macroPhases ?? []).map((phase) => phase.label));
   const checkpoints = ids(schema.checkpoints, label);
-  invariant(checkpoints.has("S4_PORTFOLIO_GATE"), "нет отдельного S4_PORTFOLIO_GATE", label);
+  invariant(checkpoints.has("S4_PORTFOLIO_GATE"), "нет отдельного S4 gate", label);
+  invariant(typeof schema.researchUnitRule?.singleThesisGate === "string" && schema.researchUnitRule.singleThesisGate.trim(), "нет правила Single-thesis Gate", label);
+  invariant(typeof schema.researchUnitRule?.portfolioBatchGate === "string" && schema.researchUnitRule.portfolioBatchGate.trim(), "нет правила Portfolio Gate", label);
   for (const checkpoint of checkpoints.values()) {
     invariant(phases.has(checkpoint.macroPhase), `${checkpoint.id}: неизвестная macro phase`, label);
     invariant(stages.has(checkpoint.dashboardStage), `${checkpoint.id}: неизвестная dashboard stage`, label);
@@ -159,6 +171,7 @@ export function parseActiveRun(markdown, label = "data/ACTIVE_RUN.md") {
     "Last updated"
   ];
   const values = Object.fromEntries(required.map((name) => [name, fieldFromMarkdown(markdown, name, label)]));
+  const optionalField = (name, fallback = "") => markdown.match(new RegExp(`^${name}:\\s*(.+)$`, "m"))?.[1]?.trim() ?? fallback;
   return {
     schemaVersion: Number(values["Schema version"]),
     runId: values["Run ID"],
@@ -175,6 +188,13 @@ export function parseActiveRun(markdown, label = "data/ACTIVE_RUN.md") {
     completedCheckpoints: parseList(values["Completed checkpoints"]),
     candidateIds: parseList(values["Candidate IDs"]),
     selectedFocusIds: parseList(values["Selected focus IDs"]),
+    researchUnit: optionalField("Research Unit", "portfolio_batch"),
+    thesisId: optionalField("Thesis ID", ""),
+    scopeLock: optionalField("Scope lock", ""),
+    canonicalThesis: optionalField("Canonical thesis", ""),
+    thesisConfirmation: optionalField("Thesis confirmation", ""),
+    definitionSource: optionalField("Definition source", ""),
+    prohibitedReframes: optionalField("Prohibited reframes", ""),
     strongestEvidence: values["Strongest evidence"],
     sourceBoard: values["Source board"],
     lastUpdated: values["Last updated"],
@@ -188,6 +208,16 @@ export function validateActiveRunRecord(run, { schema, boardText, rootDir = defa
   invariant(run.schemaVersion === schema.runSchemaVersion, `поддерживается schema version ${schema.runSchemaVersion}`, label);
   invariant(schema.runStatuses.includes(run.status), `недопустимый Status «${run.status}»`, label);
   invariant(run.mode === "niche_factory", "Mode должен быть niche_factory", label);
+  invariant(schema.researchUnits?.includes(run.researchUnit), `недопустимый Research Unit «${run.researchUnit}»`, label);
+  if (run.researchUnit === "single_thesis") {
+    invariant(run.candidateIds.length === 1, "single_thesis допускает ровно один Candidate ID", label);
+    invariant(run.thesisId === run.candidateIds[0], "Thesis ID должен совпадать с единственным Candidate ID", label);
+    invariant(run.scopeLock.length > 0, "single_thesis требует Scope lock с решением владельца", label);
+    invariant(run.canonicalThesis.length > 0, "single_thesis требует Canonical thesis", label);
+    invariant(run.thesisConfirmation === "owner_confirmed", "single_thesis требует Thesis confirmation: owner_confirmed", label);
+    invariant(run.definitionSource.length > 0, "single_thesis требует Definition source", label);
+    invariant(run.prohibitedReframes.length > 0, "single_thesis требует Prohibited reframes", label);
+  }
   invariant(/^E[0-5]$/.test(run.strongestEvidence), "Strongest evidence должен быть E0–E5", label);
   invariant(/^\d{4}-\d{2}-\d{2}$/.test(run.lastUpdated), "Last updated должен быть YYYY-MM-DD", label);
   invariant(/^[a-z0-9-]+$/.test(run.runId), "некорректный Run ID", label);
@@ -407,6 +437,11 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
       invariant(idea.gateStatus === "parked", "parked_missing_evidence требует gateStatus parked", auditLabel);
       invariant(audit.criteria.some((criterion) => criterion.result === "unknown"), "parked_missing_evidence требует unknown-критерий", auditLabel);
     }
+    if (idea.gateStatus === "passed_not_selected" && idea.objectType !== "market_reference") {
+      invariant(audit.ownerDecision?.explicit === true, "passed_not_selected требует явного ownerDecision", auditLabel);
+      invariant(audit.ownerDecision?.decision === "not_selected", "passed_not_selected требует ownerDecision.decision=not_selected", auditLabel);
+      invariant(typeof audit.ownerDecision?.source === "string" && audit.ownerDecision.source.trim(), "passed_not_selected требует источник owner decision", auditLabel);
+    }
     if (audit.competitionEffect === "confirms_market") {
       invariant(!failedCriteria.some((criterion) => criterion.id === "market_exists"), "подтверждённая конкуренция несовместима с failed market_exists", auditLabel);
     }
@@ -460,6 +495,9 @@ export function validateConsistency({ schema, activeRun, registry, factoryState 
     const idea = ideas.get(candidateId);
     invariant(idea, `кандидат ${candidateId} отсутствует в реестре`, label);
     invariant(idea.runIds.includes(activeRun.registryRunId), `кандидат ${candidateId} не связан с ${activeRun.registryRunId}`, label);
+    if (activeRun.researchUnit === "single_thesis") {
+      invariant(idea.canonicalThesis === activeRun.canonicalThesis, `Canonical thesis кандидата ${candidateId} не совпадает с ACTIVE_RUN`, label);
+    }
     if (activeRun.status === "active") {
       invariant(
         stageOrder.get(idea.stage) <= stageOrder.get(activeCheckpoint.dashboardStage),

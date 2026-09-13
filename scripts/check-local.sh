@@ -10,6 +10,7 @@ required_files=(
   ".env.example"
   ".gitignore"
   "docs/SCORING_MODEL.md"
+  "docs/IDEA_DEFINITION_PROTOCOL.md"
   "docs/IDEA_PURGATORY_PROTOCOL.md"
   "docs/WORKFLOW.md"
   "docs/NICHE_DISCOVERY_LOOP.md"
@@ -42,6 +43,7 @@ required_files=(
   "docs/history/RETROSPECTIVE_BOOTSTRAP.md"
   "docs/history/worklog/README.md"
   "prompts/start-niche-factory.md"
+  "prompts/run-concrete-idea.md"
   "prompts/run-custdev-cycle.md"
   "data/discovery/_insight-run-template.md"
   "scripts/validate-active-run.mjs"
@@ -75,6 +77,8 @@ grep -q 'data/ACTIVE_RUN.md' AGENTS.md
 grep -q 'I · INSIGHT' docs/INSIGHT_EXECUTION_MODEL.md
 grep -q '100–1 000' docs/IDEA_PURGATORY_PROTOCOL.md
 grep -q '18 критер' docs/SIGMA_EXECUTION_MODEL.md
+grep -q 'Thesis Contract' docs/IDEA_DEFINITION_PROTOCOL.md
+grep -q 'readinessCannotCauseFailed' data/FACTORY_SCHEMA.json
 
 node scripts/validate-portfolio.mjs
 node scripts/validate-active-run.mjs

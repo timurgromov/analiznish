@@ -4,7 +4,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 import { buildPublicArtifact, validatePublicArtifact } from "../scripts/build-public-dashboard.mjs";
-import { validateActiveRunRecord, validateConsistency, validateFactoryState, validateRegistry } from "../scripts/factory-validation.mjs";
+import { validateActiveRunRecord, validateConsistency, validateFactoryState, validateRegistry, validateSchema } from "../scripts/factory-validation.mjs";
 import { factoryFixtures, ideaById } from "../fixtures/factory-fixtures.mjs";
 
 test("parked → active проходит без изменения validator", () => {
@@ -15,7 +15,9 @@ test("parked → active проходит без изменения validator", (
     .filter((checkpointId) => checkpointId !== fixture.activeRun.checkpointId);
   fixture.activeRun.markdown = fixture.activeRun.markdown
     .replace("## Точка возобновления (не текущая работа)", "## Единственная текущая работа")
-    .replace("## Gate возобновлённого этапа", "## Gate этапа");
+    .replace("## Gate возобновлённого этапа", "## Gate этапа")
+    .replace("## Итог закрытого run", "## Единственная текущая работа")
+    .replace("## Условие возвращения", "## Gate этапа");
   assert.doesNotThrow(() => validateActiveRunRecord(fixture.activeRun, fixture));
   fixture.registry.runs.find((run) => run.id === fixture.activeRun.registryRunId).status = "active";
   assert.doesNotThrow(() => validateConsistency({
@@ -24,6 +26,44 @@ test("parked → active проходит без изменения validator", (
     registry: fixture.registry,
     factoryState: fixture.factoryState
   }));
+});
+
+test("single_thesis не допускает разветвления на несколько candidate IDs", () => {
+  const fixture = factoryFixtures();
+  fixture.activeRun.researchUnit = "single_thesis";
+  fixture.activeRun.thesisId = fixture.activeRun.candidateIds[0];
+  fixture.activeRun.scopeLock = "owner decision";
+  fixture.activeRun.candidateIds.push("invented-variant");
+  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /single_thesis допускает ровно один Candidate ID/);
+});
+
+test("schema явно различает Portfolio Gate и Single-thesis Gate", () => {
+  const fixture = factoryFixtures();
+  assert.match(fixture.schema.researchUnitRule.singleThesisGate, /Single-thesis/);
+  assert.match(fixture.schema.researchUnitRule.portfolioBatchGate, /Portfolio Gate/);
+});
+
+test("single_thesis без подтверждённого канонического тезиса падает", () => {
+  const fixture = factoryFixtures();
+  fixture.activeRun.canonicalThesis = "";
+  assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /требует Canonical thesis/);
+});
+
+test("канонический тезис ACTIVE_RUN должен совпадать с реестром", () => {
+  const fixture = factoryFixtures();
+  ideaById(fixture.registry, fixture.activeRun.candidateIds[0]).canonicalThesis = "Подменённый продукт";
+  assert.throws(() => validateConsistency({
+    schema: fixture.schema,
+    activeRun: fixture.activeRun,
+    registry: fixture.registry,
+    factoryState: fixture.factoryState
+  }), /Canonical thesis кандидата/);
+});
+
+test("readiness gap не может стать blockerCode", () => {
+  const fixture = factoryFixtures();
+  fixture.schema.blockerCodes.push("existing_channel");
+  assert.throws(() => validateSchema(fixture.schema), /readiness-признак existing_channel не может быть blockerCode/);
 });
 
 test("неизвестный checkpoint падает", () => {
@@ -151,6 +191,14 @@ test("нехватка evidence не может маскироваться по�
   const idea = ideaById(fixture.registry, "cycle-assistant");
   idea.gateStatus = "failed";
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /gateStatus failed требует blockerCode/);
+});
+
+test("concrete bet не получает passed_not_selected без owner decision", () => {
+  const fixture = factoryFixtures();
+  const idea = ideaById(fixture.registry, "rule24");
+  idea.gateStatus = "passed_not_selected";
+  fixture.registry.decisionAudits.rule24.decisionClass = "passed_not_selected";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /passed_not_selected требует явного ownerDecision/);
 });
 
 test("активный S0 не допускает кандидата выше quick_scan", () => {

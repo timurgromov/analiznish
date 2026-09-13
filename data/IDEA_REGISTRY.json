@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updatedAt": "2026-09-12",
+  "updatedAt": "2026-09-13",
   "purpose": "Единый реестр всех сохранённых идей и рыночных референсов для визуального кабинета.",
   "rankingModel": {
     "id": "evidence_adjusted_opportunity_v1",
@@ -86,10 +86,10 @@
       "legacyEvidenceConfidence": 0.65,
       "evidenceLevel": "E1",
       "stage": "market_research",
-      "gateStatus": "failed",
-      "rankingReason": "S3 прошёл до Portfolio Gate: локальный сегмент и цены наблюдаемы, но 18-критериальная матрица дала execution priority 15; commodity без защищённого канала не стал финалистом.",
+      "gateStatus": "parked",
+      "rankingReason": "S3 прошёл до раннего Gate: локальный сегмент и цены наблюдаемы. Отсутствие готового канала и защиты больше не считается failed; нужны один конкретный Job и дешёвый эксперимент экономики.",
       "mainRisk": "Широкий AI-photo продукт без канала и защиты будет конкурировать с дешевыми marketplace-исполнителями.",
-      "nextGate": "Возврат только с доказанным сегментом, собственным acquisition advantage и contribution margin; не с новым frontend или набором стилей.",
+      "nextGate": "Сформулировать один Job/сегмент и дешёвый тест цены, качества результата и contribution margin; готовый acquisition advantage до теста не требуется.",
       "source": "data/niches/2026-07-21-kadra-ai-photo.md",
       "runIds": ["kadra-reference-mining-2026-07-16", "portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
     },
@@ -171,8 +171,8 @@
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
       "stage": "market_research",
-      "gateStatus": "passed_not_selected",
-      "rankingReason": "Есть доступ к экспертам и безопасная B2B-модель обучения, но плательщик и бюджет не подтверждены.",
+      "gateStatus": "parked",
+      "rankingReason": "Есть доступ к экспертам и безопасная B2B-модель обучения; плательщик и бюджет остаются следующими вопросами, а не основанием автоматического not selected.",
       "mainRisk": "Образовательный рынок может ценить только живого эксперта, а не самостоятельную практику.",
       "nextGate": "Пять problem interviews с руководителями программ и один подтверждённый бюджет пилота.",
       "source": "data/niches/2026-09-09-rpp-practice-lab.md",
@@ -234,8 +234,8 @@
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
       "stage": "market_research",
-      "gateStatus": "passed_not_selected",
-      "rankingReason": "Concierge-пилот возможен без разработки и есть экспертный доступ, но рынок очень узкий и ценность продукта не доказана.",
+      "gateStatus": "parked",
+      "rankingReason": "Concierge-пилот возможен без разработки и есть экспертный доступ; ёмкость и самостоятельная ценность требуют проверки, а не автоматического not selected.",
       "mainRisk": "Задача может полностью закрываться документом или обычной CRM.",
       "nextGate": "Пять разговоров и один ручной кейс-пакет с обезличенным материалом.",
       "source": "data/niches/2026-09-09-rpp-supervision-os.md",
@@ -276,8 +276,8 @@
       "evidenceConfidence": 0.5,
       "evidenceLevel": "E1",
       "stage": "market_research",
-      "gateStatus": "passed_not_selected",
-      "rankingReason": "Есть повторяющиеся зарубежные продукты и понятная подписка, но российский канал и безопасный результат не проверены.",
+      "gateStatus": "parked",
+      "rankingReason": "Есть повторяющиеся зарубежные продукты и понятная подписка; российский канал и безопасный результат являются вопросами следующего эксперимента, а не причиной not selected.",
       "mainRisk": "B2C CAC и работа с тяжёлыми случаями могут разрушить экономику и безопасность.",
       "nextGate": "Проверить один не-клинический оффер и один канал привлечения до продукта.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
@@ -364,10 +364,10 @@
       "legacyEvidenceConfidence": 0.6,
       "evidenceLevel": "E1",
       "stage": "market_research",
-      "gateStatus": "passed_not_selected",
-      "rankingReason": "S0–S5 пройдены: российские booking/payment alternatives подтверждают локальный рынок и деньги. Rule24 прошёл screen, но с execution priority 27 не вошёл в два финалиста: switching reason, канал и экономика exact penalty-layer не доказаны.",
+      "gateStatus": "parked",
+      "rankingReason": "S0–S5 пройдены: российские booking/payment alternatives подтверждают локальный рынок и деньги. Низкий execution score не имеет права назначать not selected; ставка ждёт owner choice или отдельного теста switching reason.",
       "mainRisk": "Перепутать сильный рыночный сигнал с доказанной причиной выбрать именно отдельный Rule24, не учтя payment/compliance и support-cost exact-сценария.",
-      "nextGate": "Вернуть к Portfolio Gate только с сильным external fact о switching reason, канале или экономике Rule24.",
+      "nextGate": "При owner choice спроектировать дешёвый тест switching reason и оплаты; готовый канал или доказанная экономика до этого не требуются.",
       "source": "data/niches/2026-07-03-rule24-psychologists.md",
       "runIds": ["portfolio-v07-2026-07-20", "rule24-recovery-2026-09-12"]
     },
@@ -407,10 +407,10 @@
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "failed",
-      "rankingReason": "Категория и деньги подтверждены конкурентами. Не прошла именно широкая ставка без узкого измеримого результата, независимого канала и безопасной границы; рынок не считается слабым.",
+      "gateStatus": "parked",
+      "rankingReason": "Категория и деньги подтверждены конкурентами. Широкий оффер требует сужения и safety boundary; отсутствие готового канала не является failed новой идеи.",
       "mainRisk": "Нет узкого измеримого результата и независимого канала привлечения.",
-      "nextGate": "Не возвращать без узкого измеримого результата и канала, которого нет у универсальных конкурентов.",
+      "nextGate": "Сформулировать один безопасный измеримый результат и самый дешёвый тест сегмента; готовый независимый канал заранее не требуется.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
       "aliases": ["P8"],
       "runIds": ["psychologists-marketplace-2026-09-10"]
@@ -450,10 +450,10 @@
       "evidenceConfidence": 0.5,
       "evidenceLevel": "E1",
       "stage": "quick_scan",
-      "gateStatus": "failed",
-      "rankingReason": "Спрос на сессии есть, но двусторонний marketplace требует дорогого запуска и не даёт нам стартового преимущества.",
+      "gateStatus": "parked",
+      "rankingReason": "Спрос на сессии есть; двусторонний cold start — структурный риск для проверки, но отсутствие готовых supply/demand у нового бизнеса не доказывает несходящуюся экономику.",
       "mainRisk": "Одновременно нужны исполнители, клиенты, доверие и два отдельных CAC.",
-      "nextGate": "Не строить первым; возвращать только при готовой одной стороне рынка.",
+      "nextGate": "Проверить ручной wedge с одной достижимой стороной; generic marketplace не строить до этого эксперимента.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
       "aliases": ["P7"],
       "runIds": ["psychologists-marketplace-2026-09-10"]
@@ -607,24 +607,25 @@
     },
     {
       "id": "codex-project-starter-product",
-      "title": "Codex Project Starter — запуск цифрового проекта без команды",
-      "projectSummary": "Цифровой пакет из адаптированного starter pack, коротких видеоуроков и понятного маршрута: идея → проектные документы → работа с Codex → GitHub → первый ограниченный deploy. Расширенные форматы могут включать малую группу или личное сопровождение.",
-      "customer": "Гипотеза: предприниматель, эксперт или самостоятельный оператор, который уже пользуется ChatGPT, имеет конкретную идею или рабочий процесс, но не умеет организовать AI-агента как проект и не имеет собственной продуктовой команды.",
-      "customerOutcome": "Не просто получить ответы в чате, а собрать управляемый цифровой проект с понятными файлами, задачами, проверками и первым работающим результатом.",
-      "moneyModel": "Гипотеза: разовая продажа self-serve пакета за 4 900–6 900 ₽; более дорогая малая группа или личное сопровождение. Подписка на поддержку допустима только после доказанного повторяющегося Job.",
+      "title": "Codex Project Starter — AI-переход и первое внедрение",
+      "canonicalThesis": "Практический образовательный и внедренческий цифровой продукт, который помогает предпринимателю или самостоятельному специалисту понять, где AI, нейросети, агенты и Codex полезны в его работе или бизнесе, выбрать приоритетный сценарий и довести первое внедрение до измеримого результата.",
+      "projectSummary": "Программа практического перехода к AI: диагностика работы/бизнеса, выбор полезных сценариев, освоение нейросетей и агентов, настройка рабочего контура и первое измеримое внедрение. Templates, видео, упражнения, группа и сопровождение — компоненты и delivery-гипотезы, а не отдельные продукты.",
+      "customer": "Гипотеза для исследования: предприниматели, частные специалисты, самостоятельные операторы и программисты, которые используют ChatGPT фрагментарно, но ещё не превратили AI/агентов/Codex в системный рабочий процесс.",
+      "customerOutcome": "Понять применимые AI-сценарии для своей работы или бизнеса, выбрать приоритетный и довести первое внедрение до наблюдаемого полезного результата.",
+      "moneyModel": "Исследуемая гипотеза: платный цифровой продукт или программа с возможным сопровождением; self-serve, группа, интенсив, внедрение и последующие уровни не разделяются на новые идеи до проверки сегмента и результата.",
       "category": "Обучение и цифровые инструменты",
       "objectType": "concrete_bet",
-      "baseScore": 68,
-      "scoreBasis": "E0: подтверждены собственные активы Tamplates, контент-контур и способность доводить проекты до live; внешний спрос, платные референсы, узкий ICP и конверсия не проверены.",
-      "evidenceConfidence": 0.25,
-      "evidenceLevel": "E0",
-      "stage": "inbox",
-      "gateStatus": "not_researched",
-      "rankingReason": "Класс B: высокая скорость проверки, низкий COGS и сильный founder-asset дают потенциал, но пока продаётся слишком широкое обещание без подтверждённого плательщика и канала.",
-      "mainRisk": "Упаковать внутренний сложный набор файлов как товар для новичка: человек не дойдёт до результата, поддержка съест маржу, а платформенные изменения быстро обесценят уроки про интерфейс.",
-      "nextGate": "Найти и разобрать 5 платных русско- и англоязычных офферов с тем же переходом «не разработчик → первый работающий проект через AI-агента»: цена, deliverables, аудитория, отзывы и способ продажи.",
-      "source": "data/IDEA_INBOX.md",
-      "runIds": []
+      "baseScore": 50,
+      "scoreBasis": "Нейтральная стартовая оценка после восстановления исходного Thesis Contract. Старый score относился к ошибочно суженному self-serve starter и отменён; новый S1–S4 должен отделить opportunity, business design, readiness и confidence.",
+      "evidenceConfidence": 0.4,
+      "evidenceLevel": "E1",
+      "stage": "market_research",
+      "gateStatus": "in_progress",
+      "rankingReason": "Исходный продукт восстановлен как программа AI-перехода и внедрения, а не набор templates. S0 пройден по подтверждённому Thesis Contract; S1 заново исследует денежные категории и результаты без штрафа за нормальную неготовность новой идеи.",
+      "mainRisk": "Снова сузить широкую клиентскую трансформацию до одного инструмента, формата или сегмента до evidence; затем построить большой инфопродукт без выбора конкретного первого результата.",
+      "nextGate": "S1: минимум три независимые платные модели AI-перехода/внедрения с плательщиком, трансформацией, delivery и границей evidence.",
+      "source": "data/discovery/2026-09-13-codex-project-starter-thesis-reset.md",
+      "runIds": ["codex-project-starter-2026-09-12"]
     }
   ],
   "decisionAudits": {
@@ -667,17 +668,17 @@
     },
     "kadra": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "failed_economics",
-      "blockerCode": "commodity_without_channel",
+      "decisionClass": "parked_missing_evidence",
+      "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Российские исполнители, цены и конкретные AI-photo Jobs наблюдаемы." }],
       "criteria": [
         { "id": "market_and_prices", "label": "Рынок и цены", "result": "passed", "evidenceLevel": "E1", "observation": "Российская категория и price corridor подтверждены конкурентами." },
         { "id": "one_paid_job", "label": "Один платный Job", "result": "unknown", "evidenceLevel": "E1", "observation": "Широкая AI-фотосессия не сведена к одному повторяемому результату." },
-        { "id": "protected_channel", "label": "Защищённый канал", "result": "failed", "evidenceLevel": "E1", "observation": "Нет собственного acquisition advantage; общий marketplace доступен всем." },
+        { "id": "protected_channel", "label": "Защищённый канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет собственного acquisition advantage; это readiness gap и вопрос эксперимента, не failed рынка." },
         { "id": "contribution_margin", "label": "Contribution margin", "result": "unknown", "evidenceLevel": "E1", "observation": "COGS, retries, QA, support и CAC нашей ставки не посчитаны." }
       ],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Ставка и границы legacy-актива описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты и платные услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Найдены независимые сигналы Job и качества результата." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные сегменты и цены наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "failed", "summary": "Широкая commodity-ставка без канала и подтверждённой экономики не вошла в финал." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Ставка и границы legacy-актива описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты и платные услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Найдены независимые сигналы Job и качества результата." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные сегменты и цены наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Нужны один Job и тест экономики; отсутствие готового канала/защиты не является failed." }],
       "reviewedAt": "2026-09-12"
     },
     "auto-seo-cpa": {
@@ -712,7 +713,7 @@
     },
     "rpp-practice-lab": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "passed_not_selected",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Есть экспертный доступ; внешний бюджет образовательных программ не подтверждён." }],
@@ -742,7 +743,7 @@
     },
     "rpp-supervision-os": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "passed_not_selected",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Экспертный доступ есть, ёмкость узкого РПП-сегмента не измерена." }],
@@ -762,7 +763,7 @@
     },
     "psych-emotional-eating": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "passed_not_selected",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Глобальные продукты подтверждают category; локальный канал и safety boundary неизвестны." }],
@@ -802,7 +803,7 @@
     },
     "rule24": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "passed_not_selected",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Cue, Calink, Recordo, YouTalk и платёжная инфраструктура подтверждают локальную категорию." }],
@@ -822,12 +823,12 @@
     },
     "psych-generic-ai": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "failed_economics",
-      "blockerCode": "commodity_without_channel",
+      "decisionClass": "parked_missing_evidence",
+      "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Категория доступна глобально и локально, но exact broad-copy ставка не локализована." }],
-      "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Конкуренты подтверждают спрос и деньги." }, { "id": "narrow_outcome", "label": "Узкий измеримый результат", "result": "failed", "evidenceLevel": "E1", "observation": "Broad AI-психолог не имеет одного безопасного outcome." }, { "id": "protected_channel", "label": "Независимый канал", "result": "failed", "evidenceLevel": "E1", "observation": "Нет канала или преимущества против универсальных продуктов." }, { "id": "safety_boundary", "label": "Safety boundary", "result": "unknown", "evidenceLevel": "E1", "observation": "Не определена." }],
-      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Категория подтверждена конкурентами." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "failed", "summary": "Отсеяна broad commodity-ставка без outcome и канала, а не сам рынок." }],
+      "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Конкуренты подтверждают спрос и деньги." }, { "id": "narrow_outcome", "label": "Узкий измеримый результат", "result": "unknown", "evidenceLevel": "E1", "observation": "Broad AI-психолог ещё не спроектирован вокруг одного безопасного outcome." }, { "id": "protected_channel", "label": "Независимый канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Готового канала нет; это readiness gap и вопрос эксперимента, не failed." }, { "id": "safety_boundary", "label": "Safety boundary", "result": "unknown", "evidenceLevel": "E1", "observation": "Не определена." }],
+      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Категория подтверждена конкурентами." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Нужны безопасный outcome и тест сегмента; неготовность/канал не являются failed." }],
       "reviewedAt": "2026-09-12"
     },
     "profiwatcher": {
@@ -842,12 +843,12 @@
     },
     "psych-session-marketplace": {
       "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "failed_economics",
-      "blockerCode": "two_sided_cold_start",
+      "decisionClass": "parked_missing_evidence",
+      "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Спрос на сессии и площадки существует; наша стартовая сторона рынка отсутствует." }],
-      "criteria": [{ "id": "session_market", "label": "Рынок сессий", "result": "passed", "evidenceLevel": "E1", "observation": "Площадки и оплаты подтверждают категорию." }, { "id": "supply_side", "label": "Готовая сторона исполнителей", "result": "failed", "evidenceLevel": "E1", "observation": "Нет стартового предложения специалистов." }, { "id": "demand_side", "label": "Доступный спрос", "result": "failed", "evidenceLevel": "E1", "observation": "Нет собственного канала клиентов." }, { "id": "unit_economics", "label": "Экономика двух CAC", "result": "failed", "evidenceLevel": "E1", "observation": "Одновременно требуются acquisition и доверие двух сторон." }],
-      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок подтверждён." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "failed", "summary": "Exact two-sided модель не прошла ранний gate из-за cold start и двух CAC." }],
+      "criteria": [{ "id": "session_market", "label": "Рынок сессий", "result": "passed", "evidenceLevel": "E1", "observation": "Площадки и оплаты подтверждают категорию." }, { "id": "supply_side", "label": "Готовая сторона исполнителей", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет стартового предложения специалистов; для нового бизнеса это readiness gap." }, { "id": "demand_side", "label": "Доступный спрос", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет собственного канала клиентов; нужен тест wedge, не terminal вывод." }, { "id": "unit_economics", "label": "Экономика двух CAC", "result": "unknown", "evidenceLevel": "E1", "observation": "Риск двух acquisition sides известен, но фактическая несходимость не доказана." }],
+      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок подтверждён." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Нужен ручной wedge с одной достижимой стороной; неготовность не является failed." }],
       "reviewedAt": "2026-09-12"
     },
     "field-service-next-action": {
@@ -921,14 +922,14 @@
       "reviewedAt": "2026-09-12"
     },
     "codex-project-starter-product": {
-      "currentCheckpointId": "S0_CONTEXT",
-      "decisionClass": "not_researched",
+      "currentCheckpointId": "S1_MARKET",
+      "decisionClass": "advance",
       "blockerCode": null,
-      "competitionEffect": "not_checked",
-      "geographies": [{ "market": "Россия и глобальный рынок", "status": "not_checked", "summary": "География, ICP и платные референсы ещё не проверялись." }],
-      "criteria": [{ "id": "founder_assets", "label": "Активы основателя", "result": "passed", "evidenceLevel": "E0", "observation": "Starter pack и опыт существуют." }, { "id": "payer", "label": "Конкретный плательщик", "result": "unknown", "evidenceLevel": "E0", "observation": "Гипотеза слишком широкая." }, { "id": "paid_references", "label": "Платные референсы", "result": "unknown", "evidenceLevel": "E0", "observation": "Не собраны." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "not_started", "summary": "Идея остаётся в чистилище до сравнения платных референсов." }],
-      "reviewedAt": "2026-09-12"
+      "competitionEffect": "confirms_market",
+      "geographies": [{ "market": "Россия", "status": "partial", "summary": "Россия — исходная география исследования; старые источники подтверждают только часть категории, новый расширенный Thesis Contract ещё проходит S1." }, { "market": "Глобальный рынок", "status": "not_checked", "summary": "Глобальные модели будут использоваться как референсы, но не заменят локальный спрос и плательщика." }],
+      "criteria": [{ "id": "thesis_contract", "label": "Подтверждённый смысл продукта", "result": "passed", "evidenceLevel": "E1", "observation": "Владелец подтвердил AI-переход и внедрение как продукт; templates, сайт и delivery — компоненты." }, { "id": "market_exists", "label": "Платная категория расширенного тезиса", "result": "unknown", "evidenceLevel": "E1", "observation": "Старые офферы покрывают часть категории; S1 должен заново сопоставить обучение, внедрение и практический результат." }, { "id": "segment_map", "label": "Карта сегментов одной ставки", "result": "unknown", "evidenceLevel": "E1", "observation": "Предприниматели, специалисты, операторы и программисты остаются гипотезами внутри одного продукта." }, { "id": "business_design", "label": "Проверяемая модель первого оффера", "result": "unknown", "evidenceLevel": "E1", "observation": "Delivery, цена и первый результат должны быть спроектированы после рынка; их отсутствие не является отрицательным evidence." }, { "id": "readiness", "label": "Текущая готовность", "result": "not_applicable", "evidenceLevel": "E1", "observation": "Готовый канал, moat, кейсы и repeat не требуются для раннего допуска идеи." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Владелец подтвердил Canonical thesis, трансформацию, компоненты и запрещённые подмены." }, { "checkpointId": "S1_MARKET", "status": "in_progress", "summary": "Рынок и денежные модели заново исследуются для расширенного AI-перехода; старое закрытие отменено." }],
+      "reviewedAt": "2026-09-13"
     }
   },
   "runs": [
@@ -1025,10 +1026,21 @@
       "title": "Rule24: Factory v2 recovery screen",
       "category": "Психология",
       "status": "complete",
-      "result": "S0_CONTEXT–S5_COMPETITORS пройдены: российский booking/payment рынок подтверждён; Rule24 passed_not_selected на раннем Portfolio Gate, интервью не открыты.",
+      "result": "S0_CONTEXT–S5_COMPETITORS пройдены: российский booking/payment рынок подтверждён. Прежний passed_not_selected по score отменён; Rule24 parked до следующего evidence gate или явного owner decision.",
       "evidenceLevel": "E1",
       "framework": "factory_v2",
       "updatedAt": "2026-09-12",
+      "source": "data/ACTIVE_RUN.md"
+    },
+    {
+      "id": "codex-project-starter-2026-09-12",
+      "title": "Codex Project Starter: восстановленный Thesis Contract",
+      "category": "Обучение и цифровые инструменты",
+      "status": "active",
+      "result": "Ошибочное сужение до self-serve templates и passed_not_selected отменены. S0 подтверждает программу AI-перехода и внедрения; S1 заново проверяет платные категории и результаты без требования готового бизнеса.",
+      "evidenceLevel": "E1",
+      "framework": "factory_v2",
+      "updatedAt": "2026-09-13",
       "source": "data/ACTIVE_RUN.md"
     }
   ]

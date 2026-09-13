@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "updatedAt": "2026-09-12",
+  "updatedAt": "2026-09-13",
   "registrySource": "data/IDEA_REGISTRY.json",
   "dashboard": {
     "defaultView": "funnel",
@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Контур проходит методологическое исправление: competition-based отсевы отменены, у решений появился открытый audit trail. Portfolio Closure снова открыт, потому что семь B2B-кандидатов ещё не прошли S2–S4.",
-    "confirmed": "Конкуренты подтверждают рынок и не могут быть единственной причиной failed. Обоснованный failed требует blockerCode и фактический failed-критерий; отсутствие evidence означает parked. Радарыч прошёл S0–S5 и находится на owner hold.",
-    "unknown": "Семь B2B-гипотез ещё не проверены на повторяемые локальные проблемы; Cycle и Sansara также ждут недостающих evidence. Полный контур на интервью, действии, оплате, bounded build и повторе не подтверждён.",
-    "nextGate": "S2_TREND: собрать по два независимых свежих problem signals для каждого из семи B2B-кандидатов.",
-    "source": "data/PORTFOLIO_CLOSURE.md"
+    "summary": "Контур исправлен против смыслового дрейфа и преждевременного отсева. Codex Project Starter восстановлен как одна программа AI-перехода и первого внедрения: S0 Thesis Contract пройден, S1 рынка активен. B2B batch отдельно parked на S2.",
+    "confirmed": "Одна идея владельца требует короткое Definition Interview и один подтверждённый Thesis Contract. Сегменты и delivery не создают новые продукты. Opportunity, business design, readiness и confidence разделены; score не назначает outcome, а passed_not_selected конкретной ставки требует явного owner decision.",
+    "unknown": "Для расширенного Codex Project Starter ещё не сопоставлены платные модели, сегменты и первый результат; willingness-to-pay, CAC, support burden и repeat остаются будущими gates, а не причиной отказа. Полный контур на интервью, действии, оплате, bounded build и повторе не подтверждён.",
+    "nextGate": "S1_MARKET для Codex Project Starter: минимум три независимые платные модели AI-перехода/внедрения с плательщиком, трансформацией, delivery и границей evidence.",
+    "source": "data/discovery/2026-09-13-codex-project-starter-thesis-reset.md"
   }
 }

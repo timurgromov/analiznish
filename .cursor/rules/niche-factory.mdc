@@ -13,6 +13,13 @@ alwaysApply: true
   `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`; не генерируй shortlist
   только из рассуждений модели.
 - Не требуй готовую нишу: сначала уточни hunting constraints и предложи 3–5 поисковых направлений.
+- Если пользователь принёс конкретную идею, до research/score проведи короткое
+  owner interview по `docs/IDEA_DEFINITION_PROTOCOL.md`, максимум четыре вопроса
+  за сообщение. Верни один Thesis Contract, получи подтверждение и храни
+  одинаковый canonical thesis в active run, реестре и source board.
+- Одна идея не дробится на сегменты, ICP, delivery, sprint, цену или канал.
+  Fork требует явного owner authorization и различий одновременно в Job,
+  плательщике, экономике и канале.
 - По умолчанию используй `hybrid`: публичный research делай сам, пользователю оставляй интервью и авторизованные/закрытые действия.
 - Веди один checkpoint за раз: confirmed, unknown, agent action, user action, acceptance, next gate.
 - Используй только checkpoints, переходы, восемь стадий и evidence-caps из
@@ -21,7 +28,14 @@ alwaysApply: true
 - `I · INSIGHT` выполняй по `docs/INSIGHT_EXECUTION_MODEL.md`: E1-корпус →
   минимум пять реальных интервью → уточнение JTBD/канала/финансов → action →
   pay. До I_E1 интервью не начинай.
-- До интервью проведи ранний Portfolio Gate: batch 5–10 кандидатов, публичный `S · SCAN 0–3`, затем 18 критериев на шаге 4 и максимум 1–2 финалиста.
+- До интервью проведи ранний Gate: Portfolio Gate по 5–10 независимым идеям
+  при поиске с нуля либо Single-thesis Gate по одной карточке владельца. Не
+  заполняй batch вариантами одной идеи.
+- Отделяй opportunity, business design, readiness и evidence confidence.
+  Отсутствие готового продукта, канала, кейсов, аудитории, moat, доказанных
+  CAC/LTV/repeat не является ранним terminal outcome. Score упорядочивает
+  эксперименты; `passed_not_selected` конкретной ставки требует явного owner
+  decision, `failed` — hard blocker из schema.
 - Считай устойчивую прибыль главной целью; повторяемый cashflow предпочтителен, но B2B и подписка не являются hard filters.
 - Не разрешай полноценный MVP до build gate из `docs/CUSTDEV_PROTOCOL.md`.
 - Participant-level заметки, контакты, даты и raw quotes храни только в

@@ -9,6 +9,39 @@
     "complete",
     "killed"
   ],
+  "researchUnits": [
+    "single_thesis",
+    "portfolio_batch"
+  ],
+  "researchUnitRule": {
+    "singleThesis": "Одна идея владельца остаётся одной карточкой. Сегмент, delivery, цена, канал и ICP — гипотезы внутри неё, а не новые ставки.",
+    "singleThesisGate": "Single-thesis проходит S0–S5 и 18 критериев в одной карточке. Без hard blocker агент формулирует следующий evidence gate; открыть I_E1, поставить run на паузу или прекратить его может только владелец. Batch из вариантов одной идеи запрещён.",
+    "portfolioBatchGate": "Portfolio Gate применяется, когда ищутся несколько независимых ставок; он оставляет 1–2 финалиста для S5.",
+    "forkRequires": ["explicit_owner_authorization", "distinct_job", "distinct_payer", "distinct_economics", "distinct_channel"],
+    "description": "Новая ставка допустима только когда владелец явно разрешил fork и все четыре различия зафиксированы как отдельная продуктовая гипотеза."
+  },
+  "thesisDefinitionContract": {
+    "requiredFor": "single_thesis",
+    "requiredFields": ["canonicalThesis", "thesisConfirmation", "definitionSource", "prohibitedReframes"],
+    "canonicalThesisMustMatchRegistry": true,
+    "ownerConfirmationRequiredBeforeResearch": true,
+    "protocol": "docs/IDEA_DEFINITION_PROTOCOL.md"
+  },
+  "evaluationLayers": {
+    "opportunity": "Сила рынка и Job; не смешивается с текущей готовностью проекта.",
+    "businessDesign": "Проверяемые гипотезы сегмента, оффера, delivery, цены и модели денег.",
+    "readiness": "Текущие активы, канал, кейсы, продукт, команда и защита; используется для плана, а не раннего отсева.",
+    "evidenceConfidence": "Доверие к выводу; снижает уверенность, но не ценность возможности."
+  },
+  "earlyStageDecisionRule": {
+    "notReadyIsExpected": true,
+    "readinessCannotCauseFailed": true,
+    "readinessCannotCausePassedNotSelected": true,
+    "scoreCannotSetGateStatus": true,
+    "passedNotSelectedRequiresExplicitOwnerDecision": true,
+    "unknownBecomesNextExperiment": true,
+    "nonTerminalAbsences": ["existing_channel", "protected_channel", "moat", "audience", "product", "case_studies", "proven_cac", "proven_ltv", "proven_repeat"]
+  },
   "objectTypes": [
     "market_reference",
     "concrete_bet",
@@ -158,7 +191,6 @@
     "legal_or_platform",
     "unsafe_delivery",
     "economics_not_viable",
-    "commodity_without_channel",
     "two_sided_cold_start"
   ],
   "decisionRules": {
@@ -280,13 +312,13 @@
       "id": "S4_PORTFOLIO_GATE",
       "macroPhase": "S · SCAN",
       "step": 4,
-      "name": "Ранний Portfolio Gate по 18 критериям",
+      "name": "Ранний Gate по 18 критериям",
       "dashboardStage": "market_research",
       "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"],
       "allowedNext": ["S5_COMPETITORS"],
-      "gateQuestion": "Достаточно ли привлекательна и дёшево проверяема конкретная ставка относительно остальных кандидатов batch?",
-      "passCriteria": ["eighteen_criteria_visible", "market_economics_moat_separated", "unknowns_visible", "top_one_or_two"],
-      "failurePolicy": "Сильный рынок не гарантирует выбор нашей ставки. Отсев здесь требует конкретного hard blocker или сравнительно слабой экономики/канала/защиты; конкуренция сама по себе не является минусом."
+      "gateQuestion": "Достаточно ли привлекательна и дёшево проверяема ставка: среди независимых кандидатов batch либо сама по себе как single thesis?",
+      "passCriteria": ["eighteen_criteria_visible", "opportunity_readiness_separated", "unknowns_visible", "testable_business_design", "cheapest_next_experiment"],
+      "failurePolicy": "Для batch выбираются 1–2 независимых финалиста. Для single_thesis без hard blocker определяется следующий evidence gate; агент не может назначить passed_not_selected. Отсутствие готового канала, защиты, кейсов, продукта или repeat ожидаемо и само не закрывает ставку. Сильный рынок не гарантирует успех, но конкуренция и неготовность сами по себе не являются минусом рынка."
     },
     {
       "id": "S5_COMPETITORS",
@@ -297,8 +329,8 @@
       "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE"],
       "allowedNext": ["S4_OWNER"],
       "gateQuestion": "Понятно ли, за какую работу уже платят, чем конкретная ставка отличается и где искать первых покупателей?",
-      "passCriteria": ["competitors_mapped", "paid_job_observed", "differentiation_hypothesis", "first_channel_hypothesis"],
-      "failurePolicy": "Конкуренты усиливают evidence рынка; отсутствие доказанного отличия снижает приоритет или даёт parked, но не опровергает категорию."
+      "passCriteria": ["competitors_mapped", "paid_job_observed", "differentiation_hypothesis", "first_reachable_audience_hypothesis"],
+      "failurePolicy": "Конкуренты усиливают evidence рынка. На desk-этапе требуется проверяемая гипотеза отличия и достижимой первой аудитории, а не уже доказанный канал или moat; их отсутствие становится следующим экспериментом, не terminal outcome."
     },
     {
       "id": "S4_OWNER",
@@ -310,7 +342,7 @@
       "allowedNext": ["I_E1"],
       "gateQuestion": "Какой один финалист владелец выбирает для следующего цикла?",
       "passCriteria": ["exactly_one_owner_selected_focus"],
-      "failurePolicy": "До явного выбора все финалисты parked; автоматический выбор по score запрещён."
+      "failurePolicy": "До явного выбора все финалисты parked; автоматический выбор или отказ по score запрещён. passed_not_selected допустим только после явного решения владельца и выбора другой независимой ставки."
     },
     {
       "id": "I_E1",

@@ -1,5 +1,9 @@
 # Legacy-портфель: первый SIGMA batch
 
+> **Decision layer superseded 2026-09-13.** Публичные источники остаются
+> evidence, но `commodity_without_channel` больше не terminal blocker. Текущие
+> исходы и next gates находятся в `data/IDEA_REGISTRY.json`.
+
 Дата старта: 2026-09-11
 Обновлено: 2026-09-12
 Run ID: `legacy-portfolio-russia-2026-09-11`
