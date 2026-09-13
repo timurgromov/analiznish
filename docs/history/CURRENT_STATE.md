@@ -62,7 +62,9 @@ outcome.
 * единый реестр `data/IDEA_REGISTRY.json` schema v4;
 * active-run rail и consistency validators;
 * scoring v0.7 и две независимые портфельные линзы;
-* read-only dashboard с Global Gate и состояниями соревнования;
+* read-only dashboard с Global Gate и кликабельными состояниями соревнования;
+  группа `20 вне текущего соревнования` объяснена как `6 + 9 + 5` по последнему
+  пройденному gate, отдельно от двух hard blocker;
 * public allowlist build без внутренних source paths;
 * локальный validation suite `./scripts/check-local.sh`.
 

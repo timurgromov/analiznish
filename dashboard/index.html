@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>Анализ Ниш — Кабинет идей</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260913-portfolio-final" />
+    <link rel="stylesheet" href="./styles.css?v=20260913-competition-drilldown" />
   </head>
   <body>
     <header class="topbar">
@@ -97,6 +97,13 @@
 
       <section class="app-view active" id="view-funnel" role="tabpanel" data-panel="funnel">
         <section class="decision-brief" id="decision-brief" aria-labelledby="decision-brief-title"></section>
+        <section class="panel round-selection-panel" id="round-selection-panel" aria-labelledby="round-selection-title" hidden>
+          <div class="section-head round-selection-head">
+            <div><div class="section-kicker">Расшифровка статуса</div><h2 id="round-selection-title">Идеи группы</h2><p id="round-selection-note">Здесь показаны этап, причина решения и следующий gate.</p></div>
+            <button class="reset-button" id="close-round-selection" type="button">Закрыть</button>
+          </div>
+          <div class="round-selection-groups" id="round-selection-groups"></div>
+        </section>
         <section class="panel run-funnel-panel" aria-labelledby="run-funnel-title">
           <div class="section-head run-funnel-head">
             <div><div class="section-kicker">Сопоставимый проход</div><h2 id="run-funnel-title">Воронка одного запуска</h2><p>Здесь складываются только идеи одного Factory-run. Другие запуски и legacy-активы не смешиваются с ним.</p></div>
@@ -150,7 +157,7 @@
 
       <section class="app-view" id="view-archive" role="tabpanel" data-panel="archive" hidden>
         <section class="panel">
-          <div class="section-head"><div><div class="section-kicker">Не удаляем историю</div><h2>Вне текущего соревнования и hard blockers</h2><p><strong>Вне соревнования</strong> — сохранены с условием возврата. <strong>Hard blocker</strong> — exact-модель требует снять подтверждённое ограничение. Финалисты owner gate сюда не попадают.</p></div></div>
+          <div class="section-head"><div><div class="section-kicker">Не удаляем историю</div><h2>Почему идеи остановились</h2><p><strong>Вне соревнования</strong> разбиты по последнему пройденному gate: это нехватка приоритета или доказательств, а не провал рынка. <strong>Жёсткие блокеры</strong> показаны отдельно. Финалисты owner gate сюда не попадают.</p></div></div>
           <div class="archive-groups" id="archive-groups"></div>
         </section>
       </section>
@@ -162,6 +169,6 @@
       <span>Кабинет только для просмотра · источник правды: <code>data/IDEA_REGISTRY.json</code></span>
     </footer>
 
-    <script src="./app.js?v=20260913-portfolio-final" defer></script>
+    <script src="./app.js?v=20260913-competition-drilldown" defer></script>
   </body>
 </html>

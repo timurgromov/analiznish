@@ -724,3 +724,40 @@ control не выходит за `window.innerWidth`; горизонтальны
   выбора владельца, а не «отсеян».
 * Acceptance: summary 3/20/2/3, archive 20/2, status видим на строке и карточке,
   console errors отсутствуют, mobile overflow отсутствует.
+
+### UI change contract — 2026-09-13, объяснимые статусы соревнования
+
+* Product type: read-only SaaS/admin dashboard; primary user — владелец,
+  выбирающий одну ставку для следующего evidence-цикла.
+* Target: `/dashboard/#funnel`, блок `.round-state-grid`, и
+  `/dashboard/#archive`; primary action — нажать любую из четырёх итоговых
+  карточек и увидеть соответствующие идеи, этап, причину остановки и следующий
+  gate.
+* Reproduction baseline: production viewport `1232×638`, DPR `2`,
+  `scrollWidth=1232`. Все четыре `.round-state-card` являются неинтерактивными
+  `div`; число `20` скрывает три разных состояния и не ведёт к объяснению.
+* Expected delta: четыре карточки становятся доступными кнопками. Под summary
+  открывается один drill-down выбранной группы. Для `20` он показывает три
+  непересекающиеся подгруппы: `6 — S0–S5 завершены, не вошли в тройку`,
+  `9 — остановлены на раннем Portfolio Gate`, `5 — не прошли S2–S3`.
+  В каждой строке сразу видны текущий этап, competition state и краткая причина;
+  раскрытие показывает риск и измеримое условие возврата. Вкладка
+  «Остановленные» использует ту же разбивку и отдельно показывает два hard
+  blocker.
+* Preserved invariants: итог остаётся `3/20/2/3`; состав групп и решения не
+  меняются; dashboard остаётся read-only; score, stage, gateStatus и
+  competition state не смешиваются; карточки проектов, фильтры, журнал и
+  Global Portfolio Gate продолжают работать.
+* Layout contract: exact `1232×638`; mobile `390×844`, tablet `768×1024` и
+  `1024×768`, compact desktop `1180×820`, desktop `1366×768`, `1440×900`, wide
+  `1984×1046`; breakpoint probes `559/560/561`, `759/760/761`,
+  `1099/1100/1101`, `1178/1179/1180`. Drill-down и archive идут одной колонкой;
+  кнопки не меняют ширину summary grid; на всех размерах
+  `scrollWidth === innerWidth`.
+* Accessibility: кнопки имеют `aria-pressed`, явный текст действия и
+  `focus-visible`; повторное нажатие оставляет выбранную группу открытой,
+  закрытие выполняется отдельной кнопкой.
+* Acceptance: после свежей загрузки каждая из четырёх кнопок открывает правильное
+  число идей; `20 = 6 + 9 + 5`; карточка раскрывается; hard blockers и
+  references не смешиваются с parked; browser console errors и горизонтальный
+  overflow отсутствуют.

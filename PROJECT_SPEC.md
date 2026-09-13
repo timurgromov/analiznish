@@ -259,7 +259,9 @@ design, readiness и evidence confidence показываются отдельн
 * Markdown-артефакты, prompts, project memory и локальные проверки;
 * machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
 * read-only dashboard с первой вкладкой всех идей, фильтрами, общим осторожным
-  рейтингом, воронкой, research-runs, портфелем и архивом;
+  рейтингом, воронкой, research-runs, портфелем и архивом; четыре итоговых
+  состояния открывают свои списки, а идеи вне текущего соревнования разбиты по
+  последнему пройденному gate и не смешиваются с hard blockers;
 * проверяемые `IDEA_REGISTRY.json` и `FACTORY_STATE.json` без backend и
   дублирования подробных Markdown-источников.
 

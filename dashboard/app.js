@@ -46,6 +46,7 @@ const state = {
   funnelGate: "all",
   funnelSort: "current",
   selectedRunId: null,
+  roundSelection: null,
   portfolioView: "queue",
   portfolio: { market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
   selectedPortfolioIndex: 0,
@@ -102,6 +103,37 @@ function competitionStateForIdea(ideaId) {
 
 function auditFor(id) {
   return state.registry.decisionAudits?.[id] || null;
+}
+
+function ideasInCompetitionGroup(groupId) {
+  return (state.registry.portfolioRound.stateGroups[groupId] || [])
+    .map((id) => state.registry.ideas.find((idea) => idea.id === id))
+    .filter(Boolean)
+    .sort((a, b) => currentScore(b) - currentScore(a));
+}
+
+function outCompetitionGroups() {
+  const ideas = ideasInCompetitionGroup("out_of_current_competition");
+  return [
+    {
+      id: "desk_complete_not_selected",
+      title: "Desk research завершён — не вошли в тройку",
+      note: "Прошли S0–S5 и общий сравнительный gate. Это не провал: сейчас выбраны более сильные ставки.",
+      ideas: ideas.filter((idea) => auditFor(idea.id)?.currentCheckpointId === "S4_OWNER"),
+    },
+    {
+      id: "early_portfolio_gate",
+      title: "Остановлены на раннем Portfolio Gate",
+      note: "Дошли до сопоставимой оценки, но не получили приоритет на более дорогой конкурентный разбор S5.",
+      ideas: ideas.filter((idea) => auditFor(idea.id)?.currentCheckpointId === "S4_PORTFOLIO_GATE"),
+    },
+    {
+      id: "prerequisite_evidence_gap",
+      title: "Не прошли S2–S3",
+      note: "Пока не хватает обязательных доказательств проблемы, плательщика или ограниченной модели поставки. Это evidence-gap, не hard blocker.",
+      ideas: ideas.filter((idea) => !["S4_OWNER", "S4_PORTFOLIO_GATE"].includes(auditFor(idea.id)?.currentCheckpointId)),
+    },
+  ];
 }
 
 function checkpointById(id) {
@@ -199,10 +231,10 @@ function renderTopSummary() {
   document.querySelector("#decision-brief").innerHTML = `<div class="owner-overview">
     <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(interviewHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
     <div class="round-state-grid" aria-label="Итог текущего соревнования">
-      <div class="round-state-card is-final"><strong>${finalists}</strong><span>предварительных финалиста</span></div>
-      <div class="round-state-card"><strong>${out}</strong><span>вне текущего соревнования</span></div>
-      <div class="round-state-card is-hard"><strong>${hardFailed}</strong><span>hard blocker</span></div>
-      <div class="round-state-card"><strong>${references}</strong><span>reference / benchmark</span></div>
+      <button class="round-state-card is-final" type="button" data-round-target="provisional_finalist" aria-controls="round-selection-panel" aria-pressed="false"><strong>${finalists}</strong><span>предварительных финалиста</span><small>Открыть список →</small></button>
+      <button class="round-state-card" type="button" data-round-target="out_of_current_competition" aria-controls="round-selection-panel" aria-pressed="false"><strong>${out}</strong><span>вне текущего соревнования</span><small>Этапы и причины →</small></button>
+      <button class="round-state-card is-hard" type="button" data-round-target="hard_failed" aria-controls="round-selection-panel" aria-pressed="false"><strong>${hardFailed}</strong><span>жёстких блокера</span><small>Открыть блокеры →</small></button>
+      <button class="round-state-card" type="button" data-round-target="reference_or_benchmark" aria-controls="round-selection-panel" aria-pressed="false"><strong>${references}</strong><span>референса / benchmark</span><small>Открыть список →</small></button>
     </div>
     <div class="round-finalists"><span>Выбрать одну ставку:</span>${finalistIdeas.map((idea) => `<a href="${projectCardHref(idea.id)}">${escapeHtml(idea.title)}</a>`).join("")}</div>
   </div>
@@ -214,6 +246,52 @@ function renderTopSummary() {
   document.querySelector("#updated-at").textContent = `Обновлено ${formatDate(state.registry.updatedAt)}`;
   document.querySelector("#add-idea-instruction").textContent = state.factory.dashboard.addIdeaInstruction;
   document.querySelector("#ranking-formula").textContent = state.registry.rankingModel.formula.replace("round", "округлить");
+}
+
+function competitionGroupSection(title, note, ideas) {
+  return `<section class="archive-section"><div class="archive-title"><div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(note)}</p></div><strong>${ideas.length}</strong></div><div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
+}
+
+function renderRoundSelection() {
+  const panel = document.querySelector("#round-selection-panel");
+  const groupsTarget = document.querySelector("#round-selection-groups");
+  document.querySelectorAll("[data-round-target]").forEach((button) => {
+    const active = button.dataset.roundTarget === state.roundSelection;
+    button.classList.toggle("selected", active);
+    button.setAttribute("aria-pressed", String(active));
+  });
+  if (!state.roundSelection) {
+    panel.hidden = true;
+    groupsTarget.innerHTML = "";
+    return;
+  }
+
+  const definitions = {
+    provisional_finalist: {
+      title: "Предварительные финалисты",
+      note: "Все три прошли desk research S0–S5. Они не отсеяны: следующий gate — выбор владельцем одной ставки.",
+    },
+    out_of_current_competition: {
+      title: "Почему 20 идей не вошли в текущий цикл",
+      note: "Здесь три разных причины остановки. Ни одна из этих 20 идей не имеет hard blocker.",
+    },
+    hard_failed: {
+      title: "Жёстко заблокированные exact-модели",
+      note: "Возврат возможен только после снятия конкретного подтверждённого ограничения.",
+    },
+    reference_or_benchmark: {
+      title: "Референсы и действующий benchmark",
+      note: "Это источники сравнения и рыночные ориентиры, а не наши конкурирующие ставки.",
+    },
+  };
+  const definition = definitions[state.roundSelection];
+  const sections = state.roundSelection === "out_of_current_competition"
+    ? outCompetitionGroups()
+    : [{ title: definition.title, note: definition.note, ideas: ideasInCompetitionGroup(state.roundSelection) }];
+  document.querySelector("#round-selection-title").textContent = definition.title;
+  document.querySelector("#round-selection-note").textContent = definition.note;
+  groupsTarget.innerHTML = sections.map((group) => competitionGroupSection(group.title, group.note, group.ideas)).join("");
+  panel.hidden = false;
 }
 
 function renderFilterOptions() {
@@ -505,16 +583,14 @@ function renderRuns() {
 
 function renderArchive() {
   const groups = [
-    ["out_of_current_competition", "Вне текущего соревнования", "Сохранены с точным условием возврата; это не провал рынка"],
-    ["hard_failed", "Hard blocker", "Exact-модель возвращается только после снятия подтверждённого ограничения"],
+    ...outCompetitionGroups(),
+    {
+      title: "Жёсткие блокеры",
+      note: "Exact-модель возвращается только после снятия подтверждённого ограничения.",
+      ideas: ideasInCompetitionGroup("hard_failed"),
+    },
   ];
-  document.querySelector("#archive-groups").innerHTML = groups.map(([status, title, note]) => {
-    const ideas = state.registry.portfolioRound.stateGroups[status]
-      .map((id) => state.registry.ideas.find((idea) => idea.id === id))
-      .filter(Boolean)
-      .sort((a, b) => currentScore(b) - currentScore(a));
-    return `<section class="archive-section"><div class="archive-title"><div><h3>${title}</h3><p>${note}</p></div><strong>${ideas.length}</strong></div><div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
-  }).join("");
+  document.querySelector("#archive-groups").innerHTML = groups.map((group) => competitionGroupSection(group.title, group.note, group.ideas)).join("");
 }
 
 function renderPortfolioTable() {
@@ -577,6 +653,15 @@ function resetIdeaFilters() {
 }
 
 function bindControls() {
+  document.querySelectorAll("[data-round-target]").forEach((button) => button.addEventListener("click", () => {
+    state.roundSelection = button.dataset.roundTarget;
+    renderRoundSelection();
+    document.querySelector("#round-selection-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+  document.querySelector("#close-round-selection").addEventListener("click", () => {
+    state.roundSelection = null;
+    renderRoundSelection();
+  });
   document.querySelectorAll(".view-tab").forEach((button) => button.addEventListener("click", () => {
     if (button.dataset.view === "all-ideas") resetIdeaFilters();
     switchView(button.dataset.view);
@@ -653,6 +738,7 @@ async function init() {
     state.portfolio.queue = parseTable(hitParade, "Приоритет");
     if (!registry.ideas?.length || !registry.runs?.length || !state.portfolio.market.rows.length || !state.portfolio.queue.rows.length) throw new Error("Один из источников не содержит обязательных данных");
     renderTopSummary();
+    renderRoundSelection();
     renderFilterOptions();
     renderIdeas();
     renderFunnel();

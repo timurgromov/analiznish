@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-dashboard-competition-drilldown",
+  "change_kind": "dashboard-explainable-competition-status",
+  "status": "passed",
+  "requested_visible_change": "Сделать все четыре итоговые цифры кликабельными и показать, на каком этапе и почему остановилась каждая идея.",
+  "expected_visible_delta": "Каждая карточка 3/20/2/3 открывает свою группу; 20 идей вне соревнования разделены по последнему пройденному gate на 6/9/5, отдельно от hard blockers.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "b5c729c9d7280e440dbecc332492ce42c02ef8eff59dfb916c74f6148b63a8a0",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?candidate=competition-groups#funnel",
+    "source_ref": "staged candidate diff before this evidence artifact",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel and /dashboard/#archive",
+    "state": "Global Portfolio Gate completed at desk level; owner choice pending",
+    "selector_or_slide_id": ".round-state-grid, #round-selection-panel, #archive-groups",
+    "action": "Нажать каждую итоговую карточку, раскрыть одну строку и проверить одинаковую классификацию во вкладке Остановленные."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Итоговая классификация остаётся 3/20/2/3",
+    "Stage, gate outcome и competition state не смешиваются",
+    "Недостаток evidence не называется hard blocker",
+    "До owner choice интервью и build не открыты"
+  ],
+  "required_viewports": [
+    "390x844",
+    "1232x638",
+    "1440x900",
+    "20-size responsive matrix"
+  ],
+  "observations": [
+    {
+      "viewport": "1232x638",
+      "viewport_source": "live Chrome session and isolated Playwright Chrome",
+      "before_signature": "Четыре round-state-card были неинтерактивными div; число 20 не раскрывало состав и причины.",
+      "after_signature": "Четыре доступные кнопки открывают один drill-down; выбранная группа имеет aria-pressed=true.",
+      "observed_visible_result": "Группа 20 показывает три секции с 6, 9 и 5 строками; раскрытие Радарыча показывает риск и следующий gate.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "390x844",
+      "viewport_source": "isolated Playwright Chrome and visual screenshot review",
+      "before_signature": "На mobile не существовало пути от итоговой цифры к объяснению конкретной идеи.",
+      "after_signature": "Drill-down складывается в одну колонку; заголовок, пояснение, close и строки идей доступны без горизонтального scroll.",
+      "observed_visible_result": "document width равен scrollWidth 390px; секции и карточка не обрезаны.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "isolated Playwright Chrome and visual screenshot review",
+      "before_signature": "Desktop summary показывал только агрегаты без перехода к объектам.",
+      "after_signature": "Выбранная карточка имеет явный active outline; под summary виден полноширинный список одной группы.",
+      "observed_visible_result": "Карточки 3/20/2/3 открывают соответственно 3/20/2/3 идеи; 20 разложены на 6/9/5.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "20-size responsive matrix",
+      "viewport_source": "isolated Playwright Chrome",
+      "before_signature": "Новый интерактивный drill-down не имел проверки на основных размерах и границах breakpoints.",
+      "after_signature": "Основные размеры, exact 1232x638 и обе стороны breakpoints 560, 760, 1100 и 1180 прошли механическую проверку.",
+      "observed_visible_result": "На всех размерах: 4 кнопки, 20=6+9+5, остальные группы 3/2/3, архив 6/9/5/2, раскрытие работает, overflow и console/page errors отсутствуют.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ]
+}
