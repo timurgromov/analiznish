@@ -701,3 +701,26 @@ control не выходит за `window.innerWidth`; горизонтальны
 * Acceptance: `documentElement.scrollWidth === innerWidth` на `390×844`,
   `559/560/561`, `760`, `1180×820`, `1366×768`, `1440×900`; status-chip не
   обрезан, console errors отсутствуют.
+
+### UI change contract — 2026-09-13, честный Portfolio Final
+
+* Target: `/dashboard/` и `/dashboard/project.html?id=<id>` после закрытия
+  Global Portfolio Gate.
+* Baseline signature: верхний блок считает финалистами все записи со стадией
+  `finalist`, а вкладка «Остановленные» считает все `parked`; поэтому три
+  финалиста owner gate смешиваются с объектами вне текущего соревнования.
+* Expected delta: верхний блок читает `portfolioRound.stateGroups` и показывает
+  ровно `3` предварительных финалиста, `20` объектов вне текущего соревнования,
+  `2` hard failed и `3` reference/benchmark. Карточка показывает одновременно
+  gate outcome и статус текущего соревнования. Архив содержит только `out` и
+  `hard_failed`, а не финалистов на owner hold.
+* Preserved invariants: read-only UI, рейтинг, confidence, фильтры, журнал run,
+  исторические таблицы, карточки и source boundary остаются без write-действий.
+* Layout contract: mobile `390×844`, tablet `768×1024` и `1024×768`, compact
+  desktop `1180×820`, desktop `1366×768`, `1440×900`, wide `1984×1046`;
+  breakpoint probes `559/560/561`, `759/760/761`, `1099/1100/1101`,
+  `1178/1179/1180`. Во всех режимах `scrollWidth === innerWidth`.
+* Primary action: открыть одного из трёх финалистов и увидеть, что он ждёт
+  выбора владельца, а не «отсеян».
+* Acceptance: summary 3/20/2/3, archive 20/2, status видим на строке и карточке,
+  console errors отсутствуют, mobile overflow отсутствует.

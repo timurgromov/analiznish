@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-dashboard-global-portfolio-final",
+  "change_kind": "dashboard-global-portfolio-state",
+  "status": "passed",
+  "requested_visible_change": "Показать честный итог всех исследованных проектов без ложных финалов и провалов и оставить один понятный owner gate.",
+  "expected_visible_delta": "Верхний экран показывает итог 3/20/2/3, ссылки ровно на три предварительных финалиста и один следующий gate; карточка каждой идеи отдельно показывает место в текущем соревновании.",
+  "attempt_number": 2,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "87fc5cd959b9e96118bf736ce75fab7b2989ad46db9a83a96ca100a84656fd9a",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#funnel",
+    "source_ref": "staged candidate diff before this evidence artifact",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel and /dashboard/project.html?id=<idea>",
+    "state": "Global Portfolio Gate completed at desk level; owner choice pending",
+    "selector_or_slide_id": ".round-state-grid, .round-finalists, #run-funnel-body, .portfolio-state",
+    "action": "Открыть воронку, проверить итоговые группы и открыть три карточки финалистов плюс одну карточку вне соревнования."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Stage и gateStatus не выводятся из competition state",
+    "Readiness и score не создают failed",
+    "Public allowlist не содержит внутренних source paths",
+    "До owner choice интервью и build не открыты"
+  ],
+  "required_viewports": [
+    "390x844",
+    "768x1024",
+    "1024x768",
+    "1180x820",
+    "1366x768",
+    "1440x900",
+    "1984x1046",
+    "559/560/561x820",
+    "759/760/761x820",
+    "1099/1100/1101x820",
+    "1178/1179/1180x820"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "isolated Playwright Chrome and visual screenshot review",
+      "before_signature": "Локальные runs оставляли несколько несовместимых финальных пулов и не давали полного итога соревнования.",
+      "after_signature": "Первый экран показывает 3 предварительных финалиста, 20 идей вне соревнования, 2 hard blocker и 3 reference/benchmark; ниже один Global Portfolio Gate.",
+      "observed_visible_result": "Все три ссылки финалистов видны, архив показывает 22 остановленные идеи, document width равен scrollWidth 390px.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "isolated Playwright Chrome and visual screenshot review",
+      "before_signature": "Решение владельца опиралось на устаревшие локальные owner holds разных runs.",
+      "after_signature": "Desktop ведёт от единого итога 3/20/2/3 к rail одного Global Gate и трём кандидатам этого запуска.",
+      "observed_visible_result": "Три finalist links и три кандидата run совпадают; document width равен scrollWidth 1440px.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "19-size responsive matrix",
+      "viewport_source": "isolated Playwright Chrome",
+      "before_signature": "Новый блок competition state не имел полной breakpoint-проверки.",
+      "after_signature": "Базовые размеры и обе стороны breakpoints 560, 760, 1100 и 1180 прошли механическую проверку.",
+      "observed_visible_result": "На всех 19 размерах scrollWidth равен innerWidth, видны три finalist links и archive count 22, console/page errors отсутствуют.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1180x820 project cards",
+      "viewport_source": "isolated Playwright Chrome",
+      "before_signature": "Карточка показывала только checkpoint и gate outcome, не место идеи в текущем соревновании.",
+      "after_signature": "Три выбранных кандидата показывают «Предварительный финалист», Радарыч — «Вне текущего соревнования».",
+      "observed_visible_result": "Заголовки и competition state совпадают с registry; overflow отсутствует.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ]
+}

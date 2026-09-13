@@ -26,6 +26,10 @@ function escapeHtml(value) { return String(value ?? "").replace(/&/g, "&amp;").r
 function currentScore(idea, registry) { return Math.round(registry.rankingModel.neutralPrior + (idea.baseScore - registry.rankingModel.neutralPrior) * idea.evidenceConfidence); }
 function setStatus(text, tone = "") { const target = document.querySelector("#data-status"); target.textContent = text; target.className = `status ${tone}`.trim(); }
 function legacyConfidenceNote(idea) { return !Number.isFinite(idea.legacyEvidenceConfidence) || idea.legacyEvidenceConfidence === idea.evidenceConfidence ? "" : `<small class="legacy-confidence">Legacy: ${Math.round(idea.legacyEvidenceConfidence * 100)}%; активное доверие ограничено evidence-cap ${idea.evidenceLevel} до ${Math.round(idea.evidenceConfidence * 100)}%.</small>`; }
+function competitionStateForIdea(registry, ideaId) {
+  const stateId = Object.entries(registry.portfolioRound.stateGroups).find(([, ids]) => ids.includes(ideaId))?.[0];
+  return registry.competitionStates.find((item) => item.id === stateId);
+}
 function criterionLabel(id, audit) { return audit.criteria.find((criterion) => criterion.id === id)?.label || criterionLabels[id] || id.replaceAll("_", " "); }
 function projectSourceSection(source) {
   if (!source) return `<section class="project-source"><p>Публичная карточка показывает обезличенный audit trail. Внутренний путь источника не публикуется.</p></section>`;
@@ -67,11 +71,12 @@ async function init() {
     if (!idea || !audit) throw new Error("Такой проект или его audit trail не найден в едином реестре");
     const stage = registry.stages.find((item) => item.id === idea.stage);
     const gate = registry.gateStatuses.find((item) => item.id === idea.gateStatus);
+    const competitionState = competitionStateForIdea(registry, idea.id);
     const score = currentScore(idea, registry);
     const blocker = audit.blockerCode ? `Есть: ${audit.blockerCode}` : "Нет";
     document.title = `${idea.title} — Анализ Ниш`;
     document.querySelector("#project-card").innerHTML = `<header class="project-card-hero"><div><p class="section-kicker">${escapeHtml(objectTypeLabels[idea.objectType] || idea.objectType)} · ${escapeHtml(idea.category)}</p><h1>${escapeHtml(idea.title)}</h1><p>${escapeHtml(idea.projectSummary)}</p></div><div class="project-score" aria-label="Текущий рейтинг ${score}, доверие ${Math.round(idea.evidenceConfidence * 100)} процентов"><strong>${score}</strong><span>текущий рейтинг</span><b>${Math.round(idea.evidenceConfidence * 100)}% доверие</b>${legacyConfidenceNote(idea)}</div></header>
-    <section class="decision-strip" aria-label="Текущее решение"><div><span>Checkpoint</span><strong>${escapeHtml(audit.currentCheckpointId)}</strong></div><div><span>Этап</span><strong>${escapeHtml(stage?.label || idea.stage)}</strong></div><div><span>Решение</span><strong>${escapeHtml(gate?.label || idea.gateStatus)}</strong></div><div><span>Класс решения</span><strong>${escapeHtml(decisionClassLabels[audit.decisionClass] || audit.decisionClass)}</strong></div><div><span>Hard blocker</span><strong>${escapeHtml(blocker)}</strong></div><div class="competition-fact"><span>Конкуренция</span><strong>${escapeHtml(competitionLabels[audit.competitionEffect] || audit.competitionEffect)}</strong></div></section>
+    <section class="decision-strip" aria-label="Текущее решение"><div><span>Checkpoint</span><strong>${escapeHtml(audit.currentCheckpointId)}</strong></div><div><span>Этап</span><strong>${escapeHtml(stage?.label || idea.stage)}</strong></div><div><span>Решение gate</span><strong>${escapeHtml(gate?.label || idea.gateStatus)}</strong></div><div class="portfolio-state"><span>В текущем соревновании</span><strong>${escapeHtml(competitionState?.label || "Статус не задан")}</strong></div><div><span>Hard blocker</span><strong>${escapeHtml(blocker)}</strong></div><div class="competition-fact"><span>Конкуренция</span><strong>${escapeHtml(competitionLabels[audit.competitionEffect] || audit.competitionEffect)}</strong></div></section>
     <section class="project-facts" aria-label="Суть проекта"><div><span>Для кого</span><p>${escapeHtml(idea.customer)}</p></div><div><span>Результат для клиента</span><p>${escapeHtml(idea.customerOutcome)}</p></div><div><span>Как зарабатывает</span><p>${escapeHtml(idea.moneyModel)}</p></div></section>
     <section class="project-research" aria-label="Состояние исследования"><div><span>Почему в этом месте</span><p>${escapeHtml(idea.rankingReason)}</p></div><div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div><div class="project-next"><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div><div><span>Уровень доказательств</span><p><strong>${escapeHtml(idea.evidenceLevel)}</strong> · ${Math.round(idea.evidenceConfidence * 100)}% активного доверия</p></div></section>
     ${renderCurrentGate(schema, audit)}${renderEvidence(audit)}${renderGeographies(audit)}

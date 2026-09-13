@@ -12,10 +12,10 @@
     "status": "configured",
     "statusLabel": "Контур настроен, но не подтверждён end-to-end",
     "endToEndValidated": false,
-    "summary": "Контур исправлен против смыслового дрейфа и преждевременного отсева. Codex Project Starter восстановлен как одна программа AI-перехода и первого внедрения: S0 Thesis Contract пройден, S1 рынка активен. B2B batch отдельно parked на S2.",
-    "confirmed": "Одна идея владельца требует короткое Definition Interview и один подтверждённый Thesis Contract. Сегменты и delivery не создают новые продукты. Opportunity, business design, readiness и confidence разделены; score не назначает outcome, а passed_not_selected конкретной ставки требует явного owner decision.",
-    "unknown": "Для расширенного Codex Project Starter ещё не сопоставлены платные модели, сегменты и первый результат; willingness-to-pay, CAC, support burden и repeat остаются будущими gates, а не причиной отказа. Полный контур на интервью, действии, оплате, bounded build и повторе не подтверждён.",
-    "nextGate": "S1_MARKET для Codex Project Starter: минимум три независимые платные модели AI-перехода/внедрения с плательщиком, трансформацией, delivery и границей evidence.",
-    "source": "data/discovery/2026-09-13-codex-project-starter-thesis-reset.md"
+    "summary": "Desk research текущего соревнования закрыт: незавершённой очереди нет, Global Portfolio Gate оставил три предварительных финалиста. Контур ещё не подтверждён end-to-end, потому что владелец не выбрал одну ставку и реальные интервью не начаты.",
+    "confirmed": "Все 28 объектов классифицированы ровно один раз: 3 предварительных финалиста, 20 вне текущего соревнования с условиями возврата, 2 hard failed exact-модели и 3 reference/benchmark. Готовность, код и наличие канала не использованы как terminal filter.",
+    "unknown": "У трёх финалистов остаются E1-неизвестные: реальный повторяемый Job конкретного сегмента, willingness-to-pay, CAC, маржа и repeat. Интервью, действие, оплата, bounded build и повтор ещё не подтверждены.",
+    "nextGate": "Владелец выбирает ровно одну из трёх ставок для подготовки I_E1 и минимум пяти реальных интервью.",
+    "source": "data/discovery/2026-09-13-global-portfolio-gate.md"
   }
 }

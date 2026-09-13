@@ -1,58 +1,52 @@
 # Active Niche Factory Run
 
 Schema version: 2
-Run ID: codex-project-starter-russia-2026-09-12
-Registry run ID: codex-project-starter-2026-09-12
+Run ID: global-portfolio-gate-2026-09-13
+Registry run ID: global-portfolio-gate-2026-09-13
 Mode: niche_factory
-Status: active
-Direction: Один образовательный и внедренческий AI-переход для работы и бизнеса; templates и delivery — компоненты, не определение продукта
-Checkpoint ID: S1_MARKET
-Checkpoint gate status: in_progress
+Status: parked
+Direction: Единый Portfolio Final; выбрать одну ставку для интервью
+Checkpoint ID: S4_OWNER
+Checkpoint gate status: parked
 Macro phase: S · SCAN
-Current step: 1
-Current step name: Рынок, референсы и денежные модели
-Previous checkpoint: S0_CONTEXT
-Completed checkpoints: S0_CONTEXT
-Candidate IDs: codex-project-starter-product
+Current step: 4
+Current step name: Owner checkpoint — выбор одного финалиста
+Previous checkpoint: S5_COMPETITORS
+Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE, S4_PORTFOLIO_GATE, S5_COMPETITORS
+Candidate IDs: agency-ar-control, codex-project-starter-product, psych-lead-to-paid-session
 Selected focus IDs: —
-Research Unit: single_thesis
-Thesis ID: codex-project-starter-product
-Scope lock: 2026-09-13 — владелец явно указал: один Codex Project Starter; сегменты и delivery проверяются внутри одной карточки.
-Canonical thesis: Практический образовательный и внедренческий цифровой продукт, который помогает предпринимателю или самостоятельному специалисту понять, где AI, нейросети, агенты и Codex полезны в его работе или бизнесе, выбрать приоритетный сценарий и довести первое внедрение до измеримого результата.
-Thesis confirmation: owner_confirmed
-Definition source: Прямые сообщения владельца 2026-09-13 в текущем Codex-чате.
-Prohibited reframes: Не сводить продукт к архиву templates, курсу по интерфейсу, генератору сайта или отдельным версиям для PM, агентств и founders.
+Research Unit: portfolio_batch
 Strongest evidence: E1
-Source board: data/discovery/2026-09-13-codex-project-starter-thesis-reset.md
+Source board: data/discovery/2026-09-13-global-portfolio-gate.md
 Last updated: 2026-09-13
 
 ## Решение владельца
 
-2026-09-13: владелец подтвердил, что продукт — программа практического перехода
-к использованию AI/агентов/Codex в работе и бизнесе. Templates, сайты,
-сопровождение и сегментные упаковки являются компонентами/гипотезами. Решение
-`passed_not_selected` отменено: оно было принято агентом без owner choice после
-подмены исходного тезиса.
+2026-09-13: владелец поручил завершить все desk-gates и дать честный финальный
+список. Desk research завершён; выбор одной ставки ещё не сделан.
 
 ## Что реально проверено
 
-S0 Definition Gate пройден: канонический тезис, клиентская трансформация,
-компоненты и запрещённые подмены подтверждены владельцем. Старое S1–S5
-исследовало более узкую версию и не переносится автоматически на новый тезис.
+Все 25 concrete bets получили место в текущем соревновании или явный исход.
+Незавершённой очереди нет. Global Portfolio Gate оставил три разные ставки:
 
-## Единственная текущая работа
+1. контроль ранней дебиторки малых B2B-услуг;
+2. Codex Project Starter — AI-переход и первое внедрение;
+3. обращение → оплаченная первая сессия для частных психологов.
 
-Пересобрать S1 вокруг платных категорий AI-перехода и практического внедрения в
-работу/бизнес, не требуя от новой идеи уже готовых канала, защиты, кейсов или
-repeat.
+Это предварительные финалисты, а не три новых проекта и не три разрешённых
+разработки.
 
-## Gate этапа
+## Точка возобновления (не текущая работа)
 
-Минимум три независимые платные модели; для каждой зафиксированы плательщик,
-трансформация, delivery и evidence boundary. После этого разрешён S2.
+Ждать явного выбора владельца одной ставки; после выбора подготовить I_E1.
+
+## Gate возобновлённого этапа
+
+Владелец называет одну ставку. Тогда реестр получает ровно один
+`selected_for_interviews`, готовятся screener, interview guide и evidence table,
+после чего проводятся минимум пять реальных интервью.
 
 ## Запрещённый переход
 
-Не менять канонический тезис без owner checkpoint, не сводить продукт к
-templates/сайту, не создавать отдельные проекты из сегментов и не использовать
-неготовность либо score как terminal outcome.
+До выбора не начинать интервью, трафик, продажи, запрос оплаты или build.

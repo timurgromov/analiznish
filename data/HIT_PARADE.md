@@ -18,13 +18,16 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 
 | Сейчас | Количество | Решение |
 | --- | ---: | --- |
-| CustDev-ready | 0 | Ни у кого нет одновременно S4 owner choice и I_E1. |
-| Finalist parked | 3 | Радарыч и психологические P1/P2 ждут общего owner choice. |
+| CustDev-ready | 0 | Владелец ещё не выбрал одну ставку; I_E1 и интервью не открыты. |
+| Предварительный финал | 3 | AR control, Codex Project Starter и lead→paid session ждут явного owner choice. |
 | Обоснованный failed | 2 | AI YouTube exact domestic-ad и ProfiWatcher имеют legal/platform blockerCode и отдельный failed-критерий. |
-| Parked до evidence или owner choice | 22 | Включая Rule24, КАДРУ, Cycle, Sansara, психологические и семь B2B-гипотез. Неготовность не является отказом. |
-| Проверяется сейчас | 1 | Codex Project Starter: S1 заново исследует широкий продукт AI-перехода и первого внедрения. |
+| Вне текущего соревнования | 20 | Все сохранены с конкретным условием возврата; это не провал рынка. |
+| Проверяется сейчас | 0 | Незакрытой desk-очереди нет; run parked на owner choice. |
 | Прошла, не в фокусе | 0 concrete bets | Агент не может назначить этот исход по score; нужен явный owner decision. |
 | Active business / market reference | 3 | Benchmark и карта рынка, не кандидаты Factory. |
+
+Global Portfolio Gate завершён 2026-09-13. Канонический текущий digest —
+`data/PORTFOLIO_CLOSURE.md`; исторические таблицы ниже не изменяют его исходы.
 
 Колонки `Доверие` ниже сохраняют frozen legacy v0.7 для воспроизводимости
 исторических формул. Активный `evidenceConfidence`, ограниченный caps E0–E5,

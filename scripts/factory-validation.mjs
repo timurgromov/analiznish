@@ -54,7 +54,7 @@ function evidenceRank(level) {
 
 export function validateSchema(schema) {
   const label = "data/FACTORY_SCHEMA.json";
-  invariant(schema.schemaVersion === 2, "поддерживается только schemaVersion 2", label);
+  invariant(schema.schemaVersion === 3, "поддерживается только schemaVersion 3", label);
   for (const key of ["runSchemaVersion", "registrySchemaVersion", "factoryStateSchemaVersion"]) {
     invariant(Number.isInteger(schema[key]), `${key} должен быть целым`, label);
   }
@@ -67,6 +67,14 @@ export function validateSchema(schema) {
   const gateStatuses = ids(schema.gateStatuses, label);
   invariant(gateStatuses.has("parked") && gateStatuses.has("failed"), "parked/failed должны быть исходами gate", label);
   invariant(!stages.has("parked") && !stages.has("failed"), "parked/failed не могут быть стадиями", label);
+  const competitionStates = ids(schema.competitionStates, label);
+  const expectedCompetitionStates = ["active_research", "queued_research", "provisional_finalist", "selected_for_interviews", "out_of_current_competition", "hard_failed", "reference_or_benchmark"];
+  invariant(JSON.stringify([...competitionStates.keys()]) === JSON.stringify(expectedCompetitionStates), "порядок competitionStates неканонический", label);
+  invariant(schema.portfolioRoundContract?.everyObjectExactlyOnce === true, "портфельный раунд должен классифицировать каждый объект ровно один раз", label);
+  invariant(schema.portfolioRoundContract?.oneActiveRun === true, "портфельный раунд должен иметь один активный research run", label);
+  invariant(Number.isInteger(schema.portfolioRoundContract?.activeResearchBatchMax) && schema.portfolioRoundContract.activeResearchBatchMax >= 1, "нет допустимого размера active research batch", label);
+  invariant(schema.portfolioRoundContract?.selectedForInterviewsMax === 1, "для интервью можно выбрать максимум одну ставку", label);
+  invariant(schema.portfolioRoundContract?.globalGateFinalistLimit === 3, "Global Portfolio Gate должен оставлять максимум три ставки", label);
 
   const criterionResults = new Set(schema.criterionResults ?? []);
   for (const result of ["passed", "failed", "unknown", "not_applicable"]) {
@@ -313,6 +321,7 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   invariant(registry.rankingModel?.formula === "round(50 + (baseScore - 50) * evidenceConfidence)", "неожиданная ranking formula", label);
   invariant(JSON.stringify(registry.stages) === JSON.stringify(schema.stages), "stages должны точно соответствовать FACTORY_SCHEMA", label);
   invariant(JSON.stringify(registry.gateStatuses) === JSON.stringify(schema.gateStatuses), "gateStatuses должны точно соответствовать FACTORY_SCHEMA", label);
+  invariant(JSON.stringify(registry.competitionStates) === JSON.stringify(schema.competitionStates), "competitionStates должны точно соответствовать FACTORY_SCHEMA", label);
 
   const stageMap = ids(schema.stages, "data/FACTORY_SCHEMA.json");
   const gateStatuses = new Set(schema.gateStatuses.map((status) => status.id));
@@ -322,6 +331,7 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   const checkpointAuditStatuses = new Set(schema.checkpointAuditStatuses);
   const decisionClasses = new Set(schema.decisionClasses);
   const blockerCodes = new Set(schema.blockerCodes);
+  const competitionStateIds = new Set(schema.competitionStates.map((state) => state.id));
   const runIds = new Set();
   const runsById = new Map();
   for (const run of registry.runs ?? []) {
@@ -445,6 +455,56 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
     if (audit.competitionEffect === "confirms_market") {
       invariant(!failedCriteria.some((criterion) => criterion.id === "market_exists"), "подтверждённая конкуренция несовместима с failed market_exists", auditLabel);
     }
+  }
+
+  const round = registry.portfolioRound;
+  invariant(round && typeof round === "object" && !Array.isArray(round), "portfolioRound обязателен", label);
+  for (const key of ["id", "title", "status", "globalGateStatus", "nextGate", "updatedAt"]) {
+    invariant(typeof round[key] === "string" && round[key].trim(), `portfolioRound.${key} обязателен`, label);
+  }
+  invariant(Array.isArray(round.currentResearchIds), "portfolioRound.currentResearchIds должен быть массивом", label);
+  invariant(new Set(round.currentResearchIds).size === round.currentResearchIds.length, "portfolioRound.currentResearchIds содержит дубликаты", label);
+  invariant(schema.portfolioRoundContract.statuses.includes(round.status), `неизвестный portfolioRound.status ${round.status}`, label);
+  invariant(schema.portfolioRoundContract.globalGateStatuses.includes(round.globalGateStatus), `неизвестный globalGateStatus ${round.globalGateStatus}`, label);
+  invariant(/^\d{4}-\d{2}-\d{2}$/.test(round.updatedAt), "portfolioRound.updatedAt должен быть YYYY-MM-DD", label);
+  invariant(round.stateGroups && typeof round.stateGroups === "object" && !Array.isArray(round.stateGroups), "portfolioRound.stateGroups обязателен", label);
+  invariant(JSON.stringify(Object.keys(round.stateGroups)) === JSON.stringify([...competitionStateIds]), "portfolioRound.stateGroups должен содержать все competitionStates в каноническом порядке", label);
+  const roundMembership = new Map();
+  for (const [stateId, idsInState] of Object.entries(round.stateGroups)) {
+    invariant(competitionStateIds.has(stateId), `неизвестный competition state ${stateId}`, label);
+    invariant(Array.isArray(idsInState), `portfolioRound.stateGroups.${stateId} должен быть массивом`, label);
+    invariant(new Set(idsInState).size === idsInState.length, `portfolioRound.stateGroups.${stateId} содержит дубликаты`, label);
+    for (const ideaId of idsInState) {
+      invariant(ideaIds.has(ideaId), `portfolioRound содержит неизвестную идею ${ideaId}`, label);
+      invariant(!roundMembership.has(ideaId), `${ideaId} одновременно находится в ${roundMembership.get(ideaId)} и ${stateId}`, label);
+      roundMembership.set(ideaId, stateId);
+    }
+  }
+  invariant(roundMembership.size === ideaIds.size, "portfolioRound должен классифицировать каждый объект ровно один раз", label);
+  if (round.status === "researching") {
+    invariant(round.stateGroups.active_research.length >= 1, "исследуемый portfolioRound требует хотя бы одну active_research ставку", label);
+    invariant(round.stateGroups.active_research.length <= schema.portfolioRoundContract.activeResearchBatchMax, `active research batch превышает ${schema.portfolioRoundContract.activeResearchBatchMax}`, label);
+    invariant(JSON.stringify(round.stateGroups.active_research) === JSON.stringify(round.currentResearchIds), "currentResearchIds должен совпадать с active_research", label);
+  } else {
+    invariant(round.stateGroups.active_research.length === 0, "завершённый desk research не может сохранять active_research", label);
+    invariant(round.currentResearchIds.length === 0, "завершённый desk research не может сохранять currentResearchIds", label);
+  }
+  invariant(round.stateGroups.selected_for_interviews.length <= schema.portfolioRoundContract.selectedForInterviewsMax, "для интервью выбрано больше одной ставки", label);
+  if (round.status === "ready_for_owner_choice") {
+    invariant(round.globalGateStatus === "ready", "ready_for_owner_choice требует globalGateStatus=ready", label);
+    invariant(round.stateGroups.provisional_finalist.length >= 1 && round.stateGroups.provisional_finalist.length <= schema.portfolioRoundContract.globalGateFinalistLimit, "Global Portfolio Gate должен оставить 1–3 предварительных финалиста", label);
+    invariant(round.stateGroups.active_research.length === 0 && round.stateGroups.queued_research.length === 0, "перед owner choice не должно оставаться активного или ожидающего исследования", label);
+  }
+  for (const ideaId of round.stateGroups.provisional_finalist) {
+    const idea = registry.ideas.find((item) => item.id === ideaId);
+    invariant(idea.stage === "finalist" && idea.gateStatus === "parked", `${ideaId}: provisional_finalist требует finalist/parked`, label);
+    invariant(registry.decisionAudits[ideaId].currentCheckpointId === "S4_OWNER", `${ideaId}: provisional_finalist должен ждать S4_OWNER`, label);
+  }
+  for (const ideaId of round.stateGroups.hard_failed) {
+    invariant(registry.ideas.find((item) => item.id === ideaId).gateStatus === "failed", `${ideaId}: hard_failed требует gateStatus failed`, label);
+  }
+  for (const ideaId of round.stateGroups.reference_or_benchmark) {
+    invariant(["market_reference", "active_business"].includes(registry.ideas.find((item) => item.id === ideaId).objectType), `${ideaId}: reference_or_benchmark допускает только reference или active business`, label);
   }
 
   if (checkSources) {

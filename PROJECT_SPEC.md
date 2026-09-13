@@ -131,6 +131,10 @@ capabilities и способом удешевить тест, но не дока
 ### 4. `portfolio_review`
 
 Сравнение рынков и конкретных ставок для выбора одного следующего фокуса.
+Если объединяются результаты нескольких завершённых runs, Global Portfolio
+Gate запускается только при пустых исследовательских очередях, оставляет 1–3
+предварительных финалиста и ждёт owner choice ровно одной ставки. Идеи вне
+текущего соревнования сохраняются с условием возврата; это не `failed`.
 
 ### 5. `idea_inbox` / чистилище
 
@@ -174,7 +178,7 @@ CustDev/action/pay gates.
 | --- | --- | --- | --- |
 | `inbox` | Что не потерять? | Идея, плательщик и дешёвая первая проверка | `quick_scan` |
 | `quick_scan` | Есть ли очевидный рынок и модель денег? | Hard filters и первичные публичные признаки | `market_research` |
-| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | Для batch: S0–S5, 18 критериев и 1–2 финалиста; для single thesis: возможность, business design, readiness и следующий gate | `finalist` либо owner hold |
+| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | Для batch: S0–S5, 18 критериев и 1–2 финалиста; для single thesis: возможность, business design, readiness и следующий gate; для объединения runs: Global Gate максимум из 3 | `finalist` либо owner hold |
 | `finalist` | Какую одну ставку проверять? | Owner choice и полный I_E1-корпус | `interview_ready` |
 | `interviews` | Повторяется ли дорогая проблема? | Минимум пять интервью, JTBD, канал и финансовый диапазон | `offer_ready` |
 | `action_test` | Совершит ли клиент затратное действие? | Оффер, CTA, интро/demo/data/LOI | I_E4 money gate |

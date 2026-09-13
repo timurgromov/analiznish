@@ -7,6 +7,18 @@ import { buildPublicArtifact, validatePublicArtifact } from "../scripts/build-pu
 import { validateActiveRunRecord, validateConsistency, validateFactoryState, validateRegistry, validateSchema } from "../scripts/factory-validation.mjs";
 import { factoryFixtures, ideaById } from "../fixtures/factory-fixtures.mjs";
 
+function makeActiveRunSingleThesis(fixture, thesis = "Один подтверждённый тезис") {
+  fixture.activeRun.candidateIds = [fixture.activeRun.candidateIds[0]];
+  fixture.activeRun.researchUnit = "single_thesis";
+  fixture.activeRun.thesisId = fixture.activeRun.candidateIds[0];
+  fixture.activeRun.scopeLock = "owner decision";
+  fixture.activeRun.canonicalThesis = thesis;
+  fixture.activeRun.thesisConfirmation = "owner_confirmed";
+  fixture.activeRun.definitionSource = "owner message";
+  fixture.activeRun.prohibitedReframes = "не дробить продукт";
+  ideaById(fixture.registry, fixture.activeRun.candidateIds[0]).canonicalThesis = thesis;
+}
+
 test("parked → active проходит без изменения validator", () => {
   const fixture = factoryFixtures();
   fixture.activeRun.status = "active";
@@ -45,12 +57,14 @@ test("schema явно различает Portfolio Gate и Single-thesis Gate", 
 
 test("single_thesis без подтверждённого канонического тезиса падает", () => {
   const fixture = factoryFixtures();
+  makeActiveRunSingleThesis(fixture);
   fixture.activeRun.canonicalThesis = "";
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /требует Canonical thesis/);
 });
 
 test("канонический тезис ACTIVE_RUN должен совпадать с реестром", () => {
   const fixture = factoryFixtures();
+  makeActiveRunSingleThesis(fixture);
   ideaById(fixture.registry, fixture.activeRun.candidateIds[0]).canonicalThesis = "Подменённый продукт";
   assert.throws(() => validateConsistency({
     schema: fixture.schema,
@@ -99,7 +113,7 @@ test("checkpoint без обязательного prerequisite падает", (
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S4_OWNER";
   fixture.activeRun.currentStep = 4;
-  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
+  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
@@ -163,7 +177,7 @@ test("незавершённый owner checkpoint не может иметь pas
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S4_OWNER";
   fixture.activeRun.currentStep = 4;
-  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста P1/P2";
+  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE", "S5_COMPETITORS"];
   fixture.activeRun.checkpointGateStatus = "passed";
@@ -199,6 +213,66 @@ test("concrete bet не получает passed_not_selected без owner decisi
   idea.gateStatus = "passed_not_selected";
   fixture.registry.decisionAudits.rule24.decisionClass = "passed_not_selected";
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /passed_not_selected требует явного ownerDecision/);
+});
+
+test("portfolio round классифицирует каждый объект ровно один раз", () => {
+  const fixture = factoryFixtures();
+  fixture.registry.portfolioRound.stateGroups.out_of_current_competition.pop();
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /классифицировать каждый объект ровно один раз/);
+});
+
+test("portfolio round запрещает двойное участие объекта", () => {
+  const fixture = factoryFixtures();
+  fixture.registry.portfolioRound.stateGroups.queued_research.push("kadra");
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /одновременно находится/);
+});
+
+test("provisional finalist обязан ждать owner gate", () => {
+  const fixture = factoryFixtures();
+  const finalistId = fixture.registry.portfolioRound.stateGroups.provisional_finalist[0];
+  fixture.registry.decisionAudits[finalistId].currentCheckpointId = "S5_COMPETITORS";
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /должен ждать S4_OWNER/);
+});
+
+test("Global Portfolio Gate оставляет не больше трёх финалистов", () => {
+  const fixture = factoryFixtures();
+  fixture.registry.portfolioRound.status = "ready_for_owner_choice";
+  fixture.registry.portfolioRound.globalGateStatus = "ready";
+  fixture.registry.portfolioRound.currentResearchIds = [];
+  fixture.registry.portfolioRound.stateGroups.out_of_current_competition.push(
+    ...fixture.registry.portfolioRound.stateGroups.active_research,
+    ...fixture.registry.portfolioRound.stateGroups.queued_research
+  );
+  fixture.registry.portfolioRound.stateGroups.active_research = [];
+  fixture.registry.portfolioRound.stateGroups.queued_research = [];
+  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
+    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => id !== "kadra");
+  fixture.registry.portfolioRound.stateGroups.provisional_finalist.push("kadra");
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /Global Portfolio Gate должен оставить 1–3/);
+});
+
+test("один active run допускает bounded batch до десяти ставок", () => {
+  const fixture = factoryFixtures();
+  const batch = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.slice(0, 7);
+  fixture.registry.portfolioRound.status = "researching";
+  fixture.registry.portfolioRound.globalGateStatus = "not_ready";
+  fixture.registry.portfolioRound.currentResearchIds = batch;
+  fixture.registry.portfolioRound.stateGroups.active_research = batch;
+  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
+    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => !batch.includes(id));
+  assert.doesNotThrow(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }));
+});
+
+test("active research batch больше десяти ставок падает", () => {
+  const fixture = factoryFixtures();
+  const batch = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.slice(0, 11);
+  fixture.registry.portfolioRound.status = "researching";
+  fixture.registry.portfolioRound.globalGateStatus = "not_ready";
+  fixture.registry.portfolioRound.currentResearchIds = batch;
+  fixture.registry.portfolioRound.stateGroups.active_research = batch;
+  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
+    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => !batch.includes(id));
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /active research batch превышает 10/);
 });
 
 test("активный S0 не допускает кандидата выше quick_scan", () => {

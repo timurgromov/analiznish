@@ -91,6 +91,15 @@ function gateById(id) {
   return state.registry.gateStatuses.find((gate) => gate.id === id);
 }
 
+function competitionStateById(id) {
+  return state.registry.competitionStates.find((item) => item.id === id);
+}
+
+function competitionStateForIdea(ideaId) {
+  return Object.entries(state.registry.portfolioRound.stateGroups)
+    .find(([, ideaIds]) => ideaIds.includes(ideaId))?.[0] || "out_of_current_competition";
+}
+
 function auditFor(id) {
   return state.registry.decisionAudits?.[id] || null;
 }
@@ -177,19 +186,25 @@ function setStatus(text, tone = "") {
 
 function renderTopSummary() {
   const ideas = state.registry.ideas;
-  const finalists = ideas.filter((idea) => idea.stage === "finalist").length;
-  const interviews = ideas.filter((idea) => idea.stage === "interviews").length;
-  const archive = ideas.filter((idea) => ["parked", "failed"].includes(idea.gateStatus)).length;
+  const groups = state.registry.portfolioRound.stateGroups;
+  const finalistIdeas = groups.provisional_finalist.map((id) => ideas.find((idea) => idea.id === id)).filter(Boolean);
+  const finalists = finalistIdeas.length;
+  const out = groups.out_of_current_competition.length;
+  const hardFailed = groups.hard_failed.length;
+  const references = groups.reference_or_benchmark.length;
+  const archive = out + hardFailed;
   const system = state.factory.systemStatus;
   const systemState = system.status === "configured" ? "Настроен" : system.statusLabel;
-  const interviewHeadline = interviews === 0 ? "До интервью не дошла ни одна идея" : `${pluralIdeas(interviews)} дошли до интервью`;
+  const interviewHeadline = `Desk research завершён: ${finalists} финалиста ждут выбора`;
   document.querySelector("#decision-brief").innerHTML = `<div class="owner-overview">
     <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(interviewHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
-    <div class="owner-flow" aria-label="Текущее состояние портфеля">
-      <a href="#all-ideas" class="owner-flow-step"><strong>${ideas.length}</strong><span>всего идей</span></a><i aria-hidden="true">→</i>
-      <button type="button" class="owner-flow-step" data-stage-jump="finalist"><strong>${finalists}</strong><span>${pluralNoun(finalists, "финалист", "финалиста", "финалистов")}</span></button><i aria-hidden="true">→</i>
-      <button type="button" class="owner-flow-step owner-flow-target" data-stage-jump="interviews"><strong>${interviews}</strong><span>на интервью</span></button>
+    <div class="round-state-grid" aria-label="Итог текущего соревнования">
+      <div class="round-state-card is-final"><strong>${finalists}</strong><span>предварительных финалиста</span></div>
+      <div class="round-state-card"><strong>${out}</strong><span>вне текущего соревнования</span></div>
+      <div class="round-state-card is-hard"><strong>${hardFailed}</strong><span>hard blocker</span></div>
+      <div class="round-state-card"><strong>${references}</strong><span>reference / benchmark</span></div>
     </div>
+    <div class="round-finalists"><span>Выбрать одну ставку:</span>${finalistIdeas.map((idea) => `<a href="${projectCardHref(idea.id)}">${escapeHtml(idea.title)}</a>`).join("")}</div>
   </div>
   <aside class="owner-next-gate"><p class="section-kicker">Один следующий gate</p><strong>${escapeHtml(system.nextGate)}</strong><a href="#research">Открыть журнал исследований →</a></aside>
   <details class="decision-context"><summary>Что уже подтверждено и что остаётся неизвестным</summary><div><p><span>Подтверждено</span>${escapeHtml(system.confirmed)}</p><p><span>Неизвестно</span>${escapeHtml(system.unknown)}</p><p><span>Состояние контура</span>${escapeHtml(system.summary)}</p></div></details>`;
@@ -211,7 +226,8 @@ function renderFilterOptions() {
 }
 
 function searchableText(idea) {
-  return [idea.title, idea.category, idea.rankingReason, idea.mainRisk, idea.nextGate, objectTypeLabels[idea.objectType]].join(" ").toLocaleLowerCase("ru");
+  const competition = competitionStateById(competitionStateForIdea(idea.id));
+  return [idea.title, idea.category, idea.rankingReason, idea.mainRisk, idea.nextGate, objectTypeLabels[idea.objectType], competition?.label].join(" ").toLocaleLowerCase("ru");
 }
 
 function sortIdeas(ideas, sortKey) {
@@ -241,6 +257,7 @@ function ideaCard(idea, rank, compact = false) {
   const score = currentScore(idea);
   const stage = stageById(idea.stage);
   const gate = gateById(idea.gateStatus);
+  const competition = competitionStateById(competitionStateForIdea(idea.id));
   const audit = auditFor(idea.id);
   return `<details class="idea-card tone-${scoreTone(score)} gate-${idea.gateStatus}${compact ? " compact" : ""}">
     <summary class="idea-summary">
@@ -249,7 +266,7 @@ function ideaCard(idea, rank, compact = false) {
       <span class="rating-cell"><strong>${score}</strong><small>оценка ${idea.baseScore}</small></span>
       <span class="confidence-cell"><strong>${Math.round(idea.evidenceConfidence * 100)}%</strong><span class="confidence-track"><i style="width:${Math.round(idea.evidenceConfidence * 100)}%"></i></span><small>${escapeHtml(evidenceLabels[idea.evidenceLevel] || idea.evidenceLevel)}</small></span>
       <span class="stage-cell"><strong>${escapeHtml(stage?.label || idea.stage)}</strong><small>${escapeHtml(idea.evidenceLevel)}</small></span>
-      <span class="gate-cell"><span>${escapeHtml(gate?.label || idea.gateStatus)}</span></span>
+      <span class="gate-cell"><span>${escapeHtml(gate?.label || idea.gateStatus)}</span><small>${escapeHtml(competition?.label || "Статус не задан")}</small></span>
       <span class="reason-cell">${escapeHtml(idea.rankingReason)}${audit ? `<small class="audit-class">${escapeHtml(audit.currentCheckpointId)} · ${escapeHtml(decisionClassLabels[audit.decisionClass] || audit.decisionClass)}</small>` : ""}</span>
       <span class="expand-icon" aria-hidden="true">⌄</span>
     </summary>
@@ -488,11 +505,14 @@ function renderRuns() {
 
 function renderArchive() {
   const groups = [
-    ["parked", "Припаркованы", "Можно вернуть после указанного условия"],
-    ["failed", "Отсеяны", "Возвращать только при изменении ключевого ограничения"],
+    ["out_of_current_competition", "Вне текущего соревнования", "Сохранены с точным условием возврата; это не провал рынка"],
+    ["hard_failed", "Hard blocker", "Exact-модель возвращается только после снятия подтверждённого ограничения"],
   ];
   document.querySelector("#archive-groups").innerHTML = groups.map(([status, title, note]) => {
-    const ideas = state.registry.ideas.filter((idea) => idea.gateStatus === status).sort((a, b) => currentScore(b) - currentScore(a));
+    const ideas = state.registry.portfolioRound.stateGroups[status]
+      .map((id) => state.registry.ideas.find((idea) => idea.id === id))
+      .filter(Boolean)
+      .sort((a, b) => currentScore(b) - currentScore(a));
     return `<section class="archive-section"><div class="archive-title"><div><h3>${title}</h3><p>${note}</p></div><strong>${ideas.length}</strong></div><div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
   }).join("");
 }

@@ -1144,3 +1144,42 @@ Verification:
 `data/FACTORY_SCHEMA.json` задаёт Definition Contract и четыре слоя оценки;
 validator требует owner-confirmed thesis, его совпадение с реестром и источник
 для `passed_not_selected`. Негативные contract tests проверяют эти запреты.
+
+## DEC-2026-09-13-GLOBAL-PORTFOLIO-GATE — Один финал соревнования поверх завершённых runs
+
+Status: active
+Area: methodology | data | validation | dashboard
+Decision date: 2026-09-13
+Evidence: полный аудит 28 объектов показал, что локальные owner holds разных
+runs не дают владельцу единого ответа, а смешение `stage`, `gateStatus` и места
+в соревновании создаёт ложные «финалы» и «провалы»
+
+Decision:
+
+Состояние текущего соревнования хранится отдельно в
+`portfolioRound.stateGroups`. Один active run остаётся единственным rail, но
+может вести bounded batch до 10 независимых идей. После завершения всех desk
+runs Global Portfolio Gate требует пустые `active_research` и
+`queued_research`, классифицирует каждый объект ровно один раз и оставляет
+максимум три `provisional_finalist`. Явный owner choice переводит ровно одну
+ставку в `selected_for_interviews`.
+
+`out_of_current_competition` означает «сейчас не тратим следующий цикл» и
+обязательно содержит измеримое условие возврата. Это не `failed` и не отрицание
+рынка. `hard_failed` остаётся только для exact-модели с явным blockerCode и
+проваленным критерием. Market references и действующий бизнес учитываются как
+evidence/benchmark, но не конкурируют за execution focus.
+
+Why:
+
+Локальный Portfolio Gate отвечает, какие 1–2 идеи конкретного batch заслужили
+глубокий desk research. Global Gate отвечает на другой вопрос: какую одну из
+всех уже исследованных ставок проверять людьми следующей. Без отдельного слоя
+система либо плодит параллельные «финалы», либо ошибочно закрывает нормальные
+неподготовленные идеи.
+
+Verification:
+
+Schema v3, registry v4 и contract tests проверяют размер batch, пустую очередь,
+лимит трёх финалистов, единственный owner selection и классификацию всех
+объектов. Dashboard показывает 3/20/2/3 отдельно от stage и gate status.
