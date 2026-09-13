@@ -116,22 +116,10 @@ function outCompetitionGroups() {
   const ideas = ideasInCompetitionGroup("out_of_current_competition");
   return [
     {
-      id: "desk_complete_not_selected",
-      title: "Desk research завершён — не вошли в тройку",
-      note: "Прошли S0–S5 и общий сравнительный gate. Это не провал: сейчас выбраны более сильные ставки.",
-      ideas: ideas.filter((idea) => auditFor(idea.id)?.currentCheckpointId === "S4_OWNER"),
-    },
-    {
-      id: "early_portfolio_gate",
-      title: "Остановлены на раннем Portfolio Gate",
-      note: "Дошли до сопоставимой оценки, но не получили приоритет на более дорогой конкурентный разбор S5.",
-      ideas: ideas.filter((idea) => auditFor(idea.id)?.currentCheckpointId === "S4_PORTFOLIO_GATE"),
-    },
-    {
-      id: "prerequisite_evidence_gap",
-      title: "Не прошли S2–S3",
-      note: "Пока не хватает обязательных доказательств проблемы, плательщика или ограниченной модели поставки. Это evidence-gap, не hard blocker.",
-      ideas: ideas.filter((idea) => !["S4_OWNER", "S4_PORTFOLIO_GATE"].includes(auditFor(idea.id)?.currentCheckpointId)),
+      id: "thesis_clarification",
+      title: "Нужно уточнить границу ставки",
+      note: "Это не рыночный провал. Сначала нужно убрать дублирование или слишком широкую формулировку продукта, после чего ставка возвращается в S0–S5.",
+      ideas,
     },
   ];
 }
@@ -219,24 +207,24 @@ function setStatus(text, tone = "") {
 function renderTopSummary() {
   const ideas = state.registry.ideas;
   const groups = state.registry.portfolioRound.stateGroups;
-  const finalistIdeas = groups.provisional_finalist.map((id) => ideas.find((idea) => idea.id === id)).filter(Boolean);
-  const finalists = finalistIdeas.length;
+  const interviewReadyIdeas = groups.provisional_finalist.map((id) => ideas.find((idea) => idea.id === id)).filter(Boolean);
+  const interviewReady = interviewReadyIdeas.length;
   const out = groups.out_of_current_competition.length;
   const hardFailed = groups.hard_failed.length;
   const references = groups.reference_or_benchmark.length;
   const archive = out + hardFailed;
   const system = state.factory.systemStatus;
   const systemState = system.status === "configured" ? "Настроен" : system.statusLabel;
-  const interviewHeadline = `Desk research завершён: ${finalists} финалиста ждут выбора`;
+  const interviewHeadline = `Desk research завершён: ${interviewReady} ${pluralNoun(interviewReady, "проект готов", "проекта готовы", "проектов готовы")} к интервью`;
   document.querySelector("#decision-brief").innerHTML = `<div class="owner-overview">
     <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(interviewHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
     <div class="round-state-grid" aria-label="Итог текущего соревнования">
-      <button class="round-state-card is-final" type="button" data-round-target="provisional_finalist" aria-controls="round-selection-panel" aria-pressed="false"><strong>${finalists}</strong><span>предварительных финалиста</span><small>Открыть список →</small></button>
-      <button class="round-state-card" type="button" data-round-target="out_of_current_competition" aria-controls="round-selection-panel" aria-pressed="false"><strong>${out}</strong><span>вне текущего соревнования</span><small>Этапы и причины →</small></button>
+      <button class="round-state-card is-final" type="button" data-round-target="provisional_finalist" aria-controls="round-selection-panel" aria-pressed="false"><strong>${interviewReady}</strong><span>готовы к интервью</span><small>Открыть список →</small></button>
+      <button class="round-state-card" type="button" data-round-target="out_of_current_competition" aria-controls="round-selection-panel" aria-pressed="false"><strong>${out}</strong><span>нужно уточнить ставку</span><small>Причины и условия →</small></button>
       <button class="round-state-card is-hard" type="button" data-round-target="hard_failed" aria-controls="round-selection-panel" aria-pressed="false"><strong>${hardFailed}</strong><span>жёстких блокера</span><small>Открыть блокеры →</small></button>
       <button class="round-state-card" type="button" data-round-target="reference_or_benchmark" aria-controls="round-selection-panel" aria-pressed="false"><strong>${references}</strong><span>референса / benchmark</span><small>Открыть список →</small></button>
     </div>
-    <div class="round-finalists"><span>Выбрать одну ставку:</span>${finalistIdeas.map((idea) => `<a href="${projectCardHref(idea.id)}">${escapeHtml(idea.title)}</a>`).join("")}</div>
+    <div class="round-finalists"><span>Следующий рабочий пакет:</span><strong>1–3 проекта из ${interviewReady}; текущая работа — одна.</strong></div>
   </div>
   <aside class="owner-next-gate"><p class="section-kicker">Один следующий gate</p><strong>${escapeHtml(system.nextGate)}</strong><a href="#research">Открыть журнал исследований →</a></aside>
   <details class="decision-context"><summary>Что уже подтверждено и что остаётся неизвестным</summary><div><p><span>Подтверждено</span>${escapeHtml(system.confirmed)}</p><p><span>Неизвестно</span>${escapeHtml(system.unknown)}</p><p><span>Состояние контура</span>${escapeHtml(system.summary)}</p></div></details>`;
@@ -268,12 +256,12 @@ function renderRoundSelection() {
 
   const definitions = {
     provisional_finalist: {
-      title: "Предварительные финалисты",
-      note: "Все три прошли desk research S0–S5. Они не отсеяны: следующий gate — выбор владельцем одной ставки.",
+      title: "Проекты, готовые к интервью",
+      note: "Все прошли desk research S0–S5. Пул не ограничен числом победителей: владелец формирует рабочий пакет из 1–3 проектов и задаёт один текущий фокус.",
     },
     out_of_current_competition: {
-      title: "Почему 20 идей не вошли в текущий цикл",
-      note: "Здесь три разных причины остановки. Ни одна из этих 20 идей не имеет hard blocker.",
+      title: "Идеи, которым нужно уточнить границу ставки",
+      note: "Эти идеи не отсеяны рынком: их остановило дублирование с другой ставкой или слишком широкая формулировка продукта.",
     },
     hard_failed: {
       title: "Жёстко заблокированные exact-модели",
@@ -428,7 +416,11 @@ function renderRunFunnel() {
   const runCurrentIndex = currentCheckpointIndexes.length ? Math.max(...currentCheckpointIndexes) : -1;
   const visibleCheckpoints = state.schema.checkpoints.slice(0, Math.min(state.schema.checkpoints.length, Math.max(1, lastRecordedIndex + 2)));
   const runStatus = run.status === "complete" ? "Завершён" : run.status === "parked" ? "На паузе" : run.status === "active" ? "В работе" : "Остановлен";
-  const batchStatus = ideas.length >= 5 && ideas.length <= 10 ? "Полный batch 5–10" : `Не batch: ${pluralIdeas(ideas.length)}`;
+  const batchStatus = ideas.length === 1
+    ? "Одна ставка"
+    : ideas.length <= 10
+      ? `Bounded batch: ${pluralIdeas(ideas.length)}`
+      : `Портфельный аудит: ${pluralIdeas(ideas.length)}`;
   const rows = visibleCheckpoints.map((checkpoint, index) => {
     const entries = ideas.map((idea) => checkpointEntry(idea, checkpoint.id)).filter(Boolean);
     const passed = entries.filter((entry) => entry.status === "passed").length;

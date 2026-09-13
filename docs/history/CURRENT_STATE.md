@@ -2,110 +2,82 @@
 
 ## Текущая точка
 
-Desk research текущего соревнования завершён. Единственный оперативный run
-`global-portfolio-gate-2026-09-13` припаркован на `S4_OWNER`: владелец выбирает
-ровно одну ставку для перехода в `I_E1`. Незавершённой исследовательской
-очереди нет.
+Desk research всех 25 concrete bets завершён. Run
+`global-portfolio-gate-2026-09-13` припаркован на `S4_OWNER — план пакета
+интервью`: исследовательской очереди нет, следующий шаг — выбрать рабочий пакет
+из 1–3 готовых проектов и одну текущую работу внутри него.
 
-Итоговая классификация всех 28 объектов:
+Итоговая классификация 28 объектов:
 
-* 3 предварительных финалиста: контроль ранней дебиторки малых B2B-услуг,
-  Codex Project Starter и путь «обращение → оплаченная первая сессия»;
-* 20 идей вне текущего соревнования с измеримым условием возврата;
+* 20 concrete bets прошли S0–S5 и готовы к интервью;
+* 3 ставки требуют уточнить Thesis Contract: generic AI-психолог, marketplace
+  психологических сессий и общий field-service ops;
 * 2 hard failed exact-модели: AI YouTube Automation и ProfiWatcher;
-* 3 действующих бизнеса или рыночных референса, не участвующих в выборе.
+* 3 действующих бизнеса или рыночных референса не участвуют в выборе.
 
-Полный дайджест и причины: `data/PORTFOLIO_CLOSURE.md`. Машинный источник
-состояния: `data/IDEA_REGISTRY.json`. До выбора одного финалиста интервью,
-трафик, запрос оплаты и build не открыты.
+Полный дайджест: `data/PORTFOLIO_CLOSURE.md`. Машинный источник:
+`data/IDEA_REGISTRY.json`. Реальные интервью ещё не проведены; strongest
+evidence двадцати готовых ставок остаётся E1.
 
-## Что проверено
+## Что исправлено и проверено
 
-* Codex Project Starter прошёл S0–S5 как одна ставка AI-перехода и первого
-  измеримого внедрения. Templates, сайт, группа, сопровождение, сегменты и
-  длительность — компоненты или гипотезы внутри продукта, не отдельные идеи.
-* B2B operations batch доведён до bounded gates. Контроль ранней дебиторки
-  вошёл в итоговую тройку; compliance и остальные ставки получили конкретные
-  условия возврата.
-* Legacy и психологические ставки сведены в единый Global Portfolio Gate.
-  Старые локальные статусы не считаются текущим итогом.
-* У трёх финалистов strongest evidence остаётся E1. Реальные повторяемые Jobs,
-  willingness-to-pay, CAC, маржа и repeat пока не подтверждены.
+* Устранена искусственная квота «три финалиста». Готовность к интервью теперь
+  означает прохождение S0–S5 без hard blocker, а не победу в рейтинге.
+* Повторно исследованы 14 ранее остановленных ставок. Одиннадцать доведены до
+  S5; по ним отсутствие WTP, switching reason, buyer access, канала или repeat
+  признано вопросом интервью/эксперимента, а не основанием для desk-отсева.
+* Три широкие/дублирующие ставки оставлены в `quick_scan` с точным условием
+  уточнения. Это не отрицание рынка.
+* Codex Project Starter остаётся одной канонической ставкой AI-перехода и
+  первого измеримого внедрения. Templates, группа и сопровождение — компоненты,
+  не отдельные продукты.
+* Два hard blockers перепроверены по актуальным правилам платформ/источников.
 
-## Исправленная логика Factory
+## Исполняемая логика Factory
 
-`competition state` отделён от стадии и результата gate. `parked` означает
-остановку до следующего evidence/owner gate, а не рыночный провал. `failed`
-требует явного `blockerCode` и проваленного критерия. Конкуренты, отсутствие
-готового канала, продукта, moat, продаж или repeat не являются terminal
-filters новой идеи.
+`competition state` отделён от стадии и gate outcome. Пул
+`provisional_finalist` не имеет верхнего лимита. В `selected_for_interviews`
+владелец может поместить 1–3 проекта, но `Selected focus IDs` содержит ровно
+одну текущую работу. После её интервью фокус можно последовательно перевести на
+следующий проект пакета.
 
-Один активный run остаётся единственным rail, но ранний Portfolio Gate может
-содержать ограниченный batch до 10 независимых ставок. Global Gate оставляет
-не более трёх предварительных финалистов. После явного owner choice реестр
-допускает ровно один `selected_for_interviews`.
+`out_of_current_competition` теперь означает только «сначала уточнить границу
+ставки/убрать дубль». `failed` требует явного `blockerCode` и проваленного
+schema-критерия. Конкуренты, отсутствие готового канала, продукта, moat,
+продаж, WTP или repeat не являются terminal filters новой идеи.
 
-Для принесённой владельцем идеи сначала обязателен Definition Interview и один
-подтверждённый Thesis Contract. Сегменты, ICP, цена, канал и delivery не
-создают новые продукты без отдельного owner authorization.
+Для принесённой владельцем идеи обязателен Definition Interview и один
+подтверждённый Thesis Contract. Сегменты, ICP, цена, канал и delivery не создают
+новые продукты без отдельного owner authorization.
 
 ## Состояние системы
 
-Niche Factory v2 имеет статус `configured`, но ещё не `validated` полным
-end-to-end циклом. Для этого одна ставка должна пройти реальные интервью,
-action, money, bounded build и repeat gate либо получить честный terminal
-outcome.
+Niche Factory v2 имеет статус `configured`, но не `validated` полным
+end-to-end циклом. Для этого хотя бы одна ставка должна пройти реальные
+интервью, action, money, bounded build и repeat gate либо получить честный
+terminal outcome.
 
 Работает:
 
-* машинный контракт `data/FACTORY_SCHEMA.json` schema v3;
-* единый реестр `data/IDEA_REGISTRY.json` schema v4;
+* машинный контракт `data/FACTORY_SCHEMA.json` schema v4;
+* единый реестр `data/IDEA_REGISTRY.json` schema v5;
 * active-run rail и consistency validators;
 * scoring v0.7 и две независимые портфельные линзы;
-* read-only dashboard с Global Gate и кликабельными состояниями соревнования;
-  группа `20 вне текущего соревнования` объяснена как `6 + 9 + 5` по последнему
-  пройденному gate, отдельно от двух hard blocker;
+* read-only dashboard с кликабельными группами `20/3/2/3`;
 * public allowlist build без внутренних source paths;
 * локальный validation suite `./scripts/check-local.sh`.
 
 ## Runtime и release boundary
 
 * Frontend: static dashboard в `dashboard/`.
-* Backend и PostgreSQL: отсутствуют; подробности хранятся в Markdown, индекс —
-  в JSON.
-* Local runtime: Docker Compose/nginx на `http://127.0.0.1:8765/dashboard/`.
-* Production: GitHub Pages на
-  `https://timurgromov.github.io/analiznish/dashboard/`.
-* Branch: `main`; origin: `https://github.com/timurgromov/analiznish.git`.
-* Dashboard read-only; изменение решения идёт через project sources и
-  validators, не через UI.
+* Backend/PostgreSQL отсутствуют; подробности в Markdown, индекс в JSON.
+* Local: `http://127.0.0.1:8765/dashboard/` через Docker Compose/nginx.
+* Production: `https://timurgromov.github.io/analiznish/dashboard/`.
+* Branch `main`, origin `https://github.com/timurgromov/analiznish.git`.
+* Dashboard read-only; решения меняются через источники и validators.
 
 ## Единственный следующий gate
 
-Владелец выбирает одну из трёх ставок. После этого агент:
-
-1. записывает ровно один `selected_for_interviews`;
-2. готовит screener, interview guide и evidence table для `I_E1`;
-3. проводит минимум пять реальных интервью одного сегмента;
-4. по заранее заданному критерию переводит ставку дальше, меняет сегмент,
-   паркует или закрывает.
-
-## Нельзя случайно откатить
-
-* Не дробить Codex Project Starter и любую другую owner-идею на продукты по
-  сегментам, форматам или delivery.
-* Не выводить решение из score и не превращать `unknown` в `failed`.
-* Не считать конкурентов или отсутствие готового канала отрицанием рынка.
-* Не считать legacy-код, production или paywall evidence спроса.
-* Не начинать интервью, action, оплату или build до явного выбора одной ставки.
-* Не смешивать действующий бизнес, market reference и новую concrete bet.
-
-## Где смотреть
-
-* Активный rail: `data/ACTIVE_RUN.md`
-* Итог портфеля: `data/PORTFOLIO_CLOSURE.md`
-* Реестр и аудиты: `data/IDEA_REGISTRY.json`
-* Global Gate evidence: `data/discovery/2026-09-13-global-portfolio-gate.md`
-* Workflow: `docs/WORKFLOW.md`
-* Решения: `docs/history/DECISIONS.md`
-* Текущая очередь: `TASKS.md`
+Владелец выбирает 1–3 проекта из двадцати готовых и называет один текущим. Для
+него агент готовит I_E1-корпус, screener, гипотезы и план минимум пяти реальных
+интервью. До этого action, money и build не открыты.

@@ -54,7 +54,7 @@ function evidenceRank(level) {
 
 export function validateSchema(schema) {
   const label = "data/FACTORY_SCHEMA.json";
-  invariant(schema.schemaVersion === 3, "поддерживается только schemaVersion 3", label);
+  invariant(schema.schemaVersion === 4, "поддерживается только schemaVersion 4", label);
   for (const key of ["runSchemaVersion", "registrySchemaVersion", "factoryStateSchemaVersion"]) {
     invariant(Number.isInteger(schema[key]), `${key} должен быть целым`, label);
   }
@@ -73,8 +73,8 @@ export function validateSchema(schema) {
   invariant(schema.portfolioRoundContract?.everyObjectExactlyOnce === true, "портфельный раунд должен классифицировать каждый объект ровно один раз", label);
   invariant(schema.portfolioRoundContract?.oneActiveRun === true, "портфельный раунд должен иметь один активный research run", label);
   invariant(Number.isInteger(schema.portfolioRoundContract?.activeResearchBatchMax) && schema.portfolioRoundContract.activeResearchBatchMax >= 1, "нет допустимого размера active research batch", label);
-  invariant(schema.portfolioRoundContract?.selectedForInterviewsMax === 1, "для интервью можно выбрать максимум одну ставку", label);
-  invariant(schema.portfolioRoundContract?.globalGateFinalistLimit === 3, "Global Portfolio Gate должен оставлять максимум три ставки", label);
+  invariant(schema.portfolioRoundContract?.selectedForInterviewsMax === 3, "рабочий пакет интервью должен допускать максимум три ставки", label);
+  invariant(schema.portfolioRoundContract?.interviewReadyMin === 1, "пул готовых к интервью должен содержать минимум одну ставку", label);
 
   const criterionResults = new Set(schema.criterionResults ?? []);
   for (const result of ["passed", "failed", "unknown", "not_applicable"]) {
@@ -489,16 +489,16 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
     invariant(round.stateGroups.active_research.length === 0, "завершённый desk research не может сохранять active_research", label);
     invariant(round.currentResearchIds.length === 0, "завершённый desk research не может сохранять currentResearchIds", label);
   }
-  invariant(round.stateGroups.selected_for_interviews.length <= schema.portfolioRoundContract.selectedForInterviewsMax, "для интервью выбрано больше одной ставки", label);
+  invariant(round.stateGroups.selected_for_interviews.length <= schema.portfolioRoundContract.selectedForInterviewsMax, `пакет интервью превышает ${schema.portfolioRoundContract.selectedForInterviewsMax} ставки`, label);
   if (round.status === "ready_for_owner_choice") {
     invariant(round.globalGateStatus === "ready", "ready_for_owner_choice требует globalGateStatus=ready", label);
-    invariant(round.stateGroups.provisional_finalist.length >= 1 && round.stateGroups.provisional_finalist.length <= schema.portfolioRoundContract.globalGateFinalistLimit, "Global Portfolio Gate должен оставить 1–3 предварительных финалиста", label);
+    invariant(round.stateGroups.provisional_finalist.length >= schema.portfolioRoundContract.interviewReadyMin, "пул готовых к интервью не может быть пустым", label);
     invariant(round.stateGroups.active_research.length === 0 && round.stateGroups.queued_research.length === 0, "перед owner choice не должно оставаться активного или ожидающего исследования", label);
   }
   for (const ideaId of round.stateGroups.provisional_finalist) {
     const idea = registry.ideas.find((item) => item.id === ideaId);
-    invariant(idea.stage === "finalist" && idea.gateStatus === "parked", `${ideaId}: provisional_finalist требует finalist/parked`, label);
-    invariant(registry.decisionAudits[ideaId].currentCheckpointId === "S4_OWNER", `${ideaId}: provisional_finalist должен ждать S4_OWNER`, label);
+    invariant(idea.stage === "finalist" && idea.gateStatus === "parked", `${ideaId}: готовность к интервью требует finalist/parked`, label);
+    invariant(registry.decisionAudits[ideaId].currentCheckpointId === "S4_OWNER", `${ideaId}: готовая ставка должна ждать планирования S4_OWNER`, label);
   }
   for (const ideaId of round.stateGroups.hard_failed) {
     invariant(registry.ideas.find((item) => item.id === ideaId).gateStatus === "failed", `${ideaId}: hard_failed требует gateStatus failed`, label);
@@ -577,6 +577,11 @@ export function validateConsistency({ schema, activeRun, registry, factoryState 
     }
   }
   invariant(activeRun.selectedFocusIds.length <= 1, "в активном run больше одного выбранного фокуса", label);
+  if (activeRun.checkpointId === "S4_OWNER" && activeRun.checkpointGateStatus === "passed") {
+    const interviewBatch = registry.portfolioRound.stateGroups.selected_for_interviews;
+    invariant(interviewBatch.length >= 1 && interviewBatch.length <= schema.portfolioRoundContract.selectedForInterviewsMax, "S4_OWNER требует пакет из 1–3 ставок", label);
+    invariant(interviewBatch.includes(activeRun.selectedFocusIds[0]), "текущий фокус должен входить в пакет интервью", label);
+  }
   return true;
 }
 

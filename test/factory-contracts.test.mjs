@@ -113,7 +113,7 @@ test("checkpoint без обязательного prerequisite падает", (
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S4_OWNER";
   fixture.activeRun.currentStep = 4;
-  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста";
+  fixture.activeRun.currentStepName = "Owner checkpoint — план пакета интервью";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
@@ -123,7 +123,7 @@ test("S3 не может перепрыгнуть ранний Portfolio Gate", 
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S5_COMPETITORS";
   fixture.activeRun.currentStep = 5;
-  fixture.activeRun.currentStepName = "Конкуренты и конкурентная рамка финалистов";
+  fixture.activeRun.currentStepName = "Конкуренты и готовность к интервью";
   fixture.activeRun.previousCheckpoint = "S3_LOCALIZE";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
@@ -177,7 +177,7 @@ test("незавершённый owner checkpoint не может иметь pas
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S4_OWNER";
   fixture.activeRun.currentStep = 4;
-  fixture.activeRun.currentStepName = "Owner checkpoint — выбор одного финалиста";
+  fixture.activeRun.currentStepName = "Owner checkpoint — план пакета интервью";
   fixture.activeRun.previousCheckpoint = "S5_COMPETITORS";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE", "S5_COMPETITORS"];
   fixture.activeRun.checkpointGateStatus = "passed";
@@ -231,47 +231,50 @@ test("provisional finalist обязан ждать owner gate", () => {
   const fixture = factoryFixtures();
   const finalistId = fixture.registry.portfolioRound.stateGroups.provisional_finalist[0];
   fixture.registry.decisionAudits[finalistId].currentCheckpointId = "S5_COMPETITORS";
-  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /должен ждать S4_OWNER/);
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /ждать планирования S4_OWNER/);
 });
 
-test("Global Portfolio Gate оставляет не больше трёх финалистов", () => {
+test("пул готовых к интервью не ограничен тремя ставками", () => {
   const fixture = factoryFixtures();
-  fixture.registry.portfolioRound.status = "ready_for_owner_choice";
-  fixture.registry.portfolioRound.globalGateStatus = "ready";
-  fixture.registry.portfolioRound.currentResearchIds = [];
-  fixture.registry.portfolioRound.stateGroups.out_of_current_competition.push(
-    ...fixture.registry.portfolioRound.stateGroups.active_research,
-    ...fixture.registry.portfolioRound.stateGroups.queued_research
+  assert.ok(fixture.registry.portfolioRound.stateGroups.provisional_finalist.length > 3);
+  assert.doesNotThrow(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }));
+});
+
+test("рабочий пакет интервью допускает до трёх ставок", () => {
+  const fixture = factoryFixtures();
+  const readyCandidates = fixture.registry.portfolioRound.stateGroups.provisional_finalist.splice(0, 2);
+  const additionalCandidate = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.splice(0, 1);
+  fixture.registry.portfolioRound.stateGroups.selected_for_interviews.push(...readyCandidates, ...additionalCandidate);
+  assert.doesNotThrow(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }));
+});
+
+test("рабочий пакет интервью больше трёх ставок падает", () => {
+  const fixture = factoryFixtures();
+  const extra = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.splice(0, 1);
+  fixture.registry.portfolioRound.stateGroups.selected_for_interviews.push(
+    ...fixture.registry.portfolioRound.stateGroups.provisional_finalist.splice(0, 3),
+    ...extra
   );
-  fixture.registry.portfolioRound.stateGroups.active_research = [];
-  fixture.registry.portfolioRound.stateGroups.queued_research = [];
-  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
-    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => id !== "kadra");
-  fixture.registry.portfolioRound.stateGroups.provisional_finalist.push("kadra");
-  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /Global Portfolio Gate должен оставить 1–3/);
+  assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /пакет интервью превышает 3 ставки/);
 });
 
 test("один active run допускает bounded batch до десяти ставок", () => {
   const fixture = factoryFixtures();
-  const batch = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.slice(0, 7);
+  const batch = fixture.registry.portfolioRound.stateGroups.provisional_finalist.splice(0, 7);
   fixture.registry.portfolioRound.status = "researching";
   fixture.registry.portfolioRound.globalGateStatus = "not_ready";
   fixture.registry.portfolioRound.currentResearchIds = batch;
   fixture.registry.portfolioRound.stateGroups.active_research = batch;
-  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
-    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => !batch.includes(id));
   assert.doesNotThrow(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }));
 });
 
 test("active research batch больше десяти ставок падает", () => {
   const fixture = factoryFixtures();
-  const batch = fixture.registry.portfolioRound.stateGroups.out_of_current_competition.slice(0, 11);
+  const batch = fixture.registry.portfolioRound.stateGroups.provisional_finalist.splice(0, 11);
   fixture.registry.portfolioRound.status = "researching";
   fixture.registry.portfolioRound.globalGateStatus = "not_ready";
   fixture.registry.portfolioRound.currentResearchIds = batch;
   fixture.registry.portfolioRound.stateGroups.active_research = batch;
-  fixture.registry.portfolioRound.stateGroups.out_of_current_competition =
-    fixture.registry.portfolioRound.stateGroups.out_of_current_competition.filter((id) => !batch.includes(id));
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /active research batch превышает 10/);
 });
 

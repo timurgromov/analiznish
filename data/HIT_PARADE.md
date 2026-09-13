@@ -18,15 +18,15 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 
 | Сейчас | Количество | Решение |
 | --- | ---: | --- |
-| CustDev-ready | 0 | Владелец ещё не выбрал одну ставку; I_E1 и интервью не открыты. |
-| Предварительный финал | 3 | AR control, Codex Project Starter и lead→paid session ждут явного owner choice. |
+| Готовы к интервью | 20 | Все прошли S0–S5; WTP, канал и outcome ещё требуют реальных интервью. |
+| Рабочий пакет интервью | 0 | Владелец ещё не выбрал 1–3 проекта и один текущий фокус. |
 | Обоснованный failed | 2 | AI YouTube exact domestic-ad и ProfiWatcher имеют legal/platform blockerCode и отдельный failed-критерий. |
-| Вне текущего соревнования | 20 | Все сохранены с конкретным условием возврата; это не провал рынка. |
+| Нужно уточнить ставку | 3 | Generic AI-психолог, marketplace сессий и общий field-service ops требуют убрать широту или дубль; это не провал рынка. |
 | Проверяется сейчас | 0 | Незакрытой desk-очереди нет; run parked на owner choice. |
 | Прошла, не в фокусе | 0 concrete bets | Агент не может назначить этот исход по score; нужен явный owner decision. |
 | Active business / market reference | 3 | Benchmark и карта рынка, не кандидаты Factory. |
 
-Global Portfolio Gate завершён 2026-09-13. Канонический текущий digest —
+Portfolio readiness audit завершён 2026-09-13. Канонический текущий digest —
 `data/PORTFOLIO_CLOSURE.md`; исторические таблицы ниже не изменяют его исходы.
 
 Колонки `Доверие` ниже сохраняют frozen legacy v0.7 для воспроизводимости
@@ -35,9 +35,9 @@ Global Portfolio Gate завершён 2026-09-13. Канонический те
 очереди; legacy-число не открывает evidence gate.
 
 Legacy-код и legacy-карточки не являются Factory-прогрессом. Последующий
-Factory v2-screen после аудита оставил «Радарыч» finalist/parked, а PastLife AI
-/ Sansara parked на S2 до exact-offer signals. Строки ниже сохраняют прежние
-оценки только как историю и не разрешают founder-сессии, traffic или продажи.
+Factory v2-screen после аудита довёл «Радарыч» и PastLife AI / Sansara до S5 и
+пула готовности к интервью. Строки ниже сохраняют прежние оценки только как
+историю и не разрешают founder-сессии, traffic или продажи без следующих gates.
 
 ## Историческая карта рынков и референсов
 

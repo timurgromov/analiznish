@@ -110,8 +110,9 @@ Thesis Contract и перечень запрещённых подмен. Сег�
 Триггер: «Хочу искать нишу» или явный запрос системно найти новый рынок.
 
 Результат: `idea purgatory → context inventory → pain/product/transaction mining → 5–10 candidates → S · SCAN
-0–3 → 18-критериальный Portfolio Gate → 1–2 deep research → 1 concrete bet → CustDev → offer/action
-test → paid pilot → bounded MVP`.
+0–3 → 18-критериальный Portfolio Gate → S5 всех конкретных ставок без blocker →
+пул готовых к интервью → рабочий пакет 1–3 → одна текущая работа → CustDev →
+offer/action test → paid pilot → bounded MVP`.
 
 ### 2. Оценка готовой идеи
 
@@ -130,11 +131,12 @@ capabilities и способом удешевить тест, но не дока
 
 ### 4. `portfolio_review`
 
-Сравнение рынков и конкретных ставок для выбора одного следующего фокуса.
-Если объединяются результаты нескольких завершённых runs, Global Portfolio
-Gate запускается только при пустых исследовательских очередях, оставляет 1–3
-предварительных финалиста и ждёт owner choice ровно одной ставки. Идеи вне
-текущего соревнования сохраняются с условием возврата; это не `failed`.
+Сравнение рынков и конкретных ставок для определения порядка работы. Если
+объединяются результаты нескольких завершённых runs, общий gate запускается
+только при пустых исследовательских очередях и показывает весь пул прошедших
+S0–S5 ставок. Владелец формирует пакет 1–3 и назначает одну текущую работу.
+Идеи с неразведённым дублем или слишком широкой формулировкой сохраняются с
+условием уточнения; это не `failed`.
 
 ### 5. `idea_inbox` / чистилище
 
@@ -149,7 +151,7 @@ Gate запускается только при пустых исследова�
 
 | Macro phase | Роль в контуре | Канонический протокол | Условие перехода |
 | --- | --- | --- | --- |
-| `S · SCAN` | Desk research, ранний Portfolio Gate, owner choice и конкурентная рамка | `docs/SIGMA_EXECUTION_MODEL.md` | Один выбранный финалист; реальные интервью ещё не начаты |
+| `S · SCAN` | Desk research, ранний Portfolio Gate, owner planning и конкурентная рамка | `docs/SIGMA_EXECUTION_MODEL.md` | Пул готовых ставок, пакет 1–3 и один текущий фокус; реальные интервью ещё не начаты |
 | `I · INSIGHT` | E1-корпус → минимум пять интервью → JTBD/канал/финансы → action → pay | `docs/INSIGHT_EXECUTION_MODEL.md` + `docs/CUSTDEV_PROTOCOL.md` | E4 открывает только bounded build |
 | `G · GENERATE` | Ограниченная спецификация доказанного решения | `build_ready` из `data/FACTORY_SCHEMA.json` | Scope не шире оплаченного результата |
 | `M · MAKE` | Сборка bounded MVP с ручным fallback | Текущие project/build rules | Usage gate |
@@ -178,8 +180,8 @@ CustDev/action/pay gates.
 | --- | --- | --- | --- |
 | `inbox` | Что не потерять? | Идея, плательщик и дешёвая первая проверка | `quick_scan` |
 | `quick_scan` | Есть ли очевидный рынок и модель денег? | Hard filters и первичные публичные признаки | `market_research` |
-| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | Для batch: S0–S5, 18 критериев и 1–2 финалиста; для single thesis: возможность, business design, readiness и следующий gate; для объединения runs: Global Gate максимум из 3 | `finalist` либо owner hold |
-| `finalist` | Какую одну ставку проверять? | Owner choice и полный I_E1-корпус | `interview_ready` |
+| `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | S0–S5, 18 критериев и конкретная проверяемая ставка без blocker | `finalist` либо уточнение Thesis Contract |
+| `finalist` | Какие проекты готовы к интервью? | Пул готовности; пакет 1–3; один текущий фокус и полный I_E1-корпус | `interview_ready` |
 | `interviews` | Повторяется ли дорогая проблема? | Минимум пять интервью, JTBD, канал и финансовый диапазон | `offer_ready` |
 | `action_test` | Совершит ли клиент затратное действие? | Оффер, CTA, интро/demo/data/LOI | I_E4 money gate |
 | `paid` | Выделит ли клиент деньги? | E4 и bounded scope с лимитом | `build_ready` / usage |
@@ -260,8 +262,8 @@ design, readiness и evidence confidence показываются отдельн
 * machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
 * read-only dashboard с первой вкладкой всех идей, фильтрами, общим осторожным
   рейтингом, воронкой, research-runs, портфелем и архивом; четыре итоговых
-  состояния открывают свои списки, а идеи вне текущего соревнования разбиты по
-  последнему пройденному gate и не смешиваются с hard blockers;
+  состояния открывают свои списки: весь пул готовых к интервью отделён от
+  ставок, которым нужно уточнить Thesis Contract, и от hard blockers;
 * проверяемые `IDEA_REGISTRY.json` и `FACTORY_STATE.json` без backend и
   дублирования подробных Markdown-источников.
 

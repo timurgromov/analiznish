@@ -1,5 +1,10 @@
 # Global Portfolio Gate — закрытие desk research
 
+> Superseded 2026-09-13: квота трёх финалистов отменена решением
+> `DEC-2026-09-13-INTERVIEW-READINESS-POOL`. Актуальный пересмотр 14 проектов и
+> итог 20/3/2/3 находятся в
+> `data/discovery/2026-09-13-portfolio-interview-readiness-audit.md`.
+
 Дата: 2026-09-13
 Run ID: `global-portfolio-gate-2026-09-13`
 Статус: `ready_for_owner_choice`

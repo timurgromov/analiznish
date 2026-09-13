@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 4,
+  "schemaVersion": 5,
   "updatedAt": "2026-09-13",
   "purpose": "Единый реестр всех сохранённых идей и рыночных референсов для визуального кабинета.",
   "rankingModel": {
@@ -13,7 +13,7 @@
     { "id": "inbox", "order": 0, "label": "Чистилище", "shortLabel": "Идея", "description": "Новые идеи, которые только сохранены и ещё не проверялись." },
     { "id": "quick_scan", "order": 1, "label": "Первичная проверка", "shortLabel": "Проверка", "description": "За 5–10 минут проверяем плательщика, деньги и очевидные стоп-факторы." },
     { "id": "market_research", "order": 2, "label": "Проверка рынка", "shortLabel": "Рынок", "description": "Ищем спрос, конкурентов, рабочую экономику и применимость в России." },
-    { "id": "finalist", "order": 3, "label": "Финалисты", "shortLabel": "Финал", "description": "Лучшие 1–2 идеи batch, ожидающие owner choice и E1-подготовку." },
+    { "id": "finalist", "order": 3, "label": "Готовы к интервью", "shortLabel": "Готовы", "description": "Desk research S0–S5 завершён; ставка может войти в следующий пакет интервью после планирования владельцем." },
     { "id": "interviews", "order": 4, "label": "Интервью", "shortLabel": "Люди", "description": "Минимум пять разговоров проверяют повторяемую дорогую проблему в прошлом поведении." },
     { "id": "action_test", "order": 5, "label": "Тест действием", "shortLabel": "Действие", "description": "После уточнения JTBD, канала и финансов просим сделать наблюдаемый затратный шаг." },
     { "id": "paid", "order": 6, "label": "Первые деньги", "shortLabel": "Оплата", "description": "Получена оплата, платный пилот или подтверждённый бюджет; разрешён только bounded build." },
@@ -30,9 +30,9 @@
   "competitionStates": [
     { "id": "active_research", "label": "Исследуется сейчас", "description": "Одна ставка или один bounded batch до 10 независимых ставок, по которым агент выполняет текущий evidence gate." },
     { "id": "queued_research", "label": "В очереди исследования", "description": "Ставка остаётся в текущем соревновании, но ждёт ограниченного desk-gate после активной работы." },
-    { "id": "provisional_finalist", "label": "Предварительный финалист", "description": "Desk research пройден; ставка ждёт единого Portfolio Final и не открывает интервью сама по себе." },
-    { "id": "selected_for_interviews", "label": "Выбрана для интервью", "description": "Владелец выбрал ровно одну ставку; после I_E1 разрешены реальные интервью." },
-    { "id": "out_of_current_competition", "label": "Вне текущего соревнования", "description": "Ставка сохранена, но в текущем цикле не исследуется; у неё есть явное условие возврата." },
+    { "id": "provisional_finalist", "label": "Готова к интервью", "description": "Desk research S0–S5 пройден; ставка входит в общий пул готовности и ждёт места в рабочем пакете интервью." },
+    { "id": "selected_for_interviews", "label": "В пакете интервью", "description": "Владелец включил ставку в следующий пакет из 1–3 проектов; один из них назначается текущим рабочим фокусом." },
+    { "id": "out_of_current_competition", "label": "Нужно уточнить ставку", "description": "Публичный рынок может существовать, но объект пока не является достаточно отдельной и конкретной ставкой для интервью; указан точный пробел определения." },
     { "id": "hard_failed", "label": "Жёстко заблокирована", "description": "Точная модель остановлена подтверждённым hard blocker." },
     { "id": "reference_or_benchmark", "label": "Референс или benchmark", "description": "Объект помогает оценивать рынок или деньги, но не участвует в выборе новой ставки." }
   ],
@@ -45,34 +45,34 @@
     "stateGroups": {
       "active_research": [],
       "queued_research": [],
-      "provisional_finalist": ["agency-ar-control", "codex-project-starter-product", "psych-lead-to-paid-session"],
-      "selected_for_interviews": [],
-      "out_of_current_competition": [
+      "provisional_finalist": [
+        "agency-ar-control",
+        "codex-project-starter-product",
+        "psych-lead-to-paid-session",
+        "radarych",
+        "rpp-between-session",
+        "rule24",
+        "kadra",
+        "pastlife-sansara",
+        "outsourced-compliance-calendar",
         "cycle-assistant",
-        "psych-generic-ai",
         "rpp-practice-lab",
         "psych-employer-outcome",
         "psych-couples-practices",
         "rpp-supervision-os",
         "psych-emotional-eating",
         "psych-practice-crm",
-        "psych-session-marketplace",
         "field-service-next-action",
         "wholesale-order-to-cash",
-        "field-service-ops",
         "smb-contract-obligations",
-        "vendor-security-evidence",
-        "radarych",
-        "rpp-between-session",
-        "rule24",
-        "kadra",
-        "pastlife-sansara",
-        "outsourced-compliance-calendar"
+        "vendor-security-evidence"
       ],
+      "selected_for_interviews": [],
+      "out_of_current_competition": ["psych-generic-ai", "psych-session-marketplace", "field-service-ops"],
       "hard_failed": ["ai-youtube-automation", "profiwatcher"],
       "reference_or_benchmark": ["timur-business-system", "auto-seo-cpa", "onsud-reference"]
     },
-    "nextGate": "Владелец выбирает ровно одну из трёх ставок; затем агент готовит I_E1 и минимум пять реальных интервью.",
+    "nextGate": "Владелец формирует пакет из 1–3 готовых ставок и назначает одну текущей работой; затем агент готовит для неё I_E1 и минимум пять реальных интервью.",
     "updatedAt": "2026-09-13"
   },
   "ideas": [
@@ -113,11 +113,11 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены: российские и международные paid/free конкуренты подтверждают рынок персональных airfare alerts. На Global Portfolio Gate ставка не вошла в тройку: российские willingness-to-pay, CAC и repeat неизвестны, а B2C несёт повышенное бремя доказать экономику. Это выход из текущего соревнования, не провал рынка.",
+      "rankingReason": "S0–S5 пройдены: российские и международные paid/free конкуренты подтверждают рынок персональных airfare alerts. Российские willingness-to-pay, CAC и repeat неизвестны и проверяются после включения в пакет интервью.",
       "mainRisk": "Принять сильный рынок и готовый движок за доказательство того, что российский B2C-сегмент оплатит персонализацию поверх бесплатных alert-сервисов.",
-      "nextGate": "Вернуть после 5 WTP-сигналов одного frequent-route сегмента; затем заново сравнить с текущим фокусом.",
+      "nextGate": "Включить в пакет интервью и проверить 5 WTP-сигналов одного frequent-route сегмента.",
       "source": "data/niches/2026-07-01-travel-radar.md",
-      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "kadra",
@@ -135,11 +135,11 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены: для одного Job реалистичных профильных фото известны локальные продукты, price corridor, COGS-формула, проверяемое отличие и дешёвый falsifier. На Global Portfolio Gate ставка не вошла в тройку из-за commodity pressure и неизвестных accepted-quality, CAC, COGS и repeat; это не провал рынка.",
+      "rankingReason": "S0–S5 пройдены: для одного Job реалистичных профильных фото известны локальные продукты, price corridor, COGS-формула, проверяемое отличие и дешёвый falsifier. Accepted-quality, CAC, COGS и repeat остаются непроверенными.",
       "mainRisk": "Широкий AI-photo продукт без канала и защиты будет конкурировать с дешевыми marketplace-исполнителями.",
-      "nextGate": "Вернуть после 5 платных intent из 30 квалифицированных контактов либо появления нового доступного канала.",
+      "nextGate": "Включить в пакет интервью; затем проверить 5 платных intent из 30 квалифицированных контактов.",
       "source": "data/niches/2026-07-21-kadra-ai-photo.md",
-      "runIds": ["kadra-reference-mining-2026-07-16", "portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "kadra-bounded-gate-2026-09-13"]
+      "runIds": ["kadra-reference-mining-2026-07-16", "portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "kadra-bounded-gate-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "auto-seo-cpa",
@@ -154,7 +154,7 @@
       "scoreBasis": "Нормализовано из рыночных блоков референса v0.7; личный fit неизвестен",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "passed_not_selected",
       "rankingReason": "Обязательный большой рынок и CPA-модель подтверждены, но это пока чужой референс без нашего преимущества в трафике.",
       "mainRisk": "Без собственного дешёвого трафика продукт остаётся оболочкой вокруг доступных всем партнёрских ссылок.",
@@ -218,13 +218,13 @@
       "scoreBasis": "Нормализовано из E1-карточки 2026-09-09",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Есть доступ к экспертам и безопасная B2B-модель обучения; плательщик и бюджет остаются следующими вопросами, а не основанием автоматического not selected.",
+      "rankingReason": "S0–S5 завершены: платные российские программы супервизии подтверждают buyer и бюджет, а следующий неизвестный — ценность самостоятельного тренажёра — проверяется интервью, а не desk-отсевом.",
       "mainRisk": "Образовательный рынок может ценить только живого эксперта, а не самостоятельную практику.",
-      "nextGate": "Пять problem interviews с руководителями программ и один подтверждённый бюджет пилота.",
+      "nextGate": "Включить в пакет интервью; провести пять разговоров с руководителями программ и затем запросить один бюджет пилота.",
       "source": "data/niches/2026-09-09-rpp-practice-lab.md",
-      "runIds": ["psychologists-sigma-2026-09-09"]
+      "runIds": ["psychologists-sigma-2026-09-09", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "psych-employer-outcome",
@@ -239,13 +239,13 @@
       "scoreBasis": "Нормализовано из E1 marketplace batch 2026-09-10",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Сильная экономика внешних референсов, но длинная B2B-продажа и нет доступа к бюджетодержателям.",
-      "mainRisk": "Закупочная процедура, клиническое доказательство и длинный цикл сделки блокируют дешёвую проверку.",
-      "nextGate": "Вернуть только после интро к трём HR или страховым бюджетодержателям.",
+      "rankingReason": "S0–S5 завершены: Alter, Ясно и Zigmund подтверждают российскую B2B-категорию, корпоративные бюджеты и измеримый outcome; доступ к бюджетодержателю является задачей рекрутинга интервью, не desk-блокером.",
+      "mainRisk": "Длинный цикл закупки и требование доказать результат могут сделать модель медленной и дорогой.",
+      "nextGate": "Включить в пакет интервью при возможности рекрутинга трёх HR или страховых бюджетодержателей.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
-      "runIds": ["psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-marketplace-2026-09-10", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "psych-couples-practices",
@@ -260,13 +260,13 @@
       "scoreBasis": "Нормализовано из E1 marketplace batch 2026-09-10",
       "evidenceConfidence": 0.5,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Внешний B2C-рынок выглядит сильным, но у нас нет локального преимущества и канала.",
+      "rankingReason": "S0–S5 завершены: русскоязычные WIMCO, Juvly и App Store-продукты подтверждают ежедневный ритуал и подписную модель; канал и готовность платить за наш формат должны выясняться интервью и тестом оффера.",
       "mainRisk": "Дистрибуцию придётся строить с нуля в конкурентной категории.",
-      "nextGate": "Возвращать только с партнёром, у которого уже есть релевантная аудитория.",
+      "nextGate": "Включить в пакет интервью; проверить прошлое использование парных практик и затем один партнёрский канал.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
-      "runIds": ["psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-marketplace-2026-09-10", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "rpp-supervision-os",
@@ -281,13 +281,13 @@
       "scoreBasis": "Нормализовано из E1-карточки 2026-09-09",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Concierge-пилот возможен без разработки и есть экспертный доступ; ёмкость и самостоятельная ценность требуют проверки, а не автоматического not selected.",
+      "rankingReason": "S0–S5 завершены: российские программы супервизии подтверждают платную работу, а concierge-кейс-пакет позволяет проверить самостоятельную ценность без разработки.",
       "mainRisk": "Задача может полностью закрываться документом или обычной CRM.",
-      "nextGate": "Пять разговоров и один ручной кейс-пакет с обезличенным материалом.",
+      "nextGate": "Включить в пакет интервью; пять разговоров и один ручной обезличенный кейс-пакет.",
       "source": "data/niches/2026-09-09-rpp-supervision-os.md",
-      "runIds": ["psychologists-sigma-2026-09-09"]
+      "runIds": ["psychologists-sigma-2026-09-09", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "cycle-assistant",
@@ -302,13 +302,13 @@
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S3 подтвердил локально доступный платный partner/advice outcome и специальную категорию health data. На S4 ставка выведена из текущего соревнования: прямые приложения уже закрывают Job, а Telegram-first ухудшает privacy без проверяемого wedge.",
+      "rankingReason": "S0–S5 завершены: Flo, Clue и Apple подтверждают категорию и высокий privacy benchmark. Отсутствие готового wedge не закрывает интервью, но запрещает собирать health data и строить Telegram-продукт до privacy design.",
       "mainRisk": "Собрать Telegram-first health-data продукт без ясной ценности и privacy/legal boundary.",
-      "nextGate": "Возврат в S4 только с privacy-first minimal-data дизайном и минимум 5 реальными payment intents за конкретный non-medical outcome.",
+      "nextGate": "Включить в безопасный пакет интервью без сбора health data; до action-test зафиксировать non-medical outcome и privacy-first minimal-data design.",
       "source": "data/niches/2026-07-05-ai-cycle-assistant.md",
-      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "cycle-assistant-bounded-2026-09-13"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "cycle-assistant-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "psych-emotional-eating",
@@ -323,13 +323,13 @@
       "scoreBasis": "Нормализовано из E1 marketplace batch 2026-09-10",
       "evidenceConfidence": 0.5,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Есть повторяющиеся зарубежные продукты и понятная подписка; российский канал и безопасный результат являются вопросами следующего эксперимента, а не причиной not selected.",
+      "rankingReason": "S0–S5 завершены: программа самонаблюдения имеет понятный recurring Job, а неизвестные канал и WTP должны проверяться интервью; safety boundary фиксируется до контакта и исключает диагностику и лечение.",
       "mainRisk": "B2C CAC и работа с тяжёлыми случаями могут разрушить экономику и безопасность.",
-      "nextGate": "Проверить один не-клинический оффер и один канал привлечения до продукта.",
+      "nextGate": "Включить в безопасный пакет интервью со screener; затем проверить один не-клинический оффер и один канал до продукта.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
-      "runIds": ["psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-marketplace-2026-09-10", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "rpp-between-session",
@@ -346,12 +346,12 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Публичный batch подтвердил Job и доступ к экспертам, но на Global Portfolio Gate ставка не вошла в тройку: willingness-to-pay и безопасный контур работы с чувствительными данными не доказаны. Это выход из текущего соревнования, не провал рынка.",
+      "rankingReason": "Публичный batch подтвердил Job и доступ к экспертам. Willingness-to-pay и безопасный контур работы с чувствительными данными остаются вопросами интервью и последующего теста.",
       "mainRisk": "Чувствительные данные и ожидание мониторинга создают клинический и репутационный риск.",
-      "nextGate": "Вернуть после 5 недавних случаев повторяемой проблемы без хранения клинических данных.",
+      "nextGate": "Включить в безопасный пакет интервью и проверить 5 недавних случаев без хранения клинических данных.",
       "source": "data/niches/2026-09-09-rpp-between-session-companion.md",
       "aliases": ["P2"],
-      "runIds": ["psychologists-sigma-2026-09-09", "psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-sigma-2026-09-09", "psychologists-marketplace-2026-09-10", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "psych-lead-to-paid-session",
@@ -368,9 +368,9 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Финалист раннего Portfolio Gate: дешёво тестируется через доступ к психологам, но сама утечка выручки ещё не подтверждена.",
+      "rankingReason": "S0–S5 завершены: ставка дешёво тестируется через доступ к психологам, но сама утечка выручки ещё не подтверждена.",
       "mainRisk": "У практиков может не быть существенной потери между входящим обращением и оплатой.",
-      "nextGate": "Owner choice; при выборе этой ставки сначала завершить I_E1 и только затем открыть пять интервью.",
+      "nextGate": "Включить в пакет из 1–3 проектов; при текущем фокусе завершить I_E1 и затем провести пять интервью.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
       "aliases": ["P1"],
       "runIds": ["psychologists-marketplace-2026-09-10", "psychologists-sigma-2026-09-09", "global-portfolio-gate-2026-09-13"]
@@ -388,14 +388,14 @@
       "scoreBasis": "Нормализовано из E1 marketplace batch 2026-09-10",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Подписная модель понятна, но базовые функции уже доступны и причина переключения не найдена.",
+      "rankingReason": "S0–S5 завершены: YCLIENTS и более лёгкие решения подтверждают локальную подписную категорию и цену от 960 ₽/мес; причина переключения является главным вопросом интервью, а не условием доступа к ним.",
       "mainRisk": "Без дорогой причины переключиться это набор функций, а не покупаемый продукт.",
-      "nextGate": "Возвращать только после трёх независимых случаев дорогого ухода с текущего инструмента.",
+      "nextGate": "Включить в пакет интервью и искать три независимых случая дорогого сбоя или ухода с текущего инструмента.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
       "aliases": ["P6"],
-      "runIds": ["psychologists-marketplace-2026-09-10"]
+      "runIds": ["psychologists-marketplace-2026-09-10", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "rule24",
@@ -413,11 +413,11 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены: российские booking/payment alternatives подтверждают локальный рынок и деньги. На Global Portfolio Gate ставка не вошла в тройку, потому что switching reason и чистая экономика отдельного penalty-layer не доказаны. Это выход из текущего соревнования, не отрицание рынка.",
+      "rankingReason": "S0–S5 пройдены: российские booking/payment alternatives подтверждают локальный рынок и деньги. Switching reason и чистая экономика отдельного penalty-layer остаются вопросами интервью.",
       "mainRisk": "Перепутать сильный рыночный сигнал с доказанной причиной выбрать именно отдельный Rule24, не учтя payment/compliance и support-cost exact-сценария.",
-      "nextGate": "Вернуть после 3 подтверждённых случаев, где психолог готов переключиться на отдельный penalty-layer.",
+      "nextGate": "Включить в пакет интервью и проверить 3 случая, где психолог готов переключиться на отдельный penalty-layer.",
       "source": "data/niches/2026-07-03-rule24-psychologists.md",
-      "runIds": ["portfolio-v07-2026-07-20", "rule24-recovery-2026-09-12"]
+      "runIds": ["portfolio-v07-2026-07-20", "rule24-recovery-2026-09-12", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "pastlife-sansara",
@@ -435,11 +435,11 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены после появления Evoria, PastLife.app и Past Life Story & Webtoon. Exact category существует, но на Global Portfolio Gate ставка не вошла в тройку: локальный paid reference, внешние оплаты, CAC, margin и repeat Sansara остаются unknown. Это не провал рынка.",
+      "rankingReason": "S0–S5 пройдены после появления Evoria, PastLife.app и Past Life Story & Webtoon. Exact category существует; локальный paid reference, внешние оплаты, CAC, margin и repeat Sansara остаются unknown.",
       "mainRisk": "Принять готовность engine или смежный интерес к AI-фото за спрос на exact-offer «прошлая жизнь».",
-      "nextGate": "Вернуть после 5 локальных payment intents на exact-оффер; затем заново сравнить с текущим фокусом.",
+      "nextGate": "Включить в пакет интервью; затем проверить 5 локальных payment intents на exact-оффер.",
       "source": "data/niches/2026-07-01-pastlife-ai-sansara.md",
-      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "sansara-exact-offer-2026-09-13"]
+      "runIds": ["portfolio-v07-2026-07-20", "legacy-portfolio-sigma-2026-09-11", "sansara-exact-offer-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "psych-generic-ai",
@@ -456,7 +456,7 @@
       "evidenceLevel": "E1",
       "stage": "quick_scan",
       "gateStatus": "parked",
-      "rankingReason": "Категория и деньги подтверждены, но broad «AI-психолог 24/7» не является одной owner-defined ставкой: он смешивает companionship, coaching и health outcomes. Выведен из текущего соревнования до Thesis Contract; рынок не признан failed.",
+      "rankingReason": "Категория и деньги подтверждены, но broad «AI-психолог 24/7» не является одной owner-defined ставкой: он смешивает companionship, coaching и health outcomes. Остановлен до уточнения Thesis Contract; рынок не признан failed.",
       "mainRisk": "Нет узкого измеримого результата и независимого канала привлечения.",
       "nextGate": "Возврат с owner-confirmed Thesis Contract: один сегмент, прошлый Job, non-clinical outcome, safety boundary и cheapest no-health-data experiment.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
@@ -476,7 +476,7 @@
       "scoreBasis": "Нормализовано из блоков карточки и портфеля v0.7",
       "evidenceConfidence": 0.55,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "failed",
       "rankingReason": "S3_LOCALIZE не пройден: собственные уведомления Profi.ru уже существуют, а проверенного API/right-to-use для отдельного commercial watcher нет.",
       "mainRisk": "Превратить внутренний read-only watcher в коммерческий продукт без права на источник и обработку данных.",
@@ -499,7 +499,7 @@
       "evidenceLevel": "E1",
       "stage": "quick_scan",
       "gateStatus": "parked",
-      "rankingReason": "Спрос на сессии и комиссия подтверждены. Но проверяемый односторонний concierge wedge уже учтён как psych-lead-to-paid-session; самостоятельного demand source для generic marketplace нет. Это причина выхода из текущего соревнования, не провал рынка.",
+      "rankingReason": "Спрос на сессии и комиссия подтверждены. Но проверяемый односторонний concierge wedge уже учтён как psych-lead-to-paid-session; самостоятельного demand source для generic marketplace нет. Сначала нужно развести ставки; это не провал рынка.",
       "mainRisk": "Одновременно нужны исполнители, клиенты, доверие и два отдельных CAC.",
       "nextGate": "Вернуть при источнике минимум 20 квалифицированных обращений либо после трёх оплаченных ручных matches с наблюдаемой комиссионной экономикой.",
       "source": "data/discovery/2026-09-10-psychologists-authenticated-marketplace-batch.md",
@@ -519,13 +519,13 @@
       "scoreBasis": "E1: российские field-service CRM уже публично покрывают заявки, мастеров, статусы и оплату.",
       "evidenceConfidence": 0.3,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S1 подтвердил рынок, но bounded S2 не нашёл два независимых owner signals одной российской вертикали. Кандидат вышел из текущего соревнования без failed.",
+      "rankingReason": "S0–S5 завершены с первой проверяемой вертикалью — электромонтажные и ремонтные бригады. РемCRM и российские FSM подтверждают заявки, маршруты, акты и подписку; частота потери next action проверяется интервью владельцев.",
       "mainRisk": "Сделать ещё один общий CRM без защищённого канала и отличия.",
-      "nextGate": "Вернуть после двух свежих owner cases одной вертикали с измеренной потерей лида после первого контакта.",
+      "nextGate": "Включить в пакет интервью с электромонтажными или ремонтными бригадами; нужны два случая измеренной потери заявки или следующего шага.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
-      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13"]
+      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "agency-ar-control",
@@ -544,7 +544,7 @@
       "gateStatus": "parked",
       "rankingReason": "S0–S5 пройдены: два независимых системных сигнала, рублёвые alternatives, ограниченный CSV-first scope и 18 критериев определены. WTP, CAC, доступ к buyer и фактическое сокращение DSO остаются E1-unknown.",
       "mainRisk": "Повторить invoicing/CRM без права на данные и без причины платить.",
-      "nextGate": "Owner choice; при выборе — I_E1 и пять интервью по реальным реестрам дебиторки до action/pay test.",
+      "nextGate": "Включить в пакет из 1–3 проектов; при текущем фокусе подготовить I_E1 и пять интервью по реальным реестрам дебиторки.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
       "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
@@ -561,13 +561,13 @@
       "scoreBasis": "E1: в РФ уже есть B2B-порталы с 1С-интеграцией, включая публичный тариф от 50 000 ₽/мес.",
       "evidenceConfidence": 0.3,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Свежие vendor cases подтверждают Excel/1С pain в опте, но bounded S3 не нашёл первого оффера без портала или ERP-интеграции. Идея вышла из текущего соревнования без failed.",
+      "rankingReason": "S0–S5 завершены: локальные кейсы подтверждают Excel→1С order workflow, а ограниченный wedge определён как импорт и проверка одного повторного формата заказа без замены ERP.",
       "mainRisk": "Войти в длинные ERP-интеграции до доказательства остроты Job.",
-      "nextGate": "Вернуть, когда один доступный оптовик готов дать выгрузку и платно проверить один bounded workflow без портала.",
+      "nextGate": "Включить в пакет интервью; найти одного оптовика с повторным Excel-заказом и запросить обезличенный пример до платного concierge-теста.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
-      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13"]
+      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "field-service-ops",
@@ -582,9 +582,9 @@
       "scoreBasis": "E1: российские field-service CRM публично связывают заявку, выезд, акт, счёт и оплату.",
       "evidenceConfidence": 0.3,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "quick_scan",
       "gateStatus": "parked",
-      "rankingReason": "Широкий field-service ops дублирует более узкий next-action candidate и не добавляет отдельного Job. Сохранён вне текущего соревнования, не failed.",
+      "rankingReason": "Широкий field-service ops дублирует более узкий next-action candidate и не добавляет отдельного Job. Сохранён для уточнения границы ставки, не failed.",
       "mainRisk": "Не сузить вертикаль и стать ещё одним общим back-office продуктом.",
       "nextGate": "Вернуть только с новым Job, который не дублирует next-action и подтверждён двумя owner cases.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
@@ -603,13 +603,13 @@
       "scoreBasis": "E1: учёт сроков, продлений и уведомлений уже встроен в локальный 1С-контур.",
       "evidenceConfidence": 0.3,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "1С и CLM подтверждают рынок, но bounded S2 не нашёл два свежих случая одного дорогого риска в конкретном SMB-сегменте. Вне текущего соревнования, не failed.",
+      "rankingReason": "S0–S5 завершены: Saby, Битрикс24 и специализированные решения подтверждают контроль сроков, обязательств и рублёвую подписку; один дорогой SMB-риск должен быть выбран по интервью, а не придуман desk research.",
       "mainRisk": "Упасть в дорогой enterprise CLM без доступного малого сегмента.",
-      "nextGate": "Вернуть после двух случаев одного типа пропущенного обязательства и подтверждённого buyer с бюджетом.",
+      "nextGate": "Включить в пакет интервью; найти два случая одного типа пропущенного обязательства и определить владельца бюджета.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
-      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13"]
+      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "outsourced-compliance-calendar",
@@ -626,11 +626,11 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены: два свежих practitioner signals, повторяемые обязательные сроки, metadata-only scope и 18 критериев определены. На Global Portfolio Gate ставка не вошла в тройку: standalone WTP, отличие от Контур/1С и доступ к buyer слабее финалистов. Это не провал рынка.",
+      "rankingReason": "S0–S5 пройдены: два свежих practitioner signals, повторяемые обязательные сроки, metadata-only scope и 18 критериев определены. Standalone WTP и отличие от Контур/1С остаются вопросами интервью.",
       "mainRisk": "Затронуть чувствительные данные и регулирование до ясной ценности.",
-      "nextGate": "Вернуть после 3 metadata-аудитов портфеля у доступных бухгалтеров-аутсорсеров.",
+      "nextGate": "Включить в пакет интервью и провести 3 metadata-аудита портфеля у бухгалтеров-аутсорсеров.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
-      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13"]
+      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "vendor-security-evidence",
@@ -645,13 +645,13 @@
       "scoreBasis": "E1: найден enterprise-level российский референс, но не малый buyer и не безопасный простой оффер.",
       "evidenceConfidence": 0.3,
       "evidenceLevel": "E1",
-      "stage": "market_research",
+      "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "Реальные анкеты подтверждают procurement Job, но bounded S2 не нашёл малого повторного buyer; высокий trust/security burden не компенсирован доступом. Вне текущего соревнования, не failed.",
+      "rankingReason": "S0–S5 завершены: российский vendor questionnaire и сервис подготовки evidence подтверждают Job; безопасный wedge ограничен картой ответов и ссылок без загрузки секретов. Частота у малого поставщика проверяется интервью.",
       "mainRisk": "Запрашивать customer secrets и стать небезопасным непрошедшим procurement инструментом.",
-      "nextGate": "Вернуть после трёх малых B2B-поставщиков с повторным questionnaire и безопасным пакетом без загрузки secrets.",
+      "nextGate": "Включить в пакет интервью; найти три малых B2B-поставщика с повторным questionnaire и проверить metadata-only пакет без secrets.",
       "source": "data/discovery/2026-09-12-b2b-operations-s0-context.md",
-      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13"]
+      "runIds": ["b2b-ops-scan-2026-09-12", "b2b-operations-bounded-2026-09-13", "global-portfolio-gate-2026-09-13"]
     },
     {
       "id": "codex-project-starter-product",
@@ -669,9 +669,9 @@
       "evidenceLevel": "E1",
       "stage": "finalist",
       "gateStatus": "parked",
-      "rankingReason": "S0–S5 пройдены для одного продукта AI-перехода: наблюдаются российские деньги, активный Job и конкурентная рамка. Ставка стала provisional finalist, но E1 не подтверждает наш ICP, WTP, канал, support COGS или repeat.",
+      "rankingReason": "S0–S5 пройдены для одного продукта AI-перехода: наблюдаются российские деньги, активный Job и конкурентная рамка. Ставка готова к интервью, но E1 не подтверждает наш ICP, WTP, канал, support COGS или repeat.",
       "mainRisk": "Построить широкий инфопродукт до выбора active-intent сегмента и измеримого первого процесса либо снова выдать один delivery-компонент за весь продукт.",
-      "nextGate": "Owner choice; если владелец выберет эту ставку одной, подготовить I_E1 и провести минимум пять реальных интервью до offer/action/pay test.",
+      "nextGate": "Включить в пакет из 1–3 проектов; при текущем фокусе подготовить I_E1 и провести минимум пять реальных интервью.",
       "source": "data/discovery/2026-09-13-codex-project-starter-thesis-reset.md",
       "runIds": ["codex-project-starter-2026-09-12", "global-portfolio-gate-2026-09-13"]
     }
@@ -693,7 +693,7 @@
     },
     "radarych": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Российские free alternatives и локальный Telegram-контекст проверены; willingness-to-pay, CAC и repeat не подтверждены." }, { "market": "Глобальный рынок", "status": "checked", "summary": "Paid airfare-alert референсы подтверждают recurring-модель категории, но не российскую конверсию." }],
@@ -710,13 +710,13 @@
         { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российские alternatives подтвердили локальную задачу; отличие и willingness-to-pay оставлены unknown." },
         { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Ставка пережила сравнение: сильный рынок и дешёвый следующий тест, но B2C-экономика не доказана." },
         { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкурентные продукты, цены и сценарии изучены; конкуренция засчитана как market evidence." },
-        { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил Радарыч в текущей тройке; возврат после 5 WTP-сигналов одного frequent-route сегмента." }
+        { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью, где проверяются 5 WTP-сигналов одного frequent-route сегмента." }
       ],
       "reviewedAt": "2026-09-12"
     },
     "kadra": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Российские исполнители, цены и конкретные AI-photo Jobs наблюдаемы." }],
@@ -726,7 +726,7 @@
         { "id": "protected_channel", "label": "Защищённый канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет собственного acquisition advantage; это readiness gap и вопрос эксперимента, не failed рынка." },
         { "id": "contribution_margin", "label": "Contribution margin", "result": "unknown", "evidenceLevel": "E1", "observation": "COGS, retries, QA, support и CAC нашей ставки не посчитаны." }
       ],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Ставка и границы legacy-актива описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты и платные услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Найдены независимые сигналы Job и качества результата." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные сегменты и цены наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев сохранены; один Job, пакет 590–990 ₽, COGS-формула и falsifier 5/30 определены; E1 execution priority 29 не закрывает ставку." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Generic AI-photo закрыт конкурентами; отличие проверяется на реалистичном профильном результате, прозрачной разовой цене и quality gate." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил КАДРУ в текущей тройке; возврат после 5/30 платных intent либо нового доступного канала." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Ставка и границы legacy-актива описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты и платные услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Найдены независимые сигналы Job и качества результата." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные сегменты и цены наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев сохранены; один Job, пакет 590–990 ₽, COGS-формула и falsifier 5/30 определены." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Отличие проверяется на реалистичном профильном результате, прозрачной разовой цене и quality gate." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью и последующему тесту 5/30 платных intent." }],
       "reviewedAt": "2026-09-12"
     },
     "auto-seo-cpa": {
@@ -760,73 +760,73 @@
       "reviewedAt": "2026-09-12"
     },
     "rpp-practice-lab": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
+      "currentCheckpointId": "S4_OWNER",
       "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Есть экспертный доступ; внешний бюджет образовательных программ не подтверждён." }],
       "criteria": [{ "id": "expert_access", "label": "Доступ к экспертам", "result": "passed", "evidenceLevel": "E1", "observation": "Есть доступ для дешёвой проверки." }, { "id": "budget_owner", "label": "Плательщик и бюджет", "result": "unknown", "evidenceLevel": "E1", "observation": "Не подтверждены реальными покупателями." }, { "id": "product_value", "label": "Ценность самостоятельного продукта", "result": "unknown", "evidenceLevel": "E1", "observation": "Неясно, отделима ли ценность от живого эксперта." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Экспертный доступ и формат ставки описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Референсы обучения и супервизии подтверждают категорию." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные проблемы практики собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российский экспертный доступ есть." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Ставка прошла, но не вошла в текущие 1–2 финалиста." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Экспертный доступ и формат ставки описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Платные программы обучения и супервизии подтверждают категорию и бюджет." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные проблемы практики собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российский экспертный доступ и локальные программы подтверждены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Неизвестная самостоятельная ценность перенесена в интервью, а не использована как отсев." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Живая супервизия и образовательные программы заданы как alternatives; отличие тренажёра остаётся проверяемой гипотезой." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к включению в пакет интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "psych-employer-outcome": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Внешняя B2B-модель видна, но нет доступа к локальным бюджетодержателям." }],
       "criteria": [{ "id": "reference_economics", "label": "Экономика референсов", "result": "passed", "evidenceLevel": "E1", "observation": "Внешние референсы показывают крупного плательщика." }, { "id": "buyer_access", "label": "Доступ к buyer", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет интро к HR, страховым или работодателям." }, { "id": "cheap_test", "label": "Дешёвый первый тест", "result": "unknown", "evidenceLevel": "E1", "observation": "Закупочный цикл не позволяет быструю проверку текущим доступом." }],
-      "checkpointHistory": [{ "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Сильный рынок, но недоступный buyer и длинный цикл не позволяют выбрать ставку сейчас." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Корпоративный плательщик и outcome описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Российские корпоративные программы подтверждают рынок и деньги." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные кейсы и buyer language подтверждают Job." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные провайдеры, HR-кабинеты и бюджетный контур доступны." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Длинная закупка снижает приоритет, но не право на интервью." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Alter, Ясно и Zigmund задали paid alternatives и гипотезу измеримого outcome." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету при доступном рекрутинге HR buyer." }],
+      "reviewedAt": "2026-09-13"
     },
     "psych-couples-practices": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Глобальная B2C-категория видна; российский канал не проверен." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Конкуренты подтверждают B2C-категорию." }, { "id": "local_channel", "label": "Локальный канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет собственного или партнёрского доступа к аудитории." }, { "id": "willingness_to_pay", "label": "Готовность платить", "result": "unknown", "evidenceLevel": "E1", "observation": "Для российского оффера не проверена." }],
-      "checkpointHistory": [{ "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Категория подтверждена, ставка не выбрана без канала и локальной экономики." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик, ежедневный Job и подписка описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Платные приложения подтверждают категорию." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Ежедневные вопросы и ритуалы повторяются у нескольких продуктов." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Русскоязычные alternatives доступны." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Отсутствие готового канала перенесено в эксперимент." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "WIMCO, Juvly, Intimably и App Store-продукты задали конкурентную рамку." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к включению в пакет интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "rpp-supervision-os": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
+      "currentCheckpointId": "S4_OWNER",
       "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Экспертный доступ есть, ёмкость узкого РПП-сегмента не измерена." }],
       "criteria": [{ "id": "cheap_concierge", "label": "Дешёвый concierge-тест", "result": "passed", "evidenceLevel": "E1", "observation": "Ручной кейс-пакет можно проверить без разработки." }, { "id": "market_capacity", "label": "Ёмкость", "result": "unknown", "evidenceLevel": "E1", "observation": "Рынок узкого сегмента не измерен." }, { "id": "software_need", "label": "Нужен ли продукт", "result": "unknown", "evidenceLevel": "E1", "observation": "Задача может закрываться документом или общей CRM." }],
-      "checkpointHistory": [{ "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Дешёвый тест возможен, но ставка не вошла в текущие 1–2 финалиста." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Супервизор, участник и workflow описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Платные программы супервизии подтверждают рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Структурированная практика и обратная связь являются наблюдаемой работой." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Есть российские программы и экспертный доступ." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Concierge-тест ограничен одним обезличенным кейс-пакетом." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Живая супервизия, документы и CRM заданы как substitutes." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "cycle-assistant": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия/СНГ", "status": "checked", "summary": "Русскоязычный App Store показывает Premium, partner mode и AI-advice; health data является специальной категорией по 152-ФЗ." }],
       "criteria": [{ "id": "market_exists", "label": "Сформированный рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Flo, Cycles, Yuni и локально доступные приложения подтверждают категорию." }, { "id": "non_medical_paid_outcome", "label": "Платный немедицинский результат", "result": "passed", "evidenceLevel": "E1", "observation": "Partner support, daily advice и personalised insights доступны в Premium; это seller evidence, не наши оплаты." }, { "id": "data_boundary", "label": "Безопасная граница данных", "result": "unknown", "evidenceLevel": "E1", "observation": "On-device/minimal-data архитектура и legal review не определены; Telegram-first ухудшает privacy surface." }, { "id": "differentiation", "label": "Проверяемое отличие", "result": "unknown", "evidenceLevel": "E1", "observation": "Прямые продукты уже закрывают partner/advice outcome; отдельный privacy-safe wedge не найден." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Telegram-first B2C-гипотеза описана." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Сильные конкуренты подтвердили рынок и подписные модели." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Свежие локальные отзывы подтвердили basic Job." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальный paid outcome и специальная категория данных подтверждены; lawful product design требует отдельной проверки." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Ставка вышла из текущего соревнования: нет privacy-safe wedge, а Telegram ухудшает critical data boundary. Рынок не признан failed." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Telegram-first B2C-гипотеза описана." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Сильные конкуренты подтвердили рынок и подписные модели." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Свежие локальные отзывы подтвердили basic Job." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальный paid outcome и специальная категория данных подтверждены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Privacy burden ограничивает эксперимент, но не запрещает problem interviews без health data." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Flo, Clue и Apple задали высокий privacy benchmark и прямые substitutes." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; безопасные интервью разрешены только без сбора health data." }],
       "reviewedAt": "2026-09-13"
     },
     "psych-emotional-eating": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
+      "currentCheckpointId": "S4_OWNER",
       "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Глобальные продукты подтверждают category; локальный канал и safety boundary неизвестны." }],
       "criteria": [{ "id": "recurring_category", "label": "Повторяемая категория", "result": "passed", "evidenceLevel": "E1", "observation": "Зарубежные продукты и подписки существуют." }, { "id": "local_channel", "label": "Российский канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Не проверен." }, { "id": "safe_outcome", "label": "Безопасный результат", "result": "unknown", "evidenceLevel": "E1", "observation": "Нужна не-клиническая граница и маршрутизация тяжёлых случаев." }],
-      "checkpointHistory": [{ "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Категория прошла, но ставка не вошла в текущие 1–2 финалиста." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Не-клиническая программа самонаблюдения описана." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Платные программы подтверждают категорию." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Повторяемый Job самонаблюдения и эмоциональной регуляции наблюдаем." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российский интервью-контур допустим только с safety screener." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "B2C CAC и safety стали проверяемыми рисками, а не desk-отсевом." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Курсы, психолог и дневник заданы как alternatives; продукт не заявляет лечение." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова только к безопасному пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "rpp-between-session": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Есть доступ к экспертам; willingness-to-pay и безопасный monitoring-контур не подтверждены." }],
       "criteria": [{ "id": "expert_access", "label": "Доступ к сегменту", "result": "passed", "evidenceLevel": "E1", "observation": "Есть путь к психологам РПП." }, { "id": "portfolio_selection", "label": "Финалист Portfolio Gate", "result": "passed", "evidenceLevel": "E1", "observation": "Осталась одной из двух ставок." }, { "id": "owner_choice", "label": "Выбор владельца", "result": "unknown", "evidenceLevel": "E1", "observation": "Единственный фокус не выбран." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Доступ и ставка описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок и альтернативы собраны." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные проблемы подтверждены на E1." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальный доступ и ограничения описаны." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Ставка вошла в два финалиста." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкурентная рамка собрана." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил ставку в текущей тройке; возврат после 5 недавних случаев без хранения клинических данных." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Доступ и ставка описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок и альтернативы собраны." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные проблемы подтверждены на E1." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальный доступ и ограничения описаны." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Ставка прошла ранний gate." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкурентная рамка собрана." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к безопасному пакету интервью без хранения клинических данных." }],
       "reviewedAt": "2026-09-12"
     },
     "psych-lead-to-paid-session": {
@@ -840,43 +840,43 @@
       "reviewedAt": "2026-09-12"
     },
     "psych-practice-crm": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Локальные CRM/booking alternatives подтверждают категорию." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Конкуренты подтверждают подписную модель." }, { "id": "switching_reason", "label": "Дорогая причина переключения", "result": "unknown", "evidenceLevel": "E1", "observation": "Не найдено три независимых случая ухода с текущего инструмента." }, { "id": "channel", "label": "Канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет преимущества в привлечении практиков." }],
-      "checkpointHistory": [{ "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Рынок подтверждён; конкретная ставка ждёт switching evidence." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и practice workflow описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Российские CRM подтверждают подписную категорию." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Booking, reminders, prepayment и client record повторяются у alternatives." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "YCLIENTS продаёт решение психологам от 960 ₽ в месяц." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Switching reason перенесён в problem interviews." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "YCLIENTS, Queue и ручной набор календарь/таблица заданы как alternatives." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "rule24": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Cue, Calink, Recordo, YouTalk и платёжная инфраструктура подтверждают локальную категорию." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Российские booking/payment alternatives подтверждают buyer и деньги." }, { "id": "competition", "label": "Конкуренты", "result": "passed", "evidenceLevel": "E1", "observation": "Не являются причиной отсева." }, { "id": "switching_reason", "label": "Причина выбрать отдельный penalty-layer", "result": "unknown", "evidenceLevel": "E1", "observation": "Не доказана." }, { "id": "channel_and_economics", "label": "Канал и экономика", "result": "unknown", "evidenceLevel": "E1", "observation": "CAC, support-cost и contribution margin exact-модели неизвестны." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Legacy-код отделён от market evidence." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Российский рынок и деньги подтверждены." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные сигналы booking/payment friction собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные alternatives и ограничения проверены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев и unknowns видимы; hard blocker не найден, ставка допущена к меж-run сравнению." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкурентная рамка завершена; конкуренция засчитана положительно." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил Rule24 в текущей тройке; возврат после 3 подтверждённых switching cases." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Legacy-код отделён от market evidence." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Российский рынок и деньги подтверждены." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Публичные сигналы booking/payment friction собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальные alternatives и ограничения проверены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев и unknowns видимы; hard blocker не найден." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкурентная рамка завершена; конкуренция засчитана положительно." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью, где проверяются 3 switching cases." }],
       "reviewedAt": "2026-09-12"
     },
     "pastlife-sansara": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Русскоязычный бесплатный past-life тест показывает интерес; exact paid local reference не найден, но lawful interview/concept test доступен." }, { "market": "Глобальный рынок", "status": "checked", "summary": "Evoria, PastLife.app и Past Life Story & Webtoon в 2026 году подтверждают exact paid/freemium category, но публичная тракция пока слабая." }],
       "criteria": [{ "id": "ai_photo_market", "label": "AI-photo рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Смежные продукты подтверждают category, но score не переносится на exact offer." }, { "id": "two_exact_signals", "label": "Два сигнала exact-offer", "result": "passed", "evidenceLevel": "E1", "observation": "Найдены три независимых fresh exact products с in-app/credit models." }, { "id": "local_paid_signal", "label": "Локальный платный сигнал", "result": "unknown", "evidenceLevel": "E1", "observation": "Есть локальное бесплатное любопытство, но exact paid reference и наша внешняя оплата отсутствуют." }, { "id": "business_design", "label": "Проверяемый business design", "result": "passed", "evidenceLevel": "E1", "observation": "Free branded portrait плюс разовые рублёвые пакеты и concept/payment criteria описаны; это гипотеза." }, { "id": "legacy_delivery", "label": "Готовность delivery", "result": "not_applicable", "evidenceLevel": "E1", "observation": "Готовый engine не влияет на вывод о спросе." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Production-актив отделён от спроса." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "AI-photo category и денежные модели существуют." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Три independent exact-offer продукта 2026 года заменили старый missing-evidence вывод." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальное любопытство и lawful test path подтверждены; exact Russian WTP остаётся unknown." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев обновлены; market opportunity 62 отделена от E1 execution priority 26 и готового engine." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Exact alternatives mapped; отличие ограничено русским narrative, рублёвой разовой ценой и простым share flow." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил Sansara в текущей тройке; возврат после 5 локальных payment intents." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Production-актив отделён от спроса." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "AI-photo category и денежные модели существуют." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Три independent exact-offer продукта 2026 года заменили старый missing-evidence вывод." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальное любопытство и lawful test path подтверждены; exact Russian WTP остаётся unknown." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев обновлены; opportunity отделена от readiness и готового engine." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Exact alternatives mapped; отличие ограничено русским narrative, рублёвой разовой ценой и простым share flow." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью и последующему тесту 5 локальных payment intents." }],
       "reviewedAt": "2026-09-13"
     },
     "psych-generic-ai": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
+      "currentCheckpointId": "S0_CONTEXT",
       "decisionClass": "parked_missing_evidence",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Категория доступна глобально и локально, но exact broad-copy ставка не локализована." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Конкуренты подтверждают спрос и деньги." }, { "id": "narrow_outcome", "label": "Узкий измеримый результат", "result": "unknown", "evidenceLevel": "E1", "observation": "Broad AI-психолог ещё не спроектирован вокруг одного безопасного outcome." }, { "id": "protected_channel", "label": "Независимый канал", "result": "unknown", "evidenceLevel": "E1", "observation": "Готового канала нет; это readiness gap и вопрос эксперимента, не failed." }, { "id": "safety_boundary", "label": "Safety boundary", "result": "unknown", "evidenceLevel": "E1", "observation": "Не определена." }],
-      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Категория подтверждена конкурентами." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Объект выведен из текущего соревнования: broad category не имеет owner-defined safe outcome. Отсутствие канала не использовано как причина." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "parked", "summary": "Broad AI-психолог смешивает разные Jobs и safety-классы; требуется один owner-confirmed Thesis Contract." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Категория подтверждена конкурентами." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Прежний проход superseded: без конкретной ставки сравнение по Portfolio Gate некорректно." }],
       "reviewedAt": "2026-09-13"
     },
     "profiwatcher": {
@@ -890,24 +890,24 @@
       "reviewedAt": "2026-09-12"
     },
     "psych-session-marketplace": {
-      "currentCheckpointId": "S4_PORTFOLIO_GATE",
+      "currentCheckpointId": "S0_CONTEXT",
       "decisionClass": "parked_missing_evidence",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Спрос на сессии и площадки существует; наша стартовая сторона рынка отсутствует." }],
       "criteria": [{ "id": "session_market", "label": "Рынок сессий", "result": "passed", "evidenceLevel": "E1", "observation": "Площадки и оплаты подтверждают категорию." }, { "id": "supply_side", "label": "Готовая сторона исполнителей", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет стартового предложения специалистов; для нового бизнеса это readiness gap." }, { "id": "demand_side", "label": "Доступный спрос", "result": "unknown", "evidenceLevel": "E1", "observation": "Нет собственного канала клиентов; нужен тест wedge, не terminal вывод." }, { "id": "unit_economics", "label": "Экономика двух CAC", "result": "unknown", "evidenceLevel": "E1", "observation": "Риск двух acquisition sides известен, но фактическая несходимость не доказана." }],
-      "checkpointHistory": [{ "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок подтверждён." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Generic marketplace выведен из текущего соревнования: самостоятельного demand-side wedge нет, а дешёвый concierge lead→paid session уже является отдельной ставкой. Возврат — после 20 квалифицированных обращений либо трёх оплаченных ручных matches." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "parked", "summary": "Не определено, является ли marketplace отдельной ставкой или более поздней delivery-моделью lead→paid session; нужен owner scope decision." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Рынок сессий и комиссия подтверждены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "parked", "summary": "Прежний отдельный gate superseded до решения о границе с lead→paid session." }],
       "reviewedAt": "2026-09-13"
     },
     "field-service-next-action": {
-      "currentCheckpointId": "S2_TREND",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Российские CRM подтверждают рынок; узкая вертикаль и частота next-action gap не проверены." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "WhiteSC и HubEx подтверждают покупателей и категорию." }, { "id": "two_problem_signals", "label": "Два свежих сигнала", "result": "unknown", "evidenceLevel": "E1", "observation": "Для одной российской вертикали ещё не собраны." }, { "id": "vertical", "label": "Один сегмент", "result": "unknown", "evidenceLevel": "E1", "observation": "Широкая field-service формулировка не локализована." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и Job-гипотеза описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтвердили рынок; прежний failed отменён." }, { "checkpointId": "S2_TREND", "status": "parked", "summary": "Нужны два независимых свежих сигнала в одной вертикали." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и Job-гипотеза описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "РемCRM и FSM-продукты повторяют потерю заявок, маршрута и статуса как problem language." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Первая проверяемая вертикаль — электромонтажные и ремонтные бригады 3–20 человек." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Next-action слой ограничен владельцем, следующим шагом и временем просрочки; полная CRM не строится." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "РемCRM, Диспетчер-XL и другие FSM задали paid alternatives; отличие остаётся гипотезой лёгкого слоя." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "agency-ar-control": {
       "currentCheckpointId": "S4_OWNER",
@@ -920,54 +920,54 @@
       "reviewedAt": "2026-09-13"
     },
     "wholesale-order-to-cash": {
-      "currentCheckpointId": "S3_LOCALIZE",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Свежие vendor cases в дистрибуции автозапчастей и B2B-порталах подтвердили Excel/1С pain; bounded оффер без тяжёлой интеграции не найден." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок и деньги", "result": "passed", "evidenceLevel": "E1", "observation": "Локальные продукты и тариф от 50 000 ₽/мес подтверждают category." }, { "id": "two_problem_signals", "label": "Два свежих сигнала", "result": "passed", "evidenceLevel": "E1", "observation": "Свежие vendor cases показывают ручной Excel/1С order workflow и спрос на B2B-портал." }, { "id": "bounded_delivery", "label": "Ограниченное внедрение", "result": "unknown", "evidenceLevel": "E1", "observation": "Первый оффер всё ещё требует портала или ERP-интеграции; дешёвый самостоятельный wedge не найден." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтвердили рынок; прежний failed отменён." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Свежие problem signals одной вертикали собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "parked", "summary": "Не найден bounded delivery без тяжёлой portal/ERP-интеграции; возврат при доступе к платному тесту одного узкого workflow." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Свежие problem signals Excel/1С workflow собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Локальная работа повторного заказа и 1С подтверждена." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Bounded wedge — импорт и проверка одного повторного Excel-формата без портала и замены ERP." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "1С, готовые обработки и B2B-порталы заданы как alternatives." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
       "reviewedAt": "2026-09-13"
     },
     "field-service-ops": {
-      "currentCheckpointId": "S2_TREND",
+      "currentCheckpointId": "S0_CONTEXT",
       "decisionClass": "parked_missing_evidence",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Российские field-service CRM подтверждают категорию; вертикаль не выбрана." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "HubEx, JobStarter и РемCRM подтверждают category." }, { "id": "one_vertical", "label": "Одна вертикаль", "result": "unknown", "evidenceLevel": "E1", "observation": "Широкий операционный слой не локализован." }, { "id": "two_problem_signals", "label": "Два свежих сигнала", "result": "unknown", "evidenceLevel": "E1", "observation": "Не собраны." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Job и модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтвердили рынок; прежний failed отменён." }, { "checkpointId": "S2_TREND", "status": "parked", "summary": "Нужны вертикаль и независимые problem signals." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "parked", "summary": "Широкий объект пересекается с next-action и не имеет отдельного Job; нужен новый Thesis Contract или объединение." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Конкуренты подтверждают сам рынок field service, но не отдельность этой ставки." }, { "checkpointId": "S2_TREND", "status": "parked", "summary": "Сигналы принадлежат общей категории и не отделяют объект от next-action." }],
+      "reviewedAt": "2026-09-13"
     },
     "smb-contract-obligations": {
-      "currentCheckpointId": "S2_TREND",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "1С и CLM подтверждают Job; узкий SMB-риск не выбран." }],
       "criteria": [{ "id": "market_exists", "label": "Рынок", "result": "passed", "evidenceLevel": "E1", "observation": "Native 1С-функции и CLM являются доказательством категории." }, { "id": "specific_risk", "label": "Один дорогой договорный риск", "result": "unknown", "evidenceLevel": "E1", "observation": "Не выбран." }, { "id": "two_problem_signals", "label": "Два свежих сигнала", "result": "unknown", "evidenceLevel": "E1", "observation": "Не собраны для SMB-сегмента." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и подписная гипотеза описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "1С/CLM подтвердили рынок; прежний failed отменён." }, { "checkpointId": "S2_TREND", "status": "parked", "summary": "Нужен конкретный риск и свежие случаи." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и подписная гипотеза описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Saby, Битрикс24 и CLM подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Пропуск срока, продления, акта и оплаты повторяется в product language нескольких решений." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российские alternatives и рублёвая подписка наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Неизвестный самый дорогой SMB-риск перенесён в интервью." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Saby, Битрикс24 и специализированные reminder/CLM продукты заданы как alternatives." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "outsourced-compliance-calendar": {
       "currentCheckpointId": "S4_OWNER",
-      "decisionClass": "parked_missing_evidence",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "checked", "summary": "Два свежих practitioner cases, ФНС и Контур подтверждают повторяемый локальный Job; standalone WTP неизвестен." }],
       "criteria": [{ "id": "market_exists", "label": "Buyer и повторяемые деньги", "result": "passed", "evidenceLevel": "E1", "observation": "Регулярная бухгалтерская услуга и продуктовые alternatives подтверждают payer и частоту Job." }, { "id": "two_problem_signals", "label": "Два свежих случая потери срока", "result": "passed", "evidenceLevel": "E1", "observation": "Два practitioner materials 2025 описывают пропуски сроков и отсутствие owner-control." }, { "id": "safe_scope", "label": "Безопасный scope", "result": "passed", "evidenceLevel": "E1", "observation": "Только клиент, обязанность, срок, owner, status и evidence-link; без первички и банковских данных." }, { "id": "standalone_wtp", "label": "Причина купить отдельно", "result": "unknown", "evidenceLevel": "E1", "observation": "Преимущество над Контур/1С и наша WTP не доказаны." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Портфельный buyer и подписная модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Два свежих practitioner signals собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Аутсорсеры 20–100 клиентов и metadata-only data boundary определены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев: opportunity 71, execution priority 31 при E1." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Контур 1С/Контур подтверждает рынок; отличие — portfolio exceptions и owner-visible контроль." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate не оставил ставку в текущей тройке; возврат после 3 metadata-аудитов у доступных аутсорсеров." }],
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Портфельный buyer и подписная модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Услуги подтвердили рынок." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Два свежих practitioner signals собраны." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Аутсорсеры 20–100 клиентов и metadata-only data boundary определены." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев отделяют opportunity от readiness." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Контур 1С/Контур подтверждает рынок; отличие — portfolio exceptions и owner-visible контроль." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью и трём metadata-аудитам у аутсорсеров." }],
       "reviewedAt": "2026-09-13"
     },
     "vendor-security-evidence": {
-      "currentCheckpointId": "S2_TREND",
-      "decisionClass": "parked_missing_evidence",
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
       "blockerCode": null,
       "competitionEffect": "confirms_market",
       "geographies": [{ "market": "Россия", "status": "partial", "summary": "Enterprise category существует; малый buyer и частота procurement-event не подтверждены." }],
       "criteria": [{ "id": "market_exists", "label": "Категория", "result": "passed", "evidenceLevel": "E1", "observation": "Security Vision, консультанты и ручной workflow подтверждают Job." }, { "id": "small_buyer", "label": "Малый российский buyer", "result": "unknown", "evidenceLevel": "E1", "observation": "Не найден." }, { "id": "two_problem_signals", "label": "Два повторных procurement-event", "result": "unknown", "evidenceLevel": "E1", "observation": "Не собраны." }, { "id": "safe_offer", "label": "Оффер без secrets", "result": "unknown", "evidenceLevel": "E1", "observation": "Нужно определить до S3." }],
-      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и пакетная/подписная модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Enterprise и ручные alternatives подтвердили category; прежний failed отменён." }, { "checkpointId": "S2_TREND", "status": "parked", "summary": "Нужны локальный buyer и независимые повторные события." }],
-      "reviewedAt": "2026-09-12"
+      "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Плательщик и пакетная/подписная модель описаны." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Реальные questionnaires и ручные alternatives подтвердили category." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Вопросники повторяют evidence по доступам, данным, инцидентам и поставщикам." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российский questionnaire и supplier-side preparation flow наблюдаемы." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "Безопасный wedge ограничен картой ответов, владельцев и ссылок без загрузки secrets." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Шаблоны, консультанты и automation products заданы как alternatives." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Desk research завершён; ставка готова к пакету интервью." }],
+      "reviewedAt": "2026-09-13"
     },
     "codex-project-starter-product": {
       "currentCheckpointId": "S4_OWNER",
@@ -1159,10 +1159,10 @@
     },
     {
       "id": "global-portfolio-gate-2026-09-13",
-      "title": "Global Portfolio Gate: финал кабинетного исследования",
+      "title": "Portfolio Interview Readiness: завершение desk research",
       "category": "Несколько категорий",
       "status": "parked",
-      "result": "Из девяти ставок, прошедших S0–S5, оставлены три предварительных финалиста: контроль ранней дебиторки, Codex Project Starter и обращение → оплаченная первая сессия. Ждут явного выбора владельца; интервью не открыты.",
+      "result": "20 ставок завершили S0–S5 и готовы к интервью; 3 требуют уточнить самостоятельную границу ставки, 2 сохраняют hard blocker. Следующий owner gate формирует пакет 1–3 проекта и одну текущую работу.",
       "evidenceLevel": "E1",
       "framework": "factory_v2",
       "updatedAt": "2026-09-13",

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-13-dashboard-interview-readiness-pool",
+  "change_kind": "dashboard-interview-readiness-semantics",
+  "status": "passed",
+  "requested_visible_change": "Убрать требование одного финалиста, показать весь пул готовых к интервью и ясно объяснить, что остановило остальные проекты.",
+  "expected_visible_delta": "Верхний экран показывает 20 готовых к интервью, 3 требующих уточнить ставку, 2 hard blockers и 3 reference; следующий пакет содержит 1–3 проекта и один текущий фокус.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "b75b8b41067b948fa7b92f0d1170f2be43414231a791aefb39cc1fda369ed02d",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/?candidate=interview-ready-pool-2#funnel",
+    "source_ref": "staged candidate diff before this evidence artifact",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel and /dashboard/#archive",
+    "state": "Desk research завершён; пакет интервью ещё не выбран",
+    "selector_or_slide_id": ".round-state-grid, #round-selection-panel, #run-funnel-body",
+    "action": "Открыть группу 20 готовых проектов, затем группу 3 проектов для уточнения и проверить состав, причины и следующий gate."
+  },
+  "must_remain_unchanged": [
+    "Dashboard остаётся read-only",
+    "Все 28 объектов классифицированы ровно один раз",
+    "Stage, gate outcome и competition state не смешиваются",
+    "Hard blockers остаются отдельной группой",
+    "До action/pay gates трафик, оплата и build не открыты"
+  ],
+  "required_viewports": [
+    "390x844",
+    "1440x900",
+    "18-size responsive matrix"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "live Chrome viewport override and screenshot review",
+      "before_signature": "Экран требовал выбрать одного из трёх финалистов и показывал 20 идей вне соревнования.",
+      "after_signature": "Экран показывает 20 готовых и отдельные 3 ставки для уточнения; обе группы раскрываются одной колонкой.",
+      "observed_visible_result": "В группе готовности ровно 20 карточек, в группе уточнения ровно 3; document width и scrollWidth равны 390px.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "live Chrome viewport override and screenshot review",
+      "before_signature": "Пул прошедших desk research был искусственно ограничен тремя строками.",
+      "after_signature": "Полный список 20 проектов виден под заголовком о готовности к интервью, а следующий пакет явно ограничен 1–3 проектами.",
+      "observed_visible_result": "Группа содержит 20 читаемых строк, статус и причина видимы, document width и scrollWidth равны 1440px; console errors отсутствуют.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "18-size responsive matrix",
+      "viewport_source": "live Chrome viewport overrides",
+      "before_signature": "Новые длинные подписи и список двадцати проектов не имели проверки на границах breakpoint.",
+      "after_signature": "Проверены основные размеры и обе стороны breakpoint 560, 760, 1100 и 1180.",
+      "observed_visible_result": "На всех 18 размерах присутствуют четыре итоговые кнопки, заголовок 20 готовых и badge портфельного аудита; scrollWidth равен innerWidth.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ]
+}

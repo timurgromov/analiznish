@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "runSchemaVersion": 2,
-  "registrySchemaVersion": 4,
+  "registrySchemaVersion": 5,
   "factoryStateSchemaVersion": 3,
   "runStatuses": [
     "active",
@@ -16,7 +16,7 @@
   "researchUnitRule": {
     "singleThesis": "Одна идея владельца остаётся одной карточкой. Сегмент, delivery, цена, канал и ICP — гипотезы внутри неё, а не новые ставки.",
     "singleThesisGate": "Single-thesis проходит S0–S5 и 18 критериев в одной карточке. Без hard blocker агент формулирует следующий evidence gate; открыть I_E1, поставить run на паузу или прекратить его может только владелец. Batch из вариантов одной идеи запрещён.",
-    "portfolioBatchGate": "Portfolio Gate применяется, когда ищутся несколько независимых ставок; он оставляет 1–2 финалиста для S5.",
+    "portfolioBatchGate": "Portfolio Gate применяется, когда ищутся несколько независимых ставок. Все ставки, прошедшие desk-критерии, могут завершить S5 и войти в пул готовых к интервью; приоритет определяет порядок работы, а не право на проверку людьми.",
     "forkRequires": ["explicit_owner_authorization", "distinct_job", "distinct_payer", "distinct_economics", "distinct_channel"],
     "description": "Новая ставка допустима только когда владелец явно разрешил fork и все четыре различия зафиксированы как отдельная продуктовая гипотеза."
   },
@@ -96,9 +96,9 @@
     {
       "id": "finalist",
       "order": 3,
-      "label": "Финалисты",
-      "shortLabel": "Финал",
-      "description": "Лучшие 1–2 идеи batch, ожидающие owner choice и E1-подготовку."
+      "label": "Готовы к интервью",
+      "shortLabel": "Готовы",
+      "description": "Desk research S0–S5 завершён; ставка может войти в следующий пакет интервью после планирования владельцем."
     },
     {
       "id": "interviews",
@@ -174,18 +174,18 @@
     },
     {
       "id": "provisional_finalist",
-      "label": "Предварительный финалист",
-      "description": "Desk research пройден; ставка ждёт единого Portfolio Final и не открывает интервью сама по себе."
+      "label": "Готова к интервью",
+      "description": "Desk research S0–S5 пройден; ставка входит в общий пул готовности и ждёт места в рабочем пакете интервью."
     },
     {
       "id": "selected_for_interviews",
-      "label": "Выбрана для интервью",
-      "description": "Владелец выбрал ровно одну ставку; после I_E1 разрешены реальные интервью."
+      "label": "В пакете интервью",
+      "description": "Владелец включил ставку в следующий пакет из 1–3 проектов; один из них назначается текущим рабочим фокусом."
     },
     {
       "id": "out_of_current_competition",
-      "label": "Вне текущего соревнования",
-      "description": "Ставка сохранена, но в текущем цикле не исследуется; у неё есть явное условие возврата."
+      "label": "Нужно уточнить ставку",
+      "description": "Публичный рынок может существовать, но объект пока не является достаточно отдельной и конкретной ставкой для интервью; указан точный пробел определения."
     },
     {
       "id": "hard_failed",
@@ -204,9 +204,9 @@
     "everyObjectExactlyOnce": true,
     "oneActiveRun": true,
     "activeResearchBatchMax": 10,
-    "selectedForInterviewsMax": 1,
-    "globalGateFinalistLimit": 3,
-    "description": "Текущий портфельный раунд отделяет участие в соревновании от stage и gateStatus. Пока status=researching, предварительных финалистов может быть больше трёх; перед owner choice Global Portfolio Gate обязан сократить их до 1–3."
+    "selectedForInterviewsMax": 3,
+    "interviewReadyMin": 1,
+    "description": "Текущий портфельный раунд отделяет квалификацию от операционной ёмкости. Пул готовых к интервью не ограничен числом победителей; владелец формирует рабочий пакет из 1–3 ставок и назначает ровно один текущий фокус."
   },
   "criterionResults": [
     "passed",
@@ -365,13 +365,13 @@
       "allowedNext": ["S5_COMPETITORS"],
       "gateQuestion": "Достаточно ли привлекательна и дёшево проверяема ставка: среди независимых кандидатов batch либо сама по себе как single thesis?",
       "passCriteria": ["eighteen_criteria_visible", "opportunity_readiness_separated", "unknowns_visible", "testable_business_design", "cheapest_next_experiment"],
-      "failurePolicy": "Для batch выбираются 1–2 независимых финалиста. Для single_thesis без hard blocker определяется следующий evidence gate; агент не может назначить passed_not_selected. Отсутствие готового канала, защиты, кейсов, продукта или repeat ожидаемо и само не закрывает ставку. Сильный рынок не гарантирует успех, но конкуренция и неготовность сами по себе не являются минусом рынка."
+      "failurePolicy": "Для batch приоритет определяет порядок дорогой работы, но не ограничивает число ставок, которые могут завершить S5. Для single_thesis без hard blocker определяется следующий evidence gate; агент не может назначить passed_not_selected. Отсутствие готового канала, защиты, кейсов, продукта или repeat ожидаемо и само не закрывает ставку."
     },
     {
       "id": "S5_COMPETITORS",
       "macroPhase": "S · SCAN",
       "step": 5,
-      "name": "Конкуренты и конкурентная рамка финалистов",
+      "name": "Конкуренты и готовность к интервью",
       "dashboardStage": "finalist",
       "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE"],
       "allowedNext": ["S4_OWNER"],
@@ -383,13 +383,13 @@
       "id": "S4_OWNER",
       "macroPhase": "S · SCAN",
       "step": 4,
-      "name": "Owner checkpoint — выбор одного финалиста",
+      "name": "Owner checkpoint — план пакета интервью",
       "dashboardStage": "finalist",
       "prerequisites": ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE", "S4_PORTFOLIO_GATE", "S5_COMPETITORS"],
       "allowedNext": ["I_E1"],
-      "gateQuestion": "Какой один финалист владелец выбирает для следующего цикла?",
-      "passCriteria": ["exactly_one_owner_selected_focus"],
-      "failurePolicy": "До явного выбора все финалисты parked; автоматический выбор или отказ по score запрещён. passed_not_selected допустим только после явного решения владельца и выбора другой независимой ставки."
+      "gateQuestion": "Какие 1–3 готовые ставки входят в следующий пакет интервью и какая одна является текущей работой?",
+      "passCriteria": ["one_to_three_interview_projects", "exactly_one_current_work_focus"],
+      "failurePolicy": "До явного плана пул готовых ставок сохраняется без отсева. Score задаёт порядок, но не закрывает право на интервью; одновременно текущей работой остаётся ровно одна ставка."
     },
     {
       "id": "I_E1",
@@ -399,7 +399,7 @@
       "dashboardStage": "finalist",
       "prerequisites": ["S4_OWNER"],
       "allowedNext": ["I_E2"],
-      "gateQuestion": "Готов ли обезличенный E1-корпус, screener и guide для проверки одной выбранной ставки?",
+      "gateQuestion": "Готовы ли отдельные обезличенные E1-корпус, screener и guide для текущей ставки из пакета интервью?",
       "passCriteria": ["public_corpus", "research_question", "screener", "interview_guide", "privacy_boundary"],
       "failurePolicy": "Без полного E1-пакета реальные интервью не начинаются."
     },

@@ -1,4 +1,4 @@
-# Portfolio Closure — итог текущего соревнования
+# Portfolio Closure — готовность к интервью
 
 Дата: 2026-09-13
 Статус: `ready_for_owner_choice`
@@ -7,63 +7,70 @@
 ## Итог
 
 Desk research закрыт: нет идей в `active_research` или `queued_research`.
-Из 25 concrete bets три оставлены для выбора владельца, 20 сохранены вне
-текущего соревнования с условием возврата, две exact-модели имеют подтверждённый
-hard blocker. Ещё три объекта — действующий бизнес/рыночные референсы и не
-участвуют в выборе новой ставки.
+Из 25 concrete bets двадцать прошли S0–S5 и готовы к интервью, три требуют
+уточнить границу Thesis Contract, две exact-модели имеют подтверждённый hard
+blocker. Ещё три объекта — действующий бизнес/рыночные референсы.
 
-Ни одна идея не отсеяна за отсутствие готового канала, кода, продаж или
-масштабируемости. Эти неизвестные влияют на размер следующего эксперимента.
+«Готова к интервью» не означает доказанный спрос или готовый бизнес. У всех
+двадцати strongest evidence остаётся E1: WTP, канал, CAC, outcome и repeat
+должны проверяться людьми, действием и деньгами. Пул готовности не ограничен
+числом победителей. Операционная ёмкость — пакет 1–3 проекта и одна текущая
+работа.
 
-## Три предварительных финалиста
+## 20 проектов, готовых к интервью
 
-| Проект | Что это | Почему в финале | Что не доказано | Следующий gate |
-| --- | --- | --- | --- | --- |
-| Контроль ранней дебиторки малых B2B-услуг | CSV-first workflow: aging, обещанная дата, напоминание и следующий шаг до юридического взыскания. | Два независимых системных problem signals, recurring рублёвые alternatives, прямой cashflow outcome. | Доступ к buyer, WTP, CAC и фактическое сокращение DSO. | Выбор владельца → I_E1 → 5 интервью. |
-| Codex Project Starter | Один практический продукт AI-перехода: диагностика, выбор сценария и первое измеримое внедрение. Templates, группа и сопровождение — компоненты. | Российские платные модели, активный AI-transition Job, высокий чек и сильный owner fit. | Первый ICP, WTP, канал, support COGS, completion и repeat. | Выбор владельца → I_E1 → 5 интервью. |
-| Обращение → оплаченная первая сессия | Для частного психолога: восстановить путь от входящего обращения до состоявшейся оплаты. | Самый дешёвый falsifier, доступ к психологам, результат напрямую связан с выручкой. | Существует ли реальная повторяемая утечка после обращения. | Выбор владельца → I_E1 → 5 интервью. |
-
-## Вне текущего соревнования — не провал рынка
-
-| Проект | Коротко | Почему остановлен сейчас | Условие возврата |
-| --- | --- | --- | --- |
-| Радарыч | Персональные airfare alerts в Telegram. | Локальная причина платить сверх бесплатных alerts, CAC и repeat не доказаны. | 5 WTP-сигналов одного frequent-route сегмента. |
-| КАДРА | Реалистичные AI-фото для профиля. | Commodity pressure, accepted-quality, COGS, CAC и repeat неизвестны. | 5/30 платных intent либо новый доступный канал. |
-| Sansara | AI-образы прошлой жизни. | Exact category есть, локальная WTP/repeat экономика слабее финалистов. | 5 локальных payment intents. |
-| Rule24 | Booking/payment/penalty workflow психолога. | Нет switching reason и чистой экономики отдельного penalty layer. | 3 подтверждённых switching cases. |
-| РПП между сессиями | Задания и динамика между сессиями. | Sensitive-data/safety burden и WTP психолога не доказаны. | 5 recent cases без хранения клинических данных. |
-| Compliance-календарь | Metadata-only контроль сроков портфеля бухгалтерии. | Сильный Job, но standalone-отличие от Контур/1С и доступ к buyer слабее финалистов. | 3 metadata audits у доступных аутсорсеров. |
-| Marketplace психологических сессий | Двусторонняя площадка с комиссией. | Дешёвый concierge wedge уже совпадает со ставкой lead→paid session; отдельного demand source нет. | 20 квалифицированных обращений либо 3 оплаченных ручных matches. |
-| Generic AI-психолог | Широкий AI-chat category. | Нет одного безопасного owner-confirmed outcome; broad category не является concrete bet. | Подтверждённый Thesis Contract и safety boundary. |
-| Ассистент по циклу | Платный advice/partner outcome вокруг цикла. | Free apps закрывают basic Job; Telegram ухудшает privacy без нового результата. | Privacy-first scope и 5 payment intents. |
-| Next-action выездных бригад | Не терять заявку и следующий контакт. | Нет двух owner signals одной вертикали. | 2 cases с измеренной потерей лида. |
-| Общий field-service ops | Выезд → акт → счёт → оплата. | Дублирует более узкий next-action и не имеет отдельного Job. | Новый недублирующий Job и 2 owner cases. |
-| Order-to-cash малого опта | Повторный заказ дилера из Excel/1С в счёт. | Свежий pain есть, но первый оффер требует тяжёлой portal/ERP integration. | Доступный оптовик готов платно проверить bounded workflow без портала. |
-| Договорные обязательства SMB | Продления, обязательства и approvals. | Рынок подтверждён, два свежих случая одного дорогого SMB-риска не найдены. | 2 cases одного риска и buyer с бюджетом. |
-| Security questionnaire evidence | Пакет ответов/доказательств поставщика. | Процесс подтверждён, малый повторный buyer и безопасный low-trust оффер не найдены. | 3 малых поставщика с repeat questionnaire без загрузки secrets. |
-| RPP Practice Lab | Архивная гипотеза практик. | Проиграла внутри психологического batch и не имеет нового evidence. | Новый внешний факт и owner decision. |
-| Employer outcome для психологов | B2B outcome-программа. | Сильный рынок, но длинная продажа и недоступный канал. | Доступ к 3 buyer interviews или partner channel. |
-| Практики для пар | Микропрактики между сессиями. | Новый B2C-фокус и нет локального преимущества. | 5 повторяемых local cases и канал. |
-| RPP Supervision OS | Контур супервизии. | Отдельный buyer/job не подтверждён в текущем batch. | 5 recent cases супервизоров. |
-| Emotional eating B2C | Программа для клиента. | B2C acquisition и clinical/safety risk выше доступных ставок. | Безопасный узкий outcome и 5 payment intents. |
-| CRM частной практики | Общий кабинет психолога. | Сильные substitutes, нет причины переключения. | 3 switching cases. |
-
-## Hard failed exact-модели
-
-| Проект | Причина | Что может снять blocker |
+| Проект | Что проверено desk research | Что проверять интервью |
 | --- | --- | --- |
-| AI YouTube Automation | Exact domestic-ad модель не имеет доступного платёжного контура и допустимого оригинального формата; platform/legal blocker зафиксирован отдельно. | Новая exact-модель с законным механизмом денег и platform-safe format проходит новый S0. |
-| ProfiWatcher | Нет подтверждённого права на коммерческий источник данных Profi.ru. | Письменное permission/API либо независимый lawful source. |
+| Контроль ранней дебиторки малых B2B-услуг | Recurring alternatives и прямой cashflow Job | buyer access, WTP, DSO outcome |
+| Codex Project Starter | Платные модели AI-перехода, bounded assisted offer, конкуренты | первый ICP, WTP, completion, support COGS |
+| Обращение → оплаченная первая сессия | Альтернативы и дешёвый concierge falsifier | повторяемая утечка и готовность платить за результат |
+| Радарыч | Paid alert category и конкретный frequent-route сценарий | причина платить, CAC и repeat |
+| КАДРА | Прямые AI-photo конкуренты и accepted-quality Job | 5/30 payment intent, quality/COGS |
+| PastLife AI / Sansara | Exact category и конкуренты | локальная WTP, CAC и repeat |
+| Rule24 | Practice-management alternatives | три switching cases и экономика слоя |
+| РПП между сессиями | Paid category и безопасная metadata-only граница | пять recent cases и WTP психолога |
+| Compliance-календарь | Российские 1С/Контур alternatives и recurring deadline Job | три metadata-аудита у аутсорсеров |
+| Ассистент по циклу | Paid category и privacy constraints | узкий outcome, доверие и payment intent |
+| RPP Practice Lab | Платные программы практики и супервизии | самостоятельная ценность формата |
+| Employer outcome для психологов | Российские корпоративные программы и бюджеты | три HR buyer interviews и измеримый outcome |
+| Практики для пар | Русскоязычные paid alternatives и ежедневный Job | повторяемость, канал и WTP пары |
+| RPP Supervision OS | Платная супервизия и workflow | пять recent cases супервизоров |
+| Emotional eating B2C | Платные программы и bounded non-clinical scope | safety, CAC и пять payment intents |
+| CRM частной практики | YCLIENTS и локальная подписная категория | три причины переключения |
+| Next-action выездных бригад | РемCRM/FSM alternatives и узкая первая вертикаль | два owner cases с измеренной потерей лида |
+| Order-to-cash малого опта | Excel/1С alternatives и bounded import wedge | доступный оптовик, частота и бюджет |
+| Договорные обязательства SMB | Saby/Битрикс24/CLM и recurring deadline Job | один дорогой риск и buyer с бюджетом |
+| Security questionnaire evidence | Российские questionnaires и безопасный evidence-map scope | три поставщика с повторным процессом |
 
-## Не участвуют в выборе новой ставки
+## 3 проекта, которым нужно уточнить ставку
+
+| Проект | Что остановило | Что сделать |
+| --- | --- | --- |
+| Generic AI-психолог | Смешаны разные outcomes и safety boundaries | Выбрать один безопасный outcome и подтвердить Thesis Contract |
+| Marketplace психологических сессий | Дублирует более узкий lead→paid-session wedge | Описать независимый demand source/Job либо объединить с существующей ставкой |
+| Общий field-service ops | Дублирует next-action и слишком широк для одного теста | Выделить недублирующий Job, payer и bounded outcome |
+
+Это не провал рынка и не нехватка готового канала. После уточнения каждая ставка
+возвращается в S0–S5.
+
+## 2 hard blockers
+
+| Проект | Подтверждённый blocker | Условие возврата |
+| --- | --- | --- |
+| AI YouTube Automation | Exact domestic-ad модель не имеет доступного платёжного контура; reused automation конфликтует с platform rules | Новая законная модель денег и оригинальный platform-safe формат проходят новый S0 |
+| ProfiWatcher | Нет подтверждённого права на коммерческий источник данных Profi.ru | Письменное permission/API либо независимый lawful source |
+
+## 3 объекта вне выбора новой ставки
 
 | Объект | Статус | Почему |
 | --- | --- | --- |
-| Timur Gromov Business System | Действующий бизнес / benchmark | Есть реальные деньги; это операционное ядро, не новая ставка Factory. |
-| Авто SEO/CPA | Рыночный референс | Подтверждает рынок, но нашей concrete bet ещё нет. |
-| OnSud | Рыночный референс | Подтверждает product/price mechanic, но не получает execution priority. |
+| Timur Gromov Business System | Действующий бизнес / benchmark | Есть реальные деньги; это операционное ядро |
+| Авто SEO/CPA | Рыночный референс | Подтверждает рынок, но нашей concrete bet ещё нет |
+| OnSud | Рыночный референс | Подтверждает механику продукта/цены, но не получает execution priority |
 
-## Текущий owner gate
+## Следующий gate
 
-Нужно выбрать одну из трёх ставок. До выбора система честно завершена на
-последнем desk-gate: интервью, трафик, action, деньги и build не открыты.
+Владелец выбирает рабочий пакет из 1–3 готовых проектов и внутри него одну
+текущую работу. Для текущего проекта агент готовит I_E1-корпус, screener и план
+минимум пяти реальных интервью. После завершения его интервью можно последовательно
+перевести текущий фокус на следующий проект пакета.
