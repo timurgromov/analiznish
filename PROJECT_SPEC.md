@@ -111,7 +111,7 @@ Thesis Contract и перечень запрещённых подмен. Сег�
 
 Результат: `idea purgatory → context inventory → pain/product/transaction mining → 5–10 candidates → S · SCAN
 0–3 → 18-критериальный Portfolio Gate → S5 всех конкретных ставок без blocker →
-пул готовых к интервью → рабочий пакет 1–3 → одна текущая работа → CustDev →
+desk-квалифицированный пул → пакет подготовки 1–3 → одна текущая работа → I_E1 → CustDev →
 offer/action test → paid pilot → bounded MVP`.
 
 ### 2. Оценка готовой идеи
@@ -151,7 +151,7 @@ S0–S5 ставок. Владелец формирует пакет 1–3 и н
 
 | Macro phase | Роль в контуре | Канонический протокол | Условие перехода |
 | --- | --- | --- | --- |
-| `S · SCAN` | Desk research, ранний Portfolio Gate, owner planning и конкурентная рамка | `docs/SIGMA_EXECUTION_MODEL.md` | Пул готовых ставок, пакет 1–3 и один текущий фокус; реальные интервью ещё не начаты |
+| `S · SCAN` | Desk research, ранний Portfolio Gate, owner planning и конкурентная рамка | `docs/SIGMA_EXECUTION_MODEL.md` | Ранжированный desk-квалифицированный пул, пакет подготовки 1–3 и один текущий фокус; реальные интервью ещё не начаты |
 | `I · INSIGHT` | E1-корпус → минимум пять интервью → JTBD/канал/финансы → action → pay | `docs/INSIGHT_EXECUTION_MODEL.md` + `docs/CUSTDEV_PROTOCOL.md` | E4 открывает только bounded build |
 | `G · GENERATE` | Ограниченная спецификация доказанного решения | `build_ready` из `data/FACTORY_SCHEMA.json` | Scope не шире оплаченного результата |
 | `M · MAKE` | Сборка bounded MVP с ручным fallback | Текущие project/build rules | Usage gate |
@@ -181,7 +181,7 @@ CustDev/action/pay gates.
 | `inbox` | Что не потерять? | Идея, плательщик и дешёвая первая проверка | `quick_scan` |
 | `quick_scan` | Есть ли очевидный рынок и модель денег? | Hard filters и первичные публичные признаки | `market_research` |
 | `market_research` | Есть ли рынок, референсы, локальная применимость и profit path? | S0–S5, 18 критериев и конкретная проверяемая ставка без blocker | `finalist` либо уточнение Thesis Contract |
-| `finalist` | Какие проекты готовы к интервью? | Пул готовности; пакет 1–3; один текущий фокус и полный I_E1-корпус | `interview_ready` |
+| `finalist` | Какие проекты завершили desk research? | Ранжированный desk-квалифицированный пул; пакет подготовки 1–3 и один текущий фокус | I_E1, затем `interview_ready` |
 | `interviews` | Повторяется ли дорогая проблема? | Минимум пять интервью, JTBD, канал и финансовый диапазон | `offer_ready` |
 | `action_test` | Совершит ли клиент затратное действие? | Оффер, CTA, интро/demo/data/LOI | I_E4 money gate |
 | `paid` | Выделит ли клиент деньги? | E4 и bounded scope с лимитом | `build_ready` / usage |
@@ -262,7 +262,7 @@ design, readiness и evidence confidence показываются отдельн
 * machine-checked `ACTIVE_RUN` и rail-протокол продолжения между чатами;
 * read-only dashboard с первой вкладкой всех идей, фильтрами, общим осторожным
   рейтингом, воронкой, research-runs, портфелем и архивом; четыре итоговых
-  состояния открывают свои списки: весь пул готовых к интервью отделён от
+  состояния открывают свои списки: весь desk-квалифицированный пул отделён от
   ставок, которым нужно уточнить Thesis Contract, и от hard blockers;
 * проверяемые `IDEA_REGISTRY.json` и `FACTORY_STATE.json` без backend и
   дублирования подробных Markdown-источников.

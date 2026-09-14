@@ -123,7 +123,7 @@ test("S3 не может перепрыгнуть ранний Portfolio Gate", 
   const fixture = factoryFixtures();
   fixture.activeRun.checkpointId = "S5_COMPETITORS";
   fixture.activeRun.currentStep = 5;
-  fixture.activeRun.currentStepName = "Конкуренты и готовность к интервью";
+  fixture.activeRun.currentStepName = "Конкуренты и завершение desk research";
   fixture.activeRun.previousCheckpoint = "S3_LOCALIZE";
   fixture.activeRun.completedCheckpoints = ["S0_CONTEXT", "S1_MARKET", "S2_TREND", "S3_LOCALIZE"];
   assert.throws(() => validateActiveRunRecord(fixture.activeRun, fixture), /не выполнен prerequisite S4_PORTFOLIO_GATE/);
@@ -227,17 +227,32 @@ test("portfolio round запрещает двойное участие объе�
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /одновременно находится/);
 });
 
-test("provisional finalist обязан ждать owner gate", () => {
+test("desk-квалифицированная ставка обязана ждать owner gate", () => {
   const fixture = factoryFixtures();
   const finalistId = fixture.registry.portfolioRound.stateGroups.provisional_finalist[0];
   fixture.registry.decisionAudits[finalistId].currentCheckpointId = "S5_COMPETITORS";
   assert.throws(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }), /ждать планирования S4_OWNER/);
 });
 
-test("пул готовых к интервью не ограничен тремя ставками", () => {
+test("desk-квалифицированный пул не ограничен тремя ставками", () => {
   const fixture = factoryFixtures();
   assert.ok(fixture.registry.portfolioRound.stateGroups.provisional_finalist.length > 3);
   assert.doesNotThrow(() => validateRegistry(fixture.registry, { ...fixture, checkSources: false }));
+});
+
+test("desk-квалификация, подготовка и interview_ready разделены машинным контрактом", () => {
+  const fixture = factoryFixtures();
+  assert.equal(fixture.schema.stages.find((stage) => stage.id === "finalist").label, "Desk research завершён");
+  assert.equal(fixture.schema.stageSemantics.deskQualifiedStage, "finalist");
+  assert.equal(fixture.schema.stageSemantics.interviewPreparationState, "selected_for_interviews");
+  assert.equal(fixture.schema.stageSemantics.actualInterviewReadinessGate, "interview_ready");
+  assert.equal(fixture.schema.stageSemantics.scoreControlsOrderNotAdmission, true);
+});
+
+test("реестр объясняет назначение и ограниченную сопоставимость рейтинга", () => {
+  const fixture = factoryFixtures();
+  assert.match(fixture.registry.rankingModel.usage, /порядок/);
+  assert.match(fixture.registry.rankingModel.comparability, /предварительны/);
 });
 
 test("рабочий пакет интервью допускает до трёх ставок", () => {

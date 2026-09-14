@@ -1,0 +1,218 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-09-14-desk-qualified-ranking",
+  "change_kind": "dashboard-status-and-ranking",
+  "status": "passed",
+  "requested_visible_change": "Отделить завершение desk research от фактической готовности к интервью и показать, что 20 проектов уже ранжированы, а не равнозначны.",
+  "expected_visible_delta": "Верхний экран показывает 20 прошедших desk research и диапазон 63–47; раскрытый пул объясняет base score, confidence, ограниченную сопоставимость E1 и порядок всех 20 ставок.",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "f124a7b008bd815052010c82bac0ace13673e507880711f91c92ddefff59bb33",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#funnel",
+    "source_ref": "staged working tree; public allowlist build with 12 files",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#funnel",
+    "state": "read-only owner dashboard; portfolio round ready_for_owner_choice; 20 desk-qualified bets",
+    "selector_or_slide_id": "#decision-brief and #round-selection-panel for provisional_finalist",
+    "action": "fresh load, then click the 20-project summary card"
+  },
+  "must_remain_unchanged": [
+    "all 28 objects remain classified exactly once",
+    "group counts remain 20/3/2/3",
+    "base scores, evidence confidence and gate outcomes remain unchanged",
+    "dashboard remains read-only",
+    "project cards, research log and other status groups remain available"
+  ],
+  "required_viewports": [
+    "390x844",
+    "759x900",
+    "760x900",
+    "761x900",
+    "768x1024",
+    "1024x768",
+    "1099x820",
+    "1100x820",
+    "1101x820",
+    "1178x820",
+    "1179x820",
+    "1180x820",
+    "1366x768",
+    "1440x900",
+    "1984x1046"
+  ],
+  "observations": [
+    {
+      "viewport": "390x844",
+      "viewport_source": "in-app Playwright viewport; inner=390x844; scrollWidth=390",
+      "before_signature": "heading=20 проектов готовы к интервью; card=20 готовы к интервью; no score range",
+      "after_signature": "heading=20 проектов прошли S0–S5; card=прошли desk research; range=63→47; rows=20; first=63; last=47",
+      "observed_visible_result": "Mobile composition stacks the preparation copy and ranked pool without horizontal overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "759x900",
+      "viewport_source": "in-app Playwright viewport; inner=759x900; scrollWidth=759",
+      "before_signature": "ready-for-interview wording; ranking hidden behind group status",
+      "after_signature": "desk-qualified wording; ranking 63→47; 20 ordered rows",
+      "observed_visible_result": "Pre-breakpoint mobile layout preserves all ranking facts and group controls.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "760x900",
+      "viewport_source": "in-app Playwright viewport; inner=760x900; scrollWidth=760",
+      "before_signature": "ready-for-interview wording; no visible score range",
+      "after_signature": "desk-qualified wording; ranking 63→47; 20 ordered rows",
+      "observed_visible_result": "The 760px boundary renders the new wording and pool without overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "761x900",
+      "viewport_source": "in-app Playwright viewport; inner=761x900; scrollWidth=761",
+      "before_signature": "ready-for-interview wording; no visible score range",
+      "after_signature": "desk-qualified wording; ranking 63→47; 20 ordered rows",
+      "observed_visible_result": "Post-breakpoint layout keeps the ranked pool readable and complete.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "768x1024",
+      "viewport_source": "in-app Playwright viewport; inner=768x1024; scrollWidth=768",
+      "before_signature": "single readiness label for all 20",
+      "after_signature": "desk status, priority range and I_E1 boundary shown separately",
+      "observed_visible_result": "Tablet portrait shows the separate status, priority and preparation layers.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1024x768",
+      "viewport_source": "in-app Playwright viewport; inner=1024x768; scrollWidth=1024",
+      "before_signature": "single readiness label for all 20",
+      "after_signature": "desk status, priority range and I_E1 boundary shown separately",
+      "observed_visible_result": "Tablet landscape keeps all 20 ranked cards usable without horizontal overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1099x820",
+      "viewport_source": "in-app Playwright viewport; inner=1099x820; scrollWidth=1099",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with 63→47 range and explicit preliminary ranking",
+      "observed_visible_result": "The compact desktop side of the 1100px boundary has no overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1100x820",
+      "viewport_source": "in-app Playwright viewport; inner=1100x820; scrollWidth=1100",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with 63→47 range and explicit preliminary ranking",
+      "observed_visible_result": "The exact 1100px boundary keeps the new information hierarchy intact.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1101x820",
+      "viewport_source": "in-app Playwright viewport; inner=1101x820; scrollWidth=1101",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with 63→47 range and explicit preliminary ranking",
+      "observed_visible_result": "The expanded desktop layout preserves ranking columns and controls.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1178x820",
+      "viewport_source": "in-app Playwright viewport; inner=1178x820; scrollWidth=1178",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with ranking 63→47 and 20 ordered rows",
+      "observed_visible_result": "Pre-tab breakpoint composition remains within the viewport.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1179x820",
+      "viewport_source": "in-app Playwright viewport; inner=1179x820; scrollWidth=1179",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with ranking 63→47 and 20 ordered rows",
+      "observed_visible_result": "The exact tab breakpoint renders without clipping or overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1180x820",
+      "viewport_source": "in-app Playwright viewport; inner=1180x820; scrollWidth=1180",
+      "before_signature": "ready label with no range",
+      "after_signature": "desk label with ranking 63→47 and 20 ordered rows",
+      "observed_visible_result": "Post-tab breakpoint layout shows the ranked pool and table headings.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1366x768",
+      "viewport_source": "in-app Playwright viewport; inner=1366x768; scrollWidth=1366",
+      "before_signature": "heading promised interview readiness; scores not summarized",
+      "after_signature": "heading states desk completion; 63→47 summary and ranked rows visible",
+      "observed_visible_result": "Short desktop height keeps the decision and ranking surfaces usable.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1440x900",
+      "viewport_source": "in-app Playwright viewport; inner=1440x900; scrollWidth=1440",
+      "before_signature": "heading=20 проектов готовы к интервью; card=20 готовы к интервью; no score range",
+      "after_signature": "heading=20 проектов прошли S0–S5; card=прошли desk research; range=63→47; rows=20",
+      "observed_visible_result": "Desktop shows the ranking explanation, column legend and ordered project list.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "1984x1046",
+      "viewport_source": "in-app Playwright viewport; inner=1984x1046; scrollWidth=1984",
+      "before_signature": "single readiness status; no priority range",
+      "after_signature": "three layers visible: desk completion, 63→47 priority, I_E1 readiness boundary",
+      "observed_visible_result": "Wide desktop keeps the dense workbench aligned without excessive stretching or overflow.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

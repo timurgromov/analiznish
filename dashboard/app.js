@@ -84,6 +84,20 @@ function currentScore(idea) {
   return Math.round(state.registry.rankingModel.neutralPrior + (idea.baseScore - state.registry.rankingModel.neutralPrior) * idea.evidenceConfidence);
 }
 
+function scoreRange(ideas) {
+  const scores = ideas.map(currentScore);
+  const baseScores = ideas.map((idea) => idea.baseScore);
+  const confidences = ideas.map((idea) => Math.round(idea.evidenceConfidence * 100));
+  return {
+    scoreHigh: Math.max(...scores),
+    scoreLow: Math.min(...scores),
+    baseHigh: Math.max(...baseScores),
+    baseLow: Math.min(...baseScores),
+    confidenceHigh: Math.max(...confidences),
+    confidenceLow: Math.min(...confidences),
+  };
+}
+
 function stageById(id) {
   return state.registry.stages.find((stage) => stage.id === id);
 }
@@ -207,24 +221,28 @@ function setStatus(text, tone = "") {
 function renderTopSummary() {
   const ideas = state.registry.ideas;
   const groups = state.registry.portfolioRound.stateGroups;
-  const interviewReadyIdeas = groups.provisional_finalist.map((id) => ideas.find((idea) => idea.id === id)).filter(Boolean);
-  const interviewReady = interviewReadyIdeas.length;
+  const deskQualifiedIdeas = groups.provisional_finalist.map((id) => ideas.find((idea) => idea.id === id)).filter(Boolean);
+  const deskQualified = deskQualifiedIdeas.length;
+  const range = scoreRange(deskQualifiedIdeas);
   const out = groups.out_of_current_competition.length;
   const hardFailed = groups.hard_failed.length;
   const references = groups.reference_or_benchmark.length;
   const archive = out + hardFailed;
   const system = state.factory.systemStatus;
   const systemState = system.status === "configured" ? "Настроен" : system.statusLabel;
-  const interviewHeadline = `Desk research завершён: ${interviewReady} ${pluralNoun(interviewReady, "проект готов", "проекта готовы", "проектов готовы")} к интервью`;
+  const deskHeadline = `Desk research завершён: ${deskQualified} ${pluralNoun(deskQualified, "проект прошёл", "проекта прошли", "проектов прошли")} S0–S5`;
   document.querySelector("#decision-brief").innerHTML = `<div class="owner-overview">
-    <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(interviewHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
+    <div class="owner-heading"><div><p class="section-kicker">Экран решений</p><h2 id="decision-brief-title">${escapeHtml(deskHeadline)}</h2></div><span class="decision-status">${escapeHtml(systemState)}</span></div>
     <div class="round-state-grid" aria-label="Итог текущего соревнования">
-      <button class="round-state-card is-final" type="button" data-round-target="provisional_finalist" aria-controls="round-selection-panel" aria-pressed="false"><strong>${interviewReady}</strong><span>готовы к интервью</span><small>Открыть список →</small></button>
+      <button class="round-state-card is-final" type="button" data-round-target="provisional_finalist" aria-controls="round-selection-panel" aria-pressed="false"><strong>${deskQualified}</strong><span>прошли desk research</span><small>Рейтинг ${range.scoreHigh} → ${range.scoreLow}</small></button>
       <button class="round-state-card" type="button" data-round-target="out_of_current_competition" aria-controls="round-selection-panel" aria-pressed="false"><strong>${out}</strong><span>нужно уточнить ставку</span><small>Причины и условия →</small></button>
       <button class="round-state-card is-hard" type="button" data-round-target="hard_failed" aria-controls="round-selection-panel" aria-pressed="false"><strong>${hardFailed}</strong><span>жёстких блокера</span><small>Открыть блокеры →</small></button>
       <button class="round-state-card" type="button" data-round-target="reference_or_benchmark" aria-controls="round-selection-panel" aria-pressed="false"><strong>${references}</strong><span>референса / benchmark</span><small>Открыть список →</small></button>
     </div>
-    <div class="round-finalists"><span>Следующий рабочий пакет:</span><strong>1–3 проекта из ${interviewReady}; текущая работа — одна.</strong></div>
+    <div class="round-priority-grid">
+      <div><span>Приоритет внутри пула</span><strong>Ставки не равнозначны: рейтинг ${range.scoreHigh} → ${range.scoreLow}</strong><small>Score задаёт порядок подготовки, но не отменяет пройденный desk-gate.</small></div>
+      <div><span>Следующий пакет подготовки</span><strong>1–3 проекта из ${deskQualified}; текущая работа — одна.</strong><small>Фактическая готовность к интервью появится после I_E1.</small></div>
+    </div>
   </div>
   <aside class="owner-next-gate"><p class="section-kicker">Один следующий gate</p><strong>${escapeHtml(system.nextGate)}</strong><a href="#research">Открыть журнал исследований →</a></aside>
   <details class="decision-context"><summary>Что уже подтверждено и что остаётся неизвестным</summary><div><p><span>Подтверждено</span>${escapeHtml(system.confirmed)}</p><p><span>Неизвестно</span>${escapeHtml(system.unknown)}</p><p><span>Состояние контура</span>${escapeHtml(system.summary)}</p></div></details>`;
@@ -236,8 +254,13 @@ function renderTopSummary() {
   document.querySelector("#ranking-formula").textContent = state.registry.rankingModel.formula.replace("round", "округлить");
 }
 
-function competitionGroupSection(title, note, ideas) {
-  return `<section class="archive-section"><div class="archive-title"><div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(note)}</p></div><strong>${ideas.length}</strong></div><div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
+function competitionGroupSection(title, note, ideas, { ranked = false } = {}) {
+  const range = ranked ? scoreRange(ideas) : null;
+  const rankingGuide = ranked ? `<div class="pool-ranking-guide">
+    <div><strong>Это ранжированный пул, а не ${ideas.length} равнозначных проектов</strong><span>Осторожный рейтинг ${range.scoreHigh} → ${range.scoreLow} · база ${range.baseHigh} → ${range.baseLow} · доверие ${range.confidenceHigh}% → ${range.confidenceLow}%</span></div>
+    <p>${escapeHtml(state.registry.rankingModel.comparability)} ${escapeHtml(state.registry.rankingModel.usage)}</p>
+  </div><div class="idea-table-head compact-table-head" aria-hidden="true"><span>№</span><span>Проект</span><span>Рейтинг</span><span>Доверие</span><span>Этап</span><span>Решение</span><span>Почему здесь</span><span></span></div>` : "";
+  return `<section class="archive-section"><div class="archive-title"><div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(note)}</p></div><strong>${ideas.length}</strong></div>${rankingGuide}<div class="archive-list">${ideas.map((idea, index) => ideaCard(idea, index + 1, true)).join("")}</div></section>`;
 }
 
 function renderRoundSelection() {
@@ -256,8 +279,9 @@ function renderRoundSelection() {
 
   const definitions = {
     provisional_finalist: {
-      title: "Проекты, готовые к интервью",
-      note: "Все прошли desk research S0–S5. Пул не ограничен числом победителей: владелец формирует рабочий пакет из 1–3 проектов и задаёт один текущий фокус.",
+      title: "Предварительный рейтинг desk-проверенных ставок",
+      note: "Все прошли S0–S5 без hard blocker, но ещё не прошли I_E1. Рейтинг задаёт очерёдность подготовки; владелец формирует пакет из 1–3 проектов и один текущий фокус.",
+      ranked: true,
     },
     out_of_current_competition: {
       title: "Идеи, которым нужно уточнить границу ставки",
@@ -275,10 +299,10 @@ function renderRoundSelection() {
   const definition = definitions[state.roundSelection];
   const sections = state.roundSelection === "out_of_current_competition"
     ? outCompetitionGroups()
-    : [{ title: definition.title, note: definition.note, ideas: ideasInCompetitionGroup(state.roundSelection) }];
+    : [{ title: definition.title, note: definition.note, ideas: ideasInCompetitionGroup(state.roundSelection), ranked: definition.ranked }];
   document.querySelector("#round-selection-title").textContent = definition.title;
   document.querySelector("#round-selection-note").textContent = definition.note;
-  groupsTarget.innerHTML = sections.map((group) => competitionGroupSection(group.title, group.note, group.ideas)).join("");
+  groupsTarget.innerHTML = sections.map((group) => competitionGroupSection(group.title, group.note, group.ideas, { ranked: group.ranked })).join("");
   panel.hidden = false;
 }
 
@@ -329,7 +353,7 @@ function ideaCard(idea, rank, compact = false) {
     <summary class="idea-summary">
       <span class="idea-rank">${rank}</span>
       <span class="idea-identity"><strong>${escapeHtml(idea.title)}</strong><small>${escapeHtml(idea.category)} · ${escapeHtml(objectTypeLabels[idea.objectType] || idea.objectType)}</small></span>
-      <span class="rating-cell"><strong>${score}</strong><small>оценка ${idea.baseScore}</small></span>
+      <span class="rating-cell"><strong>${score}</strong><small>база ${idea.baseScore}</small></span>
       <span class="confidence-cell"><strong>${Math.round(idea.evidenceConfidence * 100)}%</strong><span class="confidence-track"><i style="width:${Math.round(idea.evidenceConfidence * 100)}%"></i></span><small>${escapeHtml(evidenceLabels[idea.evidenceLevel] || idea.evidenceLevel)}</small></span>
       <span class="stage-cell"><strong>${escapeHtml(stage?.label || idea.stage)}</strong><small>${escapeHtml(idea.evidenceLevel)}</small></span>
       <span class="gate-cell"><span>${escapeHtml(gate?.label || idea.gateStatus)}</span><small>${escapeHtml(competition?.label || "Статус не задан")}</small></span>
@@ -341,7 +365,7 @@ function ideaCard(idea, rank, compact = false) {
       <div><span>Почему это место</span><p>${escapeHtml(idea.rankingReason)}</p></div>
       <div><span>Главный риск</span><p>${escapeHtml(idea.mainRisk)}</p></div>
       <div class="next-gate-detail"><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div>
-      <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}.</p>${legacyConfidenceNote(idea)}</div>
+      <div class="score-explanation"><span>Как получился рейтинг</span><p><strong>${score}</strong> = 50 + (${idea.baseScore} − 50) × ${Math.round(idea.evidenceConfidence * 100)}%. Доверие ${confidenceText(idea.evidenceConfidence)}. ${escapeHtml(idea.scoreBasis)}. Балл определяет порядок проверки, а не допуск или gate status.</p>${legacyConfidenceNote(idea)}</div>
       <a class="project-card-link" href="${projectCardHref(idea.id)}">Открыть карточку проекта →</a>
       ${sourceLink(idea.source)}
     </div>

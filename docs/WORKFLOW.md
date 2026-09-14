@@ -168,9 +168,11 @@ gate. Score, отсутствие готового канала/moat и неиз
 После завершения отдельных batch/single-thesis runs общий gate использует
 `portfolioRound.stateGroups` и требует пустые `active_research` и
 `queued_research`. Он не выбирает победителей: все прошедшие S0–S5 ставки входят
-в `provisional_finalist`, то есть пул готовых к интервью без верхнего лимита.
+в `provisional_finalist`, то есть desk-квалифицированный пул без верхнего лимита.
+Он ранжирован, но рейтинг определяет порядок подготовки, а не gate status.
 Владелец формирует `selected_for_interviews` из 1–3 проектов и задаёт ровно один
-`Selected focus ID` как текущую работу. `out_of_current_competition` допустим
+`Selected focus ID` как текущую работу; `interview_ready` открывается только
+после полного I_E1. `out_of_current_competition` допустим
 только для ставки, которую сначала нужно сузить, развести с дублем или иначе
 довести до проверяемого Thesis Contract; это не рыночный провал.
 

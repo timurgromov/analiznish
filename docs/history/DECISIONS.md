@@ -1186,7 +1186,7 @@ Schema v3, registry v4 и contract tests проверяют размер batch, 
 
 ## DEC-2026-09-13-INTERVIEW-READINESS-POOL — Пул готовности не является соревнованием
 
-Status: active; supersedes `DEC-2026-09-13-GLOBAL-PORTFOLIO-GATE`
+Status: superseded by `DEC-2026-09-14-DESK-QUALIFIED-RANKING`; supersedes `DEC-2026-09-13-GLOBAL-PORTFOLIO-GATE`
 Area: methodology | data | validation | dashboard
 Decision date: 2026-09-13
 Evidence: повторный desk-аудит четырнадцати остановленных ставок показал, что
@@ -1217,3 +1217,40 @@ Verification:
 Schema v4, registry v5 и contract tests проверяют отсутствие верхней квоты у
 пула, максимум три проекта в пакете и один текущий фокус. Dashboard показывает
 20 готовых, 3 требующих уточнения, 2 hard blockers и 3 reference/benchmark.
+
+## DEC-2026-09-14-DESK-QUALIFIED-RANKING — Допуск, приоритет и interview_ready разделены
+
+Status: active; supersedes `DEC-2026-09-13-INTERVIEW-READINESS-POOL`
+Area: methodology | data | validation | dashboard
+Decision date: 2026-09-14
+Evidence: верхний экран показывал двадцать разных по score ставок единым статусом
+«готовы к интервью», хотя машинный gate `interview_ready` требует I_E1; реестр
+хранит диапазон осторожного рейтинга 63–47, base score 74–40 и confidence 55–30%
+
+Decision:
+
+Всегда показывать три независимых слоя. `Desk research завершён` означает только
+S0–S5 без hard blocker. Осторожный рейтинг сортирует desk-квалифицированный пул
+и определяет порядок подготовки, но не gate status и не право на дальнейшую
+проверку. `interview_ready` открывается только после выбора пакета 1–3, одного
+текущего фокуса и полного I_E1.
+
+Технические id `finalist` и `provisional_finalist` временно сохраняются для
+совместимости, но их пользовательские labels не могут обещать готовность к
+интервью. Для E1 кабинет обязан показывать base score, confidence, текущий
+рейтинг и `scoreBasis`; оценки из разных проходов считаются предварительно, а не
+полностью сопоставимыми.
+
+Why:
+
+Одинаковый этап не означает одинаковую привлекательность. И наоборот, более
+низкий предварительный score не отменяет факт завершённого desk-gate. Смешение
+этих понятий создаёт либо ложный отсев, либо впечатление, что все двадцать
+проектов равны и уже готовы к разговору с клиентами.
+
+Verification:
+
+Schema v5 вводит исполняемый `stageSemantics`; registry v6 хранит назначение и
+границу сопоставимости рейтинга. Contract tests запрещают вернуть старые labels.
+Dashboard показывает `20 прошли desk research`, диапазон `63 → 47`, отдельные
+base/confidence и пакет подготовки до I_E1.

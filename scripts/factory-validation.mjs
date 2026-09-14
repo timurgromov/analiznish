@@ -54,7 +54,7 @@ function evidenceRank(level) {
 
 export function validateSchema(schema) {
   const label = "data/FACTORY_SCHEMA.json";
-  invariant(schema.schemaVersion === 4, "поддерживается только schemaVersion 4", label);
+  invariant(schema.schemaVersion === 5, "поддерживается только schemaVersion 5", label);
   for (const key of ["runSchemaVersion", "registrySchemaVersion", "factoryStateSchemaVersion"]) {
     invariant(Number.isInteger(schema[key]), `${key} должен быть целым`, label);
   }
@@ -74,7 +74,13 @@ export function validateSchema(schema) {
   invariant(schema.portfolioRoundContract?.oneActiveRun === true, "портфельный раунд должен иметь один активный research run", label);
   invariant(Number.isInteger(schema.portfolioRoundContract?.activeResearchBatchMax) && schema.portfolioRoundContract.activeResearchBatchMax >= 1, "нет допустимого размера active research batch", label);
   invariant(schema.portfolioRoundContract?.selectedForInterviewsMax === 3, "рабочий пакет интервью должен допускать максимум три ставки", label);
-  invariant(schema.portfolioRoundContract?.interviewReadyMin === 1, "пул готовых к интервью должен содержать минимум одну ставку", label);
+  invariant(schema.portfolioRoundContract?.deskQualifiedMin === 1, "desk-квалифицированный пул должен содержать минимум одну ставку", label);
+  invariant(schema.stageSemantics?.deskQualifiedStage === "finalist", "deskQualifiedStage должен ссылаться на техническую стадию finalist", label);
+  invariant(schema.stageSemantics?.interviewPreparationState === "selected_for_interviews", "пакет подготовки должен использовать selected_for_interviews", label);
+  invariant(schema.stageSemantics?.actualInterviewReadinessGate === "interview_ready", "фактическая готовность должна определяться gate interview_ready", label);
+  invariant(schema.stageSemantics?.scoreControlsOrderNotAdmission === true, "score должен управлять порядком, а не допуском", label);
+  invariant(stages.get("finalist")?.label === "Desk research завершён", "пользовательский label finalist не должен обещать готовность к интервью", label);
+  invariant(competitionStates.get("provisional_finalist")?.label === "Прошла desk research", "competition state provisional_finalist должен означать только desk-квалификацию", label);
 
   const criterionResults = new Set(schema.criterionResults ?? []);
   for (const result of ["passed", "failed", "unknown", "not_applicable"]) {
@@ -319,6 +325,8 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   invariant(/^\d{4}-\d{2}-\d{2}$/.test(registry.updatedAt), "updatedAt должен быть YYYY-MM-DD", label);
   invariant(registry.rankingModel?.neutralPrior === 50, "neutralPrior должен быть 50", label);
   invariant(registry.rankingModel?.formula === "round(50 + (baseScore - 50) * evidenceConfidence)", "неожиданная ranking formula", label);
+  invariant(typeof registry.rankingModel?.usage === "string" && registry.rankingModel.usage.includes("порядок"), "rankingModel.usage должен объяснять роль рейтинга", label);
+  invariant(typeof registry.rankingModel?.comparability === "string" && registry.rankingModel.comparability.includes("предварительны"), "rankingModel.comparability должен объяснять ограниченную сопоставимость E1", label);
   invariant(JSON.stringify(registry.stages) === JSON.stringify(schema.stages), "stages должны точно соответствовать FACTORY_SCHEMA", label);
   invariant(JSON.stringify(registry.gateStatuses) === JSON.stringify(schema.gateStatuses), "gateStatuses должны точно соответствовать FACTORY_SCHEMA", label);
   invariant(JSON.stringify(registry.competitionStates) === JSON.stringify(schema.competitionStates), "competitionStates должны точно соответствовать FACTORY_SCHEMA", label);
@@ -492,13 +500,13 @@ export function validateRegistry(registry, { schema, rootDir = defaultRoot, chec
   invariant(round.stateGroups.selected_for_interviews.length <= schema.portfolioRoundContract.selectedForInterviewsMax, `пакет интервью превышает ${schema.portfolioRoundContract.selectedForInterviewsMax} ставки`, label);
   if (round.status === "ready_for_owner_choice") {
     invariant(round.globalGateStatus === "ready", "ready_for_owner_choice требует globalGateStatus=ready", label);
-    invariant(round.stateGroups.provisional_finalist.length >= schema.portfolioRoundContract.interviewReadyMin, "пул готовых к интервью не может быть пустым", label);
+    invariant(round.stateGroups.provisional_finalist.length >= schema.portfolioRoundContract.deskQualifiedMin, "desk-квалифицированный пул не может быть пустым", label);
     invariant(round.stateGroups.active_research.length === 0 && round.stateGroups.queued_research.length === 0, "перед owner choice не должно оставаться активного или ожидающего исследования", label);
   }
   for (const ideaId of round.stateGroups.provisional_finalist) {
     const idea = registry.ideas.find((item) => item.id === ideaId);
-    invariant(idea.stage === "finalist" && idea.gateStatus === "parked", `${ideaId}: готовность к интервью требует finalist/parked`, label);
-    invariant(registry.decisionAudits[ideaId].currentCheckpointId === "S4_OWNER", `${ideaId}: готовая ставка должна ждать планирования S4_OWNER`, label);
+    invariant(idea.stage === schema.stageSemantics.deskQualifiedStage && idea.gateStatus === "parked", `${ideaId}: desk-квалификация требует finalist/parked`, label);
+    invariant(registry.decisionAudits[ideaId].currentCheckpointId === "S4_OWNER", `${ideaId}: desk-квалифицированная ставка должна ждать планирования S4_OWNER`, label);
   }
   for (const ideaId of round.stateGroups.hard_failed) {
     invariant(registry.ideas.find((item) => item.id === ideaId).gateStatus === "failed", `${ideaId}: hard_failed требует gateStatus failed`, label);
