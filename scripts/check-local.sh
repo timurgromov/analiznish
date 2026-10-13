@@ -9,6 +9,7 @@ required_files=(
   "UX.md"
   ".env.example"
   ".gitignore"
+  "docs/AGENT_FACTORY_PROTOCOL.md"
   "docs/SCORING_MODEL.md"
   "docs/IDEA_DEFINITION_PROTOCOL.md"
   "docs/IDEA_PURGATORY_PROTOCOL.md"
@@ -66,7 +67,7 @@ done
 
 grep -q 'Хочу искать нишу' docs/NICHE_DISCOVERY_LOOP.md
 grep -q 'Хочу искать нишу' prompts/start-niche-factory.md
-grep -q 'niche_factory' AGENTS.md
+grep -q 'niche_factory' docs/AGENT_FACTORY_PROTOCOL.md
 grep -q 'niche_factory' docs/WORKFLOW.md
 grep -q 'niche_factory' skills/niche-scoring/SKILL.md
 for level in E0 E1 E2 E3 E4 E5; do

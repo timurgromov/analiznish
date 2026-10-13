@@ -43,198 +43,9 @@ blast radius, необратимый data/finance cutover или live auth/secur
 после безопасного разделения понижай до `Высокого`. Сами слова
 production/deploy/database не основание; при экономии выбирай дешевле.
 
-## Working Order
+## Factory router
 
-1. Сначала смотри структуру проекта, `data/ACTIVE_RUN.md`, указанный в нём
-   `Source board` и актуальные файлы: `README.md`, `PROJECT_SPEC.md`, `TASKS.md`,
-   `UX.md`, `docs/*`, `data/*`, `.env.example`, scripts и `git status`, если git
-   инициализирован. Активный run не сбрасывается новым чатом или сменой модели.
-2. Перед оценкой ниши прочитай `docs/SCORING_MODEL.md`, `docs/WORKFLOW.md`, `docs/NICHE_QUESTIONNAIRE.md`, `docs/NICHE_INPUT_TEMPLATE.md`, `data/HIT_PARADE.md` и при необходимости `skills/niche-scoring/SKILL.md`.
-3. Если пользователь дал неполные входные данные, не стопорись из-за мелочей для `quick_scan`. Но для `deep_score` обязателен блок A из `docs/NICHE_QUESTIONNAIRE.md`.
-4. Сначала применяй hard filters и красные флаги, потом обязательно выводи таблицу детальных критериев.
-5. Сначала классифицируй объект (`market_reference`, `concrete_bet`, `existing_asset`, `active_business`), затем разделяй `market_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`, `market_opportunity_score` и, только для конкретной нашей модели, `execution_priority_score`. Общий рейтинг `data/IDEA_REGISTRY.json` служит приблизительным порядком исследования, не заменяет эти линзы и всегда показывается рядом с типом объекта и доверием.
-6. Всегда отделяй факты, оценки и допущения. Если источник не проверен, пиши `unverified`.
-7. Перед поиском в новом для пользователя домене сначала проведи `context_inventory`: прочитай названные владельцем проекты и исследования, покажи список реально прочитанных источников, извлечённые ставки и неизвестные места. До явного owner checkpoint не генерируй replacement-идеи, не меняй активный hit parade и не выдавай сырую гипотезу за текущую ставку.
-8. Любую новую бизнес-идею, которую владелец просит заземлить/сохранить, заноси
-   в `data/IDEA_INBOX.md` и `data/IDEA_REGISTRY.json` по
-   `docs/IDEA_PURGATORY_PROTOCOL.md`: класс `A/B/C/X`, предварительная оценка,
-   доверие E0 не выше `0.25`, причина позиции и одна дешёвая проверка. Это место
-   в общей очереди исследования, а не `market_opportunity_score`,
-   `execution_priority_score` или строка hit parade. В `data/HIT_PARADE.md` идея
-   попадает только после owner checkpoint и `quick_scan`.
-9. После meaningful change обновляй `docs/history/`.
-10. Не трогай несвязанные файлы и не откатывай чужие изменения.
-11. Режим `niche_factory` веди по `docs/NICHE_DISCOVERY_LOOP.md`, `docs/REFERENCE_MINING_PROTOCOL.md`, `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md` и `docs/CUSTDEV_PROTOCOL.md`: контекст → три входа поиска → Jobs → референсы/голос клиента → ставка → реальный CustDev → проверка действием/деньгами → build gate.
-12. AI/synthetic research строит гипотезы, но не заменяет клиентов; каждый цикл заканчивай дешёвым экспериментом с заранее заданными success/kill criteria.
-13. Во время активного `niche_factory` не отвечай общими рассуждениями о методе.
-    В каждом содержательном update показывай `шаг SIGMA → что реально проверено →
-    вывод/решение → один следующий gate`. Если шаг не пройден, так и пиши;
-    не подменяй неизвестное новой идеей или оценкой.
-14. Всегда соблюдай `docs/RAIL_PROTOCOL.md`. Новый материал методологии сначала
-    встраивай в контур, затем возвращайся к этапу из `data/ACTIVE_RUN.md`.
-    Переключать, парковать или завершать run можно только по явному owner decision
-    либо terminal gate с обновлением state и worklog.
-15. Для `I · INSIGHT` используй `docs/INSIGHT_EXECUTION_MODEL.md`: public corpus,
-    AI-синтез, персонажи и synthetic interview остаются E1. После E1-подготовки
-    проведи минимум пять реальных интервью; JTBD, канал и финансы уточни до
-    I-E3. Действие и деньги проходят отдельно по `docs/CUSTDEV_PROTOCOL.md`.
-16. До реальных интервью обязателен ранний gate по 18 критериям из
-    `docs/SCORING_MODEL.md`. Если владелец просит найти нишу с нуля, это
-    Portfolio Gate для batch 5–10 **независимых** идей. Каждая конкретная,
-    проверяемая ставка без hard blocker проходит `S5_COMPETITORS` и может войти
-    в общий desk-квалифицированный пул; скоринг задаёт порядок и стоимость
-    подготовки проверки, но не искусственный лимит победителей и не означает
-    фактическую `interview_ready`. Если владелец принёс одну
-    ставку с `Research Unit: single_thesis`, это Single-thesis Gate для той же
-    одной карточки; нельзя искусственно заполнять batch её сегментами, delivery
-    или ценой. В обоих случаях проверяются деньги, ожидаемая прибыль, cashflow
-    и стоимость исполнения. После S5 владелец формирует рабочий пакет из 1–3
-    desk-квалифицированных проектов и назначает ровно одну текущую работу; для
-    неё сначала закрывается I_E1, затем интервью можно проводить последовательно
-    по всем проектам пакета. Недостаточно определённая
-    ставка получает `parked` с точным условием уточнения, а `failed` допустим
-    только при schema-backed hard blocker.
-17. Если пользователь пишет «найди актуальную идею» без готовой ниши, не
-    генерируй shortlist из головы. Проведи три независимых входа: `pain-first`
-    (форумы/спрос), `product-first` (Product Hunt/AppSumo/app stores) и
-    `transaction-first` (Acquire.com/Flippa/Microns/брокеры). Listing — lead,
-    а не доказанный бизнес; asking price, seller claims и closed deal не
-    смешивать. Пользователю сначала объясняй доступ и вывод простыми словами;
-    внутренние коды evidence не должны заменять объяснение.
-18. Не вводить критерии решения из собственных рассуждений. Любой критерий,
-    меняющий stage/gate, должен существовать в `data/FACTORY_SCHEMA.json` и
-    иметь видимый результат в `decisionAudits` реестра. Недостаток evidence
-    даёт `parked`; `failed` требует явного blockerCode и failed-критерия.
-    Конкуренты, native-функции, услуги и бесплатные substitutes подтверждают
-    рынок и не могут быть единственной причиной `failed`.
-19. Одна идея владельца = одна каноническая ставка и один `Thesis ID`. Не
-    создавать новые строки реестра из ICP, сегмента, delivery, pricing, канала,
-    срока sprint или варианта упаковки. Исследуй их внутри source board одной
-    ставки. Новая ставка допустима только после явного owner authorization и
-    зафиксированных различий одновременно в Job, плательщике, экономике и
-    канале. Для `Research Unit: single_thesis` validator требует ровно одного
-    Candidate ID; агент не может сам переключить run на portfolio batch.
-20. Для конкретной идеи до market research обязателен
-    `docs/IDEA_DEFINITION_PROTOCOL.md`: короткое owner interview, затем одна
-    карточка Thesis Contract и явное подтверждение канонического тезиса.
-    Не требуй от владельца заранее знать рынок, канал, цену, LTV или moat — это
-    предмет исследования. Вопросы задавай максимум по четыре за сообщение.
-21. Разделяй `opportunity`, `business design`, `readiness` и
-    `evidence confidence`. Отсутствие готового продукта, канала, кейсов,
-    аудитории, защиты, доказанных CAC/LTV/repeat ожидаемо для новой ставки и не
-    может само дать `failed` или `passed_not_selected`. Score упорядочивает
-    следующие эксперименты, но не назначает gate status. Для конкретной ставки
-    `passed_not_selected` допустим только после явного owner decision с
-    источником; без hard blocker следующий исход — продолжить либо `parked`.
-
-## Active Run Rail
-
-Если `data/ACTIVE_RUN.md` имеет `Status: active`, каждый содержательный ответ
-должен начинаться с `Контур: <macro phase> <step> — <step name>` и содержать:
-
-1. что реально проверено;
-2. решение или честный статус `этап не пройден`;
-3. одну текущую работу агента;
-4. не более одного действия владельца, только если оно действительно нужно;
-5. измеримый gate следующего перехода.
-
-Побочный вопрос, ссылка или обсуждение архитектуры не начинают новый run. После
-ответа/интеграции агент возвращает разговор к единственной текущей работе.
-Если владелец явно говорит, что сейчас настраивается весь контур, а доменный run
-не является фокусом, это owner decision поставить domain run в `parked`; такой
-run сохраняет resume point, но больше не управляет каждым ответом.
-
-## Niche Analysis Protocol
-
-Каждый раз, когда пользователь приносит идею, классифицируй режим:
-
-* `quick_scan` — быстрый отсев за 5-10 минут, можно работать с допущениями;
-* `deep_score` — полноценная оценка с источниками, конкурентами, TAM/SAM/SOM и карточкой ниши;
-* `rescore` — переоценка уже существующей ниши после новых данных;
-* `portfolio_review` — сравнение нескольких ниш и изменение приоритетов;
-* `niche_factory` — управляемый поиск с нуля: hunting constraints → shortlist → scan → CustDev → experiment gates;
-* `idea_inbox` — фиксация сырой идеи с приблизительным классом `A/B/C/X`, но без score и hit parade.
-* `marketplace_mining` — transaction-first разбор продаваемых/проданных
-  онлайн-бизнесов до shortlist по `docs/MARKETPLACE_REVERSE_ENGINEERING_PROTOCOL.md`.
-
-Для `idea_inbox` используй `data/IDEA_INBOX.md` и
-`docs/IDEA_PURGATORY_PROTOCOL.md`. Не требуй полный опросник, если цель
-пользователя — снять идею с головы и вернуться к ней позже.
-
-Для `quick_scan`, `deep_score` и `rescore` указывай `validation_stage` и сильнейший уровень `E0–E5`; слабые источники не заменяют `do → pay → repeat`.
-
-После owner checkpoint новая оцененная ниша = строка в hit parade + карточка
-ниши. Если данных хватает только на `quick_scan`, честно снижай
-`evidence_confidence` и перечисляй gaps. До owner checkpoint кандидат остаётся
-в discovery-артефактах и не попадает в рейтинг.
-
-Обязательный минимум входа для полноценной оценки задается блоком A в `docs/NICHE_QUESTIONNAIRE.md`:
-
-* название ниши и конкретная бизнес-модель;
-* кто платит;
-* референс: кто уже зарабатывает на похожей модели;
-* один широкий сегмент и одна боль/задача;
-* география;
-* предполагаемый чек, маржа, LTV/повторные продажи, канал продаж, активы автора.
-
-Если блок A неполный, не делай `deep_score`: верни список недостающих обязательных вопросов. Если данных хватает только на предварительный разбор, можно поставить `quick_scan`, но confidence не выше `0.55`.
-
-Собственные оплаты не являются обязательным условием высокой оценки идеи. Для новых идей оценивай открытую нишу: сформированность рынка, размер, рост рынка/тренд, горячий спрос, конкуренцию, референс, LTV, X4, защиту, реинвестирование, операционную масштабируемость, канал роста и модель заработка. Отдельно оценивай свободу и финансовую устойчивость. Собственные оплаты повышают доказательность, но их отсутствие не должно само по себе убивать идею.
-
-Конкуренция в методологии — плюс к рынку, а не минус. Наличие сильных конкурентов доказывает спрос, деньги и референсы. Если идея слаба на фоне конкурентов, снижай не `market_score`, а `moat_scale_score`, `channel`, `differentiation` или `evidence_confidence`. Не пиши "рынок занят" как главный риск, если фактически не проверена закрытость выбранного сегмента/географии.
-
-## Language Rules
-
-Основной язык проекта — русский. Все пользовательские выводы, карточки ниш, hit parade, dashboard-тексты, worklog summaries и пояснения критериев должны быть на русском.
-
-Английский допустим только для:
-
-* названий брендов, сервисов, библиотек, API и продуктов;
-* URL, путей файлов, команд, технических полей, enum/status значений;
-* коротких общепринятых терминов вроде SaaS, MVP, LTV, CAC, churn, webhook, backend, frontend, если русский перевод ухудшает точность.
-
-Не писать англоязычные предложения в `Вывод`, `Главный риск`, `Следующий шаг`, `One-liner`, описания бизнес-модели и пользовательские разделы карточек.
-
-## Evidence Rules
-
-Нельзя писать "рынок большой", "спрос растет", "конкурентов много", "маржа высокая" без пометки источника или допущения.
-
-Допустимые уровни доказательности:
-
-* `verified` — источник проверен: Wordstat/Trends, сайт конкурента, маркетплейс, интервью, заказ, платеж, статистика проекта;
-* `supported` — есть косвенные публичные признаки: выдача, цены, рекламные объявления, кейсы, вакансии, отзывы;
-* `estimated` — расчетная оценка с понятной формулой;
-* `unverified` — гипотеза пользователя или агента.
-
-Не подменяй Wordstat или Google Trends реальными цифрами, если не было доступа к данным. В таком случае пиши, что нужна ручная проверка.
-
-## Hit Parade Rules
-
-`data/HIT_PARADE.md` — источник правды по текущему рейтингу.
-
-`data/HIT_PARADE.md` содержит две независимые таблицы: карту рынков/референсов и очередь конкретных ставок.
-
-В карте рынков каждая строка должна иметь:
-
-* место на карте;
-* название ниши или референса;
-* тип объекта;
-* `market_opportunity_score`, `market_score`, `economics_score`, `evidence_confidence`;
-* сильнейшее доказательство и вывод;
-* дату последнего пересмотра.
-
-В очереди ставок каждая строка должна иметь:
-
-* приоритет;
-* название ниши;
-* тип объекта;
-* `execution_priority_score`, `economics_score`, `moat_scale_score`, `personal_filter_score`, `evidence_confidence`;
-* главный риск, решение и следующий шаг;
-* дату последнего пересмотра.
-
-Для `market_reference` не выдумывай `execution_priority_score`: сначала нужен наш конкретный сегмент, оффер и канал.
-
-Если оценка изменилась, не стирай старую логику. Добавь новую карточку или worklog, чтобы было понятно, почему рейтинг поменялся.
+Для любой niche/scoring/research задачи сначала прочитай `docs/AGENT_FACTORY_PROTOCOL.md`, `data/ACTIVE_RUN.md` и его `Source board`. Активный run не сбрасывается новым чатом. Если он active, каждый update сохраняет SIGMA step, evidence, решение и один следующий gate. Новая идея не попадает в hit parade без owner checkpoint и требуемого evidence.
 
 ## Project Memory
 
@@ -274,27 +85,65 @@ Meaningful change:
 <!-- ruslan-project-workflows:start -->
 ## Reusable skills, media and release state
 
+Version: 0.1.3
+
 Root `AGENTS.md` хранит global policy/router; scoped `AGENTS.md` наследуют его и
 содержат только domain rules. Используй только релевантные
 `ruslan-project-workflows:<skill-name>`; без plugin — `skills/<skill-name>/SKILL.md`.
 Новые optional skills остаются в plugin-каталоге, не копируются в каждый root.
 UI: `product-design-ux` до первого flow (P0 user/job, flow, CTA, states и
-viewport constraints в `PROJECT_SPEC.md`/`UX.md`), затем по риску
-`frontend-design`/`web-interface-guidelines`; visible delta — `ui-change-proof`
-with rendered exact-diff evidence; responsive — `frontend-responsive-layout-audit`
-+ `responsive-qa-gate` (matrix/overflow); acceptance — `web-ui-verify`.
+viewport constraints в `PROJECT_SPEC.md`/`UX.md`); для обычного UI и UX-аудита
+по риску `frontend-design`/`web-interface-guidelines`; visible delta —
+`ui-change-proof` with rendered exact-diff evidence; responsive —
+`frontend-responsive-layout-audit` + `responsive-qa-gate`; acceptance —
+`web-ui-verify`.
+Новый admin/CRM/dashboard без утверждённой design system или visual direction:
+после этого UX-этапа и до кода обязательно `ui-ux-pro-max`, затем весь
+указанный design/audit/acceptance route обязателен, а не «по риску».
+Если direction открыт, сначала `design-atlas`: public reference → 3–5 решений,
+не копия. Только в React+Tailwind/shadcn current 21st MCP/`21st-ui-explore`
+может показать варианты; `21st-ai` даёт 2–3 takes после brief только при
+`get_usage.aiGenerationEnabled=true`. Owner выбирает до code retrieval/write;
+copy-prompt адаптируется в реальный стек, generated HTML не production-код.
+Без framework migration для static/vanilla surface.
 Это не блокирует docs-only, backend-only или узкий incident repair.
+
+Browser lifecycle v1.1: для desk-research, поиска по файлам/чатам и чтения
+сайтов не запускай локальный Chrome, Chromium или Playwright: используй
+filesystem, Codex task tools и web-search. Для UI QA сначала используй уже
+открытый встроенный browser Codex. Отдельный browser допустим только для
+конкретной непокрываемой UI-проверки: заранее назови причину, не используй
+пользовательский Chrome profile и запусти один bounded-сеанс. Закрой созданные
+агентом browser/Playwright, dev-server и QA-container сразу после проверки, в
+том числе при ошибке; перед финалом проверь отсутствие этих процессов. Обычный
+Chrome пользователя не закрывай.
+
+Telegram surface access v1.0: до вывода «доступа нет» проверь уже открытые и
+авторизованные Telegram/MAX Desktop и Web. Native app и Web равноправны; сбой
+browser connector, iframe или одной вкладки не доказывает отсутствие доступа.
+Не проси manual screenshots, пока не испробованы доступные поверхности и не
+записан точный blocker. Не открывай посторонние чаты и не сохраняй session data.
 
 Перед добавлением site photo/video используй `media-asset-optimization`: original
 не клади в public, публикуй AVIF/WebP derivative и responsive sizes. Warn: image
 >500 KiB (hero >800 KiB), video >5 MiB desktop/>2.5 MiB mobile; >=10 MiB —
 stop-and-review. Inline video: MP4/WebM, максимум 1080p/30 fps, poster и lazy
-loading; длинное видео — streaming/embed.
+loading; длинное видео — streaming/embed. До integration/commit/release дай
+owner короткий verdict по каждому новому/заменённому asset: `ready`, `needs
+compression or derivative` или `owner decision needed`; original всегда второй
+статус до создания и audit delivery-файла. В handoff явно назови все warnings и
+stop-and-review, либо прямо скажи, что audit чистый.
 
 В release/status разделяй feature/local/origin и live commit каждой поверхности:
 backend passport не доказывает frontend; docs/tests могут быть
 `non_runtime_ahead`, unknown path — fail-closed. Не трогай чужие untracked
 файлы; secrets, конфликты и unknown runtime-files блокируют release.
+
+Runtime image/PDF/font/media, на которые ссылается код, обязаны быть tracked в
+том же commit. Untracked runtime asset — release blocker, а не допустимый local
+artifact. Не говори «готово», «исправлено» или «опубликовано», пока нет local
+checks, exact pushed commit, successful deploy и fresh live-check изменённого
+flow и добавленных assets.
 <!-- ruslan-project-workflows:end -->
 
 ## Telegram/MAX Live Verification
