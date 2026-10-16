@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <title>Анализ Ниш — Кабинет идей</title>
     <link rel="icon" href="./favicon.svg?v=20260703" type="image/svg+xml" />
-    <link rel="stylesheet" href="./styles.css?v=20260913-desk-ranking-pool" />
+    <link rel="stylesheet" href="./styles.css?v=20261016-current-hit-parade-2" />
   </head>
   <body>
     <header class="topbar">
@@ -25,7 +25,7 @@
       <div class="view-tab-wrap" role="presentation"><button class="view-tab active" type="button" role="tab" aria-selected="true" aria-controls="view-funnel" data-view="funnel">Воронка решений</button><button class="tab-help help-trigger" type="button" data-tooltip="Показывает не только текущую полку, но и сколько идей дошло, прошло дальше и остановилось на каждом этапе." aria-label="Что находится в разделе «Воронка решений»?">?</button></div>
       <div class="view-tab-wrap" role="presentation"><button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-all-ideas" data-view="all-ideas">Все идеи <span class="tab-count" id="tab-total">0</span></button><button class="tab-help help-trigger" type="button" data-tooltip="Полный реестр всех сохранённых идей. Нажатие «Все идеи» сбрасывает фильтры и возвращает весь список." aria-label="Что находится в разделе «Все идеи»?">?</button></div>
       <div class="view-tab-wrap" role="presentation"><button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-research" data-view="research">Журнал исследований <span class="tab-count" id="tab-runs">0</span></button><button class="tab-help help-trigger" type="button" data-tooltip="История отдельных исследовательских прогонов: что, когда и какими источниками проверяли, к какому выводу пришли. Это не второй список идей." aria-label="Что находится в разделе «Журнал исследований»?">?</button></div>
-      <div class="view-tab-wrap" role="presentation"><button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-portfolio" data-view="portfolio">Сравнение оценённых</button><button class="tab-help help-trigger" type="button" data-tooltip="Формальное сравнение только уже оценённых объектов. Здесь отдельно сопоставляются рынки и наши конкретные ставки; все сырые идеи остаются в общем реестре." aria-label="Что находится в разделе «Сравнение оценённых»?">?</button></div>
+      <div class="view-tab-wrap" role="presentation"><button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-portfolio" data-view="portfolio">Сравнение оценённых</button><button class="tab-help help-trigger" type="button" data-tooltip="Актуальный хит-парад берётся из реестра desk-квалифицированных ставок. Отдельно доступны исторические таблицы v0.7; все идеи остаются в общем реестре." aria-label="Что находится в разделе «Сравнение оценённых»?">?</button></div>
       <div class="view-tab-wrap" role="presentation"><button class="view-tab" type="button" role="tab" aria-selected="false" aria-controls="view-archive" data-view="archive">Остановленные <span class="tab-count" id="tab-archive">0</span></button><button class="tab-help help-trigger" type="button" data-tooltip="Идеи на паузе и в отсеве. Они не удалены: у каждой сохраняются причина остановки и условие возврата." aria-label="Что находится в разделе «Остановленные»?">?</button></div>
     </nav>
 
@@ -144,10 +144,11 @@
       <section class="app-view" id="view-portfolio" role="tabpanel" data-panel="portfolio" hidden>
         <section class="panel portfolio-panel" aria-labelledby="portfolio-title">
           <div class="section-head portfolio-heading">
-            <div><div class="section-kicker">Формальная оценка</div><h2 id="portfolio-title">Сравнение оценённых объектов</h2><p>Здесь меньше строк, чем во всём реестре: сравниваются только идеи и рынки с формальной оценкой. <strong>Наши ставки</strong> отвечают «что делать нам», а <strong>рынки</strong> — «где вообще видны спрос и деньги». Доверие в этой таблице — frozen legacy v0.7; активный evidence-cap показан в «Все идеи».</p></div>
+            <div><div class="section-kicker">Рейтинг ставок</div><h2 id="portfolio-title">Актуальный хит-парад</h2><p id="portfolio-description">Текущая очередь ставок, прошедших S0–S5. Рейтинг осторожный: предварительная оценка скорректирована доверием к доказательствам. Он задаёт порядок проверки, а не доказывает продажи и не назначает текущий фокус.</p></div>
             <div class="portfolio-tabs" role="tablist" aria-label="Представление портфеля">
-              <button class="portfolio-tab active" type="button" role="tab" aria-selected="true" data-portfolio="queue">Приоритет наших ставок</button>
-              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="market">Сильные рынки</button>
+              <button class="portfolio-tab active" type="button" role="tab" aria-selected="true" data-portfolio="current">Текущие ставки</button>
+              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="queue">Ставки v0.7</button>
+              <button class="portfolio-tab" type="button" role="tab" aria-selected="false" data-portfolio="market">Рынки v0.7</button>
             </div>
           </div>
           <div class="table-scroll" tabindex="0"><table><thead id="portfolio-head"></thead><tbody id="portfolio-body"></tbody></table></div>
@@ -169,6 +170,6 @@
       <span>Кабинет только для просмотра · источник правды: <code>data/IDEA_REGISTRY.json</code></span>
     </footer>
 
-    <script src="./app.js?v=20260913-desk-ranking-pool" defer></script>
+    <script src="./app.js?v=20261016-current-hit-parade-2" defer></script>
   </body>
 </html>

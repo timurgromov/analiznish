@@ -4,8 +4,15 @@ const FACTORY_SCHEMA_PATH = "../data/FACTORY_SCHEMA.json";
 const HIT_PARADE_PATH = "../data/HIT_PARADE.md";
 
 const portfolioColumns = {
+  current: ["Место", "Ниша", "Текущий рейтинг", "Предварительная оценка", "Доверие", "Доказательства", "Статус"],
   queue: ["Приоритет", "Ниша", "Приоритет ставки", "Экономика", "Доверие", "Решение", "Следующий шаг"],
   market: ["Место на карте", "Ниша / референс", "Рыночная возможность", "Рынок", "Экономика", "Доверие", "Вывод"],
+};
+
+const portfolioHeadings = {
+  current: ["Актуальный хит-парад", "Текущая очередь ставок, прошедших S0–S5. Рейтинг осторожный: предварительная оценка скорректирована доверием к доказательствам. Он задаёт порядок проверки, а не доказывает продажи и не назначает текущий фокус."],
+  queue: ["Ставки: история v0.7", "Сохранённое сравнение конкретных ставок по модели v0.7. Это исторический снимок; текущие места и доказательность смотрите во вкладке «Текущие ставки»."],
+  market: ["Рынки: история v0.7", "Сохранённое сравнение рыночных возможностей по модели v0.7. Рынок и конкретная ставка — разные объекты; текущую очередь проверок смотрите во вкладке «Текущие ставки»."],
 };
 
 const objectTypeLabels = {
@@ -47,8 +54,8 @@ const state = {
   funnelSort: "current",
   selectedRunId: null,
   roundSelection: null,
-  portfolioView: "queue",
-  portfolio: { market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
+  portfolioView: "current",
+  portfolio: { current: { headers: [], rows: [], ids: [] }, market: { headers: [], rows: [] }, queue: { headers: [], rows: [] } },
   selectedPortfolioIndex: 0,
 };
 
@@ -329,6 +336,21 @@ function sortIdeas(ideas, sortKey) {
     title: (a, b) => a.title.localeCompare(b.title, "ru"),
   };
   return [...ideas].sort(sorters[sortKey] || sorters.current);
+}
+
+function currentPortfolioTable() {
+  const groups = state.registry.portfolioRound.stateGroups;
+  const qualifiedIds = new Set([...(groups.provisional_finalist || []), ...(groups.selected_for_interviews || [])]);
+  const ideas = sortIdeas(state.registry.ideas.filter((idea) => qualifiedIds.has(idea.id)), "current");
+  return {
+    headers: portfolioColumns.current,
+    ids: ideas.map((idea) => idea.id),
+    rows: ideas.map((idea, index) => [
+      String(index + 1), idea.title, String(currentScore(idea)), String(idea.baseScore),
+      `${Math.round(idea.evidenceConfidence * 100)}%`, idea.evidenceLevel,
+      competitionStateById(competitionStateForIdea(idea.id))?.label || "",
+    ]),
+  };
 }
 
 function filteredIdeas() {
@@ -612,11 +634,17 @@ function renderArchive() {
 function renderPortfolioTable() {
   const table = state.portfolio[state.portfolioView];
   const columns = portfolioColumns[state.portfolioView];
+  document.querySelector("#portfolio-title").textContent = portfolioHeadings[state.portfolioView][0];
+  document.querySelector("#portfolio-description").textContent = portfolioHeadings[state.portfolioView][1];
   document.querySelector("#portfolio-head").innerHTML = `<tr>${columns.map((header) => `<th>${escapeHtml(header)}</th>`).join("")}<th><span class="visually-hidden">Детали</span></th></tr>`;
   document.querySelector("#portfolio-body").innerHTML = table.rows.map((row, index) => `<tr class="${index === state.selectedPortfolioIndex ? "selected" : ""}">${columns.map((header) => {
     const value = getRowValue(table, row, header);
-    const numeric = ["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика"].includes(header);
-    return `<td class="${numeric ? "numeric" : ""}">${numeric ? `<strong class="score-${scoreTone(Number(value))}">${escapeHtml(value)}</strong>` : escapeHtml(value)}</td>`;
+    const numeric = ["Рыночная возможность", "Приоритет ставки", "Рынок", "Экономика", "Текущий рейтинг", "Предварительная оценка"].includes(header);
+    const ideaId = table.ids?.[index];
+    const content = header === "Ниша" && ideaId
+      ? `<a href="./project.html?id=${encodeURIComponent(ideaId)}">${escapeHtml(value)}</a>`
+      : escapeHtml(value);
+    return `<td class="${numeric ? "numeric" : ""}">${numeric ? `<strong class="score-${scoreTone(Number(value))}">${content}</strong>` : content}</td>`;
   }).join("")}<td><button class="row-open" type="button" data-index="${index}">Подробнее</button></td></tr>`).join("");
   document.querySelectorAll(".row-open").forEach((button) => button.addEventListener("click", () => {
     state.selectedPortfolioIndex = Number(button.dataset.index);
@@ -631,6 +659,12 @@ function renderPortfolioDetail() {
   const target = document.querySelector("#portfolio-detail");
   if (!row) {
     target.innerHTML = "<p>В этом представлении пока нет данных.</p>";
+    return;
+  }
+  if (state.portfolioView === "current") {
+    const idea = state.registry.ideas.find((item) => item.id === table.ids[state.selectedPortfolioIndex]);
+    if (!idea) return;
+    target.innerHTML = `<div><span>Выбранная ставка · место ${state.selectedPortfolioIndex + 1}</span><h3>${escapeHtml(idea.title)}</h3><a href="./project.html?id=${encodeURIComponent(idea.id)}">Открыть карточку ↗</a></div><div class="portfolio-detail-grid"><div><span>Почему здесь</span><p>${escapeHtml(idea.rankingReason)}</p></div><div><span>Следующая проверка</span><p>${escapeHtml(idea.nextGate)}</p></div></div>`;
     return;
   }
   const nameHeader = table.headers.includes("Ниша / референс") ? "Ниша / референс" : "Ниша";
@@ -750,9 +784,10 @@ async function init() {
     state.registry = registry;
     state.factory = factory;
     state.schema = schema;
+    state.portfolio.current = currentPortfolioTable();
     state.portfolio.market = parseTable(hitParade, "Место на карте");
     state.portfolio.queue = parseTable(hitParade, "Приоритет");
-    if (!registry.ideas?.length || !registry.runs?.length || !state.portfolio.market.rows.length || !state.portfolio.queue.rows.length) throw new Error("Один из источников не содержит обязательных данных");
+    if (!registry.ideas?.length || !registry.runs?.length || !state.portfolio.current.rows.length || !state.portfolio.market.rows.length || !state.portfolio.queue.rows.length) throw new Error("Один из источников не содержит обязательных данных");
     renderTopSummary();
     renderRoundSelection();
     renderFilterOptions();

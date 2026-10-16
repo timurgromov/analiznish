@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-16-current-hit-parade",
+  "change_kind": "dashboard-ranking",
+  "status": "passed",
+  "requested_visible_change": "Show AI для B2B in the website hit parade",
+  "expected_visible_delta": "Current desk-qualified table has 21 rows; AI для B2B is #9 with cautious rating 56",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "94daaa601df5c49c84495e534260c2190eff707d1bad6a1df4660d797949b4e2",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/#portfolio",
+    "source_ref": "working tree built to _site after last edit",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/#portfolio",
+    "state": "current desk-qualified ranking",
+    "selector_or_slide_id": "#portfolio-body tr:nth-child(9)",
+    "action": "Open comparison tab, inspect row 9, select details, open project card, switch historical tabs"
+  },
+  "must_remain_unchanged": [
+    "Historical v0.7 tables retain 7 bet rows and 9 market rows",
+    "No owner focus selected",
+    "Score formula remains shared with All ideas"
+  ],
+  "required_viewports": ["1280x720", "390x844"],
+  "observations": [
+    {
+      "viewport": "1280x720",
+      "viewport_source": "Codex in-app browser; innerWidth=1280, innerHeight=720",
+      "before_signature": "published comparison tab: frozen v0.7 bets only; AI для B2B absent",
+      "after_signature": "local candidate: 21 rows; row 9 AI для B2B, rating 56, base 61, confidence 55%, E1",
+      "observed_visible_result": "AI для B2B is legible in the ranking; details give the ranking reason and next gate; project card opens from the detail link.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "390x844",
+      "viewport_source": "Codex in-app browser viewport override; innerWidth=390, innerHeight=844",
+      "before_signature": "published comparison tab: frozen v0.7 bets only; AI для B2B absent",
+      "after_signature": "local candidate: row 9 AI для B2B, rating 56; page scrollWidth=390, table scrollWidth=980 within 352px container",
+      "observed_visible_result": "Current ranking and both labeled historical tabs work; the page stays within viewport width and the table scrolls inside its panel.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

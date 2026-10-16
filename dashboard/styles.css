@@ -827,6 +827,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 .run-footer { display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: .78rem; }
 .run-footer a { font-weight: 750; text-decoration: none; }
 
+.portfolio-panel { min-width: 0; }
 .portfolio-heading { align-items: center; }
 .portfolio-tabs { display: flex; padding: 4px; border-radius: 11px; background: #edf1f6; }
 .portfolio-tab { border: 0; border-radius: 8px; padding: 8px 12px; background: transparent; color: var(--muted); font-weight: 750; }
@@ -836,6 +837,7 @@ h3 { margin-bottom: 5px; line-height: 1.25; }
 table { width: 100%; border-collapse: collapse; min-width: 980px; }
 th, td { padding: 11px 13px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; font-size: .78rem; }
 th { background: #f0f4f8; color: var(--muted); font-size: .66rem; text-transform: uppercase; letter-spacing: .045em; }
+#portfolio-head th:last-child { position: relative; }
 td.numeric strong { font-size: 1rem; }
 tbody tr.selected { background: #f3f7ff; }
 .score-strong { color: var(--green); }
@@ -1057,8 +1059,8 @@ footer a { font-weight: 750; text-decoration: none; }
   .funnel-selection-controls { grid-template-columns: 1fr; }
   .funnel-selection-controls .reset-button { grid-column: auto; }
   .run-title, .run-footer { align-items: flex-start; flex-direction: column; gap: 6px; }
-  .portfolio-tabs { width: 100%; }
-  .portfolio-tab { flex: 1; }
+  .portfolio-tabs { width: 100%; flex-wrap: wrap; }
+  .portfolio-tab { flex: 1 1 120px; }
   .archive-groups { padding: 12px; }
   .idea-details,
   .idea-card.compact .idea-details { padding-left: 14px; }
