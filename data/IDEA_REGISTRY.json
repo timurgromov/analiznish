@@ -1,6 +1,6 @@
 {
   "schemaVersion": 6,
-  "updatedAt": "2026-09-14",
+  "updatedAt": "2026-10-16",
   "purpose": "Единый реестр всех сохранённых идей и рыночных референсов для визуального кабинета.",
   "rankingModel": {
     "id": "evidence_adjusted_opportunity_v1",
@@ -67,7 +67,8 @@
         "field-service-next-action",
         "wholesale-order-to-cash",
         "smb-contract-obligations",
-        "vendor-security-evidence"
+        "vendor-security-evidence",
+        "ai-for-b2b-corporate-practicum"
       ],
       "selected_for_interviews": [],
       "out_of_current_competition": ["psych-generic-ai", "psych-session-marketplace", "field-service-ops"],
@@ -75,7 +76,7 @@
       "reference_or_benchmark": ["timur-business-system", "auto-seo-cpa", "onsud-reference"]
     },
     "nextGate": "Владелец формирует пакет подготовки из 1–3 desk-квалифицированных ставок и назначает одну текущей работой; затем агент закрывает для неё I_E1 и только после этого начинает минимум пять реальных интервью.",
-    "updatedAt": "2026-09-14"
+    "updatedAt": "2026-10-16"
   },
   "ideas": [
     {
@@ -676,6 +677,31 @@
       "nextGate": "Включить в пакет из 1–3 проектов; при текущем фокусе подготовить I_E1 и провести минимум пять реальных интервью.",
       "source": "data/discovery/2026-09-13-codex-project-starter-thesis-reset.md",
       "runIds": ["codex-project-starter-2026-09-12", "global-portfolio-gate-2026-09-13"]
+    },
+    {
+      "id": "ai-for-b2b-corporate-practicum",
+      "title": "AI для B2B — корпоративный практикум и внедрение",
+      "canonicalThesis": "Компания покупает практическое обучение сотрудников применению AI и Codex на своей рабочей задаче; команда выполняет и проверяет первый полезный результат, а выявленные задачи могут стать отдельными платными внедрениями или, при повторяемости, продуктом.",
+      "projectSummary": "Корпоративный практикум на одной рабочей задаче: личный пример применения AI, доступ и контекст Codex, совместное выполнение, проверка результата и карта последующих задач. Внедрение и поддержка — отдельные возможные продажи.",
+      "customer": "Компания в РФ: собственник или функциональный руководитель с бюджетом; участники — сотрудники команды. Первая вертикаль и budget owner уточняются в интервью.",
+      "customerOutcome": "Сотрудник умеет повторить один безопасный AI-сценарий на своей задаче; руководитель видит проверенный артефакт и следующий ограниченный процесс.",
+      "moneyModel": "Проектная оплата практикума для группы; второй практикум, внедрение, сопровождение и micro-SaaS возможны лишь после отдельной проверки спроса и экономики.",
+      "category": "Корпоративное AI-обучение и внедрение",
+      "objectType": "concrete_bet",
+      "baseScore": 61,
+      "scoreBasis": "Single-thesis E1 quick scan 2026-10-16: 18 критериев дают рынок 77, экономику 36, защиту/масштаб 37, личный фильтр 62, рыночную возможность 61 и evidence-adjusted приоритет 24. База 61 привязана к рыночной возможности; оценки разных проходов портфеля предварительны.",
+      "evidenceConfidence": 0.55,
+      "evidenceLevel": "E1",
+      "stage": "finalist",
+      "gateStatus": "parked",
+      "rankingReason": "S0–S5 завершены по отдельному owner thesis: платные российские корпоративные аналоги и понятный первый продукт подтверждают desk-категорию. Публичные цены, знакомый контакт и материалы не доказывают наши продажи, маржу или повтор.",
+      "mainRisk": "Продать разовый ручной тренинг без принятого рабочего результата, положительного вклада после всех часов и повода купить следующий проект.",
+      "nextGate": "Владелец назначает пакет 1–3 проектов и одну текущую работу; при выборе этой ставки — подготовить I_E1 и затем провести минимум пять реальных интервью.",
+      "source": "data/discovery/2026-10-16-ai-for-b2b-single-thesis.md",
+      "runIds": [
+        "ai-for-b2b-2026-10-16",
+        "global-portfolio-gate-2026-09-13"
+      ]
     }
   ],
   "decisionAudits": {
@@ -980,6 +1006,106 @@
       "criteria": [{ "id": "thesis_contract", "label": "Подтверждённый смысл продукта", "result": "passed", "evidenceLevel": "E1", "observation": "Владелец подтвердил AI-переход и внедрение как продукт; templates, сайт и delivery — компоненты." }, { "id": "market_exists", "label": "Платная категория расширенного тезиса", "result": "passed", "evidenceLevel": "E1", "observation": "Яндекс Практикум, Skillbox, Z-union, OfficeForge и Алгорикс показывают платные программы, обучение, аудит и внедрение." }, { "id": "two_problem_signals", "label": "Два независимых сигнала Job", "result": "passed", "evidenceLevel": "E1", "observation": "Исследования ВШЭ/Росстата и Cloud.ru плюс публичный рабочий эпизод на Habr показывают сложности выбора сценария, интеграции и получения эффекта." }, { "id": "local_payer", "label": "Российский плательщик-гипотеза", "result": "passed", "evidenceLevel": "E1", "observation": "Рублёвые B2C/B2B офферы подтверждают возможность оплаты; наш первый active-intent сегмент остаётся гипотезой." }, { "id": "business_design", "label": "Проверяемая модель первого оффера", "result": "passed", "evidenceLevel": "E1", "observation": "Одна 2–4-недельная программа: диагностика, один процесс, безопасная настройка, метрика до/после и handoff; цена 29 900–49 900 ₽ только гипотеза." }, { "id": "readiness", "label": "Текущая готовность", "result": "unknown", "evidenceLevel": "E1", "observation": "ICP, WTP, канал, support COGS, completion и repeat ещё не доказаны; это следующие gates, не рыночный провал." }],
       "checkpointHistory": [{ "checkpointId": "S0_CONTEXT", "status": "passed", "summary": "Владелец подтвердил Canonical thesis, трансформацию, компоненты и запрещённые подмены." }, { "checkpointId": "S1_MARKET", "status": "passed", "summary": "Четыре типа российских платных предложений подтвердили денежную категорию AI-перехода и внедрения." }, { "checkpointId": "S2_TREND", "status": "passed", "summary": "Независимые исследования и публичный рабочий эпизод подтвердили Job у active-intent слоя; 48% без потребности оставлены контрсигналом." }, { "checkpointId": "S3_LOCALIZE", "status": "passed", "summary": "Российские цены, исследования, потенциальные плательщики и законный интервью-контур подтверждены; точный SAM и WTP unknown." }, { "checkpointId": "S4_PORTFOLIO_GATE", "status": "passed", "summary": "18 критериев заполнены; opportunity 72 отделена от низкого E1 execution priority 26; сформулирован дешёвый проверяемый оффер." }, { "checkpointId": "S5_COMPETITORS", "status": "passed", "summary": "Конкуренты подтверждают оплату за переход к результату; гипотеза отличия — один измеримый процесс за 2–4 недели для active-intent owner-operator." }, { "checkpointId": "S4_OWNER", "status": "parked", "summary": "Global Portfolio Gate пройден; ставка ждёт выбора одного фокуса владельцем, автоматический выбор запрещён." }],
       "reviewedAt": "2026-09-13"
+    },
+    "ai-for-b2b-corporate-practicum": {
+      "currentCheckpointId": "S4_OWNER",
+      "decisionClass": "owner_hold",
+      "blockerCode": null,
+      "competitionEffect": "confirms_market",
+      "geographies": [
+        {
+          "market": "Россия",
+          "status": "checked",
+          "summary": "Публичные рублёвые корпоративные предложения и опрос HR/L&D; собственный buyer, бюджет и WTP unknown."
+        },
+        {
+          "market": "Глобальный рынок",
+          "status": "not_checked",
+          "summary": "Не нужен для первого локального gate."
+        }
+      ],
+      "criteria": [
+        {
+          "id": "thesis_contract",
+          "label": "Подтверждённый смысл продукта",
+          "result": "passed",
+          "evidenceLevel": "E1",
+          "observation": "Прямые сообщения владельца в чате «Переосмыслить B2B-обучение ИИ» и отдельный проект задают корпоративный практикум и последующее внедрение."
+        },
+        {
+          "id": "market_exists",
+          "label": "Платная категория",
+          "result": "passed",
+          "evidenceLevel": "E1",
+          "observation": "Российские корпоративные AI-практикумы и цены у Ивановой и Яндекс Практикума; продажи этих офферов не проверены."
+        },
+        {
+          "id": "two_problem_signals",
+          "label": "Два независимых сигнала Job",
+          "result": "passed",
+          "evidenceLevel": "E1",
+          "observation": "Практические задачи в независимых офферах и опрос HR/L&D о корпоративном обучении; собственные интервью ещё не проведены."
+        },
+        {
+          "id": "local_payer",
+          "label": "Российский плательщик-гипотеза",
+          "result": "passed",
+          "evidenceLevel": "E1",
+          "observation": "Компания/руководитель с бюджетом; публичные рублёвые B2B-офферы, но authority знакомого контакта неизвестна."
+        },
+        {
+          "id": "business_design",
+          "label": "Проверяемая модель первого оффера",
+          "result": "passed",
+          "evidenceLevel": "E1",
+          "observation": "Ограниченный групповой практикум с одной проверяемой рабочей задачей; внедрение и support вне первого объёма."
+        },
+        {
+          "id": "readiness",
+          "label": "Текущая готовность",
+          "result": "unknown",
+          "evidenceLevel": "E1",
+          "observation": "Согласованный пилот, цена, полные часы, COGS, оплата и repeat unknown; это дальнейшие gates."
+        }
+      ],
+      "checkpointHistory": [
+        {
+          "checkpointId": "S0_CONTEXT",
+          "status": "passed",
+          "summary": "Owner thesis восстановлен из prior chat и отдельного проекта; четыре различия с Codex Project Starter зафиксированы."
+        },
+        {
+          "checkpointId": "S1_MARKET",
+          "status": "passed",
+          "summary": "Российские платные корпоративные практикумы подтверждают денежную категорию, не собственные продажи."
+        },
+        {
+          "checkpointId": "S2_TREND",
+          "status": "passed",
+          "summary": "Направленный отраслевой опрос и офферы поддерживают Job; репрезентативный спрос и recent cases unknown."
+        },
+        {
+          "checkpointId": "S3_LOCALIZE",
+          "status": "passed",
+          "summary": "РФ-офферы, гипотеза budget owner, тёплый контакт и безопасный interview path; согласие на пилот unknown."
+        },
+        {
+          "checkpointId": "S4_PORTFOLIO_GATE",
+          "status": "passed",
+          "summary": "18 критериев: рынок 77, экономика 36, защита 37, личный фильтр 62, opportunity 61, execution priority 24 при E1 confidence 0.55."
+        },
+        {
+          "checkpointId": "S5_COMPETITORS",
+          "status": "passed",
+          "summary": "Специалист и крупный провайдер дают alternatives; отличие по проверенному результату остаётся гипотезой."
+        },
+        {
+          "checkpointId": "S4_OWNER",
+          "status": "parked",
+          "summary": "Ставка в desk-пуле; рабочий пакет 1–3 и один текущий фокус ещё не названы явно."
+        }
+      ],
+      "reviewedAt": "2026-10-16"
     }
   },
   "runs": [
@@ -1164,11 +1290,22 @@
       "title": "Portfolio Desk Qualification: завершение desk research",
       "category": "Несколько категорий",
       "status": "parked",
-      "result": "20 ставок завершили S0–S5 и вошли в ранжированный desk-квалифицированный пул; 3 требуют уточнить самостоятельную границу ставки, 2 сохраняют hard blocker. Следующий owner gate формирует пакет подготовки 1–3 проекта и одну текущую работу; interview_ready открывается только после I_E1.",
+      "result": "21 ставка завершила S0–S5 и вошла в ранжированный desk-квалифицированный пул; 3 требуют уточнить самостоятельную границу ставки, 2 сохраняют hard blocker. Следующий owner gate формирует пакет подготовки 1–3 проекта и одну текущую работу; interview_ready открывается только после I_E1.",
       "evidenceLevel": "E1",
       "framework": "factory_v2",
-      "updatedAt": "2026-09-14",
+      "updatedAt": "2026-10-16",
       "source": "data/ACTIVE_RUN.md"
+    },
+    {
+      "id": "ai-for-b2b-2026-10-16",
+      "title": "AI для B2B: single-thesis desk qualification",
+      "category": "Корпоративное AI-обучение и внедрение",
+      "status": "parked",
+      "result": "Одна корпоративная ставка прошла S0–S5 на E1; ждёт owner plan пакета и текущего фокуса. Покупатель, WTP, вклад и repeat неизвестны.",
+      "evidenceLevel": "E1",
+      "framework": "factory_v2",
+      "updatedAt": "2026-10-16",
+      "source": "data/discovery/2026-10-16-ai-for-b2b-single-thesis.md"
     }
   ]
 }

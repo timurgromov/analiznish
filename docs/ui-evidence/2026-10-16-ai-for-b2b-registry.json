@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "change_id": "2026-10-16-ai-for-b2b-registry",
+  "change_kind": "registry-card",
+  "status": "passed",
+  "requested_visible_change": "Separate AI для B2B corporate bet appears in public dashboard",
+  "expected_visible_delta": "28→29 ideas, 20→21 desk-qualified; card rating 56, confidence 55%, S4_OWNER parked",
+  "attempt_number": 1,
+  "checked_after_last_edit": true,
+  "candidate_diff_sha256": "657502b8d3667221e64d77d958ffee9303dffabbdab780252fb23ed7ebb5c40a",
+  "served_candidate": {
+    "url": "http://127.0.0.1:8765/dashboard/",
+    "source_ref": "staged working tree built to _site",
+    "fresh_reload": true
+  },
+  "target": {
+    "surface": "/dashboard/ and /dashboard/project.html?id=ai-for-b2b-corporate-practicum",
+    "state": "public read-only registry",
+    "selector_or_slide_id": "ai-for-b2b-corporate-practicum",
+    "action": "All ideas → search AI для B2B → inspect result and detail page"
+  },
+  "must_remain_unchanged": [
+    "Codex Project Starter remains separate",
+    "No owner focus selected",
+    "3 definition needs, 2 hard blockers, 3 benchmarks"
+  ],
+  "required_viewports": [
+    "1280x720",
+    "390x844"
+  ],
+  "observations": [
+    {
+      "viewport": "1280x720",
+      "viewport_source": "Codex in-app browser; innerWidth=1280, innerHeight=720",
+      "before_signature": "published cabinet: 28 ideas, 20 desk-qualified, AI для B2B absent",
+      "after_signature": "local candidate: 29 ideas, 21 desk-qualified, AI для B2B visible with rating 56, E1 55%, parked",
+      "observed_visible_result": "The search result card is legible and shows the separate corporate bet with the cautious score and gate; project detail page renders correctly.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    },
+    {
+      "viewport": "390x844",
+      "viewport_source": "Codex in-app browser viewport override; innerWidth=390, innerHeight=844",
+      "before_signature": "published cabinet: AI для B2B absent, no horizontal overflow",
+      "after_signature": "local candidate: AI для B2B card visible after search and scroll; rating 56, E1 55%, parked; no horizontal overflow",
+      "observed_visible_result": "The search result card is legible and shows the separate corporate bet with the cautious score and gate; project detail page renders correctly.",
+      "delta_visible": true,
+      "target_visible": true,
+      "preserved_invariants_passed": true,
+      "console_errors": []
+    }
+  ],
+  "comparison_review": {
+    "variants_shown": 0,
+    "selected_variant": "",
+    "owner_approval_reference": ""
+  }
+}

@@ -13,12 +13,12 @@ Current step: 4
 Current step name: Owner checkpoint — план пакета интервью
 Previous checkpoint: S5_COMPETITORS
 Completed checkpoints: S0_CONTEXT, S1_MARKET, S2_TREND, S3_LOCALIZE, S4_PORTFOLIO_GATE, S5_COMPETITORS
-Candidate IDs: agency-ar-control, codex-project-starter-product, psych-lead-to-paid-session, radarych, rpp-between-session, rule24, kadra, pastlife-sansara, outsourced-compliance-calendar, cycle-assistant, rpp-practice-lab, psych-employer-outcome, psych-couples-practices, rpp-supervision-os, psych-emotional-eating, psych-practice-crm, field-service-next-action, wholesale-order-to-cash, smb-contract-obligations, vendor-security-evidence
+Candidate IDs: agency-ar-control, codex-project-starter-product, psych-lead-to-paid-session, radarych, rpp-between-session, rule24, kadra, pastlife-sansara, outsourced-compliance-calendar, cycle-assistant, rpp-practice-lab, psych-employer-outcome, psych-couples-practices, rpp-supervision-os, psych-emotional-eating, psych-practice-crm, field-service-next-action, wholesale-order-to-cash, smb-contract-obligations, vendor-security-evidence, ai-for-b2b-corporate-practicum
 Selected focus IDs: —
 Research Unit: portfolio_batch
 Strongest evidence: E1
 Source board: data/discovery/2026-09-13-portfolio-interview-readiness-audit.md
-Last updated: 2026-09-14
+Last updated: 2026-10-16
 
 ## Решение владельца
 
@@ -28,8 +28,8 @@ Last updated: 2026-09-14
 
 ## Что реально проверено
 
-Все 25 concrete bets получили явный исход; незавершённой desk-очереди нет.
-Двадцать ставок прошли S0–S5 и вошли в ранжированный desk-квалифицированный пул. Три объекта требуют сначала
+Все 26 concrete bets получили явный исход; незавершённой desk-очереди нет.
+Двадцать одна ставка прошла S0–S5 и вошла в ранжированный desk-квалифицированный пул. Три объекта требуют сначала
 уточнить границу ставки: generic AI-психолог, generic marketplace сессий и
 общий field-service ops. Две exact-модели сохраняют hard blocker.
 
@@ -54,3 +54,10 @@ evidence table; только после прохождения I_E1 провод
 
 До планирования пакета не начинать интервью. Трафик, запрос оплаты и build
 остаются закрыты последующими action/pay gates.
+
+## Дополнение 2026-10-16
+
+«AI для B2B» прошла отдельный single-thesis S0–S5 на E1 и вошла в общий
+desk-квалифицированный пул. Источник: `data/discovery/2026-10-16-ai-for-b2b-single-thesis.md`.
+Пакет и текущий фокус по-прежнему не назначены; checkpoint `S4_OWNER / parked`
+и запрет на интервью до I_E1 сохраняются.

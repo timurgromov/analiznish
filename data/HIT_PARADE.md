@@ -1,6 +1,6 @@
 # Hit Parade — Карта возможностей и ставок
 
-Last updated: 2026-09-13
+Last updated: 2026-10-16
 Scoring model: `docs/SCORING_MODEL.md` v0.7
 
 Здесь нет единого «лучшего бизнеса». Система отвечает на два разных вопроса:
@@ -18,13 +18,20 @@ data/IDEA_REGISTRY.json и data/PORTFOLIO_CLOSURE.md.
 
 | Сейчас | Количество | Решение |
 | --- | ---: | --- |
-| Готовы к интервью | 20 | Все прошли S0–S5; WTP, канал и outcome ещё требуют реальных интервью. |
+| Прошли desk research | 21 | Все прошли S0–S5; WTP, канал и outcome ещё требуют реальных интервью. |
 | Рабочий пакет интервью | 0 | Владелец ещё не выбрал 1–3 проекта и один текущий фокус. |
 | Обоснованный failed | 2 | AI YouTube exact domestic-ad и ProfiWatcher имеют legal/platform blockerCode и отдельный failed-критерий. |
 | Нужно уточнить ставку | 3 | Generic AI-психолог, marketplace сессий и общий field-service ops требуют убрать широту или дубль; это не провал рынка. |
 | Проверяется сейчас | 0 | Незакрытой desk-очереди нет; run parked на owner choice. |
 | Прошла, не в фокусе | 0 concrete bets | Агент не может назначить этот исход по score; нужен явный owner decision. |
 | Active business / market reference | 3 | Benchmark и карта рынка, не кандидаты Factory. |
+
+Срез 20 ставок от 2026-09-13 дополнен single-thesis проходом «AI для B2B»
+2026-10-16. Её предварительная база 61, доверие E1 / 0.55, осторожный рейтинг
+56, 9-е место из 21 при текущей сортировке (балл 56 разделяет с 10-й).
+Подробные 18 критериев и ограничения —
+`data/discovery/2026-10-16-ai-for-b2b-single-thesis.md`.
+Это desk-допуск, не готовность к интервью и не owner selection.
 
 Portfolio readiness audit завершён 2026-09-13. Канонический текущий digest —
 `data/PORTFOLIO_CLOSURE.md`; исторические таблицы ниже не изменяют его исходы.
