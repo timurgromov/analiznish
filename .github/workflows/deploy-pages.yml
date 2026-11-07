@@ -96,4 +96,4 @@ jobs:
           RELEASE_UPLOAD_SECONDS: ${{ needs.build.outputs.upload_s }}
           RELEASE_BUILD_SECONDS: ${{ needs.build.outputs.build_s }}
           RELEASE_STARTED: ${{ needs.build.outputs.release_started }}
-        run: node scripts/release-passport.mjs verify "${{ steps.deployment.outputs.page_url }}" "$GITHUB_SHA"
+        run: node scripts/release-passport.mjs verify "${{ steps.deployment.outputs.page_url }}" "$GITHUB_SHA" "${{ steps.deployment.outputs.page_url }}dashboard/"

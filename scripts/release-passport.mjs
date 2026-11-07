@@ -2,7 +2,7 @@ import { writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 
-const [command, target, expectedCommit] = process.argv.slice(2);
+const [command, target, expectedCommit, homepage = target] = process.argv.slice(2);
 const now = () => Math.floor(Date.now() / 1000);
 
 if (command === 'write') {
@@ -24,7 +24,7 @@ if (command === 'write') {
       if (!response.ok) throw new Error(`Passport HTTP ${response.status}`);
       const passport = await response.json();
       if (passport.commit !== expectedCommit) throw new Error(`Expected ${expectedCommit}, received ${passport.commit}`);
-      const home = await fetch(target, { signal: AbortSignal.timeout(15000), cache: 'no-store' });
+      const home = await fetch(homepage, { signal: AbortSignal.timeout(15000), cache: 'no-store' });
       if (!home.ok) throw new Error(`Home HTTP ${home.status}`);
       console.log(`deploy-timing mode=pages commit=${expectedCommit} upload_s=${process.env.RELEASE_UPLOAD_SECONDS || 'unknown'} build_s=${process.env.RELEASE_BUILD_SECONDS || 'unknown'} checks_s=${now() - started} total_s=${process.env.RELEASE_STARTED ? now() - Number(process.env.RELEASE_STARTED) : 'unknown'}`);
       process.exit(0);
